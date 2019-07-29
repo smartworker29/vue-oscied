@@ -1,0 +1,46 @@
+import Vue from 'vue'
+import App from './App.vue'
+
+import axios from 'axios'
+import router from './router'
+import store from './store'
+
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import BootstrapVue from 'bootstrap-vue'
+import VueAxios from 'vue-axios'
+import VeeValidate from 'vee-validate'
+// @ts-ignore
+import VueAuthenticate from 'vue-authenticate'
+import Vuex from 'vuex'
+
+Vue.use(BootstrapVue)
+Vue.use(VeeValidate)
+Vue.use(Vuex)
+Vue.use(VueAxios, axios)
+Vue.use(VueAuthenticate, {
+  baseUrl: process.env.VUE_APP_API_ENDPOINT_URL,
+  loginUrl: '/login_check',
+  tokenPrefix: 'onesource_',
+  tokenPath: 'token',
+  storageNamespace: '',
+  registerUrl: ''
+})
+
+Vue.component('fa', FontAwesomeIcon)
+
+Vue.config.productionTip = false
+
+axios.defaults.baseURL = process.env.VUE_APP_API_ENDPOINT_URL
+axios.interceptors.request.use(function (config) {
+  if (config.headers.common.Accept && config.headers.common.Accept.indexOf('*/*') !== -1) {
+    config.headers.accept = 'application/json'
+  }
+
+  return config
+})
+
+new Vue({
+  router,
+  store,
+  render: h => h(App)
+}).$mount('#app')
