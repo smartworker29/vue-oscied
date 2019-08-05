@@ -1,6 +1,9 @@
 <template>
   <b-nav :class="'navbar-expand-lg navbar-light bg-light'">
     <b-nav-item :to="{ name: 'home' }" >Home</b-nav-item>
+    <b-nav-item :to="{ name: 'test_sorting' }" >Sorting</b-nav-item>
+    <b-nav-item :to="{ name: 'test_drag' }" >Drag</b-nav-item>
+    <b-nav-item :to="{ name: 'test_tap' }" >Tap</b-nav-item>
     <template v-if="!isAuthenticated">
       <b-nav-item :to="{ name: 'signUp' }" >Sign Up</b-nav-item>
       <b-nav-item :to="{ name: 'signIn' }" >Sign In</b-nav-item>

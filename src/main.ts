@@ -4,12 +4,12 @@ import App from './App.vue'
 import axios from 'axios'
 import router from './router'
 import store from './store'
+import './icons'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import BootstrapVue from 'bootstrap-vue'
 import VueAxios from 'vue-axios'
 import VeeValidate from 'vee-validate'
-// @ts-ignore
 import VueAuthenticate from 'vue-authenticate'
 import Vuex from 'vuex'
 

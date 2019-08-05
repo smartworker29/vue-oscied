@@ -3,6 +3,9 @@ import Router from 'vue-router'
 import HomePage from '@/pages/HomePage.vue'
 import SignUpPage from '@/pages/SignUpPage.vue'
 import SignInPage from '@/pages/SignInPage.vue'
+import TestDragAndDropPage from '@/pages/TestDragAndDropPage.vue'
+import TestTapSortingPage from '@/pages/TestTapSortingPage.vue'
+import SortingPage from '@/pages/SortingPage.vue'
 
 Vue.use(Router)
 
@@ -10,6 +13,21 @@ export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
+    {
+      path: '/sorting',
+      name: 'test_sorting',
+      component: SortingPage
+    },
+    {
+      path: '/drag',
+      name: 'test_drag',
+      component: TestDragAndDropPage
+    },
+    {
+      path: '/tap',
+      name: 'test_tap',
+      component: TestTapSortingPage
+    },
     {
       path: '/',
       name: 'home',
