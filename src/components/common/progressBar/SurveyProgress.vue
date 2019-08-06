@@ -1,8 +1,10 @@
 <template>
-  <div class="progress">
-    <div class="progress-bar progress-bar-striped progress-bar-animated"
-         role="progressbar"
-         :style="`width: ${processedPercent}%;`"></div>
+  <div>{{ $t('progress') }}
+    <div class="progress">
+      <div class="progress-bar progress-bar-striped progress-bar-animated"
+           role="progressbar"
+           :style="`width: ${processedPercent}%;`"></div>
+    </div>
   </div>
 </template>
 

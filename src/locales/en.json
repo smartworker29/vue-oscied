@@ -1,0 +1,41 @@
+{
+  "sign_in": "Log in",
+  "sign_up" : "Sign Up",
+  "sign_out" : "Sign Out",
+  "home" : "Home",
+  "tap" : "Tap",
+  "drag" : "Drag",
+  "sorting": "Sorting",
+  "sorting_g": {
+    "description": "Reorder the phrases below with what you consider the nest at the top",
+    "drag": {
+      "tip": "Drag and drop these phrases and rank them in order from top to bottom"
+    },
+    "tap": {
+      "tip": "Tap these phrases in order to rank them from top to bottom"
+    }
+  },
+  "progress": "Progress",
+  "more": "More",
+  "world_view" : "World View",
+  "rights_reserved": "All Rights Reserved",
+  "private_policy": "Private Policy",
+  "data_policy": "Data Policy",
+  "button_g": {
+    "confirm_order": "Confirm order",
+    "sign_in": "Login",
+    "sign_up": "Log up"
+  },
+  "email_address": "Email address",
+  "remember_me": "Remember me",
+  "password": "Password",
+  "password_confirm": "Confirm password",
+  "forgotten_pwd": "Forgotten password?",
+  "first_name": "First name",
+  "last_name": "Last name",
+  "gender": "Gender",
+  "male": "Male",
+  "female": "Female",
+  "phone_number": "Phone number",
+  "email_already_user": "Email address is already used"
+}

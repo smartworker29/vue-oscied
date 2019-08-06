@@ -3,27 +3,25 @@
     <div class="row">
       <div class="col-md-6">
         <div class="form-group" :class="{'has-error' : errors.first('firstName')}">
-          <label>First Name</label>
+          <label>{{ $t('first_name') }}</label>
           <input name="firstName"
                  type="text"
-                 placeholder="First Name"
                  v-model="registrationData.firstName"
                  class="form-control"
                  v-validate="'required|max:50'"
-                 data-vv-as="First Name"/>
+                 :data-vv-as="$t('first_name')"/>
           <small class="error">{{ errors.first('firstName') }}</small>
         </div>
       </div>
       <div class="col-md-6">
         <div class="form-group" :class="{'has-error' : errors.first('lastName')}">
-          <label>Last Name</label>
+          <label>{{ $t('last_name') }}</label>
           <input name="lastName"
                  type="text"
-                 placeholder="Last Name"
                  v-model="registrationData.lastName"
                  class="form-control"
                  v-validate="'required|max:50'"
-                 data-vv-as="Last Name"/>
+                 :data-vv-as="$t('last_name')"/>
           <small class="error">{{ errors.first('lastName') }}</small>
         </div>
       </div>
@@ -31,7 +29,7 @@
     <div class="row">
       <div class="col-md-12">
         <div class="form-group" :class="{'has-error' : errors.first('lastName')}">
-          <label>Gender</label>
+          <label>{{ $t('gender') }}</label>
           <div>
             <div class="form-check-inline">
               <label class="form-check-label">
@@ -41,12 +39,12 @@
                        v-model="registrationData.gender"
                        v-validate="'required'"
                        value="m"
-                       data-vv-as="Gender">Male
+                       :data-vv-as="$t('gender')">{{ $t('male') }}
               </label>
             </div>
             <div class="form-check-inline">
               <label class="form-check-label">
-                <input type="radio" class="form-check-input" name="gender" v-model="registrationData.gender" value="f">Female
+                <input type="radio" class="form-check-input" name="gender" v-model="registrationData.gender" value="f">{{ $t('female') }}
               </label>
             </div>
           </div>
@@ -57,30 +55,29 @@
     <div class="row">
       <div class="col-md-12">
         <div class="form-group" :class="{'has-error' : (errors.first('email') || !emailIsFree)}">
-          <label>E-mail Address</label>
+          <label>{{ $t('email_address') }}</label>
           <input name="email"
                  type="email"
-                 placeholder="E-mail Address"
                  v-model="registrationData.email"
                  class="form-control"
                  v-validate="'required|email|max:180'"
-                 data-vv-as="Email"
+                 :data-vv-as="$t('email_address')"
                  @change="checkEmail()"/>
           <small class="error">{{ errors.first('email') }}</small>
-          <small class="error" v-if="!errors.first('email') && !emailIsFree">Email address is already used.</small>
+          <small class="error" v-if="!errors.first('email') && !emailIsFree">{{ $t('email_already_user') }}</small>
         </div>
       </div>
     </div>
     <div class="row" v-if="availableRegistrationFields.includes('phone')">
       <div class="col-md-12">
         <div class="form-group" :class="{'has-error' : errors.first('phone')}">
-          <label>Phone Number</label>
+          <label>{{ $t('phone_number') }}</label>
           <input name="phone"
                  type="text"
-                 placeholder="Phone Number"
                  v-model="registrationData.phone"
                  class="form-control"
-                 v-validate="'required'"/>
+                 v-validate="'required'"
+                :data-vv-as="$t('phone_number')"/>
           <small class="error">{{ errors.first('phone') }}</small>
         </div>
       </div>
@@ -88,13 +85,12 @@
     <div class="row">
       <div class=" col-md-6">
         <div class="form-group" :class="{'has-error' : errors.first('plainPassword')}">
-          <label>Password</label>
+          <label>{{ $t('password') }}</label>
           <input name="plainPassword"
                  v-validate="'required|min:8'"
-                 data-vv-as="Password"
+                 :data-vv-as="$t('password')"
                  type="password"
                  ref="password"
-                 placeholder="Password"
                  v-model="registrationData.password.first"
                  class="form-control"/>
           <small class="error">{{ errors.first('plainPassword') }}</small>
@@ -103,12 +99,11 @@
       <div class=" col-md-6">
         <div class="form-group"
              :class="{'has-error' : errors.first('plainPasswordSecond')}">
-          <label>Confirm Password</label>
+          <label>{{ $t('password_confirm') }}</label>
           <input name="plainPasswordSecond"
                  v-validate="'required|confirmed:password'"
-                 data-vv-as="Confirm password"
+                 :data-vv-as="$t('password_confirm')"
                  type="password"
-                 placeholder="Confirm Password"
                  v-model="registrationData.password.second"
                  class="form-control"/>
           <small class="error">{{ errors.first('plainPasswordSecond') }}</small>
@@ -122,7 +117,7 @@
     </div>
     <div class="row">
       <div class=" col-md-6">
-        <button type="submit" class="btn btn-success">Sign Up</button>
+        <button type="submit" class="btn btn-success">{{ $t('button_g.sign_up') }}</button>
       </div>
     </div>
   </form>
@@ -182,7 +177,7 @@ export default class SignUpForm extends Vue {
   }
 
   handleRegistrationErrors (data: object) {
-    console.log(data)// todo::add handle logic
+    // todo::add handle logic
   }
 }
 </script>

@@ -1,7 +1,7 @@
 <template>
     <div class="tap-sorting-item" @click="changeStatus">
-      <div class="item-phrase">{{ itemOptions.displayOption ? itemOptions.item[itemOptions.displayOption] : 'title' }}</div>
-      <div class="item-rank">{{ itemOptions.type === typeOrdered ? itemOptions.orderNumber : ' ' }}</div>
+      <div class="tap-sorting-item__phrase">{{ itemOptions.displayOption ? itemOptions.item[itemOptions.displayOption] : 'title' }}</div>
+      <div class="tap-sorting-item__rank">{{ itemOptions.type === typeOrdered ? itemOptions.orderNumber : ' ' }}</div>
     </div>
 </template>
 

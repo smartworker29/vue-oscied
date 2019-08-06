@@ -13,5 +13,7 @@ declare module 'vue/types/vue' {
 
   export interface Vue {
     $auth: VueAuth
+
+    localizeValidator(locale: string) : void
   }
 }

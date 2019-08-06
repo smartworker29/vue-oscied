@@ -1,7 +1,7 @@
 <template>
   <div class="row sign-in-page">
     <div class="offset-md-2 col-md-8">
-      <h2>Sign In</h2>
+      <h2>{{ $t('sign_in') }}</h2>
       <SignInForm/>
     </div>
   </div>

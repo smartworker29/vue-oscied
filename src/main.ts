@@ -5,6 +5,8 @@ import axios from 'axios'
 import router from './router'
 import store from './store'
 import './icons'
+import i18n from './i18n'
+import './mixin'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import BootstrapVue from 'bootstrap-vue'
@@ -35,12 +37,12 @@ axios.interceptors.request.use(function (config) {
   if (config.headers.common.Accept && config.headers.common.Accept.indexOf('*/*') !== -1) {
     config.headers.accept = 'application/json'
   }
-
   return config
 })
 
 new Vue({
   router,
   store,
+  i18n,
   render: h => h(App)
 }).$mount('#app')

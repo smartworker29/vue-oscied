@@ -3,14 +3,13 @@
     <div class="row">
       <div class="col-md-12">
         <div class="form-group" :class="{'has-error' : errors.first('email')}">
-          <label>E-mail Address</label>
+          <label>{{ $t('email_address') }}</label>
           <input name="email"
                  type="email"
-                 placeholder="E-mail Address"
                  v-model="signInData.email"
                  class="form-control"
                  v-validate="'required|email|max:180'"
-                 data-vv-as="Email"/>
+                 :data-vv-as="$t('email_address')"/>
           <small class="error">{{ errors.first('email') }}</small>
         </div>
       </div>
@@ -18,12 +17,11 @@
     <div class="row">
       <div class=" col-md-12">
         <div class="form-group" :class="{'has-error' : errors.first('password')}">
-          <label>Password</label>
+          <label>{{ $t('password') }}</label>
           <input name="password"
                  v-validate="'required|min:8'"
-                 data-vv-as="Password"
+                 :data-vv-as="$t('password')"
                  type="password"
-                 placeholder="Password"
                  v-model="signInData.password"
                  class="form-control"/>
           <small class="error">{{ errors.first('password') }}</small>
@@ -37,7 +35,7 @@
     </div>
     <div class="row">
       <div class=" col-md-6">
-        <button type="submit" class="btn btn-success">Sign In</button>
+        <button type="submit" class="btn btn-success">{{ $t('button_g.sign_in') }}</button>
       </div>
     </div>
   </form>
@@ -81,9 +79,3 @@ export default class SignInForm extends Vue {
   }
 }
 </script>
-
-<style lang="less">
-  .error {
-    color: #ce4844;
-  }
-</style>

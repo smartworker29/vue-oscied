@@ -27,12 +27,12 @@
       </div>
     </div>
     <div class="col-md-6">
-      <p><fa icon="info-circle"/> Tap these phrases in order to rank them from top to bottom</p>
+      <p><fa icon="info-circle"/> {{ $t('sorting_g.tap.tip') }}</p>
     </div>
     <button class="btn btn-primary"
             @click="updateOrder"
             :class="{ disabled : isConfirmDisabled }"
-            :disabled="isConfirmDisabled ">Confirm order</button>
+            :disabled="isConfirmDisabled ">{{ $t('button_g.confirm_order') }}</button>
   </div>
 </template>
 

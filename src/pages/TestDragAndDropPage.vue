@@ -2,8 +2,8 @@
   <div>
     <div class="row">
       <div class="col-md-8">
-        <h1>World View</h1>
-        <p>Reorder the phrases below with what you consider the nest at the top <button>More ></button></p>
+        <h1>{{ $t('world_view') }}</h1>
+        <p>{{ $t('sorting_g.description') }} <button>{{ $t('more')}} ></button></p>
       </div>
       <div class="col-md-4">
         <SurveyProgress/>

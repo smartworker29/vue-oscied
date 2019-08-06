@@ -20,9 +20,9 @@
       </div>
     </div>
     <div class="col-md-6">
-      <p>Drag and drop these phrases and rank them in order from top to bottom</p>
+      <p><fa icon="info-circle"/> {{ $t('sorting_g.drag.tip') }}</p>
     </div>
-    <button class="btn btn-primary" @click="updateOrder">Confirm order</button>
+    <button class="btn btn-primary" @click="updateOrder">{{ $t('button_g.confirm_order') }}</button>
   </div>
 </template>
 

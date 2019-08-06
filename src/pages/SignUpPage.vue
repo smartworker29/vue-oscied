@@ -1,7 +1,7 @@
 <template>
   <div class="row sign-up-page">
     <div class="offset-md-2 col-md-8">
-      <h2>Sign Up</h2>
+      <h2>{{ $t('sign_up') }}</h2>
       <SignUpForm/>
     </div>
   </div>
@@ -19,6 +19,3 @@ import SignUpForm from '@/components/signUp/SignUpForm.vue'
 export default class SignUpPage extends Vue {
 }
 </script>
-
-<style lang="less">
-</style>

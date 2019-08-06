@@ -1,15 +1,15 @@
 <template>
   <b-nav :class="'navbar-expand-lg navbar-light bg-light'">
-    <b-nav-item :to="{ name: 'home' }" >Home</b-nav-item>
-    <b-nav-item :to="{ name: 'test_sorting' }" >Sorting</b-nav-item>
-    <b-nav-item :to="{ name: 'test_drag' }" >Drag</b-nav-item>
-    <b-nav-item :to="{ name: 'test_tap' }" >Tap</b-nav-item>
+    <b-nav-item :to="{ name: 'home' }" >{{ $t('home') }}</b-nav-item>
+    <b-nav-item :to="{ name: 'test_sorting' }" >{{ $t('sorting') }}</b-nav-item>
+    <b-nav-item :to="{ name: 'test_drag' }" >{{ $t('drag') }}</b-nav-item>
+    <b-nav-item :to="{ name: 'test_tap' }" >{{ $t('tap') }}</b-nav-item>
     <template v-if="!isAuthenticated">
-      <b-nav-item :to="{ name: 'signUp' }" >Sign Up</b-nav-item>
-      <b-nav-item :to="{ name: 'signIn' }" >Sign In</b-nav-item>
+      <b-nav-item :to="{ name: 'signUp' }" >{{ $t('sign_up') }}</b-nav-item>
+      <b-nav-item :to="{ name: 'signIn' }" >{{ $t('sign_in') }}</b-nav-item>
     </template>
     <template v-else>
-      <b-nav-item @click.prevent="logout()">Sign Out</b-nav-item>
+      <b-nav-item @click.prevent="logout()">{{ $t('sign_out') }}</b-nav-item>
     </template>
   </b-nav>
 </template>
