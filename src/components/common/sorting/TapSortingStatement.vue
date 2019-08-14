@@ -57,6 +57,7 @@ export default class TapSortingStatement extends Vue {
 
   created () {
     this.totalStatementCount = this.options.list.length
+    this.resultList = []
   }
 
   get isConfirmDisabled () : boolean {

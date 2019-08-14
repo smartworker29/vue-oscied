@@ -37,5 +37,8 @@
   "male": "Male",
   "female": "Female",
   "phone_number": "Phone number",
-  "email_already_user": "Email address is already used"
+  "email_already_user": "Email address is already used",
+  "forgot_password": "Forgot your password ?",
+  "no_account": "No account? Sign up",
+  "already_registered": "Already registered? Sign in"
 }

@@ -3,8 +3,8 @@
     <div class="row">
       <div class="col-md-12">
         <div class="form-group" :class="{'has-error' : errors.first('email')}">
-          <label>{{ $t('email_address') }}</label>
           <input name="email"
+                 :placeholder="[[ $t('email_address') ]]"
                  type="email"
                  v-model="signInData.email"
                  class="form-control"
@@ -17,8 +17,8 @@
     <div class="row">
       <div class=" col-md-12">
         <div class="form-group" :class="{'has-error' : errors.first('password')}">
-          <label>{{ $t('password') }}</label>
           <input name="password"
+                 :placeholder="[[ $t('password') ]]"
                  v-validate="'required|min:8'"
                  :data-vv-as="$t('password')"
                  type="password"
@@ -34,8 +34,10 @@
       </div>
     </div>
     <div class="row">
-      <div class=" col-md-6">
-        <button type="submit" class="btn btn-success">{{ $t('button_g.sign_in') }}</button>
+      <div class=" col-md-12 text-center">
+        <button type="button" class="btn btn-link" @click="changeForm('signUp')">{{ $t('forgot_password') }}</button>
+        <button type="submit" class="btn btn-success col-12">{{ $t('button_g.sign_in') }}</button>
+        <button type="button" class="btn btn-link" @click="changeForm('signUp')">{{ $t('no_account') }}</button>
       </div>
     </div>
   </form>
@@ -67,7 +69,7 @@ export default class SignInForm extends Vue {
       this.$validator.reset()
       this.error = ''
 
-      this.$router.push({ name: 'home' })
+      this.$emit('authorizedComplete')
     } catch (error) {
       const response: AxiosResponse = error.response
       if (response) {
@@ -76,6 +78,10 @@ export default class SignInForm extends Vue {
         throw error
       }
     }
+  }
+
+  changeForm (formName: string) {
+    this.$emit('changeForm', formName)
   }
 }
 </script>

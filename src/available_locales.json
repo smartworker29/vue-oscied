@@ -1,4 +1,10 @@
 [
-  "en",
-  "de"
+  {
+    "locale": "en_GB",
+    "localeName": "English (British)"
+  },
+  {
+    "locale": "de",
+    "localeName": "Deutsch"
+  }
 ]

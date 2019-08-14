@@ -4,6 +4,7 @@ import 'vue-meta/types/vue'
 declare module 'vue/types/vue' {
   interface VueAuth {
     login(credentials: object): Promise<void>
+    setToken(responseData: object): Promise<void>
     authenticate(provider: string): Promise<void>
     logout(): Promise<void>
     isAuthenticated(): boolean

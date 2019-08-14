@@ -4,3 +4,9 @@
     border: 1px solid #ce4844;
   }
 }
+
+.sign-form {
+  border: solid $border-color $border-width;
+  border-radius: $border-radius;
+  padding: 20px;
+}

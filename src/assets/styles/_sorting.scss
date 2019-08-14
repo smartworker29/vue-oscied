@@ -27,8 +27,10 @@
       }
     }
 
-    .handle {
+    &.handle {
       cursor: pointer;
+    }
+    .arrow {
       float: right;
       padding: 1px 11px;
       height: 30px;

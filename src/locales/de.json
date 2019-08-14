@@ -1,0 +1,44 @@
+{
+  "sign_in": "Deutch",
+  "sign_up" : "Deutch",
+  "sign_out" : "Deutch",
+  "home" : "Deutch",
+  "tap" : "Deutch",
+  "drag" : "Deutch",
+  "sorting": "Deutch",
+  "sorting_g": {
+    "description": "Deutch",
+    "drag": {
+      "tip": "Deutch"
+    },
+    "tap": {
+      "tip": "Deutch"
+    }
+  },
+  "progress": "Deutch",
+  "more": "Deutch",
+  "world_view" : "Deutch",
+  "rights_reserved": "Deutch",
+  "private_policy": "Deutch",
+  "data_policy": "Deutch",
+  "button_g": {
+    "confirm_order": "Deutch",
+    "sign_in": "Deutch",
+    "sign_up": "Deutch"
+  },
+  "email_address": "Deutch",
+  "remember_me": "Deutch",
+  "password": "Deutch",
+  "password_confirm": "Deutch",
+  "forgotten_pwd": "Deutch",
+  "first_name": "Deutch",
+  "last_name": "Deutch",
+  "gender": "Deutch",
+  "male": "Deutch",
+  "female": "Deutch",
+  "phone_number": "Deutch",
+  "email_already_user": "Deutch",
+  "forgot_password": "Deutch",
+  "no_account": "Deutch",
+  "already_registed": "Deutchn"
+}

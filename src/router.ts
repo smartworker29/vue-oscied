@@ -1,22 +1,24 @@
 import Vue from 'vue'
-import Router from 'vue-router'
+import Router, {Route} from 'vue-router'
 import HomePage from '@/pages/HomePage.vue'
-import SignUpPage from '@/pages/SignUpPage.vue'
-import SignInPage from '@/pages/SignInPage.vue'
 import TestDragAndDropPage from '@/pages/TestDragAndDropPage.vue'
 import TestTapSortingPage from '@/pages/TestTapSortingPage.vue'
-import SortingPage from '@/pages/SortingPage.vue'
+import SurveyPage from '@/pages/SurveyPage.vue'
+import store from '@/store'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/sorting',
-      name: 'test_sorting',
-      component: SortingPage
+      path: '/survey',
+      name: 'survey',
+      component: SurveyPage,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/drag',
@@ -32,24 +34,20 @@ export default new Router({
       path: '/',
       name: 'home',
       component: HomePage
-    },
-    {
-      path: '/sign-up',
-      name: 'signUp',
-      component: SignUpPage
-    },
-    {
-      path: '/sign-in',
-      name: 'signIn',
-      component: SignInPage
-    },
-    {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ '@/pages/AboutPage.vue')
     }
   ]
 })
+
+router.beforeEach((to: Route, from: Route, next: any) => {
+  if(to.matched.some(record => record.meta.requiresAuth)) {
+    if (store.getters['user/isAuthenticated']) {
+      next()
+      return
+    }
+    next({ name: 'home' })
+  } else {
+    next()
+  }
+})
+
+export default router

@@ -10,14 +10,20 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import { Getter } from 'vuex-class'
 
 @Component({})
-export default class SurveyProgress extends Vue {// todo::call attributes from store
-  totalProgressItemsCount: number = 10
-  processedItemsCount: number = 5
+export default class SurveyProgress extends Vue {
+  @Getter('survey/totalSurveySection')
+  totalProgressItemsCount?: number
+
+  @Getter('survey/countCompletedSurveySection')
+  processedItemsCount?: number
 
   get processedPercent () : number {
-    return this.processedItemsCount / this.totalProgressItemsCount * 100
+    return (this.processedItemsCount && this.totalProgressItemsCount)
+      ? this.processedItemsCount / this.totalProgressItemsCount * 100
+      : 0
   }
 }
 </script>

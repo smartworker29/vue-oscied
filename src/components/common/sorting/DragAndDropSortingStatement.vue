@@ -13,8 +13,8 @@
                    ghostClass="ghost-placeholder"
                    chosenClass="chosen-item"
                    dragClass="dragged-item">
-          <div class="dd-sorting-item" v-for="(item, index) in options.list" :key="index">
-            <span class="item-phrase">{{ item[options.displayOption] }}</span> <span class="handle"><fa icon="arrows-alt-v"/></span>
+          <div class="dd-sorting-item handle" v-for="(item, index) in options.list" :key="index">
+            <span class="item-phrase">{{ item[options.displayOption] }}</span> <span class="arrow"><fa icon="arrows-alt-v"/></span>
           </div>
         </draggable>
       </div>

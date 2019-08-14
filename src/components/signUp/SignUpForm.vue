@@ -1,10 +1,10 @@
 <template>
   <form @submit.prevent="submit" novalidate>
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-12">
         <div class="form-group" :class="{'has-error' : errors.first('firstName')}">
-          <label>{{ $t('first_name') }}</label>
           <input name="firstName"
+                 :placeholder="[[ $t('first_name') ]]"
                  type="text"
                  v-model="registrationData.firstName"
                  class="form-control"
@@ -13,10 +13,10 @@
           <small class="error">{{ errors.first('firstName') }}</small>
         </div>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-12">
         <div class="form-group" :class="{'has-error' : errors.first('lastName')}">
-          <label>{{ $t('last_name') }}</label>
           <input name="lastName"
+                 :placeholder="[[ $t('last_name') ]]"
                  type="text"
                  v-model="registrationData.lastName"
                  class="form-control"
@@ -28,35 +28,9 @@
     </div>
     <div class="row">
       <div class="col-md-12">
-        <div class="form-group" :class="{'has-error' : errors.first('lastName')}">
-          <label>{{ $t('gender') }}</label>
-          <div>
-            <div class="form-check-inline">
-              <label class="form-check-label">
-                <input type="radio"
-                       class="form-check-input"
-                       name="gender"
-                       v-model="registrationData.gender"
-                       v-validate="'required'"
-                       value="m"
-                       :data-vv-as="$t('gender')">{{ $t('male') }}
-              </label>
-            </div>
-            <div class="form-check-inline">
-              <label class="form-check-label">
-                <input type="radio" class="form-check-input" name="gender" v-model="registrationData.gender" value="f">{{ $t('female') }}
-              </label>
-            </div>
-          </div>
-          <small class="error">{{ errors.first('gender') }}</small>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12">
         <div class="form-group" :class="{'has-error' : (errors.first('email') || !emailIsFree)}">
-          <label>{{ $t('email_address') }}</label>
           <input name="email"
+                 :placeholder="[[ $t('email_address') ]]"
                  type="email"
                  v-model="registrationData.email"
                  class="form-control"
@@ -68,11 +42,26 @@
         </div>
       </div>
     </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group" :class="{'has-error' : errors.first('gender')}">
+          <select name="gender"
+                  class="form-control"
+                  v-model="registrationData.gender"
+                  v-validate="'required'">
+            <option value="" disabled selected hidden>{{ $t('gender') }}</option>
+            <option value="m">{{ $t('male') }}</option>
+            <option value="f">{{ $t('female') }}</option>
+          </select>
+          <small class="error">{{ errors.first('gender') }}</small>
+        </div>
+      </div>
+    </div>
     <div class="row" v-if="availableRegistrationFields.includes('phone')">
       <div class="col-md-12">
         <div class="form-group" :class="{'has-error' : errors.first('phone')}">
-          <label>{{ $t('phone_number') }}</label>
           <input name="phone"
+                 :placeholder="[[ $t('phone_number') ]]"
                  type="text"
                  v-model="registrationData.phone"
                  class="form-control"
@@ -82,42 +71,13 @@
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class=" col-md-6">
-        <div class="form-group" :class="{'has-error' : errors.first('plainPassword')}">
-          <label>{{ $t('password') }}</label>
-          <input name="plainPassword"
-                 v-validate="'required|min:8'"
-                 :data-vv-as="$t('password')"
-                 type="password"
-                 ref="password"
-                 v-model="registrationData.password.first"
-                 class="form-control"/>
-          <small class="error">{{ errors.first('plainPassword') }}</small>
-        </div>
-      </div>
-      <div class=" col-md-6">
-        <div class="form-group"
-             :class="{'has-error' : errors.first('plainPasswordSecond')}">
-          <label>{{ $t('password_confirm') }}</label>
-          <input name="plainPasswordSecond"
-                 v-validate="'required|confirmed:password'"
-                 :data-vv-as="$t('password_confirm')"
-                 type="password"
-                 v-model="registrationData.password.second"
-                 class="form-control"/>
-          <small class="error">{{ errors.first('plainPasswordSecond') }}</small>
-        </div>
-      </div>
-    </div>
     <div class="row" v-if="error">
-      <div class=" col-md-6">
         <p>{{ error }}</p>
-      </div>
     </div>
     <div class="row">
-      <div class=" col-md-6">
-        <button type="submit" class="btn btn-success">{{ $t('button_g.sign_up') }}</button>
+      <div class="col-md-12 text-center">
+        <button type="submit" class="btn btn-success col-12">{{ $t('button_g.sign_up') }}</button>
+        <button type="button" class="btn btn-link" @click="changeForm('signIn')">{{ $t('already_registered') }}</button>
       </div>
     </div>
   </form>
@@ -127,6 +87,7 @@
 import { Vue, Component } from 'vue-property-decorator'
 import UserService from '@/services/UserService'
 import { RegistrationData } from '@/interfaces/UserInterfaces'
+import LocaleHelper from '@/utils/LocaleHelper'
 
 @Component({})
 export default class SignUpForm extends Vue {
@@ -135,11 +96,8 @@ export default class SignUpForm extends Vue {
     firstName: '',
     lastName: '',
     gender: '',
-    password: {
-      first: '',
-      second: ''
-    },
-    phone: ''
+    phone: '',
+    locale: ''
   }
 
   availableRegistrationFields: string[] = []
@@ -164,9 +122,12 @@ export default class SignUpForm extends Vue {
     }
 
     try {
-      await UserService.registration(this.registrationData)
+      this.registrationData.locale = LocaleHelper.getUserLocale()
+      const registrationData = await UserService.registration(this.registrationData)
+      await this.$auth.setToken(registrationData)
+      await UserService.getUser()
 
-      this.$router.push({ name: 'signIn' })
+      this.$emit('authorizedComplete')
     } catch (error) {
       if ('response' in error && error.response.status === 400) {
         this.handleRegistrationErrors(error.response.data)
@@ -178,6 +139,10 @@ export default class SignUpForm extends Vue {
 
   handleRegistrationErrors (data: object) {
     // todo::add handle logic
+  }
+
+  changeForm (formName: string) {
+    this.$emit('changeForm', formName)
   }
 }
 </script>
