@@ -19,7 +19,7 @@
         <div class="form-group" :class="{'has-error' : errors.first('password')}">
           <input name="password"
                  :placeholder="[[ $t('password') ]]"
-                 v-validate="'required|min:8'"
+                 v-validate="'required|min:3'"
                  :data-vv-as="$t('password')"
                  type="password"
                  v-model="signInData.password"
