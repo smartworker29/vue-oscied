@@ -48,6 +48,7 @@ import { Vue, Component } from 'vue-property-decorator'
 import { SignInData } from '@/interfaces/UserInterfaces'
 import { AxiosResponse } from 'axios'
 import UserService from '@/services/UserService'
+import LocaleHelper from '@/utils/LocaleHelper'
 
 @Component({})
 export default class SignInForm extends Vue {
@@ -64,7 +65,14 @@ export default class SignInForm extends Vue {
 
     try {
       await this.$auth.login(this.signInData)
-      await UserService.getUser()
+      const userData = await UserService.getUser()
+      LocaleHelper.setUserLocale(userData.locale)
+
+      const userLocale = LocaleHelper.getUserLocale()
+      if (userLocale) {
+        this.$i18n.locale = userLocale
+        this.localizeValidator(LocaleHelper.getLocaleForVeeValidate(userLocale))
+      }
 
       this.$validator.reset()
       this.error = ''

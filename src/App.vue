@@ -29,6 +29,10 @@ export default class App extends Vue {
       this.$i18n.locale = userLocale
       this.localizeValidator(LocaleHelper.getLocaleForVeeValidate(userLocale))
     }
+
+    if (this.$auth.isAuthenticated()) {
+      this.$router.push({ name: 'survey' })
+    }
   }
 }
 </script>

@@ -1,6 +1,7 @@
 import { Module } from 'vuex'
 import { RootState } from '@/store'
 import { Survey, Section, Statement } from '@/interfaces/SurveyInterfaces'
+import LocaleHelper from '@/utils/LocaleHelper'
 
 export interface SurveyState {
   currentSurvey: Survey | null,
@@ -20,14 +21,23 @@ const survey: Module<SurveyState, RootState> = {
   getters: {
     currentSurvey (state: SurveyState): Survey | null {
       let sections: Section[] = []
+      let statement = 'Statement'
+      let section = 'Section'
+      let instructions = 'Instructions of section'
+
+      if ('de' === LocaleHelper.getUserLocale()) {
+        statement = 'Aussage'
+        section = 'Sektion'
+        instructions = 'Anweisungen des Abschnitts'
+      }
 
       for (let iter = 0; iter < state.totalSections; iter++) {
         sections[iter] = {
-          title: `Section ${iter + 1}`,
-          instructions: `Instructions of section ${iter + 1}`,
+          title: `${section} ${iter + 1}`,
+          instructions: `${instructions} ${iter + 1}`,
           statements: (new Array(20)).fill(0).map((item: any, index: number) : Statement => {
             index++
-            return { id: index, title: `Section ${iter + 1}, Statement ${index}` }
+            return { id: index, title: `${section} ${iter + 1}, ${statement} ${index}` }
           })
         }
       }

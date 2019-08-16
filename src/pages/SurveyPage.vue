@@ -71,6 +71,7 @@ export default class SurveyPage extends Vue {
     } else {
       console.log(this.updatedOrderList) // todo::handle result
       this.displayCompleteMessage = true
+      alert('You complete survey')
     }
     store.commit('survey/addOneCompletedSection')
   }
