@@ -3,6 +3,7 @@
     background-color: $phrase-bg-color;
     border: $border-width solid $phrase-border-color;
     border-radius: $border-radius;
+    color: $form-text-color;
     padding: 13px 15px;
     margin: 10px 0px;
 
@@ -49,6 +50,7 @@
 .tap-sorting-list {
   .tap-sorting-item {
     margin: 10px 0px;
+    color: $form-text-color;
 
     &__phrase, &__rank {
       border-radius: $border-radius;

@@ -1,4 +1,4 @@
-.has-error {
+.error, .has-error {
   color: #ce4844;
   input {
     border: 1px solid #ce4844;
@@ -6,7 +6,9 @@
 }
 
 .sign-form {
+  background-color: $form-background-color;
   border: solid $border-color $border-width;
   border-radius: $border-radius;
+  color: $form-text-color;
   padding: 20px;
 }

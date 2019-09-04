@@ -29,7 +29,7 @@
     <div class="col-md-6">
       <p><fa icon="info-circle"/> {{ $t('sorting_g.tap.tip') }}</p>
     </div>
-    <button class="btn btn-primary"
+    <button class="btn btn-info"
             @click="updateOrder"
             :class="{ disabled : isConfirmDisabled }"
             :disabled="isConfirmDisabled ">{{ $t('button_g.confirm_order') }}</button>
@@ -80,6 +80,7 @@ export default class TapSortingStatement extends Vue {
     }
 
     this.$emit('updateOrder', this.resultList)
+    this.resultList = []
   }
 }
 </script>

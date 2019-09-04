@@ -24,7 +24,15 @@
   "button_g": {
     "confirm_order": "Confirm order",
     "sign_in": "Login",
-    "sign_up": "Log up"
+    "sign_up": "Log up",
+    "change": "Change",
+    "save": "Save",
+    "update_profile": "Update profile",
+    "change_password": "Change password",
+    "cancel": "Cancel",
+    "change_photo": "Change photo",
+    "delete_photo": "Delete photo",
+    "add_photo": "Add photo"
   },
   "email_address": "Email address",
   "remember_me": "Remember me",
@@ -40,5 +48,16 @@
   "email_already_user": "Email address is already used",
   "forgot_password": "Forgot your password ?",
   "no_account": "No account? Sign up",
-  "already_registered": "Already registered? Sign in"
+  "already_registered": "Already registered? Sign in",
+  "current_password": "Current password",
+  "new_password": "New password",
+  "repeat_password": "Repeat password",
+  "account": "Account",
+  "settings": "Settings",
+  "logout": "Logout",
+  "language": "Language",
+  "photo": "Photo",
+  "your_profile": "Your profile",
+  "update_password": "Update password",
+  "profile_picture": "Profile picture"
 }

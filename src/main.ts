@@ -15,6 +15,8 @@ import VeeValidate from 'vee-validate'
 import VueAuthenticate from 'vue-authenticate'
 import Vuex from 'vuex'
 
+import LocaleHelper from '@/utils/LocaleHelper'
+
 Vue.use(BootstrapVue)
 Vue.use(VeeValidate)
 Vue.use(Vuex)
@@ -37,6 +39,12 @@ axios.interceptors.request.use(function (config) {
   if (config.headers.common.Accept && config.headers.common.Accept.indexOf('*/*') !== -1) {
     config.headers.accept = 'application/json'
   }
+
+  const userLocale = LocaleHelper.getUserLocale()
+  if (userLocale) {
+    config.headers['Accept-Language'] = userLocale
+  }
+
   return config
 })
 

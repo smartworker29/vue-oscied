@@ -22,7 +22,7 @@
     <div class="col-md-6">
       <p><fa icon="info-circle"/> {{ $t('sorting_g.drag.tip') }}</p>
     </div>
-    <button class="btn btn-primary" @click="updateOrder">{{ $t('button_g.confirm_order') }}</button>
+    <button class="btn btn-info" @click="updateOrder">{{ $t('button_g.confirm_order') }}</button>
   </div>
 </template>
 

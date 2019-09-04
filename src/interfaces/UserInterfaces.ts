@@ -1,4 +1,14 @@
 export interface User {
+  id: number
+  firstName: string
+  lastName: string
+  email: string
+  gender: string
+  phone?: string
+  locale?: string
+}
+
+export interface UpdateUserData {
   firstName: string
   lastName: string
   email: string
@@ -24,4 +34,9 @@ export interface SignInData {
 export interface LocaleData {
   locale: string
   localeName: string
+}
+
+export interface UpdatePasswordData {
+  oldPassword: string
+  newPassword: string
 }

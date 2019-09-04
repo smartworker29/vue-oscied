@@ -19,19 +19,25 @@ import { User } from '@/interfaces/UserInterfaces'
 export default class App extends Vue {
   async created () {
     if (this.$auth.isAuthenticated()) {
-      this.$store.commit('user/setIsAuthenticated', true)
-      const userData: User = await UserService.getUser()
-      LocaleHelper.setUserLocale(userData.locale)
+      try {
+        const userData: User = await UserService.getUser()
+        LocaleHelper.setUserLocale(userData.locale)
+      } catch (error) {
+        if ('response' in error && error.response.status === 401) {
+          this.$auth.logout().then(async () : Promise<void> => {
+            await UserService.logout()
+            this.$router.push({ name: 'home' })
+          })
+        } else {
+          throw error
+        }
+      }
     }
 
     const userLocale = LocaleHelper.getUserLocale()
     if (userLocale) {
       this.$i18n.locale = userLocale
       this.localizeValidator(LocaleHelper.getLocaleForVeeValidate(userLocale))
-    }
-
-    if (this.$auth.isAuthenticated()) {
-      this.$router.push({ name: 'survey' })
     }
   }
 }

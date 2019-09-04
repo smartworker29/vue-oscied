@@ -25,6 +25,12 @@ export abstract class BaseApiService {
               ? response.data[responseKey] : response.data
           })
 
+      case 'put':
+          return this.api.put(url, requestData, config)
+              .then((response: AxiosResponse) => {
+                  return responseKey && response.data.hasOwnProperty(responseKey)
+                      ? response.data[responseKey] : response.data
+              })
       default:
         throw new Error('An undefined method called.')
     }

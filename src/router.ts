@@ -1,10 +1,11 @@
 import Vue from 'vue'
-import Router, {Route} from 'vue-router'
+import Router, { Route } from 'vue-router'
 import HomePage from '@/pages/HomePage.vue'
 import TestDragAndDropPage from '@/pages/TestDragAndDropPage.vue'
 import TestTapSortingPage from '@/pages/TestTapSortingPage.vue'
 import SurveyPage from '@/pages/SurveyPage.vue'
 import store from '@/store'
+import AccountPage from '@/pages/AccountPage.vue'
 
 Vue.use(Router)
 
@@ -34,6 +35,14 @@ const router = new Router({
       path: '/',
       name: 'home',
       component: HomePage
+    },
+    {
+      path: '/account',
+      name: 'account',
+      component: AccountPage,
+      meta: {
+        requiresAuth: true
+      }
     }
   ]
 })

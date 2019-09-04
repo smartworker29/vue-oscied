@@ -1,6 +1,6 @@
 import store from '@/store'
 import { BaseApiService } from '@/services/BaseApiService'
-import { User, RegistrationData, SignInData } from '@/interfaces/UserInterfaces'
+import {User, RegistrationData, SignInData, UpdatePasswordData, UpdateUserData} from '@/interfaces/UserInterfaces'
 
 class UserService extends BaseApiService {
   checkEmailAvailability (email: string) : boolean {
@@ -12,8 +12,8 @@ class UserService extends BaseApiService {
     return this.callMethod('get', '/public/reg-fields', {}, 'fields')
   }
 
-  async getUser () : Promise<User> {
-    if (store.getters['user/currentUser']) {
+  async getUser (hard: boolean = false) : Promise<User> {
+    if (store.getters['user/currentUser'] && hard !== true) {
       return store.getters['user/currentUser']
     }
 
@@ -22,10 +22,6 @@ class UserService extends BaseApiService {
     store.commit('user/setIsAuthenticated', true)
 
     return response.data
-  }
-
-  test () : string {
-    return this.callMethod('get', '/test', {}, 'message')
   }
 
   logout () : void {
@@ -38,6 +34,18 @@ class UserService extends BaseApiService {
 
   signIn (signInData: SignInData) : string {
     return this.callMethod('post', '/login_check', signInData, 'token')
+  }
+
+  update (userId: number, userData: UpdateUserData) : User {
+      return this.callMethod('put', `/user/${ userId }`, { updateUserDataForm: userData })
+  }
+
+  changePassword (userId: number, passwordData: UpdatePasswordData) {
+    return this.callMethod(
+      'post',
+      `/user/${ userId }/change_password`,
+      { updatePasswordForm: passwordData }
+    )
   }
 }
 

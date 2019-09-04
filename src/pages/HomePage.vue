@@ -5,11 +5,10 @@
         <h1>Welcome to ...</h1>
         <p>Wellcome to our surwey</p>
         <p>Please register or sign inif you are a existin user</p>
-        <p>{{ testText }}</p>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor esse expedita molestiae neque quod reprehenderit saepe sequi voluptatibus! Accusantium beatae corporis enim omnis provident quas quia quibusdam quod sunt tempora!</p>
       </div>
 
-      <div class="col-4">
+      <div class="col-4" v-if="!isAuthenticated">
         <div class="language">
           <LangSwitcher/>
         </div>
@@ -30,12 +29,9 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { Getter } from 'vuex-class'
-import UserService from '@/services/UserService'
 import SignInForm from '@/components/signIn/SignInForm.vue'
 import SignUpForm from '@/components/signUp/SignUpForm.vue'
 import LangSwitcher from '@/components/common/layout/LangSwitcher.vue'
-import store from '@/store'
-import { Section, Statement } from '@/interfaces/SurveyInterfaces'
 
 @Component({
   components: {
@@ -47,14 +43,7 @@ import { Section, Statement } from '@/interfaces/SurveyInterfaces'
 export default class Home extends Vue {
   @Getter('user/isAuthenticated')
   isAuthenticated!: boolean
-  testText: string = 'Static test text'
   displayedForm: string = 'signIn'
-
-  async created () {
-    if (this.isAuthenticated) {
-      this.testText = await UserService.test()
-    }
-  }
 
   changeForm (formName: string) {
     this.displayedForm = formName

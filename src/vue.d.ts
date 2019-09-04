@@ -1,7 +1,10 @@
 import 'vee-validate/types/vue'
 import 'vue-meta/types/vue'
 
+import { ErrorBag } from 'vee-validate'
+
 declare module 'vue/types/vue' {
+
   interface VueAuth {
     login(credentials: object): Promise<void>
     setToken(responseData: object): Promise<void>
@@ -14,6 +17,7 @@ declare module 'vue/types/vue' {
 
   export interface Vue {
     $auth: VueAuth
+    errors: ErrorBag
 
     localizeValidator(locale: string) : void
   }
