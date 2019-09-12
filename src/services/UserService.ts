@@ -4,12 +4,12 @@ import {User, RegistrationData, SignInData, UpdatePasswordData, UpdateUserData} 
 
 class UserService extends BaseApiService {
   checkEmailAvailability (email: string) : boolean {
-    return this.callMethod('get', '/public/check-availability-email', {},
+    return this.callMethod('get', '/public/check-email-availability', {},
       'available', { params: { email } })
   }
 
   getAvailableRegistrationFields () : string[] {
-    return this.callMethod('get', '/public/reg-fields', {}, 'fields')
+    return this.callMethod('get', '/public/registration-fields', {}, 'fields')
   }
 
   async getUser (hard: boolean = false) : Promise<User> {
