@@ -52,7 +52,7 @@ const survey: Module<SurveyState, RootState> = {
   },
 
   mutations: {
-    addOneCompletedSection(state: SurveyState): void {
+    addOneCompletedSection (state: SurveyState): void {
       state.countCompletedSections++
     }
   }

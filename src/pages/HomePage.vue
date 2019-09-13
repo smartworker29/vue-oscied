@@ -43,7 +43,7 @@ import LangSwitcher from '@/components/common/layout/LangSwitcher.vue'
 export default class Home extends Vue {
   @Getter('user/isAuthenticated')
   isAuthenticated!: boolean
-  displayedForm: string = 'signIn'
+  displayedForm: string = 'signUp'
 
   changeForm (formName: string) {
     this.displayedForm = formName

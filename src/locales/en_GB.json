@@ -59,5 +59,7 @@
   "photo": "Photo",
   "your_profile": "Your profile",
   "update_password": "Update password",
-  "profile_picture": "Profile picture"
+  "profile_picture": "Profile picture",
+  "password_successfully_changed": "Password have successfully been changed",
+  "profile_successfully_changed": "Changes have successfully been changed."
 }

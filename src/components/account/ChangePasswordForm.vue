@@ -47,6 +47,11 @@
             <p class="error">{{ error }}</p>
           </div>
         </div>
+        <div class="row" v-if="isPasswordChanged">
+          <div class=" col-md-12 text-center">
+            <div class="alert alert-success" role="alert">{{ $t('password_successfully_changed') }}</div>
+          </div>
+        </div>
         <div class="row">
           <div class="offset-md-6 col-md-5 text-right row">
             <button type="reset" class="btn btn-warning col-4" @click.prevent="resetChangePasswordForm()">{{ $t('button_g.cancel') }}</button>
@@ -78,6 +83,7 @@ export default class ChangePasswordForm extends Vue {
   }
 
   repeatPassword: string = ''
+  isPasswordChanged: boolean = false
 
   async changePassword () : Promise<void> {
     this.error = null
@@ -97,8 +103,11 @@ export default class ChangePasswordForm extends Vue {
       this.repeatPassword = ''
 
       await this.$auth.setToken(response)
-      // TODO: call modal about successfully updating
-      alert('Password successfully updated')
+
+      this.isPasswordChanged = true
+      setTimeout(() => {
+        this.isPasswordChanged = false
+      }, 3000)
     } catch (error) {
       if ('response' in error && error.response.status === 400) {
         this.handleChangePasswordErrors(error.response.data, this.passwordForm)
