@@ -26,7 +26,7 @@
                      :data-vv-as="$t('email_address')"
                      v-model="userDataForm.email"
                      class="form-control col-md-8"
-                     @change="isFormChanged = true"/>
+                     @change="changedEmailInput()"/>
               <small class="error">{{ errors.first('email') }}</small>
             </div>
           </div>
@@ -190,15 +190,9 @@ export default class ProfileForm extends Vue {
     }
   }
 
-  @Watch('errors.items')
-  watchEmailInput () : void {
-    if (this.errors.has('email')) {
-      this.errors.remove('firstName')
-      this.errors.remove('lastName')
-      this.errors.remove('phone')
-      this.errors.remove('locale')
-      this.errors.remove('gender')
-    }
+  async changedEmailInput () : Promise<void> {
+    this.isFormChanged = true
+    await this.$validator.validateAll()
   }
 
   handleProfileFormErrors (response: any, userDataForm: UpdateUserData) : void {
