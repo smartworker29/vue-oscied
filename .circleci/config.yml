@@ -1,0 +1,45 @@
+version: 2
+defaults: &defaults
+    docker:
+        -   image: circleci/node:10.16
+    working_directory: ~/ccr3
+    environment:
+        TZ: "/usr/share/zoneinfo/Europe/London"
+jobs:
+    deploy_master:
+        <<: *defaults
+        steps:
+            - checkout
+            -   run:
+                    name: Install rsync
+                    command: sudo apt-get install rsync
+
+            -   restore_cache:
+                    name: Restore Yarn Package Cache
+                    keys:
+                        - yarn-packages-{{ checksum "yarn.lock" }}
+            -   run:
+                    name: Install Dependencies and Build
+                    command: |
+                        yarn install --frozen-lockfile &&
+                        yarn build
+            -   save_cache:
+                    name: Save Yarn Package Cache
+                    key: yarn-packages-{{ checksum "yarn.lock" }}
+                    paths:
+                        - ~/.cache/yarn
+            -   deploy:
+                    name: Deploy to Production
+                    command: |
+                        rsync -avzc -e "ssh -o StrictHostKeyChecking=no" \
+                        --delete \
+                        /home/circleci/ccr3/dist/ $SSH_USER@$SERVER_1:$APP_PATH
+workflows:
+    version: 2
+    deploy:
+        jobs:
+            -   deploy_master:
+                    filters:
+                        branches:
+                            only:
+                                - master
