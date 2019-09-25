@@ -32,7 +32,9 @@
     "cancel": "Cancel",
     "change_photo": "Change Picture",
     "delete_photo": "Delete Picture",
-    "add_photo": "Add Picture"
+    "add_photo": "Add Picture",
+    "start_survey": "Start",
+    "continue_survey": "Continue"
   },
   "email_address": "Email Address",
   "remember_me": "Remember Me",
@@ -61,5 +63,7 @@
   "update_password": "Update Password",
   "profile_picture": "Profile Picture",
   "password_successfully_changed": "Your Password has successfully been changed",
-  "profile_successfully_changed": "Changes have successfully been changed."
+  "profile_successfully_changed": "Changes have successfully been changed.",
+  "please_register": "Please register or sign in if you are a existing user",
+  "welcome_to_survey": "Welcome to {surveyName}"
 }

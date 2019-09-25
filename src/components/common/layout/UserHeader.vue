@@ -7,7 +7,6 @@
           <b-dropdown-item :to="{ name: 'account' }" >{{ $t('account') }}</b-dropdown-item>
           <b-dropdown-item >{{ $t('settings') }}</b-dropdown-item>
           <b-dropdown-item  @click.prevent="logout">{{ $t('logout') }}</b-dropdown-item>
-          <b-dropdown-item :to="{ name: 'survey' }">Test survey</b-dropdown-item>
         </b-nav-item-dropdown>
       </b-navbar-nav>
     </b-navbar>

@@ -1,11 +1,14 @@
 import { Module } from 'vuex'
-import { RootState } from '@/store'
-import { Survey, Section, Statement } from '@/interfaces/SurveyInterfaces'
-import LocaleHelper from '@/utils/LocaleHelper'
+import { RootState, SurveyState } from '@/store'
+import { Section, SurveyInfo, CurrentSurveyData, CompleteSectionData } from '@/interfaces/SurveyInterfaces'
 
 export interface SurveyState {
-  currentSurvey: Survey | null,
-  totalSections: number,
+  isCurrentSurveyInitiated: boolean
+  currentSurveyInfo: SurveyInfo | null
+  currentProductSurveyId: number | null
+  currentProductSurveyType: string | null
+  currentProductSurveySections: Section[]
+  currentProductSurveySectionNumber: number
   countCompletedSections: number
 }
 
@@ -13,46 +16,70 @@ const survey: Module<SurveyState, RootState> = {
   namespaced: true,
 
   state: {
-    currentSurvey: null,
-    totalSections: 2,
+    isCurrentSurveyInitiated: false,
+    currentSurveyInfo: null,
+    currentProductSurveyId: null,
+    currentProductSurveyType: null,
+    currentProductSurveySections: [],
+    currentProductSurveySectionNumber: 0,
     countCompletedSections: 0
   },
 
   getters: {
-    currentSurvey (state: SurveyState): Survey | null {
-      let sections: Section[] = []
-      let statement = 'Statement'
-      let section = 'Section'
-      let instructions = 'Instructions of section'
-
-      if ('de' === LocaleHelper.getUserLocale()) {
-        statement = 'Aussage'
-        section = 'Sektion'
-        instructions = 'Anweisungen des Abschnitts'
-      }
-
-      for (let iter = 0; iter < state.totalSections; iter++) {
-        sections[iter] = {
-          title: `${section} ${iter + 1}`,
-          instructions: `${instructions} ${iter + 1}`,
-          statements: (new Array(20)).fill(0).map((item: any, index: number) : Statement => {
-            index++
-            return { id: index, title: `${section} ${iter + 1}, ${statement} ${index}` }
-          })
-        }
-      }
-      return { sections: sections }
+    getCurrentSurveyInfo (state: SurveyState) : SurveyInfo | null {
+      return state.currentSurveyInfo
     },
-    totalSurveySection (state: SurveyState): Number {
-      return state.totalSections
+    getCurrentProductSurveyId (state: SurveyState) : number | null {
+      return state.currentProductSurveyId
     },
-    countCompletedSurveySection (state: SurveyState): Number {
+    getCurrentProductSurveyType (state: SurveyState) : string | null {
+      return state.currentProductSurveyType
+    },
+    getCurrentProductSurveySectionCount (state: SurveyState): number {
+      return state.currentProductSurveySections.length
+    },
+    getCurrentProductSurveySectionNumber (state: SurveyState) : number {
+      return state.currentProductSurveySectionNumber
+    },
+    getCurrentProductSurveySection (state: SurveyState) : Section {
+      return state.currentProductSurveySections[state.currentProductSurveySectionNumber - 1]
+    },
+    getCountCompletedSurveySection (state: SurveyState) : Number {
       return state.countCompletedSections
+    },
+    isCurrentSurveyInitiated (state: SurveyState) : boolean {
+      return state.isCurrentSurveyInitiated
     }
   },
 
   mutations: {
-    addOneCompletedSection (state: SurveyState): void {
+    setCurrentSurveyData (state: SurveyState, surveyData: CurrentSurveyData) : void {
+      state.currentSurveyInfo = surveyData.surveyInfo
+      state.currentProductSurveyId = surveyData.productSurveyId
+      state.currentProductSurveyType = surveyData.productSurveyType
+      state.isCurrentSurveyInitiated = true
+    },
+    setCurrentSurveySections (state: SurveyState, sections: Section[]) : void {
+      state.currentProductSurveySections = sections;
+    },
+    clearCurrentSurveyData (state: SurveyState) : void {
+      state.isCurrentSurveyInitiated = false
+      state.currentSurveyInfo = null
+      state.currentProductSurveyId = null
+      state.currentProductSurveyType = null
+      state.currentProductSurveySections = []
+      state.currentProductSurveySectionNumber = 0
+    },
+    setCurrentProductSurveySectionNumber(state: SurveyState, sectionNumber: number) : void {
+      if (sectionNumber < 1 || sectionNumber > state.currentProductSurveySections.length) {
+        throw new Error('Unavailable the section number.')
+      }
+
+      state.currentProductSurveySectionNumber = sectionNumber
+    },
+
+    addOneCompletedSection (state: SurveyState, data: CompleteSectionData): void {
+      //TODO::add functionality to precessing the `CompleteSectionData`
       state.countCompletedSections++
     }
   }
