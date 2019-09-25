@@ -59,19 +59,16 @@
         </div>
         <div class="row">
           <div class="col-md-5">
-            <div class="form-group row" :class="{ 'has-error' : errors.first('gender') }">
+            <div class="form-group row">
               <label class="col-md-4 col-form-label">{{ $t('gender') }}</label>
               <select name="gender"
                       class="form-control col-md-8"
                       v-model="userDataForm.gender"
-                      :data-vv-as="$t('gender')"
-                      v-validate="'required'"
                       @change="isFormChanged = true">
-                <option value="" disabled selected>{{ $t('gender') }}</option>
+                <option value="" selected>{{ $t('gender') }}</option>
                 <option value="m">{{ $t('male') }}</option>
                 <option value="f">{{ $t('female') }}</option>
               </select>
-              <small class="error">{{ errors.first('gender') }}</small>
             </div>
           </div>
           <div class="offset-md-1 col-md-5">

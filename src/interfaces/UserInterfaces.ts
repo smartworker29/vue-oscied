@@ -12,7 +12,7 @@ export interface UpdateUserData {
   firstName: string
   lastName: string
   email: string
-  gender: string
+  gender?: string
   phone?: string
   locale?: string
 }
@@ -21,7 +21,7 @@ export interface RegistrationData {
   email: string
   firstName: string
   lastName: string
-  gender: string
+  gender?: string
   phone?: string
   locale?: string | null
 }
