@@ -19,10 +19,9 @@ jobs:
                     keys:
                         - yarn-packages-{{ checksum "yarn.lock" }}
             -   run:
-                    name: Install Dependencies and Build
+                    name: Install Dependencies
                     command: |
-                        yarn install --frozen-lockfile &&
-                        yarn build
+                        yarn install --frozen-lockfile
             -   save_cache:
                     name: Save Yarn Package Cache
                     key: yarn-packages-{{ checksum "yarn.lock" }}
@@ -33,7 +32,7 @@ jobs:
                     command: |
                         rsync -avzc -e "ssh -o StrictHostKeyChecking=no" \
                         --delete \
-                        /home/circleci/ccr3/dist/ $SSH_USER@$SERVER_1:$APP_PATH
+                        /home/circleci/ccr3/ $SSH_USER@$SERVER_1:$APP_PATH
 workflows:
     version: 2
     deploy:
