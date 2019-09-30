@@ -40,6 +40,13 @@ jobs:
                         --exclude=/.env* \
                         --exclude=/assets \
                         /home/circleci/ccr3/ $SSH_USER@$SERVER_1:$APP_PATH
+            -   run:
+                    name: Yarn Build and pm2 restart
+                    command: |
+                        ssh -o "StrictHostKeyChecking no" $SSH_USER@$SERVER_1 "cd $APP_PATH && \
+                        yarn build \
+                        pm2 restart appeu \
+                        "
 workflows:
     version: 2
     deploy:
