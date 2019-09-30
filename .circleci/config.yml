@@ -27,11 +27,18 @@ jobs:
                     key: yarn-packages-{{ checksum "yarn.lock" }}
                     paths:
                         - ~/.cache/yarn
+            -   run:
+                    name: Cleanup working files
+                    command: |
+                        rm -rf .circleci .git .gitignore icon.png
             -   deploy:
                     name: Deploy to Production
                     command: |
                         rsync -avzc -e "ssh -o StrictHostKeyChecking=no" \
                         --delete \
+                        --exclude=/.circleci \
+                        --exclude=/.env* \
+                        --exclude=/assets \
                         /home/circleci/ccr3/ $SSH_USER@$SERVER_1:$APP_PATH
 workflows:
     version: 2
