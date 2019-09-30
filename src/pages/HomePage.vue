@@ -2,8 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col-8">
-        <h1>Welcome to Survey Name</h1>
-        <p>Welcome to our Survey.</p>
+        <h1>Welcome to Onesource</h1>
         <p>Please register or sign in if you are a existing user</p>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor esse expedita molestiae neque quod reprehenderit saepe sequi voluptatibus! Accusantium beatae corporis enim omnis provident quas quia quibusdam quod sunt tempora!</p>
       </div>

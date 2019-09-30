@@ -44,7 +44,7 @@ jobs:
                     name: Yarn Build and pm2 restart
                     command: |
                         ssh -o "StrictHostKeyChecking no" $SSH_USER@$SERVER_1 "cd $APP_PATH && \
-                        yarn build \
+                        yarn build && \
                         pm2 restart appeu \
                         "
 workflows:
