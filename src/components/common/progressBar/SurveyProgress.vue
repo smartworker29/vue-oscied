@@ -14,10 +14,10 @@ import { Getter } from 'vuex-class'
 
 @Component({})
 export default class SurveyProgress extends Vue {
-  @Getter('survey/totalSurveySection')
+  @Getter('survey/getCurrentProductSurveySectionCount')
   totalProgressItemsCount?: number
 
-  @Getter('survey/countCompletedSurveySection')
+  @Getter('survey/getCountCompletedSurveySection')
   processedItemsCount?: number
 
   get processedPercent () : number {

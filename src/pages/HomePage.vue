@@ -3,10 +3,10 @@
     <div class="row">
       <div class="col-8">
         <h1>Welcome to Onesource</h1>
-        <p>Please register or sign in if you are a existing user</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor esse expedita molestiae neque quod reprehenderit saepe sequi voluptatibus! Accusantium beatae corporis enim omnis provident quas quia quibusdam quod sunt tempora!</p>
+            <p v-if="!isAuthenticated">{{ $t('please_register') }}</p>
+            <p>Please register or sign in if you are a existing user</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor esse expedita molestiae neque quod reprehenderit saepe sequi voluptatibus! Accusantium beatae corporis enim omnis provident quas quia quibusdam quod sunt tempora!</p>
       </div>
-
       <div class="col-4" v-if="!isAuthenticated">
         <div class="language">
           <LangSwitcher/>
@@ -16,9 +16,6 @@
         </div>
         <div v-else-if="displayedForm === 'signUp'" class="sign-form">
           <SignUpForm @changeForm="changeForm" @authorizedComplete="authorizedComplete"/>
-        </div>
-        <div v-else>
-          <p>Other forms</p>
         </div>
       </div>
     </div>
@@ -39,7 +36,7 @@ import LangSwitcher from '@/components/common/layout/LangSwitcher.vue'
     LangSwitcher
   }
 })
-export default class Home extends Vue {
+export default class HomePage extends Vue {
   @Getter('user/isAuthenticated')
   isAuthenticated!: boolean
   displayedForm: string = 'signUp'
@@ -49,9 +46,7 @@ export default class Home extends Vue {
   }
 
   authorizedComplete () {
-    if (this.isAuthenticated) {
-      this.$router.push({ name: 'survey' })
-    }
+    // TODO
   }
 }
 </script>

@@ -44,16 +44,14 @@
     </div>
     <div class="row">
       <div class="col-md-12">
-        <div class="form-group" :class="{'has-error' : errors.first('gender')}">
+        <div class="form-group">
           <select name="gender"
                   class="form-control"
-                  v-model="registrationData.gender"
-                  v-validate="'required'">
-            <option value="" disabled selected hidden>{{ $t('gender') }}</option>
+                  v-model="registrationData.gender">
+            <option value="" selected>{{ $t('gender') }}</option>
             <option value="m">{{ $t('male') }}</option>
             <option value="f">{{ $t('female') }}</option>
           </select>
-          <small class="error">{{ errors.first('gender') }}</small>
         </div>
       </div>
     </div>
