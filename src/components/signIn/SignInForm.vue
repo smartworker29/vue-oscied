@@ -5,12 +5,11 @@
         <div class="form-group" :class="{'has-error' : errors.first('email')}">
           <input name="email"
                  :placeholder="[[ $t('email_address') ]]"
-                 type="email"
+                 type="text"
                  v-model="signInData.email"
                  class="form-control"
-                 v-validate="'required|email|max:180'"
+                 v-validate="'required'"
                  :data-vv-as="$t('email_address')"/>
-          <small class="error">{{ errors.first('email') }}</small>
         </div>
       </div>
     </div>
@@ -19,12 +18,11 @@
         <div class="form-group" :class="{'has-error' : errors.first('password')}">
           <input name="password"
                  :placeholder="[[ $t('password') ]]"
-                 v-validate="'required|min:3'"
+                 v-validate="'required'"
                  :data-vv-as="$t('password')"
                  type="password"
                  v-model="signInData.password"
                  class="form-control"/>
-          <small class="error">{{ errors.first('password') }}</small>
         </div>
       </div>
     </div>

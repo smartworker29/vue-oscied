@@ -32,7 +32,9 @@
     "cancel": "Deutch: Cancel",
     "change_photo": "Deutch: Change photo",
     "delete_photo": "Deutch: Delete photo",
-    "add_photo": "Deutch: Add photo"
+    "add_photo": "Deutch: Add photo",
+    "start_survey": "Deutch: Start",
+    "continue_survey": "Deutch: Continue"
   },
   "email_address": "Deutch: Email address",
   "remember_me": "Deutch: Remember me",
@@ -61,5 +63,7 @@
   "update_password": "Deutch: Update password",
   "profile_picture": "Deutch: Profile picture",
   "password_successfully_changed": "Deutch: Password have successfully been changed",
-  "profile_successfully_changed": "Deutch: Changes have successfully been changed."
+  "profile_successfully_changed": "Deutch: Changes have successfully been changed.",
+  "please_register": "Deutch: Please register or sign in if you are a existing user",
+  "welcome_to_survey": "Deutch: Welcome to {surveyName}"
 }

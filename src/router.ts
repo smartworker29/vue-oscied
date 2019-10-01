@@ -1,11 +1,14 @@
 import Vue from 'vue'
 import Router, { Route } from 'vue-router'
-import HomePage from '@/pages/HomePage.vue'
-import TestDragAndDropPage from '@/pages/TestDragAndDropPage.vue'
-import TestTapSortingPage from '@/pages/TestTapSortingPage.vue'
-import SurveyPage from '@/pages/SurveyPage.vue'
 import store from '@/store'
+
+import CurrentSurveySection from '@/components/survey/CurrentSurveySection.vue'
+
+import HomePage from '@/pages/HomePage.vue'
 import AccountPage from '@/pages/AccountPage.vue'
+import WelcomePage from '@/pages/survey/WelcomePage.vue'
+import CurrentSurveyPage from '@/pages/survey/CurrentSurveyPage.vue'
+import CompleteSurveyMessagePage from '@/pages/survey/CompleteSurveyMessagePage.vue'
 
 Vue.use(Router)
 
@@ -14,27 +17,34 @@ const router = new Router({
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/survey',
-      name: 'survey',
-      component: SurveyPage,
-      meta: {
-        requiresAuth: true
-      }
-    },
-    {
-      path: '/drag',
-      name: 'test_drag',
-      component: TestDragAndDropPage
-    },
-    {
-      path: '/tap',
-      name: 'test_tap',
-      component: TestTapSortingPage
-    },
-    {
       path: '/',
       name: 'home',
       component: HomePage
+    },
+    {
+      path: '/:surveyProduct(eq|values|behaviours|discovery-process)/:accessCode([a-zA-Z0-9]{50})',
+      name: 'survey.welcome',
+      component: WelcomePage,
+      props: true
+    },
+    {
+      path: '/:surveyProduct(eq|values|behaviours|discovery-process)/:surveyProductId(\\d)/part',
+      name: 'survey.page',
+      component: CurrentSurveyPage,
+      props: true,
+      children: [
+        {
+          path: ':sectionNumber(\\d+)',
+          name: 'survey.page.part',
+          component: CurrentSurveySection,
+          props: true
+        }
+      ]
+    },
+    {
+      path: '/complete',
+      name: 'survey.complete',
+      component: CompleteSurveyMessagePage
     },
     {
       path: '/account',
