@@ -3,10 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "dev": "node server",
     "serve": "NODE_ENV=development webpack-serve --config=./build/webpack.dev.js",
-    "build": "NODE_ENV=production webpack --config=./build/webpack.prod.js --hide-modules --progress",
-    "lint": "vue-cli-service lint",
-    "i18n:report": "vue-cli-service i18n:report --src './src/**/*.?(js|vue)' --locales './src/locales/**/*.json'"
+    "build": "NODE_ENV=production webpack --config=./build/webpack.prod.js --hide-modules --progress"
   },
   "engines": {
     "node": ">=7.0",

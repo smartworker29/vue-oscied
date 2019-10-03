@@ -3,7 +3,7 @@ const { merge } = require('lodash')
 
 const config = {
   host: 'localhost',
-  port: '8089',
+  port: '8080',
   protocol: 'http:'
 }
 
