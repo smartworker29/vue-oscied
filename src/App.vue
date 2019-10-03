@@ -47,4 +47,7 @@ export default class App extends Vue {
   @import "./assets/styles/app";
   @import '~bootstrap/dist/css/bootstrap.css';
   @import '~bootstrap-vue/dist/bootstrap-vue.css';
+  html, body, #app {
+    height: 100%;
+  }
 </style>

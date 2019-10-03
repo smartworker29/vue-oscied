@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="application-wrapper">
     <template v-if="isAuthenticated">
       <user-header/>
     </template>

@@ -1,11 +1,14 @@
 <template>
-  <div class="container">
+  <div class="container auth-container">
     <div class="row">
       <div class="col-8">
-        <h1>Welcome to Onesource</h1>
-            <p v-if="!isAuthenticated">{{ $t('please_register') }}</p>
+        <img :src="require('@/assets/logo-ccr.svg')" />
+        <h1>Welcome</h1>
+        <h2>Survey name</h2>
+            <!-- <p v-if="!isAuthenticated">{{ $t('please_register') }}</p> -->
             <p>Please register or sign in if you are a existing user</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor esse expedita molestiae neque quod reprehenderit saepe sequi voluptatibus! Accusantium beatae corporis enim omnis provident quas quia quibusdam quod sunt tempora!</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse nec enim risus. Mauris efficitur felis lacinia, aliquam mauris a, imperdiet turpis. Morbi fringilla urna eros, at mattis dui sagittis ac. Curabitur eu enim nisl. Nullam ac feugiat sapien. Quisque eu purus ut diam imperdiet viverra sed at nulla. In pharetra hendrerit vestibulum.</p>
+            <p>Donec sollicitudin, felis ut posuere aliquam, quam lorem gravida nulla, non tempor dui felis sed magna. Nulla facilisi. Fusce rhoncus faucibus ipsum at blandit. Aenean posuere tellus nec lorem maximus, ut egestas quam varius. Integer vitae nulla consequat, cursus dui non, vestibulum sem. </p>
       </div>
       <div class="col-4" v-if="!isAuthenticated">
         <div class="language">
@@ -50,3 +53,10 @@ export default class HomePage extends Vue {
   }
 }
 </script>
+
+<style lang="scss">
+  .auth-container {
+    min-height: 100vh;
+    padding: 50px 80px
+  }
+</style>
