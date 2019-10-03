@@ -5,7 +5,7 @@ const config = {
   clientOutputPath: path.resolve(__dirname, '../dist/client'),
   serverOutputPath: path.resolve(__dirname, '../dist/server'),
   host: 'localhost',
-  port: '8089',
+  port: '8080',
   assetPath: 'asset'
 }
 
