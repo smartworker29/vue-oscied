@@ -1,12 +1,9 @@
-const dev = require('./dev')
-const prod = require('./prod')
+const path = require('path')
 
 module.exports = {
   env: process.env.NODE_ENV || 'development',
   api: 'https://onesource-admin.ccr3.com/api',
   locale: 'en_GB',
   fallback_locale: 'en_GB',
-  title: 'onesource-eu-app',
-  dev,
-  prod
+  title: 'onesource-eu-app'
 }
