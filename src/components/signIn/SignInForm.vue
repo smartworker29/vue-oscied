@@ -1,30 +1,22 @@
 <template>
-  <form @submit.prevent="submit" novalidate>
-    <div class="row">
-      <div class="col-md-12">
-        <div class="form-group" :class="{'has-error' : errors.first('email')}">
-          <input name="email"
-                 :placeholder="[[ $t('email_address') ]]"
-                 type="text"
-                 v-model="signInData.email"
-                 class="form-control"
-                 v-validate="'required'"
-                 :data-vv-as="$t('email_address')"/>
-        </div>
-      </div>
+  <form class="form" @submit.prevent="submit" novalidate>
+    <div class="form-group" :class="{'has-error' : errors.first('email')}">
+      <label for="">Email address</label>
+      <input name="email"
+        type="text"
+        v-model="signInData.email"
+        class="form-control"
+        v-validate="'required'"
+        :data-vv-as="$t('email_address')"/>
     </div>
-    <div class="row">
-      <div class=" col-md-12">
-        <div class="form-group" :class="{'has-error' : errors.first('password')}">
-          <input name="password"
-                 :placeholder="[[ $t('password') ]]"
-                 v-validate="'required'"
-                 :data-vv-as="$t('password')"
-                 type="password"
-                 v-model="signInData.password"
-                 class="form-control"/>
-        </div>
-      </div>
+    <div class="form-group" :class="{'has-error' : errors.first('password')}">
+      <label for="">Password</label>
+      <input name="password"
+        v-validate="'required'"
+        :data-vv-as="$t('password')"
+        type="password"
+        v-model="signInData.password"
+        class="form-control"/>
     </div>
     <div class="row" v-if="error">
       <div class=" col-md-6">

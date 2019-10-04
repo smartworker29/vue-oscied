@@ -23,6 +23,7 @@
   "data_policy": "Data Policy",
   "button_g": {
     "confirm_order": "Confirm Order",
+    "register": "Register",
     "sign_in": "Sign In",
     "sign_up": "Sign Up",
     "change": "Change",

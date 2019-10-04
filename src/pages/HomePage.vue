@@ -11,12 +11,12 @@
         <span class="welcome-sub-title">Welcome</span>
         <h2 class="welcome-title">Survey name</h2>
             <!-- <p v-if="!isAuthenticated">{{ $t('please_register') }}</p> -->
-            <p class="sign-in-suggestion">Please register or sign in if you are a existing user</p>
+            <p class="sign-in-suggestion">Please register or <a @click="displayedForm = 'signIn'">sign in</a> if you are a existing user</p>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse nec enim risus. Mauris efficitur felis lacinia, aliquam mauris a, imperdiet turpis. Morbi fringilla urna eros, at mattis dui sagittis ac. Curabitur eu enim nisl. Nullam ac feugiat sapien. Quisque eu purus ut diam imperdiet viverra sed at nulla. In pharetra hendrerit vestibulum.</p>
             <p>Donec sollicitudin, felis ut posuere aliquam, quam lorem gravida nulla, non tempor dui felis sed magna. Nulla facilisi. Fusce rhoncus faucibus ipsum at blandit. Aenean posuere tellus nec lorem maximus, ut egestas quam varius. Integer vitae nulla consequat, cursus dui non, vestibulum sem. </p>
       </div>
       <div class="auth-forms">
-        <div class="form">
+        <div class="form-wrapper">
           <div class="form-switcher">
             <button @click="displayedForm = 'signUp'" :class="{ 'active': displayedForm === 'signUp' }">Register</button>
             <button @click="displayedForm = 'signIn'" :class="{ 'active': displayedForm === 'signIn' }">Sign in</button>
@@ -93,6 +93,11 @@ export default class HomePage extends Vue {
     p {
       margin-bottom: 24px;
     }
+    a {
+      font-weight: 600;
+      text-decoration: underline;
+      cursor: pointer;
+    }
     .sign-in-suggestion {
       margin-bottom: 15px;
     }
@@ -129,7 +134,7 @@ export default class HomePage extends Vue {
     background-color: #ffffff;
   }
 
-  .form {
+  .form-wrapper {
     overflow: hidden;
     background: #fff;
     border-radius: 23px;
@@ -165,7 +170,51 @@ export default class HomePage extends Vue {
   }
 
   .form-content {
-    padding: 0 24px 24px;
+    padding: 0 21px 24px;
+  }
+
+  .form {
+    padding-top: 31px;
+    .form-group {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      align-items: center;
+    }
+
+    label {
+      font-size: 16px;
+      color: #071012;
+    }
+
+    input {
+      border-radius: 12px;
+      width: 100%;
+      max-width: 286px;
+      padding: 8px 4px;
+      background: #ffffff;
+      border: solid 1px #d6efff;
+    }
+  }
+
+  .btn {
+    border-radius: 12px;
+    background: #fff;
+    border: solid 1px #00cdbf;
+    padding: 13px 16px;
+  }
+
+  .btn-success {
+    color: #fff;
+    background-color: #00cdbf;
+  }
+
+  .form-actions {
+    display: flex;
+  }
+
+  .form-action-justified {
+    justify-content: space-between
   }
 
 </style>
