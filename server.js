@@ -1,17 +1,19 @@
-const url = require('url')
+const path = require('path')
 const express = require('express')
+const url = require('url')
 const config = require('./config')
 const { createBundleRenderer } = require('vue-server-renderer')
 
-const renderer = createBundleRenderer(require('./dist/server/vue-ssr-server-bundle.json'), {
+const renderer = createBundleRenderer(require('./dist/vue-ssr-server-bundle.json'), {
   runInNewContext: false,
-  template: require('fs').readFileSync('./dist/client/index.html', 'utf-8'),
-  clientManifest: require('./dist/client/vue-ssr-client-manifest.json')
+  template: require('fs').readFileSync('./dist/index.html', 'utf-8'),
+  clientManifest: require('./dist/vue-ssr-client-manifest.json')
 })
+const resolve = file => path.resolve(__dirname, file)
 
 const server = express()
 
-server.use(`/${config.prod.assetPath}`, express.static(config.prod.clientOutputPath))
+server.use(`/asset`, express.static(resolve('./dist')))
 
 server.get('*', (req, res) => {
   renderer.renderToString({ url: req.url }, (err, html) => {
@@ -28,11 +30,8 @@ server.get('*', (req, res) => {
   })
 })
 
-server.listen(config.prod.port, config.prod.host, function () {
-  const listenHost = url.format({
-    host: `${config.prod.host}:${config.prod.port}`,
-    protocol: 'http:'
-  })
+const port = process.env.PORT || 8080
 
-  console.log(`Application is running on ${listenHost}`)
+server.listen(port, '0.0.0.0', function () {
+  console.log(`server started at http://localhost:${port}`)
 })

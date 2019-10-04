@@ -17,13 +17,13 @@ class LocaleHelper {
   }
 
   getUserLocale () : string | null {
-    return localStorage[this.localeKey]
+    return (typeof window !== 'undefined' && localStorage[this.localeKey])
       ? localStorage[this.localeKey]
       : process.env.VUE_APP_I18N_FALLBACK_LOCALE
   }
 
   setUserLocale (locale?: string | null) : void {
-    if (!locale) {
+    if (!locale || typeof window === 'undefined') {
       return
     }
     localStorage[this.localeKey] = locale
