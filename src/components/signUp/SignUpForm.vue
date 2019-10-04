@@ -37,15 +37,7 @@
       </div>
       <div class="form-group">
         <label for="">Gender</label>
-        <div class="form-select">
-          <select name="gender"
-                class="form-control"
-                v-model="registrationData.gender">
-          <option value="" selected>{{ $t('gender') }}</option>
-          <option value="m">{{ $t('male') }}</option>
-          <option value="f">{{ $t('female') }}</option>
-        </select>
-        </div>
+        <v-select class="form-select" name="gender" v-model="registrationData.gender" :options="genderOption"></v-select>
       </div>
       <div
         class="form-group"
@@ -91,8 +83,10 @@ export default class SignUpForm extends Vue {
   availableRegistrationFields: string[] = []
   emailIsFree: boolean = true
   error: string | null = null
+  genderOption: Array<any> = []
 
   async created () {
+    this.genderOption = [this.$t('gender'), this.$t('male'), this.$t('female')]
     this.availableRegistrationFields = await UserService.getAvailableRegistrationFields()
   }
 
