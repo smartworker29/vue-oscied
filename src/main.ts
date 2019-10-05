@@ -10,7 +10,7 @@ import './mixin'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import BootstrapVue from 'bootstrap-vue'
-import vSelect from 'vue-select'
+import Multiselect from 'vue-multiselect'
 import VueAxios from 'vue-axios'
 import VeeValidate from 'vee-validate'
 import VueAuthenticate from 'vue-authenticate'
@@ -18,7 +18,7 @@ import Vuex from 'vuex'
 
 import LocaleHelper from '@/utils/LocaleHelper'
 
-Vue.component('v-select', vSelect)
+Vue.component('multiselect', Multiselect)
 Vue.use(BootstrapVue)
 Vue.use(VeeValidate)
 Vue.use(Vuex)

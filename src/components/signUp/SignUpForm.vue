@@ -3,7 +3,6 @@
     <div class="form-group" :class="{'has-error' : errors.first('firstName')}">
       <label for="">First name</label>
       <input name="firstName"
-              :placeholder="[[ $t('first_name') ]]"
               type="text"
               v-model="registrationData.firstName"
               class="form-control"
@@ -14,7 +13,6 @@
     <div class="form-group" :class="{'has-error' : errors.first('lastName')}">
       <label for="">Last name</label>
       <input name="lastName"
-              :placeholder="[[ $t('last_name') ]]"
               type="text"
               v-model="registrationData.lastName"
               class="form-control"
@@ -25,7 +23,6 @@
       <div class="form-group" :class="{'has-error' : (errors.first('email') || !emailIsFree)}">
         <label for="">Email address</label>
         <input name="email"
-                :placeholder="[[ $t('email_address') ]]"
                 type="email"
                 v-model="registrationData.email"
                 class="form-control"
@@ -35,9 +32,16 @@
         <small class="error" v-if="errors.first('email')">{{ errors.first('email') }}</small>
         <small class="error" v-if="!errors.first('email') && !emailIsFree">{{ $t('email_already_user') }}</small>
       </div>
-      <div class="form-group">
+      <div class="form-group form-group-select">
         <label for="">Gender</label>
-        <v-select class="form-select" name="gender" v-model="registrationData.gender" :options="genderOption"></v-select>
+        <multiselect
+          v-model="registrationData.gender"
+          :placeholder="'Select'"
+          :searchable="false"
+          :show-labels="false"
+          :options="genderOption">
+        </multiselect>
+        <!-- <v-select class="form-select" name="gender" :value="$t('gender')" v-model="registrationData.gender" :options="genderOption"></v-select> -->
       </div>
       <div
         class="form-group"
@@ -45,7 +49,6 @@
         :class="{'has-error' : errors.first('phone')}">
         <label for="">Phone number</label>
         <input name="phone"
-                :placeholder="[[ $t('phone_number') ]]"
                 type="text"
                 v-model="registrationData.phone"
                 class="form-control"
@@ -56,8 +59,8 @@
     <div class="row" v-if="error">
         <p>{{ error }}</p>
     </div>
-    <div class="form-actions form-action-justified">
-      <span @click="changeForm('signIn')">{{ $t('already_registered') }}</span>
+    <div class="form-actions form-actions-justified">
+      <span class="switch-form" @click="changeForm('signIn')">{{ $t('already_registered') }}</span>
       <button type="submit" class="btn btn-success">{{ $t('button_g.register') }}</button>
     </div>
   </form>
@@ -86,7 +89,7 @@ export default class SignUpForm extends Vue {
   genderOption: Array<any> = []
 
   async created () {
-    this.genderOption = [this.$t('gender'), this.$t('male'), this.$t('female')]
+    this.genderOption = [this.$t('male'), this.$t('female')]
     this.availableRegistrationFields = await UserService.getAvailableRegistrationFields()
   }
 

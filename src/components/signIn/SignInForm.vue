@@ -1,5 +1,5 @@
 <template>
-  <form class="form" @submit.prevent="submit" novalidate>
+  <form class="form sign-in-form" @submit.prevent="submit" novalidate>
     <div class="form-group" :class="{'has-error' : errors.first('email')}">
       <label for="">Email address</label>
       <input name="email"
@@ -23,12 +23,16 @@
         <p class="error">{{ error }}</p>
       </div>
     </div>
-    <div class="row">
-      <div class=" col-md-12 text-center">
-        <button type="button" class="btn btn-link" @click="changeForm('signUp')">{{ $t('forgot_password') }}</button>
+    <div class="form-actions form-actions-right form-actions-justified wrap">
+      <div class="switch-form" @click="changeForm('signUp')">{{ $t('forgot_password') }}</div>
+      <div class="form-actions form-actions-justified">
+        <div>
+          <input type="checkbox">
+          <label>Remember me</label>
+        </div>
         <button type="submit" class="btn btn-success col-12">{{ $t('button_g.sign_in') }}</button>
-        <button type="button" class="btn btn-link" @click="changeForm('signUp')">{{ $t('no_account') }}</button>
       </div>
+      <!-- <button type="button" class="btn btn-link" @click="changeForm('signUp')">{{ $t('no_account') }}</button> -->
     </div>
   </form>
 </template>

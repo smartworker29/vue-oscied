@@ -71,6 +71,9 @@ export default class HomePage extends Vue {
     width: 100%;
     max-width: 1440px;
     margin: 0 auto;
+    @media only screen and (max-width: 768px) {
+      padding: 40px 15px;
+    }
   }
 
   .auth-header {
@@ -81,6 +84,9 @@ export default class HomePage extends Vue {
 
   .logo {
     width: 181px;
+    @media only screen and (max-width: 768px) {
+      width: 164px;
+    }
   }
 
   .auth-content {
@@ -89,7 +95,8 @@ export default class HomePage extends Vue {
   }
 
   .welcome-info {
-    max-width: 602px;
+    max-width: 52%;
+    padding-right: 5%;
     p {
       margin-bottom: 24px;
     }
@@ -140,12 +147,17 @@ export default class HomePage extends Vue {
     border-radius: 23px;
     box-shadow: 0 24px 32px 0 rgba(0, 0, 0, 0.1);
     border: solid 1px #0085cd;
+    padding-bottom: 6px;
   }
 
   .form-switcher {
     background: #e6f3fa;
     padding: 24px 24px 0;
     border-bottom: 1px solid #bdddff;
+    @media only screen and (max-width: 768px) {
+      display: flex;
+      padding: 14px 15px 0;
+    }
 
     button {
       border-top-left-radius: 8px;
@@ -166,6 +178,10 @@ export default class HomePage extends Vue {
         color: #3d5a80;
         background: #fff;
       }
+
+      @media only screen and (max-width: 768px) {
+        width: 100%;
+      }
     }
   }
 
@@ -174,26 +190,108 @@ export default class HomePage extends Vue {
   }
 
   .form {
-    padding-top: 31px;
+    padding-top: 7%;
+    overflow: hidden;
     .form-group {
       display: flex;
       justify-content: space-between;
       margin-bottom: 16px;
+      flex-wrap: wrap;
       align-items: center;
+
+      &:last-child {
+        margin-bottom: 20px;
+      }
+
+      input {
+        font-size: 14px;
+        border-radius: 12px;
+        width: 100%;
+        max-width: 286px;
+        padding: 9px 16px;
+        background: #ffffff;
+        border: solid 1px #d6efff;
+        &:focus {
+          outline: none;
+        }
+      }
+
+      .error {
+        display: block;
+        width: 100%;
+      }
+    }
+
+    .form-group-select {
+      input {
+        border: none;
+      }
+      .multiselect {
+
+        // border: solid 1px #d6efff;
+        max-width: 286px;
+      }
+
+      .multiselect__tags {
+        border-radius: 12px;
+        padding: 5px 40px 0 16px;
+        min-height: 36px;
+        border: solid 1px #d6efff;
+      }
+
+      .multiselect__option {
+        font-size: 14px;
+        padding: 12px 16px;
+      }
+
+      .multiselect__option--highlight {
+        background: #e6f3fa;
+        color: #35495e;
+      }
+
+      .multiselect__single {
+        font-size: 14px;
+        margin: 0;
+        padding: 2px 0 0 0;
+      }
+
+      .multiselect__content {
+        padding-top: 12px;
+      }
+
+      .multiselect__content-wrapper {
+        top: 27px;
+        border: solid 1px #d6efff;
+        border-bottom-left-radius: 12px;
+        border-bottom-right-radius: 12px;
+        border-top: none;
+      }
+
+      .multiselect__placeholder {
+        margin-bottom: 1px
+      }
+      // input {
+      //   border: none;
+      //   padding: 0;
+      //   margin: 0;
+      //   width: auto;
+      // }
+
+      // .form-select {
+      //   width: 100%;
+      //   max-width: 286px;
+      // }
+
+      // .vs__dropdown-toggle {
+      //   border: solid 1px #d6efff;
+      //   border-radius: 12px;
+      //   padding: 8px 4px;
+      // }
     }
 
     label {
       font-size: 16px;
       color: #071012;
-    }
-
-    input {
-      border-radius: 12px;
-      width: 100%;
-      max-width: 286px;
-      padding: 8px 4px;
-      background: #ffffff;
-      border: solid 1px #d6efff;
     }
   }
 
@@ -201,7 +299,7 @@ export default class HomePage extends Vue {
     border-radius: 12px;
     background: #fff;
     border: solid 1px #00cdbf;
-    padding: 13px 16px;
+    padding: 13px 18px;
   }
 
   .btn-success {
@@ -210,11 +308,37 @@ export default class HomePage extends Vue {
   }
 
   .form-actions {
-    display: flex;
+    display: inline-flex;
+    margin-top: 6px;
+    width: 100%;
+    .switch-form {
+      font-size: 16px;
+      cursor: pointer;
+      text-decoration: underline;
+      color: #0085cd;
+    }
   }
 
-  .form-action-justified {
+  .form-actions-justified {
+    align-items: center;
     justify-content: space-between
+  }
+
+  .form-actions-right {
+    float: right;
+    width: 100%;
+    max-width: 286px;
+  }
+
+  .sign-in-form {
+    .switch-form {
+      width: 100%;
+      margin-bottom: 21px;
+    }
+  }
+
+  .wrap {
+    flex-wrap: wrap;
   }
 
 </style>
