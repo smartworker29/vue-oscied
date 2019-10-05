@@ -2,9 +2,9 @@
   <footer class="footer">
     <span>2019 &copy; CCR3i All Rights Reserved.</span>
     <ul>
-      <li>Privacy Policy</li>
+      <li><a>Privacy Policy</a></li>
       <li>|</li>
-      <li>Data Policy</li>
+      <li><a>Data Policy</a></li>
     </ul>
   </footer>
 </template>
@@ -13,10 +13,14 @@
   .footer {
     color: #fff;
     font-size: 14px;
-    display: flex;
+    display: inline-flex;
     position: absolute;
-    bottom: 0;
+    bottom: 22px;
     width: 100%;
+    @media only screen and (max-width: 768px) {
+      justify-content: center;
+      left: 0;
+    }
     span {
       margin-right: 26px;
     }
@@ -24,8 +28,10 @@
       display: flex;
     }
     li {
+      a {
+        text-decoration: underline;
+      }
       margin-right: 6px;
-      text-decoration: underline;
     }
   }
 </style>

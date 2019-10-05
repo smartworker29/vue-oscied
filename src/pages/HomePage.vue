@@ -69,7 +69,7 @@ export default class HomePage extends Vue {
     // min-height: 100vh;
     width: 100%;
     max-width: 1440px;
-    margin: 0 auto 105px;
+    margin: 0 auto;
   }
 
   .auth-header {

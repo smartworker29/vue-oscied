@@ -1,16 +1,27 @@
 <template>
-  <div class="row">
-    <div class="col-6 offset-6">
-      <select v-model="currentLocale" @change="changeLocale" class="form-control">
+
+      <!-- <select v-model="currentLocale" @change="changeLocale" class="form-control">
         <option v-for="(localeData, index) in availableLocales"
                 :key="index"
                 :value="localeData.locale"
                 :selected="currentLocale === localeData.locale">
                 {{ localeData.localeName }}
-        </option>
-      </select>
+        </option> -->
+    <div class="form">
+      <div class="form-group form-group-select">
+        <multiselect
+          v-model="currentLocale"
+          :searchable="false"
+          track-by="locale"
+          label="localeName"
+          :show-labels="false"
+          @select="changeLocale($event)"
+          :options="availableLocales">
+            <template slot="singleLabel" slot-scope="{ option }">{{ option.localeName }}</template>
+        </multiselect>
+      </div>
     </div>
-  </div>
+  <!-- </div> -->
 </template>
 
 <script lang="ts">
@@ -20,19 +31,26 @@ import { LocaleData } from '@/interfaces/UserInterfaces'
 
 @Component({})
 export default class LangSwitcher extends Vue {
-  currentLocale: string | null = process.env.VUE_APP_I18N_FALLBACK_LOCALE || 'en_GB'
+  currentLocale: any = {}
   availableLocales: LocaleData[] = []
 
   created () {
+    let locale = process.env.VUE_APP_I18N_FALLBACK_LOCALE || 'en_GB'
     this.availableLocales = LocaleHelper.availableLocalesData
-    this.currentLocale = LocaleHelper.getUserLocale()
+    locale = LocaleHelper.getUserLocale()
+    this.currentLocale = this.availableLocales.find(lang => lang.locale === locale)
   }
 
-  languages = LocaleHelper
-
-  changeLocale () {
-    LocaleHelper.setUserLocale(this.currentLocale)
+  changeLocale (locale) {
+    this.currentLocale = locale
+    LocaleHelper.setUserLocale(this.currentLocale.locale)
     window.location.reload()
   }
 }
 </script>
+
+<style lang="scss">
+  .language {
+    width: 200px;
+  }
+</style>

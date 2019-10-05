@@ -53,16 +53,17 @@ export default class App extends Vue {
     font-weight: normal;
     font-size: 16px;
     line-height: 1.5;
-    background: #0085cd;
-    padding: 3.5% 5.5%;
   }
 
-  html, body, #app, .application-wrapper {
+  html, body, #app {
     height: 100%;
   }
 
   .application-wrapper {
+    background: #0085cd;
     position: relative;
+    padding: 3.5% 5.5% 60px 5.5%;
+    min-height: 100%;
   }
 
   html {

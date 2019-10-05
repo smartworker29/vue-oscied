@@ -41,7 +41,6 @@
           :show-labels="false"
           :options="genderOption">
         </multiselect>
-        <!-- <v-select class="form-select" name="gender" :value="$t('gender')" v-model="registrationData.gender" :options="genderOption"></v-select> -->
       </div>
       <div
         class="form-group"
