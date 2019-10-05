@@ -26,7 +26,7 @@
     <div class="form-actions form-actions-right form-actions-justified wrap">
       <div class="switch-form" @click="changeForm('signUp')">{{ $t('forgot_password') }}</div>
       <div class="form-actions form-actions-justified">
-        <div>
+        <div class="checkbox-input">
           <input type="checkbox">
           <label>Remember me</label>
         </div>

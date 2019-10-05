@@ -78,6 +78,10 @@
       &:focus {
         outline: none;
       }
+
+      @media only screen and (max-width: 1000px) {
+        max-width: 100%;
+      }
     }
 
     .error {
@@ -94,6 +98,9 @@
 
       // border: solid 1px #d6efff;
       max-width: 286px;
+      @media only screen and (max-width: 1000px) {
+        max-width: 100%;
+      }
       &.multiselect--above {
         .multiselect__content-wrapper {
           top: auto;
@@ -171,6 +178,10 @@
   label {
     font-size: 16px;
     color: #071012;
+    @media only screen and (max-width: 1000px) {
+      width: 100%;
+      margin-bottom: 2px;
+    }
   }
 }
 
@@ -213,5 +224,22 @@
   .switch-form {
     width: 100%;
     margin-bottom: 21px;
+    .form-actions {
+      .form-actions {
+        margin-top: 0;
+      }
+    }
+  }
+}
+
+.checkbox-input {
+  display: flex;
+  label {
+    font-size: 14px;
+    font-weight: 300;
+    margin-left: 5px;
+  }
+  input {
+    margin-top: 2px;
   }
 }
