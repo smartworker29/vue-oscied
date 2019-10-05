@@ -47,6 +47,7 @@ export default class App extends Vue {
   // @import '~bootstrap/dist/css/bootstrap.css';
   // @import '~bootstrap-vue/dist/bootstrap-vue.css';
   @import "~vue-multiselect/dist/vue-multiselect.min.css";
+  @import "~flag-icon-css/css/flag-icon.css";
   @import "./assets/styles/app";
   body {
     font-family: 'Cerebri Sans';

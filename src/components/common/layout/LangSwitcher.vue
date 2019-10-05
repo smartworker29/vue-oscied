@@ -17,7 +17,7 @@
           :show-labels="false"
           @select="changeLocale($event)"
           :options="availableLocales">
-            <template slot="singleLabel" slot-scope="{ option }">{{ option.localeName }}</template>
+            <template slot="singleLabel" slot-scope="{ option }">{{ option.localName }}</template>
         </multiselect>
       </div>
     </div>
