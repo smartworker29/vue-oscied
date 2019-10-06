@@ -3,10 +3,10 @@
     <template v-if="isAuthenticated">
       <user-header/>
     </template>
-    <div class="content">
+    <div class="application-content">
       <router-view/>
+      <app-footer />
     </div>
-    <app-footer />
   </div>
 </template>
 

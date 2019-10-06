@@ -56,6 +56,19 @@
 
 .form {
   padding-top: 7%;
+  &.account-form {
+    padding-top: 23px;
+  }
+
+  .account-form-actions {
+    .btn {
+      margin-left: 24px;
+    }
+  }
+
+  .form-half {
+    width: 46%;
+  }
   .form-group {
     display: flex;
     justify-content: space-between;
@@ -65,6 +78,11 @@
 
     &:last-child {
       margin-bottom: 20px;
+    }
+
+    .language-select {
+      width: 100%;
+      max-width: 286px;
     }
 
     input {
@@ -136,6 +154,7 @@
     }
 
     .multiselect__single {
+      color: #071012;
       font-size: 14px;
       margin: 0;
       padding: 2px 0 0 0;
@@ -190,6 +209,21 @@
   background: #fff;
   border: solid 1px #00cdbf;
   padding: 13px 18px;
+  &:focus {
+    outline: none;
+  }
+}
+
+.btn-primary {
+  color: #0085cd;
+  border: solid 1px #d6efff;
+  cursor: pointer;
+  &-active {
+    background-color: #e6f3fa; 
+  }
+  &:hover {
+    background-color: #e6f3fa;
+  }
 }
 
 .btn-success {

@@ -1,10 +1,8 @@
 <template>
-  <div class="row">
-    <div class="col-12 account-sub-form">
+    <div>
       <h2>{{ $t('your_profile') }}</h2>
-      <form id="account-form" @submit.prevent="submit()" novalidate v-if="userUploaded">
-        <div class="row">
-          <div class="col-md-5">
+      <form id="account-form" class="form wrap space-between account-form" @submit.prevent="submit()" novalidate v-if="userUploaded">
+          <div class="form-half">
             <div class="form-group row" :class="{ 'has-error' : errors.first('firstName') }">
               <label class="col-md-4 col-form-label">{{ $t('first_name') }}</label>
               <input name="firstName"
@@ -16,23 +14,6 @@
                      @change="isFormChanged = true"/>
               <small class="error">{{ errors.first('firstName') }}</small>
             </div>
-          </div>
-          <div class="offset-md-1 col-md-5">
-            <div class="form-group row" :class="{ 'has-error' : errors.first('email') }">
-              <label class="col-md-4 col-form-label">{{ $t('email_address') }}</label>
-              <input name="email"
-                     v-validate="'required|email'"
-                     type="text"
-                     :data-vv-as="$t('email_address')"
-                     v-model="userDataForm.email"
-                     class="form-control col-md-8"
-                     @change="changedEmailInput()"/>
-              <small class="error">{{ errors.first('email') }}</small>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class=" col-md-5">
             <div class="form-group row" :class="{ 'has-error' : errors.first('lastName') }">
               <label class="col-md-4 col-form-label">{{ $t('last_name') }}</label>
               <input name="lastName"
@@ -44,8 +25,27 @@
                      @change="isFormChanged = true"/>
               <small class="error">{{ errors.first('lastName') }}</small>
             </div>
+            <div class="form-group row form-group-select">
+              <label class="col-md-4 col-form-label">{{ $t('gender') }}</label>
+              <multiselect
+                v-model="userDataForm.gender"
+                :placeholder="'Select'"
+                :searchable="false"
+                :show-labels="false"
+                :options="genderOption">
+              </multiselect>
+            </div>
           </div>
-          <div class="offset-md-1 col-md-5">
+          <div class="form-half">
+            <div class="form-group" :class="{'has-error' : errors.first('email')}">
+              <label for="">Email address</label>
+              <input name="email"
+                type="text"
+                v-model="userDataForm.email"
+                class="form-control"
+                v-validate="'required'"
+                :data-vv-as="$t('email_address')"/>
+            </div>
             <div class="form-group row" :class="{ 'has-error' : errors.first('phone') }">
               <label class="col-md-4 col-form-label">{{ $t('phone_number') }}</label>
               <input name="phone"
@@ -55,26 +55,10 @@
                      @change="isFormChanged = true"/>
               <small class="error">{{ errors.first('phone') }}</small>
             </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-5">
-            <div class="form-group row">
-              <label class="col-md-4 col-form-label">{{ $t('gender') }}</label>
-              <select name="gender"
-                      class="form-control col-md-8"
-                      v-model="userDataForm.gender"
-                      @change="isFormChanged = true">
-                <option value="" selected>{{ $t('gender') }}</option>
-                <option value="m">{{ $t('male') }}</option>
-                <option value="f">{{ $t('female') }}</option>
-              </select>
-            </div>
-          </div>
-          <div class="offset-md-1 col-md-5">
-            <div class="form-group row" :class="{ 'has-error' : errors.first('locale') }">
+            <div class="form-group form-group-select" :class="{ 'has-error' : errors.first('locale') }">
               <label class="col-md-4 col-form-label">{{ $t('language') }}</label>
-              <select name="locale"
+              <language-select />
+              <!-- <select name="locale"
                       class="form-control col-md-8"
                       v-model="userDataForm.locale"
                       :data-vv-as="$t('language')"
@@ -84,34 +68,28 @@
                         :value="locale.locale" :key="index">
                   {{ locale.localeName }}
                 </option>
-              </select>
+              </select> -->
               <small class="error">{{ errors.first('locale') }}</small>
             </div>
           </div>
-        </div>
-        <div class="row" v-if="isUserDataChanged">
-          <div class=" col-md-12 text-center">
-            <div class="alert alert-success" role="alert">{{ $t('profile_successfully_changed') }}</div>
+          <div class="row" v-if="isUserDataChanged">
+            <div class=" col-md-12 text-center">
+              <div class="alert alert-success" role="alert">{{ $t('profile_successfully_changed') }}</div>
+            </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="offset-md-6 col-md-5 text-right row">
-            <button type="reset"
-                    class="btn btn-warning col-4"
-                    @click.prevent="resetProfileForm()"
-                    :disabled="!isFormChanged">
-              {{ $t('button_g.cancel') }}
-            </button>
-            <button type="submit"
-                    class="btn btn-success offset-1 col-7"
-                    :disabled="!isFormChanged">
-              {{ $t('button_g.update_profile') }}
-            </button>
+          <div class="full-width flex-end account-form-actions">
+              <button class="btn btn-primary"
+                      @click.prevent="resetProfileForm()"
+                      :disabled="!isFormChanged">
+                {{ $t('button_g.cancel') }}
+              </button>
+              <button class="btn btn-primary btn-primary-active"
+                      :disabled="!isFormChanged">
+                {{ $t('button_g.update_profile') }}
+              </button>
           </div>
-        </div>
       </form>
     </div>
-  </div>
 </template>
 
 <script lang="ts">
@@ -119,10 +97,17 @@ import { Vue, Component, Watch } from 'vue-property-decorator'
 import { LocaleData, UpdateUserData, User } from '@/interfaces/UserInterfaces'
 import LocaleHelper from '@/utils/LocaleHelper'
 import UserService from '@/services/UserService'
+import LanguageSelect from '@/components/form/LanguageSelect.vue'
 
-@Component({})
+@Component({
+  components: {
+    LanguageSelect
+  }
+})
 export default class ProfileForm extends Vue {
   user!: User
+  genderOption: Array<any> = []
+
   userDataForm: UpdateUserData = {
     firstName: '',
     lastName: '',
@@ -148,6 +133,7 @@ export default class ProfileForm extends Vue {
       email: this.user.email
     }
 
+    this.genderOption = [this.$t('male'), this.$t('female')]
     this.availableLocales = LocaleHelper.availableLocalesData
   }
 

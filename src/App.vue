@@ -61,6 +61,10 @@ export default class App extends Vue {
   }
 
   .application-wrapper {
+    height: 100%;
+  }
+
+  .application-content {
     background: #0085cd;
     position: relative;
     padding: 3.5% 5.5% 60px 5.5%;

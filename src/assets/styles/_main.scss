@@ -8,3 +8,22 @@
     display: none;
   }
 }
+
+.wrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.space-between {
+  display: flex;
+  justify-content: space-between
+}
+
+.flex-end {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.full-width {
+  width: 100%;
+}

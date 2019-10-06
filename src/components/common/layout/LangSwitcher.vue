@@ -1,12 +1,4 @@
 <template>
-
-      <!-- <select v-model="currentLocale" @change="changeLocale" class="form-control">
-        <option v-for="(localeData, index) in availableLocales"
-                :key="index"
-                :value="localeData.locale"
-                :selected="currentLocale === localeData.locale">
-                {{ localeData.localeName }}
-        </option> -->
     <div class="form">
       <div class="form-group form-group-select">
         <multiselect

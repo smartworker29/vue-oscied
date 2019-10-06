@@ -67,6 +67,7 @@ export default class HomePage extends Vue {
 <style lang="scss">
   .auth-container {
     // min-height: 100vh;
+    color: #fff;
     width: 100%;
     max-width: 1440px;
     margin: 0 auto;
@@ -144,10 +145,6 @@ export default class HomePage extends Vue {
     height: 54px;
     object-fit: contain;
     background-color: #ffffff;
-  }
-
-  .wrap {
-    flex-wrap: wrap;
   }
 
 </style>
