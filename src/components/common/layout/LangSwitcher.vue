@@ -17,7 +17,14 @@
           :show-labels="false"
           @select="changeLocale($event)"
           :options="availableLocales">
-            <template slot="singleLabel" slot-scope="{ option }">{{ option.localName }}</template>
+            <template slot="singleLabel" slot-scope="{ option }">
+              <span class="flag-icon" :class="option.class"></span>
+              <span class="hide-mobile">{{ option.localeName }}</span>
+            </template>
+            <template slot="option" slot-scope="props">
+              <span class="flag-icon" :class="props.option.class"></span>
+              <span class="hide-mobile">{{ props.option.localeName }}</span>
+            </template>
         </multiselect>
       </div>
     </div>
@@ -52,5 +59,8 @@ export default class LangSwitcher extends Vue {
 <style lang="scss">
   .language {
     width: 200px;
+    @media only screen and (max-width: 600px) {
+      width: 81px;
+    }
   }
 </style>
