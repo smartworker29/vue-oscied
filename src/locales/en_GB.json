@@ -49,6 +49,7 @@
   "female": "Female",
   "phone_number": "Phone Number",
   "email_already_user": "Email Address is already used",
+  "gender_is_required": "Gender field is required",
   "forgot_password": "Forgotten your Password?",
   "no_account": "No account? Sign up",
   "already_registered": "Already registered? Sign in",
