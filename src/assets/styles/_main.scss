@@ -2,3 +2,28 @@
   background-color: $main-background-color;
   color: $main-text-color;
 }
+
+.hide-mobile {
+  @media only screen and (max-width: 600px) {
+    display: none;
+  }
+}
+
+.wrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.space-between {
+  display: flex;
+  justify-content: space-between
+}
+
+.flex-end {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.full-width {
+  width: 100%;
+}

@@ -1,42 +1,38 @@
 <template>
-  <form @submit.prevent="submit" novalidate>
-    <div class="row">
-      <div class="col-md-12">
-        <div class="form-group" :class="{'has-error' : errors.first('email')}">
-          <input name="email"
-                 :placeholder="[[ $t('email_address') ]]"
-                 type="text"
-                 v-model="signInData.email"
-                 class="form-control"
-                 v-validate="'required'"
-                 :data-vv-as="$t('email_address')"/>
-        </div>
-      </div>
+  <form class="form sign-in-form" @submit.prevent="submit" novalidate>
+    <div class="form-group" :class="{'has-error' : errors.first('email')}">
+      <label for="">Email address</label>
+      <input name="email"
+        type="text"
+        v-model="signInData.email"
+        class="form-control"
+        v-validate="'required'"
+        :data-vv-as="$t('email_address')"/>
     </div>
-    <div class="row">
-      <div class=" col-md-12">
-        <div class="form-group" :class="{'has-error' : errors.first('password')}">
-          <input name="password"
-                 :placeholder="[[ $t('password') ]]"
-                 v-validate="'required'"
-                 :data-vv-as="$t('password')"
-                 type="password"
-                 v-model="signInData.password"
-                 class="form-control"/>
-        </div>
-      </div>
+    <div class="form-group" :class="{'has-error' : errors.first('password')}">
+      <label for="">Password</label>
+      <input name="password"
+        v-validate="'required'"
+        :data-vv-as="$t('password')"
+        type="password"
+        v-model="signInData.password"
+        class="form-control"/>
     </div>
     <div class="row" v-if="error">
       <div class=" col-md-6">
         <p class="error">{{ error }}</p>
       </div>
     </div>
-    <div class="row">
-      <div class=" col-md-12 text-center">
-        <button type="button" class="btn btn-link" @click="changeForm('signUp')">{{ $t('forgot_password') }}</button>
+    <div class="form-actions form-actions-right form-actions-justified wrap">
+      <div class="switch-form" @click="changeForm('signUp')">{{ $t('forgot_password') }}</div>
+      <div class="form-actions form-actions-justified">
+        <div class="checkbox-input">
+          <input type="checkbox">
+          <label>Remember me</label>
+        </div>
         <button type="submit" class="btn btn-success col-12">{{ $t('button_g.sign_in') }}</button>
-        <button type="button" class="btn btn-link" @click="changeForm('signUp')">{{ $t('no_account') }}</button>
       </div>
+      <!-- <button type="button" class="btn btn-link" @click="changeForm('signUp')">{{ $t('no_account') }}</button> -->
     </div>
   </form>
 </template>
