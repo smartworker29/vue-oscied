@@ -44,7 +44,34 @@ export default class App extends Vue {
 </script>
 
 <style lang="scss">
+  // @import '~bootstrap/dist/css/bootstrap.css';
+  // @import '~bootstrap-vue/dist/bootstrap-vue.css';
+  @import "~vue-multiselect/dist/vue-multiselect.min.css";
+  @import "~flag-icon-css/css/flag-icon.css";
   @import "./assets/styles/app";
-  @import '~bootstrap/dist/css/bootstrap.css';
-  @import '~bootstrap-vue/dist/bootstrap-vue.css';
+  body {
+    font-family: 'Cerebri Sans';
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  html, body, #app {
+    height: 100%;
+  }
+
+  .application-wrapper {
+    height: 100%;
+  }
+
+  .application-content {
+    background: #0085cd;
+    position: relative;
+    padding: 3.5% 5.5% 60px 5.5%;
+    min-height: 100%;
+  }
+
+  html {
+    min-height: 100vh;
+  }
 </style>

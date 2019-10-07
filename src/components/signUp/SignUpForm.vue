@@ -1,82 +1,66 @@
 <template>
-  <form @submit.prevent="submit" novalidate>
-    <div class="row">
-      <div class="col-md-12">
-        <div class="form-group" :class="{'has-error' : errors.first('firstName')}">
-          <input name="firstName"
-                 :placeholder="[[ $t('first_name') ]]"
-                 type="text"
-                 v-model="registrationData.firstName"
-                 class="form-control"
-                 v-validate="'required|max:50'"
-                 :data-vv-as="$t('first_name')"/>
-          <small class="error">{{ errors.first('firstName') }}</small>
-        </div>
-      </div>
-      <div class="col-md-12">
-        <div class="form-group" :class="{'has-error' : errors.first('lastName')}">
-          <input name="lastName"
-                 :placeholder="[[ $t('last_name') ]]"
-                 type="text"
-                 v-model="registrationData.lastName"
-                 class="form-control"
-                 v-validate="'required|max:50'"
-                 :data-vv-as="$t('last_name')"/>
-          <small class="error">{{ errors.first('lastName') }}</small>
-        </div>
-      </div>
+  <form @submit.prevent="submit" class="form" novalidate>
+    <div class="form-group" :class="{'has-error' : errors.first('firstName')}">
+      <label for="">First name</label>
+      <input name="firstName"
+              type="text"
+              v-model="registrationData.firstName"
+              class="form-control"
+              v-validate="'required|max:50'"
+              :data-vv-as="$t('first_name')"/>
+      <small v-if="errors.first('firstName')" class="error">{{ errors.first('firstName') }}</small>
     </div>
-    <div class="row">
-      <div class="col-md-12">
-        <div class="form-group" :class="{'has-error' : (errors.first('email') || !emailIsFree)}">
-          <input name="email"
-                 :placeholder="[[ $t('email_address') ]]"
-                 type="email"
-                 v-model="registrationData.email"
-                 class="form-control"
-                 v-validate="'required|email|max:180'"
-                 :data-vv-as="$t('email_address')"
-                 @change="checkEmail()"/>
-          <small class="error">{{ errors.first('email') }}</small>
-          <small class="error" v-if="!errors.first('email') && !emailIsFree">{{ $t('email_already_user') }}</small>
-        </div>
-      </div>
+    <div class="form-group" :class="{'has-error' : errors.first('lastName')}">
+      <label for="">Last name</label>
+      <input name="lastName"
+              type="text"
+              v-model="registrationData.lastName"
+              class="form-control"
+              v-validate="'required|max:50'"
+              :data-vv-as="$t('last_name')"/>
+      <small v-if="errors.first('lastName')" class="error">{{ errors.first('lastName') }}</small>
     </div>
-    <div class="row">
-      <div class="col-md-12">
-        <div class="form-group">
-          <select name="gender"
-                  class="form-control"
-                  v-model="registrationData.gender">
-            <option value="" selected>{{ $t('gender') }}</option>
-            <option value="m">{{ $t('male') }}</option>
-            <option value="f">{{ $t('female') }}</option>
-          </select>
-        </div>
+      <div class="form-group" :class="{'has-error' : (errors.first('email') || !emailIsFree)}">
+        <label for="">Email address</label>
+        <input name="email"
+                type="email"
+                v-model="registrationData.email"
+                class="form-control"
+                v-validate="'required|email|max:180'"
+                :data-vv-as="$t('email_address')"
+                @change="checkEmail()"/>
+        <small class="error" v-if="errors.first('email')">{{ errors.first('email') }}</small>
+        <small class="error" v-if="!errors.first('email') && !emailIsFree">{{ $t('email_already_user') }}</small>
       </div>
-    </div>
-    <div class="row" v-if="availableRegistrationFields.includes('phone')">
-      <div class="col-md-12">
-        <div class="form-group" :class="{'has-error' : errors.first('phone')}">
-          <input name="phone"
-                 :placeholder="[[ $t('phone_number') ]]"
-                 type="text"
-                 v-model="registrationData.phone"
-                 class="form-control"
-                 v-validate="'required'"
-                :data-vv-as="$t('phone_number')"/>
-          <small class="error">{{ errors.first('phone') }}</small>
-        </div>
+      <div class="form-group form-group-select">
+        <label for="">Gender</label>
+        <multiselect
+          v-model="registrationData.gender"
+          :placeholder="'Select'"
+          :searchable="false"
+          :show-labels="false"
+          :options="genderOption">
+        </multiselect>
       </div>
-    </div>
+      <div
+        class="form-group"
+        v-if="availableRegistrationFields.includes('phone')"
+        :class="{'has-error' : errors.first('phone')}">
+        <label for="">Phone number</label>
+        <input name="phone"
+                type="text"
+                v-model="registrationData.phone"
+                class="form-control"
+                v-validate="'required'"
+              :data-vv-as="$t('phone_number')"/>
+        <small v-if="errors.first('phone')" class="error">{{ errors.first('phone') }}</small>
+      </div>
     <div class="row" v-if="error">
         <p>{{ error }}</p>
     </div>
-    <div class="row">
-      <div class="col-md-12 text-center">
-        <button type="submit" class="btn btn-success col-12">{{ $t('button_g.sign_up') }}</button>
-        <button type="button" class="btn btn-link" @click="changeForm('signIn')">{{ $t('already_registered') }}</button>
-      </div>
+    <div class="form-actions form-actions-justified">
+      <span class="switch-form" @click="changeForm('signIn')">{{ $t('already_registered') }}</span>
+      <button type="submit" class="btn btn-success">{{ $t('button_g.register') }}</button>
     </div>
   </form>
 </template>
@@ -101,8 +85,10 @@ export default class SignUpForm extends Vue {
   availableRegistrationFields: string[] = []
   emailIsFree: boolean = true
   error: string | null = null
+  genderOption: Array<any> = []
 
   async created () {
+    this.genderOption = [this.$t('male'), this.$t('female')]
     this.availableRegistrationFields = await UserService.getAvailableRegistrationFields()
   }
 

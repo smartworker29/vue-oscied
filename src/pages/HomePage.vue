@@ -1,21 +1,34 @@
 <template>
-  <div class="container">
-    <div class="row">
-      <div class="col-8">
-        <h1>Welcome to Onesource</h1>
-            <p v-if="!isAuthenticated">{{ $t('please_register') }}</p>
-            <p>Please register or sign in if you are a existing user</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor esse expedita molestiae neque quod reprehenderit saepe sequi voluptatibus! Accusantium beatae corporis enim omnis provident quas quia quibusdam quod sunt tempora!</p>
-      </div>
-      <div class="col-4" v-if="!isAuthenticated">
-        <div class="language">
+  <div class="auth-container">
+    <div class="auth-header">
+      <img class="logo" :src="require('@/assets/logo-ccr.svg')" />
+      <div class="language">
           <LangSwitcher/>
         </div>
-        <div v-if="displayedForm === 'signIn'" class="sign-form">
-          <SignInForm @changeForm="changeForm" @authorizedComplete="authorizedComplete"/>
-        </div>
-        <div v-else-if="displayedForm === 'signUp'" class="sign-form">
-          <SignUpForm @changeForm="changeForm" @authorizedComplete="authorizedComplete"/>
+    </div>
+    <div class="auth-content">
+      <div class="welcome-info">
+        <span class="welcome-sub-title">Welcome</span>
+        <h2 class="welcome-title">Survey name</h2>
+            <!-- <p v-if="!isAuthenticated">{{ $t('please_register') }}</p> -->
+            <p class="sign-in-suggestion">Please register or <a @click="displayedForm = 'signIn'">sign in</a> if you are a existing user</p>
+            <p class="hide-mobile">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse nec enim risus. Mauris efficitur felis lacinia, aliquam mauris a, imperdiet turpis. Morbi fringilla urna eros, at mattis dui sagittis ac. Curabitur eu enim nisl. Nullam ac feugiat sapien. Quisque eu purus ut diam imperdiet viverra sed at nulla. In pharetra hendrerit vestibulum.</p>
+            <p class="hide-mobile">Donec sollicitudin, felis ut posuere aliquam, quam lorem gravida nulla, non tempor dui felis sed magna. Nulla facilisi. Fusce rhoncus faucibus ipsum at blandit. Aenean posuere tellus nec lorem maximus, ut egestas quam varius. Integer vitae nulla consequat, cursus dui non, vestibulum sem. </p>
+      </div>
+      <div class="auth-forms">
+        <div class="form-wrapper">
+          <div class="form-switcher">
+            <button @click="displayedForm = 'signUp'" :class="{ 'active': displayedForm === 'signUp' }">Register</button>
+            <button @click="displayedForm = 'signIn'" :class="{ 'active': displayedForm === 'signIn' }">Sign in</button>
+          </div>
+          <div class="form-content">
+            <div v-if="displayedForm === 'signIn'" class="sign-form">
+              <SignInForm @changeForm="changeForm" @authorizedComplete="authorizedComplete"/>
+            </div>
+            <div v-else-if="displayedForm === 'signUp'" class="sign-form">
+              <SignUpForm @changeForm="changeForm" @authorizedComplete="authorizedComplete"/>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -50,3 +63,88 @@ export default class HomePage extends Vue {
   }
 }
 </script>
+
+<style lang="scss">
+  .auth-container {
+    // min-height: 100vh;
+    color: #fff;
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+
+  .auth-header {
+    margin-bottom: 81px;
+    display: flex;
+    justify-content: space-between;
+    @media only screen and (max-width: 768px) {
+      margin-bottom: 24px;
+    }
+  }
+
+  .logo {
+    width: 181px;
+    @media only screen and (max-width: 768px) {
+      width: 164px;
+    }
+  }
+
+  .auth-content {
+    display: flex;
+    justify-content: space-between;
+    @media only screen and (max-width: 600px) {
+      flex-wrap: wrap;
+      .welcome-info {
+        max-width: 100%;
+      }
+    }
+  }
+
+  .welcome-info {
+    max-width: 52%;
+    padding-right: 5%;
+    p {
+      margin-bottom: 24px;
+    }
+    a {
+      font-weight: 600;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+    .sign-in-suggestion {
+      margin-bottom: 15px;
+    }
+  }
+
+  .welcome-sub-title {
+    font-size: 24px;
+    font-weight: 300;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+  }
+
+  .welcome-title {
+    font-size: 32px;
+    margin: 7px 0 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+  }
+
+  .auth-forms {
+    width: 100%;
+    max-width: 509px;
+  }
+
+  .logo-CCR {
+    width: 181px;
+    height: 54px;
+    object-fit: contain;
+    background-color: #ffffff;
+  }
+
+</style>

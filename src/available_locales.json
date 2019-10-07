@@ -1,10 +1,12 @@
 [
   {
     "locale": "en_GB",
-    "localeName": "English (British)"
+    "localeName": "English (British)",
+    "class": "flag-icon-gb"
   },
   {
     "locale": "de",
-    "localeName": "Deutsch"
+    "localeName": "Deutsch",
+    "class": "flag-icon-de"
   }
 ]
