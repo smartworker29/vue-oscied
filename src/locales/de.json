@@ -48,6 +48,7 @@
   "female": "Deutch: Female",
   "phone_number": "Deutch: Phone number",
   "email_already_user": "Deutch: Email address is already used",
+  "gender_is_required": "Deutch: Gender field is required",
   "forgot_password": "Deutch: Forgotten your password ?",
   "no_account": "Deutch: No account? Sign up",
   "already_registered": "Deutch: Already registered? Sign in",

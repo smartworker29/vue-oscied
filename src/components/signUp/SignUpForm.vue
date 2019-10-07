@@ -37,10 +37,12 @@
         <multiselect
           v-model="registrationData.gender"
           :placeholder="'Select'"
+          label="label"
           :searchable="false"
           :show-labels="false"
           :options="genderOption">
         </multiselect>
+        <small v-if="genderRequiredError" class="error">{{ $t('gender_is_required') }}</small>
       </div>
       <div
         class="form-group"
@@ -68,27 +70,28 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 import UserService from '@/services/UserService'
-import { RegistrationData } from '@/interfaces/UserInterfaces'
+import { RegistrationData, RegistrationFormData } from '@/interfaces/UserInterfaces'
 import LocaleHelper from '@/utils/LocaleHelper'
 
 @Component({})
 export default class SignUpForm extends Vue {
-  registrationData: RegistrationData = {
+  registrationData: RegistrationFormData = {
     email: '',
     firstName: '',
     lastName: '',
-    gender: '',
+    gender: null,
     phone: '',
     locale: ''
   }
 
   availableRegistrationFields: string[] = []
   emailIsFree: boolean = true
+  genderRequiredError: boolean = false
   error: string | null = null
   genderOption: Array<any> = []
 
   async created () {
-    this.genderOption = [this.$t('male'), this.$t('female')]
+    this.genderOption = [{ label: this.$t('male'), value: 'm' }, { label: this.$t('female'), value: 'f' }]
     this.availableRegistrationFields = await UserService.getAvailableRegistrationFields()
   }
 
@@ -98,6 +101,7 @@ export default class SignUpForm extends Vue {
 
   async submit () {
     this.checkEmail()
+    this.genderRequiredError = !this.registrationData.gender || !this.registrationData.gender.value
     this.error = ''
 
     if (!await this.$validator.validateAll() || !this.emailIsFree) {
@@ -107,7 +111,10 @@ export default class SignUpForm extends Vue {
 
     try {
       this.registrationData.locale = LocaleHelper.getUserLocale()
-      const registrationData = await UserService.registration(this.registrationData)
+      const registrationData = await UserService.registration({
+        ...this.registrationData,
+        ...{ gender: this.registrationData.gender.value }
+      })
       await this.$auth.setToken(registrationData)
       await UserService.getUser()
 

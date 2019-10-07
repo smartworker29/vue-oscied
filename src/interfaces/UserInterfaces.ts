@@ -26,6 +26,15 @@ export interface RegistrationData {
   locale?: string | null
 }
 
+export interface RegistrationFormData {
+  email: string
+  firstName: string
+  lastName: string
+  gender?: { lable: string, value: string }
+  phone?: string
+  locale?: string | null
+}
+
 export interface SignInData {
   email: string
   password: string
