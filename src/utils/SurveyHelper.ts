@@ -14,11 +14,13 @@ class SurveyHelper {
   }
 
   private setData(key: string, data: any) : void {
-    window.localStorage.setItem(key, JSON.stringify(data))
+    if (typeof window !== 'undefined') {
+      window.localStorage.setItem(key, JSON.stringify(data))
+    }
   }
 
   private getData(key: string) : any {
-    const data: string | null = window.localStorage.getItem(key)
+    const data: string | null = (typeof window !== 'undefined' ? window.localStorage.getItem(key) : null)
     return data !== null ? JSON.parse(data) : null
   }
 
@@ -61,11 +63,13 @@ class SurveyHelper {
     }
 
     this.removeUncompletedSurvey(surveyData.surveyProductType, surveyData.surveyProductId)
-    window.localStorage.removeItem(this.currentSurveyKey)
+    if (typeof window !== 'undefined') {
+      window.localStorage.removeItem(this.currentSurveyKey)
+    }
   }
 
   hasUncompletedSurvey (surveyProductType: string, surveyProductId: number) : boolean {
-    return null !== window.localStorage.getItem(this.getUncompletedSurveyKey(surveyProductType, surveyProductId))
+    return null !== (typeof window !== 'undefined' ? window.localStorage.getItem(this.getUncompletedSurveyKey(surveyProductType, surveyProductId)): null)
   }
 
   getUncompletedSurvey (surveyProductType: string, surveyProductId: number) : UncompletedSurveyData {
@@ -97,7 +101,9 @@ class SurveyHelper {
 
   removeUncompletedSurvey (surveyProductType: string, surveyProductId: number) : void {
     if (this.hasUncompletedSurvey(surveyProductType, surveyProductId)) {
-      window.localStorage.removeItem(this.getUncompletedSurveyKey(surveyProductType, surveyProductId))
+      if (typeof window !== 'undefined') {
+        window.localStorage.removeItem(this.getUncompletedSurveyKey(surveyProductType, surveyProductId))
+      }
     }
   }
 

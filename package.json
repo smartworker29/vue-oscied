@@ -47,13 +47,7 @@
     "less-loader": "^4.1.0",
     "lint-staged": "^8.1.5",
     "lodash": "^4.17.10",
-    "mini-css-extract-plugin": "^0.4.0",
     "node-sass": "^4.12.0",
-    "optimize-css-assets-webpack-plugin": "^4.0.1",
-    "postcss": "^6.0.22",
-    "postcss-easy-import": "^3.0.0",
-    "postcss-loader": "^2.1.5",
-    "purgecss-webpack-plugin": "^0.22.0",
     "sass": "^1.22.7",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.21.0",
@@ -64,7 +58,7 @@
     "url-loader": "^2.1.0",
     "vee-validate": "^2.2.13",
     "vue": "^2.6.10",
-    "vue-authenticate": "^1.4.1",
+    "vue-authenticate": "https://github.com/smartinfo-lab/vue-authenticate",
     "vue-axios": "^2.1.4",
     "vue-bootstrap-toggle": "^1.1.4",
     "vue-cli-plugin-i18n": "^0.6.0",
@@ -72,6 +66,7 @@
     "vue-loader": "^15.7.1",
     "vue-property-decorator": "^6.0.0",
     "vue-router": "^3.0.3",
+    "vue-style-loader": "^4.1.2",
     "vue-template-compiler": "^2.6.10",
     "vuedraggable": "^2.23.0",
     "vuex": "^3.0.1",
@@ -81,8 +76,7 @@
     "webpack-cli": "^3.3.9",
     "webpack-merge": "^4.2.2",
     "webpack-node-externals": "^1.7.2",
-    "webpack-serve": "^1.0.2",
-    "webpackbar": "^2.6.1"
+    "webpack-serve": "^1.0.2"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"

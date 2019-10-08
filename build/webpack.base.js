@@ -3,9 +3,13 @@ const webpack = require('webpack')
 const TscofigPathsPlugin = require('tsconfig-paths-webpack-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
 const config = require('../config')
+const resolve = (file) => path.resolve(__dirname, file)
 
 module.exports = {
   context: path.resolve(__dirname, '../'),
+  output: {
+    path: resolve('../dist')
+  },
   resolve: {
     alias: {
       'vue$': 'vue/dist/vue.esm.js'
@@ -32,9 +36,10 @@ module.exports = {
       },
       {
         test: /\.s[ac]ss$/i,
+        exclude: /node_modules/,
         use: [
           // Creates `style` nodes from JS strings
-          'style-loader',
+          'vue-style-loader',
           // Translates CSS into CommonJS
           'css-loader',
           // Compiles Sass to CSS
