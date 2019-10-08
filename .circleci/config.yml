@@ -34,7 +34,6 @@ jobs:
                         --delete \
                         --exclude=/.circleci \
                         --exclude=/.env* \
-                        --exclude=/assets \
                         /home/circleci/ccr3/dist $SSH_USER@$SERVER_1:$APP_PATH
 workflows:
     version: 2
