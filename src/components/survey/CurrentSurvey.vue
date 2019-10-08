@@ -2,8 +2,10 @@
   <div class="container">
     <div class="row">
       <div class="col-md-8">
-        <h1>{{ $t('world_view') }}</h1>
-        <p>{{ $t('sorting_g.description') }} <button>{{ $t('more')}} ></button></p>
+        <h1>{{ currentSectionData.title ? currentSectionData.title : $t('world_view') }}</h1>
+        <p>
+          {{ currentSectionData.instructions ? currentSectionData.instructions : $t('sorting_g.description') }}
+           <button>{{ $t('more')}} ></button></p>
       </div>
       <div class="col-md-4">
         <SurveyProgress/>
@@ -20,7 +22,7 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import { Getter } from 'vuex-class'
-import { BaseStatement, CompleteSectionData, Section, SurveyInfo } from '@/interfaces/SurveyInterfaces'
+import { Statement, CompleteSectionData, Section, SurveyInfo } from '@/interfaces/SurveyInterfaces'
 import CurrentSurvey from '@/components/survey/CurrentSurvey.vue'
 import SurveyProgress from '@/components/common/progressBar/SurveyProgress.vue'
 import SurveyService from '@/services/SurveyService'
@@ -39,6 +41,8 @@ export default class CurrentSurveyPage extends Vue {
   currentProductSurveyId!: number
   @Getter('survey/getCurrentProductSurveyType')
   currentProductSurveyType!: string
+  @Getter('survey/getCurrentProductSurveySection')
+  currentSectionData!: Section
 
   @Prop({})
   surveyProduct!: string
@@ -62,28 +66,13 @@ export default class CurrentSurveyPage extends Vue {
   }
 
   async uploadSurveySections () : Promise<void> {
-    let sections = []
-    if (this.currentProductSurveyType === 'eq') {
-      sections = this.uploadEqSurveySections()
-    } else {
-      sections = await SurveyService.getSurveySections(this.currentProductSurveyType, this.surveyProductId)
-    }
+    let sections: Section[] = await SurveyService.getSurveySections(
+      this.currentProductSurveyType,
+      this.surveyProductId
+    )
 
     this.$store.commit('survey/setCurrentSurveySections', sections)
     this.countSection = sections.length
-  }
-
-  uploadEqSurveySections () : Section[] {
-    return [
-      {
-        id: 1,
-        title: 'world'
-      },
-      {
-        id: 2,
-        title: 'self'
-      }
-    ]
   }
 
   pushToAnotherSection (sectionNumber: number) : void {
@@ -98,7 +87,7 @@ export default class CurrentSurveyPage extends Vue {
     })
   }
 
-  handleCompleteSection (statements: BaseStatement[]) {
+  handleCompleteSection (statements: Statement[]) {
     const currentSectionNumber: number = this.$store.getters['survey/getCurrentProductSurveySectionNumber']
     this.handleSortedSection(statements, currentSectionNumber)
 
@@ -110,7 +99,7 @@ export default class CurrentSurveyPage extends Vue {
     this.pushToAnotherSection(currentSectionNumber + 1)
   }
 
-  handleSortedSection (statements: BaseStatement[], currentSectionNumber: number) {
+  handleSortedSection (statements: Statement[], currentSectionNumber: number) {
     const section: Section = this.$store.getters['survey/getCurrentProductSurveySection']
     const completeSectionData: CompleteSectionData = { sectionNumber: currentSectionNumber, statements, section }
 

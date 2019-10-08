@@ -1,5 +1,10 @@
 import { BaseApiService } from '@/services/BaseApiService'
-import { EqStatement, ResponseProductSurveyInfo, Section, SimpleStatement } from '@/interfaces/SurveyInterfaces'
+import {
+  ResponseProductSurveyInfo,
+  Section,
+  SimpleStatement,
+  SurveyUserInfo
+} from '@/interfaces/SurveyInterfaces'
 
 class SurveyService extends BaseApiService {
   private validateSurveyProductType(surveyProductType: string) : string {
@@ -28,8 +33,10 @@ class SurveyService extends BaseApiService {
     return this.callMethod('get', `/${surveyProductType}/section/id/${surveyProductId}/statements/`)
   }
 
-  getEqSectionStatements (view: string) : EqStatement[] {
-    return this.callMethod('get', `/eq/section/id/statements/${view}/`)
+  getSurveyUserInfo (surveyProductType: string, surveyProductId: number) : SurveyUserInfo {
+    surveyProductType = this.validateSurveyProductType(surveyProductType)
+
+    return this.callMethod('POST', `/${surveyProductType}/survey/user/get/`, { 'surveyId': surveyProductId })
   }
 }
 
