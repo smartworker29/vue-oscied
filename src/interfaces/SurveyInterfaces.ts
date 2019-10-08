@@ -46,3 +46,7 @@ export interface SurveyUserInfo {
   isAuthorised: boolean
   isCompleted: boolean
 }
+
+export interface StatementIRI {
+  statementId: string
+}

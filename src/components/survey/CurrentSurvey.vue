@@ -13,7 +13,6 @@
     </div>
     <router-view v-if="loadSections"
                  @completeSection="handleCompleteSection"
-                 @completeSurvey="handleCompleteSurvey"
                  @pushToAnotherSection="pushToAnotherSection"
                  :key="sectionKey"/>
   </div>
@@ -22,7 +21,7 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import { Getter } from 'vuex-class'
-import { Statement, CompleteSectionData, Section, SurveyInfo } from '@/interfaces/SurveyInterfaces'
+import { Statement, CompleteSectionData, Section, SurveyInfo, SurveyUserInfo } from '@/interfaces/SurveyInterfaces'
 import CurrentSurvey from '@/components/survey/CurrentSurvey.vue'
 import SurveyProgress from '@/components/common/progressBar/SurveyProgress.vue'
 import SurveyService from '@/services/SurveyService'
@@ -52,7 +51,7 @@ export default class CurrentSurveyPage extends Vue {
   loadSections: boolean = false
   countSection: number = 0
   sectionKey: number = 0
-  result: any = []// TODO::temporary
+  currentSurveyUserInfo: SurveyUserInfo | null = null
 
   async created () {
     if (this.surveyProduct !== this.currentProductSurveyType ||
@@ -62,6 +61,7 @@ export default class CurrentSurveyPage extends Vue {
     }
 
     await this.uploadSurveySections()
+    await this.uploadSurveyUserInfo()
     this.loadSections = true
   }
 
@@ -73,6 +73,10 @@ export default class CurrentSurveyPage extends Vue {
 
     this.$store.commit('survey/setCurrentSurveySections', sections)
     this.countSection = sections.length
+  }
+
+  async uploadSurveyUserInfo () : Promise<void> {
+    this.currentSurveyUserInfo = await SurveyService.getSurveyUserInfo(this.surveyProduct, this.surveyProductId)
   }
 
   pushToAnotherSection (sectionNumber: number) : void {
@@ -106,12 +110,20 @@ export default class CurrentSurveyPage extends Vue {
     this.$store.commit('survey/addOneCompletedSection', completeSectionData)
     SurveyHelper.addSectionToUncompletedSurvey(this.surveyProduct, this.surveyProductId, completeSectionData)
 
-    // TODO::add functionality to processing section data
-    this.result[currentSectionNumber - 1] = statements// TODO::temporary
+    try {
+      const nextSection: number = SurveyService.saveStatements(
+        this.surveyProduct,
+        this.currentSurveyUserInfo.surveyUserId,
+        statements
+      )
+
+      console.log(nextSection)
+    } catch (error) {
+      // TODO::add functionality
+    }
   }
 
   handleCompleteSurvey () {
-    console.log(this.result)
     // TODO::add functionality to processing survey data(upload the data from localStorage if passing uncompleted survey)
     // TODO::check if all section are completed
     this.$store.commit('survey/clearCurrentSurveyData')
