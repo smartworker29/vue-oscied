@@ -14,24 +14,22 @@ class SurveyHelper {
   }
 
   private setData(key: string, data: any) : void {
-    if (typeof window !== 'undefined') {
-      window.localStorage.setItem(key, JSON.stringify(data))
-    }
+    window.localStorage.setItem(key, JSON.stringify(data))
   }
 
   private getData(key: string) : any {
-    const data: string | null = (typeof window !== 'undefined' ? window.localStorage.getItem(key) : null)
+    const data: string | null = window.localStorage.getItem(key)
     return data !== null ? JSON.parse(data) : null
   }
 
   private processSectionData (section: CompleteSectionData) : CompletedSurveySectionData {
     const statements: CompletedSectionStatement[] = section.statements.map(
-      (statement: BaseStatement, index: number) : CompletedSectionStatement => {
-        return {
-          id: statement.id,
-          sortPosition: index
+        (statement: BaseStatement, index: number) : CompletedSectionStatement => {
+          return {
+            id: statement.id,
+            sortPosition: index
+          }
         }
-      }
     )
 
     return {
@@ -63,13 +61,11 @@ class SurveyHelper {
     }
 
     this.removeUncompletedSurvey(surveyData.surveyProductType, surveyData.surveyProductId)
-    if (typeof window !== 'undefined') {
-      window.localStorage.removeItem(this.currentSurveyKey)
-    }
+    window.localStorage.removeItem(this.currentSurveyKey)
   }
 
   hasUncompletedSurvey (surveyProductType: string, surveyProductId: number) : boolean {
-    return null !== (typeof window !== 'undefined' ? window.localStorage.getItem(this.getUncompletedSurveyKey(surveyProductType, surveyProductId)): null)
+    return null !== window.localStorage.getItem(this.getUncompletedSurveyKey(surveyProductType, surveyProductId))
   }
 
   getUncompletedSurvey (surveyProductType: string, surveyProductId: number) : UncompletedSurveyData {
@@ -85,10 +81,10 @@ class SurveyHelper {
     }
 
     const sectionAlreadyExist: CompletedSurveySectionData | undefined = survey.sections.find(
-      (section: CompletedSurveySectionData) : boolean => {
+        (section: CompletedSurveySectionData) : boolean => {
           return section.id === sectionData.section.id
         }
-      )
+    )
 
     if (sectionAlreadyExist) {
       throw new Error('This section is already complete')
@@ -101,9 +97,7 @@ class SurveyHelper {
 
   removeUncompletedSurvey (surveyProductType: string, surveyProductId: number) : void {
     if (this.hasUncompletedSurvey(surveyProductType, surveyProductId)) {
-      if (typeof window !== 'undefined') {
-        window.localStorage.removeItem(this.getUncompletedSurveyKey(surveyProductType, surveyProductId))
-      }
+      window.localStorage.removeItem(this.getUncompletedSurveyKey(surveyProductType, surveyProductId))
     }
   }
 
@@ -115,24 +109,24 @@ class SurveyHelper {
     }
 
     const completedSection: CompletedSurveySectionData | undefined = survey.sections.find(
-      (section: CompletedSurveySectionData) : boolean => {
-        return section.number === checkedSectionNumber
-      }
+        (section: CompletedSurveySectionData) : boolean => {
+          return section.number === checkedSectionNumber
+        }
     )
 
     return !!completedSection
   }
 
   getNextNumberSectionUncompletedSurvey (
-    surveyProductType: string,
-    surveyProductId: number,
-    sectionsCount: number
+      surveyProductType: string,
+      surveyProductId: number,
+      sectionsCount: number
   ) : number | false {
     const survey: UncompletedSurveyData = this.getUncompletedSurvey(surveyProductType, surveyProductId)
     const existSectionNumber: number[] = survey.sections.map(
-      (section: CompletedSurveySectionData) : number => {
-        return section.number
-      }
+        (section: CompletedSurveySectionData) : number => {
+          return section.number
+        }
     )
 
     for (let sectionNumber = 1; sectionNumber <= sectionsCount; sectionNumber++) {

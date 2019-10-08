@@ -48,6 +48,14 @@ axios.interceptors.request.use(function (config) {
   return config
 })
 
+new Vue({
+  router,
+  store,
+  i18n,
+  render: h => h(App)
+}).$mount('#app')
+
+/*
 const createApp = () => {
   const app = new Vue({
     router,
@@ -59,5 +67,5 @@ const createApp = () => {
 
   return { app, router, store }
 }
-
 export default createApp
+*/
