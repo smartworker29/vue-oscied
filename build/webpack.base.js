@@ -51,7 +51,7 @@ module.exports = {
         loader: 'url-loader',
         options: {
           limit: 10000,
-          name: '[name].[ext]?[hash]'
+          name: 'assets/[name].[ext]?[hash]'
         }
       },
       {
@@ -60,7 +60,7 @@ module.exports = {
           loader: 'url-loader',
           options: {
             limit: 10000,
-            name: '[name].[ext]'
+            name: 'assets/[name].[ext]'
           }
         }
       }
