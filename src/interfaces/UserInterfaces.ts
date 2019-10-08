@@ -21,7 +21,7 @@ export interface RegistrationData {
   email: string
   firstName: string
   lastName: string
-  gender?: string
+  gender?: string | null
   phone?: string
   locale?: string | null
 }
@@ -30,8 +30,8 @@ export interface RegistrationFormData {
   email: string
   firstName: string
   lastName: string
-  gender?: { lable: string, value: string }
-  phone?: string
+  gender: { label: string, value: string } | null
+  phone: string
   locale?: string | null
 }
 
