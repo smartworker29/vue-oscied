@@ -5,7 +5,6 @@ defaults: &defaults
     working_directory: ~/ccr3
     environment:
         TZ: "/usr/share/zoneinfo/Europe/London"
-        BASH_ENV: ~/.bashrc
 jobs:
     deploy_master:
         <<: *defaults
