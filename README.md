@@ -23,11 +23,3 @@ Alternatively, the Docker Stack can be used to run a specific Container for this
 ```bash
 orbit run app-eu
 ```
-
-### 2.2. Replicating Production Server
-
-We are using Vue Server Side Rendering (Vue SSR). For this reason, to render the app with SSR the following commands need to be run:
- 
-```bash
-yarn build & yarn start
-```
