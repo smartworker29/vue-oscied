@@ -13,7 +13,9 @@ jobs:
             -   run:
                     name: Install rsync
                     command: sudo apt-get install rsync
-
+            -   run:
+                    name: Install Vue CLI
+                    command: yarn global add @vue/cli
             -   restore_cache:
                     name: Restore Yarn Package Cache
                     keys:
@@ -34,8 +36,7 @@ jobs:
                         --delete \
                         --exclude=/.circleci \
                         --exclude=/.env* \
-                        --exclude=/assets \
-                        /home/circleci/ccr3/dist $SSH_USER@$SERVER_1:$APP_PATH
+                        /home/circleci/ccr3/dist/ $SSH_USER@$SERVER_1:$APP_PATH
 workflows:
     version: 2
     deploy:

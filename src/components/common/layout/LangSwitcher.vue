@@ -27,20 +27,21 @@
 import { Vue, Component } from 'vue-property-decorator'
 import LocaleHelper from '@/utils/LocaleHelper'
 import { LocaleData } from '@/interfaces/UserInterfaces'
+import { Locale } from '@/interfaces/Locale'
 
 @Component({})
 export default class LangSwitcher extends Vue {
-  currentLocale: any = {}
+  currentLocale: Locale | null = { locale: '', localeName: '' }
   availableLocales: LocaleData[] = []
 
   created () {
     let locale = process.env.VUE_APP_I18N_FALLBACK_LOCALE || 'en_GB'
     this.availableLocales = LocaleHelper.availableLocalesData
     locale = LocaleHelper.getUserLocale()
-    this.currentLocale = this.availableLocales.find(lang => lang.locale === locale)
+    this.currentLocale = this.availableLocales.find(lang => lang.locale === locale) || null
   }
 
-  changeLocale (locale) {
+  changeLocale (locale: Locale) {
     this.currentLocale = locale
     LocaleHelper.setUserLocale(this.currentLocale.locale)
     window.location.reload()
