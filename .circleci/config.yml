@@ -19,18 +19,14 @@ jobs:
                     keys:
                         - yarn-packages-{{ checksum "yarn.lock" }}
             -   run:
-                    name: Install Dependencies
+                    name: Install Dependencies and Build
                     command: |
-                        yarn install --frozen-lockfile
+                        yarn install --frozen-lockfile & yarn build
             -   save_cache:
                     name: Save Yarn Package Cache
                     key: yarn-packages-{{ checksum "yarn.lock" }}
                     paths:
                         - ~/.cache/yarn
-            -   run:
-                    name: Cleanup working files
-                    command: |
-                        rm -rf .circleci .git .gitignore icon.png
             -   deploy:
                     name: Deploy to Production
                     command: |
@@ -39,14 +35,7 @@ jobs:
                         --exclude=/.circleci \
                         --exclude=/.env* \
                         --exclude=/assets \
-                        /home/circleci/ccr3/ $SSH_USER@$SERVER_1:$APP_PATH
-            -   run:
-                    name: Yarn Build and pm2 restart
-                    command: |
-                        ssh -o "StrictHostKeyChecking no" $SSH_USER@$SERVER_1 "cd $APP_PATH && \
-                        yarn build && \
-                        pm2 restart appeu \
-                        "
+                        /home/circleci/ccr3/dist $SSH_USER@$SERVER_1:$APP_PATH
 workflows:
     version: 2
     deploy:
