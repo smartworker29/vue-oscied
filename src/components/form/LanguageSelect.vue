@@ -23,6 +23,7 @@
 import { Vue, Component } from 'vue-property-decorator'
 import LocaleHelper from '@/utils/LocaleHelper'
 import { LocaleData } from '@/interfaces/UserInterfaces'
+import { Locale } from '@/interfaces/Locale'
 
 @Component({})
 export default class LanguageSelect extends Vue {
@@ -36,7 +37,7 @@ export default class LanguageSelect extends Vue {
     this.currentLocale = this.availableLocales.find(lang => lang.locale === locale)
   }
 
-  changeLocale (locale) {
+  changeLocale (locale: Locale) {
 
   }
 }

@@ -113,7 +113,7 @@ export default class SignUpForm extends Vue {
       this.registrationData.locale = LocaleHelper.getUserLocale()
       const registrationData = await UserService.registration({
         ...this.registrationData,
-        ...{ gender: this.registrationData.gender.value }
+        ...{ gender: this.registrationData.gender ? this.registrationData.gender.value : null }
       })
       await this.$auth.setToken(registrationData)
       await UserService.getUser()
