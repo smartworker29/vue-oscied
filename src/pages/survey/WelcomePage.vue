@@ -1,10 +1,18 @@
 <template>
-  <div class="container">
+  <div class="survey">
+    <div class="survey-header">
+      <h1 class="survey-title">{{ $t('welcome_to_survey', { surveyName: (surveyInfo) ? surveyInfo.title : '' }) }}</h1>
+    </div>
+    <div class="survey-content">
+      <p v-if="!isAuthenticated">{{ $t('please_register') }}</p>
+      <p>{{ (surveyInfo) ? surveyInfo.welcomeMessage : '' }}!</p>
+      <button v-if="isAuthenticated" class="btn btn-primary btn-primary-active" @click="beginSurvey">
+        {{ isUncompletedSurvey ? $t('button_g.continue_survey') : $t('button_g.start_survey') }}
+      </button>
+    </div>
     <div class="row">
       <div class="col-8">
-        <h1>{{ $t('welcome_to_survey', { surveyName: (surveyInfo) ? surveyInfo.title : '' }) }}</h1>
-        <p v-if="!isAuthenticated">{{ $t('please_register') }}</p>
-        <p>{{ (surveyInfo) ? surveyInfo.welcomeMessage : '' }}!</p>
+        <h1></h1>
       </div>
 
       <div class="col-4" v-if="!isAuthenticated">
@@ -18,12 +26,7 @@
           <SignUpForm @changeForm="changeForm" @authorizedComplete="authorizedComplete"/>
         </div>
       </div>
-      <div class="col-4" v-else>
-        <button type="button" class="btn btn-warning" @click="beginSurvey">
-          {{ isUncompletedSurvey ? $t('button_g.continue_survey') : $t('button_g.start_survey') }}
-        </button>
-      </div>
-      </div>
+    </div>
   </div>
 </template>
 
@@ -108,3 +111,48 @@ export default class WelcomePage extends Vue {
   }
 }
 </script>
+
+<style lang="scss">
+  .survey {
+    background: #fff;
+    height: 100%;
+  }
+
+  .survey-more {
+    color: #0085cd;
+    margin-left: 16px;
+  }
+
+  .survey-title {
+    font-size: 32px;
+    font-weight: 300;
+    color: #071012;
+  }
+
+  .survey-header {
+    background: #e6f3fa;
+    padding: 1% 5.5% 7px 5.5%;
+    p {
+      margin-bottom: 30px;
+      color: #071012;
+    }
+  }
+
+  .survey-content {
+
+  }
+
+  .survey-content {
+    color: #071012;
+    overflow: hidden;
+    padding: 3.1% 39.5% 60px 5.5%;
+    h2 {
+      font-size: 20px;
+      font-weight: 300;
+      margin: 0 0 30px 0;
+    }
+    p {
+      margin-bottom: 30px;
+    }
+  }
+</style>

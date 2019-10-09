@@ -1,19 +1,20 @@
 <template>
-  <div class="container">
-    <div class="row">
-      <div class="col-md-8">
-        <h1>{{ $t('world_view') }}</h1>
-        <p>{{ $t('sorting_g.description') }} <button>{{ $t('more')}} ></button></p>
-      </div>
-      <div class="col-md-4">
-        <SurveyProgress/>
-      </div>
+  <div class="survey">
+    <div class="survey-header">
+        <h1 class="survey-title">{{ $t('world_view') }}</h1>
+        <p>{{ $t('sorting_g.description') }} <span class="survey-more">{{ $t('more')}} ></span></p>
     </div>
+    <div class="survey-content">
+      <!-- <div class="col-md-4">
+        <SurveyProgress/>
+      </div> -->
     <router-view v-if="loadSections"
-                 @completeSection="handleCompleteSection"
-                 @completeSurvey="handleCompleteSurvey"
-                 @pushToAnotherSection="pushToAnotherSection"
-                 :key="sectionKey"/>
+      @completeSection="handleCompleteSection"
+      @completeSurvey="handleCompleteSurvey"
+      @pushToAnotherSection="pushToAnotherSection"
+      :key="sectionKey"/>
+
+    </div>
   </div>
 </template>
 

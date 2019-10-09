@@ -1,10 +1,13 @@
 <template>
   <div class="drag-and-drop-statement-sorting row">
-    <div class="col-md-6 row">
-      <div class="col-md-1">
+    <div class="drag-and-drop-info">
+      <p><fa class="icon" icon="info-circle"/> {{ $t('sorting_g.drag.tip') }}</p>
+    </div>
+    <div class="drag-and-drop-content">
+      <div class="drag-and-drop-numbers">
         <p v-for="(item, index) in options.list" :key="index" class="dd-sorting-list-item-num">{{ index + 1 }}</p>
       </div>
-      <div class="col-md-11">
+      <div class="drag-and-drop">
         <draggable class="dd-sorting-list"
                    :list="options.list"
                    :handle="'.handle'"
@@ -19,10 +22,7 @@
         </draggable>
       </div>
     </div>
-    <div class="col-md-6">
-      <p><fa icon="info-circle"/> {{ $t('sorting_g.drag.tip') }}</p>
-    </div>
-    <button class="btn btn-info" @click="updateOrder">{{ $t('button_g.confirm_order') }}</button>
+    <button class="btn btn-primary btn-primary-active" @click="updateOrder">{{ $t('button_g.confirm_order') }}</button>
   </div>
 </template>
 
@@ -48,3 +48,15 @@ export default class DragAndDropSortingStatement extends Vue {
   }
 }
 </script>
+
+<style lang="scss">
+  .drag-and-drop-content {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+  }
+
+  .drag-and-drop {
+    flex: 1;
+  }
+</style>
