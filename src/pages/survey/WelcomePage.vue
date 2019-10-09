@@ -9,21 +9,23 @@
       <button v-if="isAuthenticated" class="btn btn-primary btn-primary-active" @click="beginSurvey">
         {{ isUncompletedSurvey ? $t('button_g.continue_survey') : $t('button_g.start_survey') }}
       </button>
-    </div>
-    <div class="row">
-      <div class="col-8">
-        <h1></h1>
-      </div>
-
-      <div class="col-4" v-if="!isAuthenticated">
+      <div class="auth-forms" v-if="!isAuthenticated">
         <div class="language">
           <LangSwitcher/>
         </div>
-        <div v-if="displayedForm === 'signIn'" class="sign-form">
-          <SignInForm @changeForm="changeForm" @authorizedComplete="authorizedComplete"/>
-        </div>
-        <div v-else-if="displayedForm === 'signUp'" class="sign-form">
-          <SignUpForm @changeForm="changeForm" @authorizedComplete="authorizedComplete"/>
+        <div class="form-wrapper">
+          <div class="form-switcher">
+            <button @click="displayedForm = 'signUp'" :class="{ 'active': displayedForm === 'signUp' }">Register</button>
+            <button @click="displayedForm = 'signIn'" :class="{ 'active': displayedForm === 'signIn' }">Sign in</button>
+          </div>
+          <div class="form-content">
+            <div v-if="displayedForm === 'signIn'" class="sign-form">
+              <SignInForm @changeForm="changeForm" @authorizedComplete="authorizedComplete"/>
+            </div>
+            <div v-else-if="displayedForm === 'signUp'" class="sign-form">
+              <SignUpForm @changeForm="changeForm" @authorizedComplete="authorizedComplete"/>
+            </div>
+          </div>
         </div>
       </div>
     </div>

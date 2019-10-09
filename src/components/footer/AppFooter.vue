@@ -11,12 +11,12 @@
 
 <style lang="scss">
   .footer {
-    color: #fff;
+    color: #071012;
+    left: 5.5%;
     font-size: 14px;
     display: inline-flex;
     position: absolute;
     bottom: 22px;
-    width: 100%;
     @media only screen and (max-width: 768px) {
       justify-content: center;
       left: 0;
@@ -28,10 +28,19 @@
       display: flex;
     }
     li {
+      color: #3d5a80;
       a {
+        cursor: pointer;
         text-decoration: underline;
       }
       margin-right: 6px;
+    }
+  }
+
+  .auth-container-wrapper + .footer {
+    color: #fff;
+    li {
+      color: #fff;
     }
   }
 </style>
