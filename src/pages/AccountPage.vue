@@ -1,5 +1,5 @@
 <template>
-  <div class="container account">
+  <div class="container account account-page">
     <h1>{{ $t('account') }}</h1>
     <div class="account-layout">
       <avatar-form class="account-layout-avatar" />
@@ -29,6 +29,9 @@ export default class AccountPage extends Vue {}
 
 <style lang="scss">
   .account {
+    &-page {
+      padding: 3.5% 5.5% 60px 5.5%;
+    }
     h1 {
       margin-top: -13px;
       color: #fff;
