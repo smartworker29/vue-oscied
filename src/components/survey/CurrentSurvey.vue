@@ -51,7 +51,7 @@ export default class CurrentSurveyPage extends Vue {
   loadSections: boolean = false
   countSection: number = 0
   sectionKey: number = 0
-  currentSurveyUserInfo: SurveyUserInfo | null = null
+  currentSurveyUserInfo!: SurveyUserInfo
 
   async created () {
     if (this.surveyProduct !== this.currentProductSurveyType ||
