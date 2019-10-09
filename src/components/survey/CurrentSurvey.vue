@@ -1,20 +1,16 @@
 <template>
-  <div class="container">
-    <div class="row">
-      <div class="col-md-8">
-        <h1>{{ currentSectionData.title ? currentSectionData.title : $t('world_view') }}</h1>
-        <p>
-          {{ currentSectionData.instructions ? currentSectionData.instructions : $t('sorting_g.description') }}
-           <button>{{ $t('more')}} ></button></p>
-      </div>
-      <div class="col-md-4">
-        <SurveyProgress/>
-      </div>
+  <div class="survey">
+    <div class="survey-header">
+        <h1 class="survey-title"><span>{{ currentSectionData.title ? currentSectionData.title : $t('world_view') }}</span> <SurveyProgress/></h1>
+        <p>{{ currentSectionData.instructions ? currentSectionData.instructions : $t('sorting_g.description') }} <span class="survey-more">{{ $t('more')}} ></span></p>
+
     </div>
+    <div class="survey-content">
     <router-view v-if="loadSections"
-                 @completeSection="handleCompleteSection"
-                 @pushToAnotherSection="pushToAnotherSection"
-                 :key="sectionKey"/>
+        @completeSection="handleCompleteSection"
+        @pushToAnotherSection="pushToAnotherSection"
+        :key="sectionKey"/>
+     </div>
   </div>
 </template>
 

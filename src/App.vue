@@ -62,13 +62,16 @@ export default class App extends Vue {
 
   .application-wrapper {
     height: 100%;
+    min-height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-flow: column;
   }
 
   .application-content {
     background: #0085cd;
     position: relative;
-    padding: 3.5% 5.5% 60px 5.5%;
-    min-height: 100%;
+    flex: 1;
   }
 
   html {

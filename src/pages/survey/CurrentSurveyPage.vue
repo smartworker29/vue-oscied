@@ -1,13 +1,7 @@
 <template>
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <current-survey v-if="displaySurvey"
-                        :surveyProduct="surveyProduct"
-                        :surveyProductId="surveyProductId"/>
-      </div>
-    </div>
-  </div>
+  <current-survey v-if="displaySurvey"
+    :surveyProduct="surveyProduct"
+    :surveyProductId="surveyProductId"/>
 </template>
 
 <script lang="ts">

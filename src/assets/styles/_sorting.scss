@@ -1,11 +1,28 @@
+.drag-and-drop-statement-sorting {
+  position: relative;
+  .drag-and-drop-info {
+    color: #3d5a80;
+    position: absolute;
+    left: 100%;
+    width: 500px
+  }
+  .icon {
+    height: 24px;
+    float: left;
+    margin-bottom: 8px;
+    margin-right: 16px;
+    color: #0085cd;
+  }
+}
 .dd-sorting-list {
   .dd-sorting-item {
-    background-color: $phrase-bg-color;
-    border: $border-width solid $phrase-border-color;
-    border-radius: $border-radius;
-    color: $form-text-color;
-    padding: 13px 15px;
-    margin: 10px 0px;
+    background-color: #FFFFFF;
+    max-width: 400px;
+    border: 2px solid #D6EFFF;
+    border-radius: 15px;
+    color: #000000;
+    padding: 8px 10px 9px 24px;
+    margin-bottom: 7px;
 
     &.chosen-item {
       border-color: $rank-border-color;
@@ -37,14 +54,19 @@
       height: 30px;
       width: 30px;
     }
+
+    .item-phrase {
+      color: #3d5a80;
+    }
   }
 }
 
-.dd-sorting-list-item-num {
-  min-width: 50px;
-  min-height: 50px;
-  margin: 10px;
-  padding: 15px;
+.survey .dd-sorting-list-item-num {
+  text-align: center;
+  width: 45px;
+  margin-bottom: 18px;
+  padding-top: 10px;
+  display: block;
 }
 
 .tap-sorting-list {
@@ -93,4 +115,8 @@
       }
     }
   }
+}
+
+.drag-and-drop-numbers {
+  width: 64px;
 }
