@@ -129,6 +129,16 @@ export default class WelcomePage extends Vue {
     font-size: 32px;
     font-weight: 300;
     color: #071012;
+    display: flex;
+    justify-content: space-between;
+    .progress-wrapper {
+      display: flex;
+      font-size: 12px;
+      color: #3d5a80;
+      .progress-title {
+        margin-right: 12px;
+      }
+    }
   }
 
   .survey-header {

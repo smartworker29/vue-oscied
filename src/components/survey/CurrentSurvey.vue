@@ -1,13 +1,11 @@
 <template>
   <div class="survey">
     <div class="survey-header">
-        <h1 class="survey-title">{{ $t('world_view') }}</h1>
+        <h1 class="survey-title"><span>{{ $t('world_view') }}</span> <SurveyProgress/></h1>
         <p>{{ $t('sorting_g.description') }} <span class="survey-more">{{ $t('more')}} ></span></p>
+
     </div>
     <div class="survey-content">
-      <!-- <div class="col-md-4">
-        <SurveyProgress/>
-      </div> -->
     <router-view v-if="loadSections"
       @completeSection="handleCompleteSection"
       @completeSurvey="handleCompleteSurvey"

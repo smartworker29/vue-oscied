@@ -37,6 +37,7 @@
     }
   }
 
+  .account-page + .footer,
   .auth-container-wrapper + .footer {
     color: #fff;
     li {
