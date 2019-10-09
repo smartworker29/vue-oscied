@@ -31,6 +31,13 @@ export abstract class BaseApiService {
             return responseKey && response.data.hasOwnProperty(responseKey)
               ? response.data[responseKey] : response.data
           })
+
+      case 'patch':
+        return this.api.patch(url, requestData, config)
+          .then((response: AxiosResponse) => {
+            return responseKey && response.data.hasOwnProperty(responseKey)
+              ? response.data[responseKey] : response.data
+          })
       default:
         throw new Error('An undefined method called.')
     }

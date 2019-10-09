@@ -9,6 +9,7 @@ export interface SurveyState {
   currentProductSurveyType: string | null
   currentProductSurveySections: Section[]
   currentProductSurveySectionNumber: number
+  currentProductSurveySection: Section | null
   countCompletedSections: number
 }
 
@@ -22,6 +23,7 @@ const survey: Module<SurveyState, RootState> = {
     currentProductSurveyType: null,
     currentProductSurveySections: [],
     currentProductSurveySectionNumber: 0,
+    currentProductSurveySection: null,
     countCompletedSections: 0
   },
 
@@ -41,8 +43,8 @@ const survey: Module<SurveyState, RootState> = {
     getCurrentProductSurveySectionNumber (state: SurveyState) : number {
       return state.currentProductSurveySectionNumber
     },
-    getCurrentProductSurveySection (state: SurveyState) : Section {
-      return state.currentProductSurveySections[state.currentProductSurveySectionNumber - 1]
+    getCurrentProductSurveySection (state: SurveyState) : Section|null {
+      return state.currentProductSurveySection
     },
     getCountCompletedSurveySection (state: SurveyState) : Number {
       return state.countCompletedSections
@@ -60,7 +62,9 @@ const survey: Module<SurveyState, RootState> = {
       state.isCurrentSurveyInitiated = true
     },
     setCurrentSurveySections (state: SurveyState, sections: Section[]) : void {
-      state.currentProductSurveySections = sections;
+      state.currentProductSurveySections = sections
+      state.currentProductSurveySectionNumber = 1
+      state.currentProductSurveySection = sections[0] ? sections[0] : null
     },
     clearCurrentSurveyData (state: SurveyState) : void {
       state.isCurrentSurveyInitiated = false
@@ -76,6 +80,8 @@ const survey: Module<SurveyState, RootState> = {
       }
 
       state.currentProductSurveySectionNumber = sectionNumber
+      state.currentProductSurveySection = state.currentProductSurveySections[sectionNumber - 1]
+        ? state.currentProductSurveySections[sectionNumber - 1] : null
     },
 
     addOneCompletedSection (state: SurveyState, data: CompleteSectionData): void {

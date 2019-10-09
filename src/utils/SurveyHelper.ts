@@ -4,7 +4,7 @@ import {
   CurrentSurveyData,
   UncompletedSurveyData
 } from '@/interfaces/LocalStorageInterfaces'
-import {BaseStatement, CompleteSectionData} from '@/interfaces/SurveyInterfaces'
+import {Statement, CompleteSectionData} from '@/interfaces/SurveyInterfaces'
 
 class SurveyHelper {
   private currentSurveyKey: string = 'currentSurvey'
@@ -24,7 +24,7 @@ class SurveyHelper {
 
   private processSectionData (section: CompleteSectionData) : CompletedSurveySectionData {
     const statements: CompletedSectionStatement[] = section.statements.map(
-        (statement: BaseStatement, index: number) : CompletedSectionStatement => {
+        (statement: Statement, index: number) : CompletedSectionStatement => {
           return {
             id: statement.id,
             sortPosition: index

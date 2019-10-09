@@ -1,13 +1,7 @@
-export interface BaseStatement {
+export interface Statement {
   id: number
   statement: string
-}
-export interface SimpleStatement extends BaseStatement {
   sectionId: number
-}
-
-export interface EqStatement extends BaseStatement {
-  position: number
 }
 
 export interface Section {
@@ -38,10 +32,21 @@ export interface CurrentSurveyData {
 export interface CompleteSectionData {
   section: Section
   sectionNumber: number
-  statements: BaseStatement[]
+  statements: Statement[]
 }
 
 export interface ResponseProductSurveyInfo {
   surveyProductId: number
   survey: SurveyInfo
+}
+
+
+export interface SurveyUserInfo {
+  surveyUserId: number
+  isAuthorised: boolean
+  isCompleted: boolean
+}
+
+export interface StatementIRI {
+  statementId: string
 }

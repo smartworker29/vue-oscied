@@ -4,7 +4,7 @@
       <div class="col-8">
         <h1>{{ $t('welcome_to_survey', { surveyName: (surveyInfo) ? surveyInfo.title : '' }) }}</h1>
         <p v-if="!isAuthenticated">{{ $t('please_register') }}</p>
-        <p>{{ (surveyInfo) ? surveyInfo.welcomeMessage : '' }}!</p>
+        <section v-html="(surveyInfo) ? surveyInfo.welcomeMessage : ''"></section>
       </div>
 
       <div class="col-4" v-if="!isAuthenticated">
