@@ -70,8 +70,9 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 import UserService from '@/services/UserService'
-import { RegistrationData, RegistrationFormData } from '@/interfaces/UserInterfaces'
+import { RegistrationFormData } from '@/interfaces/UserInterfaces'
 import LocaleHelper from '@/utils/LocaleHelper'
+import { EventBus } from '@/main'
 
 @Component({})
 export default class SignUpForm extends Vue {
@@ -118,7 +119,7 @@ export default class SignUpForm extends Vue {
       await this.$auth.setToken(registrationData)
       await UserService.getUser()
 
-      this.$emit('authorizedComplete')
+      EventBus.$emit('authorizedComplete')
     } catch (error) {
       if ('response' in error && error.response.status === 400) {
         this.handleRegistrationErrors(error.response.data)

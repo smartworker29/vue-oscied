@@ -20,10 +20,10 @@
           </div>
           <div class="form-content">
             <div v-if="displayedForm === 'signIn'" class="sign-form">
-              <SignInForm @changeForm="changeForm" @authorizedComplete="authorizedComplete"/>
+              <SignInForm @changeForm="changeForm"/>
             </div>
             <div v-else-if="displayedForm === 'signUp'" class="sign-form">
-              <SignUpForm @changeForm="changeForm" @authorizedComplete="authorizedComplete"/>
+              <SignUpForm @changeForm="changeForm"/>
             </div>
           </div>
         </div>
@@ -41,6 +41,7 @@ import LangSwitcher from '@/components/common/layout/LangSwitcher.vue'
 import SurveyService from '@/services/SurveyService'
 import { ResponseProductSurveyInfo, SurveyInfo } from '@/interfaces/SurveyInterfaces'
 import SurveyHelper from '@/utils/SurveyHelper'
+import { EventBus } from '@/main'
 
 @Component({
   components: {
@@ -64,6 +65,9 @@ export default class WelcomePage extends Vue {
   isUncompletedSurvey: boolean = false
 
   async created () {
+    EventBus.$on('authorizedComplete', () => {
+      this.beginSurvey()
+    })
     try {
       const response: ResponseProductSurveyInfo = await SurveyService.getProductSurveyInfo(
         this.surveyProduct,
@@ -80,13 +84,6 @@ export default class WelcomePage extends Vue {
 
   changeForm (formName: string) {
     this.displayedForm = formName
-  }
-
-  authorizedComplete () {
-    if (this.isAuthenticated) {
-      // TODO
-    }
-    this.beginSurvey()
   }
 
   beginSurvey () {
