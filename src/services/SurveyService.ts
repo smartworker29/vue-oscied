@@ -8,7 +8,7 @@ import {
 } from '@/interfaces/SurveyInterfaces'
 
 class SurveyService extends BaseApiService {
-  private validateSurveyProductType(surveyProductType: string) : string {
+  private validateSurveyProductType (surveyProductType: string) : string {
     if (surveyProductType === 'discovery-process') {
       return 'dp'
     }
@@ -36,7 +36,7 @@ class SurveyService extends BaseApiService {
           throw new Error('Unknown survey product type')
       }
 
-      return {statementId: `/api/${statementIRIPath}/${statement.id}`}
+      return { statementId: `/api/${statementIRIPath}/${statement.id}` }
     })
   }
 
@@ -68,6 +68,16 @@ class SurveyService extends BaseApiService {
     )
   }
 
+  getSurveyProgress (surveyProductType: string, surveyProductUserId: number) : number | null {
+    surveyProductType = this.validateSurveyProductType(surveyProductType)
+
+    return this.callMethod(
+      'get',
+      `/${surveyProductType}/survey/user/${surveyProductUserId}/progress/`,
+      null,
+      'nextSection'
+    )
+  }
   /**
    * For statements to be saved, they all must be related to one section.
    * The count of passed statements must be equal to the count of the section's statements
