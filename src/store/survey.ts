@@ -8,7 +8,6 @@ export interface SurveyState {
   currentProductSurveyId: number | null
   currentProductSurveyType: string | null
   currentProductSurveySections: Section[]
-  currentProductSurveySectionNumber: number
   currentProductSurveySection: Section | null
   countCompletedSections: number
 }
@@ -22,7 +21,6 @@ const survey: Module<SurveyState, RootState> = {
     currentProductSurveyId: null,
     currentProductSurveyType: null,
     currentProductSurveySections: [],
-    currentProductSurveySectionNumber: 0,
     currentProductSurveySection: null,
     countCompletedSections: 0
   },
@@ -40,10 +38,7 @@ const survey: Module<SurveyState, RootState> = {
     getCurrentProductSurveySectionCount (state: SurveyState): number {
       return state.currentProductSurveySections.length
     },
-    getCurrentProductSurveySectionNumber (state: SurveyState) : number {
-      return state.currentProductSurveySectionNumber
-    },
-    getCurrentProductSurveySection (state: SurveyState) : Section|null {
+    getCurrentProductSurveySection (state: SurveyState) : Section | null {
       return state.currentProductSurveySection
     },
     getCountCompletedSurveySection (state: SurveyState) : Number {
@@ -51,7 +46,12 @@ const survey: Module<SurveyState, RootState> = {
     },
     isCurrentSurveyInitiated (state: SurveyState) : boolean {
       return state.isCurrentSurveyInitiated
-    }
+    },
+    getNextProductSurveySectionNumber (state: SurveyState) : number | null {
+      return state.currentProductSurveySection && state.currentProductSurveySection.position
+        ? state.currentProductSurveySection.position + 1
+        : null
+    },
   },
 
   mutations: {
@@ -63,7 +63,6 @@ const survey: Module<SurveyState, RootState> = {
     },
     setCurrentSurveySections (state: SurveyState, sections: Section[]) : void {
       state.currentProductSurveySections = sections
-      state.currentProductSurveySectionNumber = 1
       state.currentProductSurveySection = sections[0] ? sections[0] : null
     },
     clearCurrentSurveyData (state: SurveyState) : void {
@@ -72,16 +71,14 @@ const survey: Module<SurveyState, RootState> = {
       state.currentProductSurveyId = null
       state.currentProductSurveyType = null
       state.currentProductSurveySections = []
-      state.currentProductSurveySectionNumber = 0
     },
-    setCurrentProductSurveySectionNumber(state: SurveyState, sectionNumber: number) : void {
-      if (sectionNumber < 1 || sectionNumber > state.currentProductSurveySections.length) {
-        throw new Error('Unavailable the section number.')
-      }
 
-      state.currentProductSurveySectionNumber = sectionNumber
-      state.currentProductSurveySection = state.currentProductSurveySections[sectionNumber - 1]
-        ? state.currentProductSurveySections[sectionNumber - 1] : null
+    setNextSurveySectionId (state: SurveyState, nextSectionId: number) : void {
+      const nextSection: Section | undefined = state.currentProductSurveySections.find((section: Section) => {
+        return section.id === nextSectionId
+      });
+
+      state.currentProductSurveySection = nextSection ? nextSection : null
     },
 
     addOneCompletedSection (state: SurveyState, data: CompleteSectionData): void {

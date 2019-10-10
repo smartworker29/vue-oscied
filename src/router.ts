@@ -28,8 +28,7 @@ const router = new Router({
       props: true
     },
     {
-      path: '/:surveyProduct(eq|values|behaviours|discovery-process)/:surveyProductId(\\d+)/part',
-      name: 'survey.page',
+      path: '/:surveyProduct(eq|values|behaviours)/:surveyProductId(\\d+)/part',
       component: CurrentSurveyPage,
       props: true,
       children: [

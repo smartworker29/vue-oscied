@@ -24,11 +24,7 @@ import SurveyHelper from '@/utils/SurveyHelper'
 })
 export default class CurrentSurveySection extends Vue {
   @Prop({})
-  sectionNumber!: number
-  @Prop({})
   surveyProduct!: string
-  @Prop({})
-  surveyProductId!: number
 
   statements: Statement[] | null = null
   sortingOptions: StatementSortingOptions = {
@@ -37,37 +33,10 @@ export default class CurrentSurveySection extends Vue {
   }
 
   async created () {
-    const sectionNumber: number = parseInt(this.sectionNumber.toString())
-
-    if (!this.validateSectionNumber(sectionNumber)) {
-      throw new Error('Section number in unavailable')
-    }
-
-    if (SurveyHelper.hasCompletedSectioninUncompletedSurvey(this.surveyProduct, this.surveyProductId, sectionNumber)) {
-      const availableSectionNumber: number | boolean = SurveyHelper.getNextNumberSectionUncompletedSurvey(
-        this.surveyProduct,
-        this.surveyProductId,
-        this.$store.getters['survey/getCurrentProductSurveySectionCount']
-      )
-      if (availableSectionNumber === false) {
-        this.$emit('completeSurvey')
-      } else {
-        this.$emit('pushToAnotherSection', availableSectionNumber)
-      }
-      return
-    }
-
-    this.$store.commit('survey/setCurrentProductSurveySectionNumber', sectionNumber)
     const section: Section = this.$store.getters['survey/getCurrentProductSurveySection']
     this.statements = await SurveyService.getSectionStatements(this.surveyProduct, section.id)
 
     this.sortingOptions.list = this.statements
-  }
-
-  async validateSectionNumber (sectionNumber: number) : Promise<boolean> {
-    const sectionCount = this.$store.getters['survey/getCurrentProductSurveySectionCount']
-
-    return sectionNumber > 0 && sectionNumber <= sectionCount
   }
 
   get isWideScreen () : boolean {
