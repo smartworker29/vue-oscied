@@ -10,7 +10,7 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import SurveyService from '@/services/SurveyService'
-import { EqStatement, Section, BaseStatement } from '@/interfaces/SurveyInterfaces'
+import { Section, Statement } from '@/interfaces/SurveyInterfaces'
 import { StatementSortingOptions } from '@/interfaces/SortingInterfaces'
 import DragAndDropSortingStatement from '@/components/common/sorting/DragAndDropSortingStatement.vue'
 import TapSortingStatement from '@/components/common/sorting/TapSortingStatement.vue'
@@ -30,7 +30,7 @@ export default class CurrentSurveySection extends Vue {
   @Prop({})
   surveyProductId!: number
 
-  statements: BaseStatement[] | null = null
+  statements: Statement[] | null = null
   sortingOptions: StatementSortingOptions = {
     list: [],
     displayOption: 'statement'
@@ -58,39 +58,23 @@ export default class CurrentSurveySection extends Vue {
     }
 
     this.$store.commit('survey/setCurrentProductSurveySectionNumber', sectionNumber)
-
-    if (this.surveyProduct === 'eq') {
-      this.statements = await this.getEqStatements(sectionNumber)
-    } else {
-      const section: Section = this.$store.getters['survey/getCurrentProductSurveySection']
-
-      this.statements = await SurveyService.getSectionStatements(this.surveyProduct, section.id)
-    }
+    const section: Section = this.$store.getters['survey/getCurrentProductSurveySection']
+    this.statements = await SurveyService.getSectionStatements(this.surveyProduct, section.id)
 
     this.sortingOptions.list = this.statements
   }
 
-  async getEqStatements (sectionNumber: number) : Promise<EqStatement[]> {
-    const view = (sectionNumber === 1) ? 'world' : 'self'
-    const statements: EqStatement[] = await SurveyService.getEqSectionStatements(view)
-
-    return statements
-  }
-
   async validateSectionNumber (sectionNumber: number) : Promise<boolean> {
     const sectionCount = this.$store.getters['survey/getCurrentProductSurveySectionCount']
-    if (sectionNumber < 1 || sectionNumber > sectionCount) {
-      return false
-    }
 
-    return true
+    return sectionNumber > 0 && sectionNumber <= sectionCount
   }
 
   get isWideScreen () : boolean {
     return window.innerWidth > 768
   }
 
-  completeSection (data: BaseStatement[]) {
+  completeSection (data: Statement[]) {
     this.$emit('completeSection', data)
   }
 }

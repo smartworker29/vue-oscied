@@ -5,7 +5,7 @@
     </div>
     <div class="survey-content">
       <p v-if="!isAuthenticated">{{ $t('please_register') }}</p>
-      <p>{{ (surveyInfo) ? surveyInfo.welcomeMessage : '' }}!</p>
+      <p v-html="(surveyInfo) ? surveyInfo.welcomeMessage : ''"></p>
       <button v-if="isAuthenticated" class="btn btn-primary btn-primary-active" @click="beginSurvey">
         {{ isUncompletedSurvey ? $t('button_g.continue_survey') : $t('button_g.start_survey') }}
       </button>
