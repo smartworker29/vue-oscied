@@ -151,13 +151,12 @@ export default class WelcomePage extends Vue {
   }
 
   .survey-content {
-
-  }
-
-  .survey-content {
     color: #071012;
     overflow: hidden;
     padding: 3.1% 39.5% 60px 5.5%;
+    @media only screen and (max-width: 1024px) {
+      padding: 4.1% 39.5% 60px 3.5%;
+    }
     h2 {
       font-size: 20px;
       font-weight: 300;

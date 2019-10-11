@@ -30,7 +30,7 @@ export default class CurrentSurveySection extends Vue {
   @Prop({})
   surveyProductId!: number
 
-  isWideScreen: boolean = window.innerWidth > 768;
+  isWideScreen: boolean = window.innerWidth > 1024;
   statements: Statement[] | null = null
   sortingOptions: StatementSortingOptions = {
     list: [],
