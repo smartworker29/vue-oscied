@@ -1,7 +1,10 @@
 <template>
   <div class="survey">
     <div class="survey-header">
-        <h1 class="survey-title"><span>{{ currentSectionData.title ? currentSectionData.title : $t('world_view') }}</span> <SurveyProgress/></h1>
+        <h1 class="survey-title">
+          <span>{{ currentSectionData.title ? currentSectionData.title : $t('world_view') }}</span>
+          <SurveyProgress class="survey-progress"/>
+        </h1>
         <p>{{ currentSectionData.instructions ? currentSectionData.instructions : $t('sorting_g.description') }} <span class="survey-more">{{ $t('more')}} ></span></p>
 
     </div>

@@ -2,9 +2,17 @@
   position: relative;
   .drag-and-drop-info {
     color: #3d5a80;
+    top: 0;
     position: absolute;
     left: 100%;
-    width: 500px
+    max-width: 500px;
+    width: 68%;
+    @media only screen and (max-width: 768px) {
+      position: static;
+      width: 100%;
+      font-size: 14px;
+      
+    }
   }
   .icon {
     height: 24px;
@@ -70,20 +78,27 @@
 }
 
 .tap-sorting-list {
+  width: 100%;
   .tap-sorting-item {
     display: flex;
     align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 7px;
     color: $form-text-color;
-
+    @media only screen and (max-width: 768px) {
+      border: solid 1px #d6efff;
+      border-radius: 15px;
+    }
     &__phrase, &__rank {
       border-radius: $border-radius;
       display: inline-block;
     }
     &__phrase {
-      padding: 9px 24px;
+      padding: 10px 24px;
       margin-right: 2px;
-      width: 69%;
+      width: 72%;
+      @media only screen and (max-width: 768px) {
+        width: 100%;
+      }
     }
     &__rank {
       width: 45px;
@@ -94,13 +109,24 @@
       margin-left: 20px;
       padding-top: 10px;
       text-align: center;
+      @media only screen and (max-width: 768px) {
+        width: 59px;
+        height: 48px;
+        margin-left: 0px;
+      }
     }
   }
 
   &.ordered {
     .tap-sorting-item {
+      @media only screen and (max-width: 768px) {
+        background-color: $selected-phrase-bg-color;
+      }
       &__phrase {
         background-color: $selected-phrase-bg-color;
+        @media only screen and (max-width: 768px) {
+          background: none;
+        }
       }
       &__rank {
         background-color: $selected-rank-bg-color;
@@ -113,6 +139,9 @@
       &__phrase {
         border: solid 1px #d6efff;
         background-color: #ffffff;
+        @media only screen and (max-width: 768px) {
+          border: none;
+        }
       }
     }
   }
