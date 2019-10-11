@@ -174,6 +174,9 @@ export default class WelcomePage extends Vue {
     }
     @media only screen and (max-width: 768px) {
       padding: 12px 12px 1px 10px;
+      .btn {
+        width: 100%;
+      }
     }
     h2 {
       font-size: 20px;
