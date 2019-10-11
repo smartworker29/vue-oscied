@@ -52,6 +52,9 @@ export default class LangSwitcher extends Vue {
 <style lang="scss">
   .language {
     width: 200px;
+    .form .form-group:last-child {
+      margin-bottom: 0;
+    }
     @media only screen and (max-width: 600px) {
       width: 81px;
     }

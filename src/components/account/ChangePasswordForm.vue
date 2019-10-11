@@ -12,8 +12,6 @@
                     class="form-control col-md-8"/>
             <small class="error">{{ errors.first('oldPassword') }}</small>
           </div>
-        </div>
-        <div class="form-half">
           <div class="form-group row" :class="{ 'has-error' : errors.first('newPassword') }">
             <label class="col-md-4 col-form-label">{{ $t('new_password') }}</label>
             <input v-validate="'required'"
@@ -24,16 +22,19 @@
                     ref="newPassword">
             <small class="error">{{ errors.first('newPassword') }}</small>
           </div>
+        </div>
+        <div class="form-half">
+          <div class="form-group space"></div>
           <div class="form-group row" :class="{ 'has-error' : errors.first('password_confirmation') }">
-            <label class="col-md-4 col-form-label">{{ $t('repeat_password') }}</label>
+            <label class="col-md-4 col-form-label">{{ $t('confirm') }}</label>
             <input v-validate="'required|confirmed:newPassword'"
                     name="password_confirmation"
                     type="password"
                     v-model="repeatPassword"
                     class="form-control col-md-8"
-                    :data-vv-as="$t('repeat_password')">
+                    :data-vv-as="$t('confirm')">
             <small class="error">{{ errors.first('password_confirmation') }}</small>
-        </div>
+          </div>
         </div>
         <div class="row" v-if="error">
           <div class=" col-md-12 text-center">

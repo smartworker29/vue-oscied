@@ -59,10 +59,19 @@ export default class AccountPage extends Vue {}
   .account-layout {
     display: flex;
     justify-content: space-between;
+    @media only screen and (max-width: 650px) {
+      flex-wrap: wrap;
+    }
   }
 
   .account-layout-avatar {
     width: 22.6%;
+    @media only screen and (max-width: 1000px) {
+      width: 40%;
+    }
+    @media only screen and (max-width: 650px) {
+      width: 100%;
+    }
     .btn {
       margin-bottom: 16px;
     }
@@ -70,5 +79,11 @@ export default class AccountPage extends Vue {}
 
   .account-layout-forms {
     width: 74.2%;
+    @media only screen and (max-width: 1000px) {
+      width: 55%;
+    }
+    @media only screen and (max-width: 650px) {
+      width: 100%;
+    }
   }
 </style>

@@ -20,6 +20,22 @@
     @media only screen and (max-width: 768px) {
       justify-content: center;
       left: 0;
+      width: 100%;
+      padding: 0 5.5%;
+      position: static;
+      margin-bottom: 40px;
+    }
+
+    @media only screen and (max-width: 576px) {
+      flex-wrap: wrap;
+      text-align: center;
+      font-size: 14px;
+      span {
+        display: block;
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 5px;
+      }
     }
     span {
       margin-right: 26px;
