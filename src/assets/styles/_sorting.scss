@@ -24,12 +24,13 @@
 }
 .dd-sorting-list {
   .dd-sorting-item {
+    position: relative;
     background-color: #FFFFFF;
     max-width: 400px;
     border: 2px solid #D6EFFF;
     border-radius: 15px;
     color: #000000;
-    padding: 8px 10px 9px 24px;
+    padding: 8px 20px 9px 24px;
     margin-bottom: 7px;
 
     &.chosen-item {
@@ -57,10 +58,11 @@
       cursor: pointer;
     }
     .arrow {
-      float: right;
-      padding: 1px 11px;
-      height: 30px;
-      width: 30px;
+      height: 20px;
+      width: 14px;
+      position: absolute;
+      right: 5px;
+      top: calc(50% - 10px);
     }
 
     .item-phrase {
