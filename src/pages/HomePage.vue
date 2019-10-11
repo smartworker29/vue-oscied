@@ -68,6 +68,9 @@ export default class HomePage extends Vue {
 <style lang="scss">
   .auth-container-wrapper {
     padding: 3.5% 5.5% 60px 5.5%;
+    @media only screen and (max-width: 768px) {
+      padding: 3.5% 5.5% 20px 5.5%;
+    }
   }
   .auth-container {
     // min-height: 100vh;
@@ -84,12 +87,20 @@ export default class HomePage extends Vue {
     @media only screen and (max-width: 768px) {
       margin-bottom: 24px;
     }
+    @media only screen and (max-width: 576px) {
+      margin-top: 10px;
+      margin-bottom: 20px;
+    }
   }
 
   .logo {
     width: 181px;
     @media only screen and (max-width: 768px) {
       width: 164px;
+    }
+
+    @media only screen and (max-width: 576px) {
+      width: 135px
     }
   }
 
@@ -117,6 +128,10 @@ export default class HomePage extends Vue {
     }
     .sign-in-suggestion {
       margin-bottom: 15px;
+      @media only screen and (max-width: 576px) {
+        font-size: 14px;
+        margin-bottom: 21px;
+      }
     }
   }
 
@@ -127,6 +142,9 @@ export default class HomePage extends Vue {
     font-stretch: normal;
     line-height: normal;
     letter-spacing: normal;
+    @media only screen and (max-width: 576px) {
+      font-size: 18px;
+    }
   }
 
   .welcome-title {
@@ -137,6 +155,10 @@ export default class HomePage extends Vue {
     font-stretch: normal;
     line-height: normal;
     letter-spacing: normal;
+    @media only screen and (max-width: 576px) {
+      font-size: 24px;
+      margin: -2px 0 9px;
+    }
   }
 
   .auth-forms {
