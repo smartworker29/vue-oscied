@@ -30,6 +30,7 @@ export default class CurrentSurveySection extends Vue {
   @Prop({})
   surveyProductId!: number
 
+  isWideScreen: boolean = window.innerWidth > 768;
   statements: Statement[] | null = null
   sortingOptions: StatementSortingOptions = {
     list: [],
@@ -62,16 +63,16 @@ export default class CurrentSurveySection extends Vue {
     this.statements = await SurveyService.getSectionStatements(this.surveyProduct, section.id)
 
     this.sortingOptions.list = this.statements
+
+    window.addEventListener('resize', () => {
+      this.isWideScreen = window.innerWidth > 1024
+    })
   }
 
   async validateSectionNumber (sectionNumber: number) : Promise<boolean> {
     const sectionCount = this.$store.getters['survey/getCurrentProductSurveySectionCount']
 
     return sectionNumber > 0 && sectionNumber <= sectionCount
-  }
-
-  get isWideScreen () : boolean {
-    return window.innerWidth > 768
   }
 
   completeSection (data: Statement[]) {
