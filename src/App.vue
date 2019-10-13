@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <app-layout/>
+    <app-layout v-if="isLoaded"/>
   </div>
 </template>
 
@@ -17,28 +17,33 @@ import { User } from '@/interfaces/UserInterfaces'
   }
 })
 export default class App extends Vue {
+  isLoaded: boolean = false;
+
+  async beforeCreate () {
+    if (this.$auth.isAuthenticated()) {
+      await UserService.getUser()
+    }
+  }
+
   async created () {
     if (this.$auth.isAuthenticated()) {
       try {
         const userData: User = await UserService.getUser()
         LocaleHelper.setUserLocale(userData.locale)
+        this.isLoaded = true
       } catch (error) {
         if ('response' in error && error.response.status === 401) {
-          this.$auth.logout().then(async () : Promise<void> => {
-            await UserService.logout()
-            this.$router.push({ name: 'home' })
-          })
+          await this.$auth.logout()
+          await UserService.logout()
+          this.isLoaded = true
+          this.$router.push({ name: 'home' })
         } else {
+          this.isLoaded = true
           throw error
         }
       }
     }
-
-    const userLocale = LocaleHelper.getUserLocale()
-    if (userLocale) {
-      this.$i18n.locale = userLocale
-      this.localizeValidator(LocaleHelper.getLocaleForVeeValidate(userLocale))
-    }
+    this.isLoaded = true
   }
 }
 </script>
