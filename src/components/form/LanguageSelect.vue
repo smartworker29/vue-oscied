@@ -1,6 +1,6 @@
 <template>
   <multiselect
-    v-model="currentLocale"
+    v-model="localModel"
     :searchable="false"
     track-by="locale"
     label="localeName"
@@ -20,25 +20,40 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import LocaleHelper from '@/utils/LocaleHelper'
 import { LocaleData } from '@/interfaces/UserInterfaces'
 import { Locale } from '@/interfaces/Locale'
 
-@Component({})
+@Component({
+})
 export default class LanguageSelect extends Vue {
-  currentLocale: any = {}
+  @Prop({})
+  value!: string;
+
+  localModel: LocaleData | null = null;
+
+  @Watch('value')
+  onValueChanged () {
+    this.localModel = this.availableLocales.find(l => l.locale === this.value) || null
+  }
+
+  @Watch('localModel')
+  onLocalModelChanged () {
+    if (this.localModel && this.localModel.locale !== this.value) {
+      this.$emit('input', this.localModel.locale)
+    }
+  }
+
   availableLocales: LocaleData[] = []
 
   created () {
-    let locale = process.env.VUE_APP_I18N_FALLBACK_LOCALE || 'en_GB'
     this.availableLocales = LocaleHelper.availableLocalesData
-    locale = LocaleHelper.getUserLocale()
-    this.currentLocale = this.availableLocales.find(lang => lang.locale === locale)
+    this.localModel = this.availableLocales.find(l => l.locale === this.value) || null
   }
 
   changeLocale (locale: Locale) {
-
+    this.$emit('on-change-locale', locale)
   }
 }
 </script>
