@@ -40,7 +40,7 @@
           label="label"
           :searchable="false"
           :show-labels="false"
-          :options="genderOption">
+          :options="genderOptions">
         </multiselect>
         <small v-if="genderRequiredError" class="error">{{ $t('gender_is_required') }}</small>
       </div>
@@ -88,10 +88,10 @@ export default class SignUpForm extends Vue {
   emailIsFree: boolean = true
   genderRequiredError: boolean = false
   error: string | null = null
-  genderOption: Array<any> = []
+  genderOptions: Array<any> = []
 
   async created () {
-    this.genderOption = [{ label: this.$t('male'), value: 'm' }, { label: this.$t('female'), value: 'f' }]
+    this.genderOptions = [{ label: this.$t('male'), value: 'm' }, { label: this.$t('female'), value: 'f' }]
     this.availableRegistrationFields = await UserService.getAvailableRegistrationFields()
   }
 

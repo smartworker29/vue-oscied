@@ -118,11 +118,22 @@ export default class WelcomePage extends Vue {
   .survey {
     background: #fff;
     height: 100%;
+    .progress-wrapper.survey-progress {
+      @media only screen and (max-width: 768px) {
+        display: none;
+      }
+    }
   }
 
   .survey-more {
     color: #0085cd;
     margin-left: 16px;
+    @media only screen and (max-width: 768px) {
+      display: block;
+      width: 100%;
+      margin-left: 0px;
+      margin-top: 6px;
+    }
   }
 
   .survey-title {
@@ -131,6 +142,9 @@ export default class WelcomePage extends Vue {
     color: #071012;
     display: flex;
     justify-content: space-between;
+    @media only screen and (max-width: 768px) {
+      margin-bottom: 11px;
+    }
     .progress-wrapper {
       display: flex;
       font-size: 12px;
@@ -143,6 +157,7 @@ export default class WelcomePage extends Vue {
 
   .survey-header {
     background: #e6f3fa;
+    overflow: hidden;
     padding: 1% 5.5% 7px 5.5%;
     p {
       margin-bottom: 30px;
@@ -151,13 +166,18 @@ export default class WelcomePage extends Vue {
   }
 
   .survey-content {
-
-  }
-
-  .survey-content {
     color: #071012;
     overflow: hidden;
     padding: 3.1% 39.5% 60px 5.5%;
+    @media only screen and (max-width: 1024px) {
+      padding: 4.1% 41.5% 60px 3.5%;
+    }
+    @media only screen and (max-width: 768px) {
+      padding: 12px 12px 1px 10px;
+      .btn {
+        width: 100%;
+      }
+    }
     h2 {
       font-size: 20px;
       font-weight: 300;
@@ -165,6 +185,9 @@ export default class WelcomePage extends Vue {
     }
     p {
       margin-bottom: 30px;
+      @media only screen and (max-width: 768px) {
+        margin-bottom: 19px;
+      }
     }
   }
 </style>
