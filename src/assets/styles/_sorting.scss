@@ -2,9 +2,17 @@
   position: relative;
   .drag-and-drop-info {
     color: #3d5a80;
+    top: 0;
     position: absolute;
     left: 100%;
-    width: 500px
+    max-width: 500px;
+    width: 68%;
+    @media only screen and (max-width: 768px) {
+      position: static;
+      width: 100%;
+      font-size: 14px;
+      
+    }
   }
   .icon {
     height: 24px;
@@ -16,12 +24,13 @@
 }
 .dd-sorting-list {
   .dd-sorting-item {
+    position: relative;
     background-color: #FFFFFF;
     max-width: 400px;
     border: 2px solid #D6EFFF;
     border-radius: 15px;
     color: #000000;
-    padding: 8px 10px 9px 24px;
+    padding: 8px 20px 9px 24px;
     margin-bottom: 7px;
 
     &.chosen-item {
@@ -49,10 +58,11 @@
       cursor: pointer;
     }
     .arrow {
-      float: right;
-      padding: 1px 11px;
-      height: 30px;
-      width: 30px;
+      height: 20px;
+      width: 14px;
+      position: absolute;
+      right: 5px;
+      top: calc(50% - 10px);
     }
 
     .item-phrase {
@@ -70,32 +80,55 @@
 }
 
 .tap-sorting-list {
+  width: 100%;
   .tap-sorting-item {
-    margin: 10px 0px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 7px;
     color: $form-text-color;
-
+    @media only screen and (max-width: 768px) {
+      border: solid 1px #d6efff;
+      border-radius: 15px;
+    }
     &__phrase, &__rank {
       border-radius: $border-radius;
       display: inline-block;
-      padding: 13px 10px;
     }
     &__phrase {
-      margin-right: 20px;
-      width: 80%;
+      padding: 10px 24px;
+      margin-right: 2px;
+      width: 72%;
+      @media only screen and (max-width: 768px) {
+        width: 100%;
+      }
     }
     &__rank {
-      text-align: center;
+      width: 45px;
+      height: 45px;
+      border-radius: 16px;
+      border: solid 1px #bdddff;
+      background-color: #fafdff;
       margin-left: 20px;
-      min-height: 50px;
-      min-width: 50px;
-      vertical-align: middle;
+      padding-top: 10px;
+      text-align: center;
+      @media only screen and (max-width: 768px) {
+        width: 59px;
+        height: 48px;
+        margin-left: 0px;
+      }
     }
   }
 
   &.ordered {
     .tap-sorting-item {
+      @media only screen and (max-width: 768px) {
+        background-color: $selected-phrase-bg-color;
+      }
       &__phrase {
         background-color: $selected-phrase-bg-color;
+        @media only screen and (max-width: 768px) {
+          background: none;
+        }
       }
       &__rank {
         background-color: $selected-rank-bg-color;
@@ -106,12 +139,11 @@
   &.raw {
     .tap-sorting-item {
       &__phrase {
-        background-color: $phrase-bg-color;
-        border: $border-width solid $phrase-border-color;
-      }
-      &__rank {
-        background-color: $rank-bg-color;
-        border: $border-width solid $rank-border-color;
+        border: solid 1px #d6efff;
+        background-color: #ffffff;
+        @media only screen and (max-width: 768px) {
+          border: none;
+        }
       }
     }
   }
