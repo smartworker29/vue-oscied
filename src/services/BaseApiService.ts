@@ -7,7 +7,13 @@ export abstract class BaseApiService {
     this.api = axios
   }
 
-  protected callMethod (method: string, url: string, requestData?: object, responseKey?: string | null, config?: AxiosRequestConfig) : any {
+  protected callMethod (
+    method: string,
+    url: string,
+    requestData?: object | null,
+    responseKey?: string | null,
+    config?: AxiosRequestConfig
+  ) : any {
     const requestedMethod = method.toLowerCase()
 
     switch (requestedMethod) {
