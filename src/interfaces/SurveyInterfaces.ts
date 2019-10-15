@@ -18,7 +18,7 @@ export interface SurveyInfo {
   accessCode: string
   defaultLanguage: string
   isUnlimitedAccess: boolean
-  logos: string[]
+  logos: SurveyLogo[]
   validFrom: Date | null
   validTo: Date | null
 }
@@ -49,4 +49,10 @@ export interface SurveyUserInfo {
 
 export interface StatementIRI {
   statementId: string
+}
+
+export interface SurveyLogo {
+  fileURL: string
+  filePath: string
+  fileName: string
 }
