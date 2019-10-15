@@ -68,5 +68,6 @@
   "profile_successfully_changed": "Deutch: Changes have successfully been changed.",
   "please_register": "Deutch: Please register or sign in if you are a existing user",
   "welcome_to_survey": "Deutch: Welcome to {surveyName}",
-  "confirm_to_next_section": "Deutch: You don't re-range the statements. Do you want to go to the next section?"
+  "confirm_to_next_section": "Deutch: You don't re-range the statements. Do you want to go to the next section?",
+  "select": "Deutch: Select"
 }
