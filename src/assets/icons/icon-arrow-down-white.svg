@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 57.1 (83088) - https://sketch.com -->
+    <title>icon-arrow-down</title>
+    <desc>Created with Sketch.</desc>
+    <g id="icon-arrow-down" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="overrides/icon/arrow-down" fill="#FFFFFF">
+            <g id="Light" transform="translate(0.000000, 6.000000)">
+                <path d="M11.9995414,10.7496824 L1.79490496,0.314574979 C1.40023009,-0.0890135978 0.742172132,-0.106589575 0.325091382,0.275317934 C-0.0919893681,0.657225444 -0.11015292,1.29399584 0.284521954,1.69758441 L10.8874079,12.5399357 C11.1762144,12.8353405 11.5801614,13 11.9995235,13 C12.4188856,13 12.8228326,12.8353405 13.1117304,12.5398423 L23.715446,1.6976172 C24.1101396,1.29404577 24.0920056,0.657274585 23.6749425,0.275348965 C23.2578795,-0.106576654 22.5998207,-0.089029251 22.2051271,0.314542188 L11.9995414,10.7496824 Z" id="icon-arrow-down"></path>
+            </g>
+        </g>
+    </g>
+</svg>
