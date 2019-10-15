@@ -21,6 +21,7 @@
   @media only screen and (max-width: 768px) {
     display: flex;
     padding: 14px 15px 0;
+    justify-content: space-between;
   }
 
   button {
@@ -44,7 +45,7 @@
     }
 
     @media only screen and (max-width: 768px) {
-      width: 100%;
+      width: 48%;
     }
   }
 }
@@ -52,12 +53,23 @@
 .form-content {
   padding: 0 21px 24px;
   overflow: hidden;
+  @media only screen and (max-width: 576px) {
+    padding: 9px 12px 24px;
+  }
 }
 
 .form {
   padding-top: 7%;
   &.account-form {
     padding-top: 23px;
+    @media only screen and (max-width: 1000px) {
+      .form-half {
+        width: 100%;
+        .space {
+          display: none;
+        }
+      }
+    }
   }
 
   .account-form-actions {
@@ -83,6 +95,15 @@
     .language-select {
       width: 100%;
       max-width: 286px;
+    }
+
+    &.space {
+      width: 100%;
+      height: 36px;
+      max-width: 286px;
+      @media only screen and (max-width: 1200px) {
+        height: 60px;
+      }
     }
 
     input {
@@ -199,7 +220,7 @@
     color: #071012;
     @media only screen and (max-width: 1000px) {
       width: 100%;
-      margin-bottom: 2px;
+      margin-bottom: 6px;
     }
   }
 }
@@ -276,5 +297,34 @@
   }
   input {
     margin-top: 2px;
+  }
+}
+
+
+.sign-form {
+  .form-actions {
+    @media only screen and (max-width: 576px) {
+      flex-wrap: wrap;
+      text-align: center;
+      .btn {
+        width: 100%;
+      }
+      .checkbox-input {
+        margin-bottom: 20px;
+      }
+    }
+  }
+  .switch-form {
+    @media only screen and (max-width: 576px) {
+      font-size: 14px;
+      margin-bottom: 24px;
+      width: 100%;
+    }
+  }
+  .form-actions-right {
+    @media only screen and (max-width: 576px) {
+      float: none;
+      max-width: 100%;
+    }
   }
 }

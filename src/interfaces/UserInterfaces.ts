@@ -1,3 +1,8 @@
+interface FormGender {
+  label: string,
+  value: string
+}
+
 export interface User {
   id: number
   firstName: string
@@ -12,7 +17,16 @@ export interface UpdateUserData {
   firstName: string
   lastName: string
   email: string
-  gender?: string
+  gender?: string | null
+  phone?: string
+  locale?: string
+}
+
+export interface UpdateUserDataForm {
+  firstName: string
+  lastName: string
+  email: string
+  gender?: FormGender | null
   phone?: string
   locale?: string
 }
@@ -30,7 +44,7 @@ export interface RegistrationFormData {
   email: string
   firstName: string
   lastName: string
-  gender: { label: string, value: string } | null
+  gender: FormGender | null
   phone: string
   locale?: string | null
 }

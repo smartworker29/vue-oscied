@@ -14,7 +14,6 @@ import { Section, Statement } from '@/interfaces/SurveyInterfaces'
 import { StatementSortingOptions } from '@/interfaces/SortingInterfaces'
 import DragAndDropSortingStatement from '@/components/common/sorting/DragAndDropSortingStatement.vue'
 import TapSortingStatement from '@/components/common/sorting/TapSortingStatement.vue'
-import SurveyHelper from '@/utils/SurveyHelper'
 
 @Component({
   components: {
@@ -26,6 +25,7 @@ export default class CurrentSurveySection extends Vue {
   @Prop({})
   surveyProduct!: string
 
+  isWideScreen: boolean = window.innerWidth > 1024;
   statements: Statement[] | null = null
   sortingOptions: StatementSortingOptions = {
     list: [],
@@ -37,10 +37,10 @@ export default class CurrentSurveySection extends Vue {
     this.statements = await SurveyService.getSectionStatements(this.surveyProduct, section.id)
 
     this.sortingOptions.list = this.statements
-  }
 
-  get isWideScreen () : boolean {
-    return window.innerWidth > 768
+    window.addEventListener('resize', () => {
+      this.isWideScreen = window.innerWidth > 1024
+    })
   }
 
   completeSection (data: Statement[]) {

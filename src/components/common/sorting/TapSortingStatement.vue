@@ -1,6 +1,9 @@
 <template>
-  <div class="tap-statement-sorting row">
-    <div class="col-md-6">
+  <div class="tap-statement-sorting drag-and-drop-statement-sorting">
+    <div class="drag-and-drop-content">
+       <div class="drag-and-drop-info">
+        <p><fa class="icon" icon="info-circle"/> {{ $t('sorting_g.drag.tip') }}</p>
+      </div>
       <div class="tap-sorting-list ordered">
         <TapSortingStatementItem v-for="(item, index) in resultList"
                                  :itemOptions="{
@@ -13,7 +16,7 @@
                                  :key="index"
                                  @removeFromOrder="removeItemFromOrder"/>
       </div>
-      <hr v-if="resultList.length > 0 && options.list.length !== 0">
+      <!-- <hr v-if="resultList.length > 0 && options.list.length !== 0"> -->
       <div class="tap-sorting-list raw">
         <TapSortingStatementItem v-for="(item, index) in options.list"
                                  :itemOptions="{
@@ -26,10 +29,7 @@
                                  @moveToOrder="moveItemToOrder"/>
       </div>
     </div>
-    <div class="col-md-6">
-      <p><fa icon="info-circle"/> {{ $t('sorting_g.tap.tip') }}</p>
-    </div>
-    <button class="btn btn-info"
+    <button class="btn btn-primary btn-primary-active"
             @click="updateOrder"
             :class="{ disabled : isConfirmDisabled }"
             :disabled="isConfirmDisabled ">{{ $t('button_g.confirm_order') }}</button>

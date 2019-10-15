@@ -3,7 +3,7 @@ import { RootState } from '@/store'
 import { User } from '@/interfaces/UserInterfaces'
 
 export interface UserState {
-  isAuthenticated: boolean
+  isAuthenticated: boolean;
   user: User | null
 }
 
@@ -11,7 +11,7 @@ const user: Module<UserState, RootState> = {
   namespaced: true,
 
   state: {
-    isAuthenticated: false,
+    isAuthenticated: !!localStorage.getItem('onesource__token') || false,
     user: null
   },
 
