@@ -43,6 +43,7 @@ import { SignInData } from '@/interfaces/UserInterfaces'
 import { AxiosResponse } from 'axios'
 import UserService from '@/services/UserService'
 import LocaleHelper from '@/utils/LocaleHelper'
+import { EventBus } from '@/main'
 
 @Component({})
 export default class SignInForm extends Vue {
@@ -71,7 +72,7 @@ export default class SignInForm extends Vue {
       this.$validator.reset()
       this.error = ''
 
-      this.$emit('authorizedComplete')
+      EventBus.$emit('authorizedComplete')
     } catch (error) {
       const response: AxiosResponse = error.response
       if (response) {

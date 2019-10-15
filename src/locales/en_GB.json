@@ -68,5 +68,6 @@
   "password_successfully_changed": "Your Password has successfully been changed",
   "profile_successfully_changed": "Changes have successfully been changed.",
   "please_register": "Please register or sign in if you are a existing user",
-  "welcome_to_survey": "Welcome to {surveyName}"
+  "welcome_to_survey": "Welcome to {surveyName}",
+  "confirm_to_next_section": "You don't re-range the statements. Do you want to go to the next section?"
 }

@@ -15,7 +15,8 @@
                    :forceFallback="true"
                    ghostClass="ghost-placeholder"
                    chosenClass="chosen-item"
-                   dragClass="dragged-item">
+                   dragClass="dragged-item"
+                   @change="isListChanged = true">
           <div class="dd-sorting-item handle" v-for="(item, index) in options.list" :key="index">
             <span class="item-phrase">{{ item[options.displayOption] }}</span> <span class="arrow"><fa icon="arrows-alt-v"/></span>
           </div>
@@ -42,8 +43,13 @@ export default class DragAndDropSortingStatement extends Vue {
     }
   })
   options!: StatementSortingOptions
+  isListChanged: boolean = false
 
   updateOrder () {
+    const messageText: string = this.$t('confirm_to_next_section') as string
+    if (!this.isListChanged && !confirm(messageText)) {
+      return
+    }
     this.$emit('updateOrder', this.options.list)
   }
 }

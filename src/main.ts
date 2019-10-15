@@ -18,6 +18,8 @@ import Vuex from 'vuex'
 
 import LocaleHelper from '@/utils/LocaleHelper'
 
+export const EventBus = new Vue()
+
 Vue.component('multiselect', Multiselect)
 Vue.use(BootstrapVue)
 Vue.use(VeeValidate)
