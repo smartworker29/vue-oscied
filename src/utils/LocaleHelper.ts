@@ -1,25 +1,32 @@
 import { LocaleData } from '@/interfaces/UserInterfaces'
 
 class LocaleHelper {
-  readonly localeKey: string = 'user_locale'
-  private availableLocales: string[] = []
+  readonly localeKey = 'user_locale'
+  readonly defaultLocale = 'en'
   availableLocalesData: LocaleData[] = []
   readonly availableVeeValidateLocales: string[] = [
     'en',
-    'de'
+    'de',
+    'ar',
+    'fr',
+    'zh_CN', // todo[m]::change to needed dictionary
+    'hi',
+    'es',
+    'ru',
+    // 'tl',// todo[m]::search a dictionary for Tagalog
+    'tr'
   ]
 
   constructor () {
     require('@/available_locales.json').forEach((item: LocaleData) => {
       this.availableLocalesData.push(item)
-      this.availableLocales.push(item.locale.toLowerCase())
     })
   }
 
   getUserLocale () : string {
     return localStorage[this.localeKey]
-        ? localStorage[this.localeKey]
-        : process.env.VUE_APP_I18N_FALLBACK_LOCALE
+      ? localStorage[this.localeKey]
+      : process.env.VUE_APP_I18N_FALLBACK_LOCALE
   }
 
   setUserLocale (locale?: string | null) : void {
@@ -30,27 +37,22 @@ class LocaleHelper {
   }
 
   getLocaleForVeeValidate (locale: string) : string {
-    if (this.availableVeeValidateLocales.indexOf(locale) !== -1) {
+    if (!locale) {
+      return this.defaultLocale
+    }
+
+    if (this.availableVeeValidateLocales.includes(locale)) {
       return locale
     }
 
-    if (locale.indexOf('-') !== -1) {
-      const partOfLocale = locale.substr(0, locale.indexOf('-'))
-
-      if (this.availableVeeValidateLocales.indexOf(partOfLocale) !== -1) {
-        return partOfLocale
-      }
+    const partOfLocale = locale.substr(0, locale.indexOf('_'))
+    if (!partOfLocale) {
+      return this.defaultLocale
     }
 
-    if (locale.indexOf('_') !== -1) {
-      const partOfLocale = locale.substr(0, locale.indexOf('_'))
-
-      if (this.availableVeeValidateLocales.indexOf(partOfLocale) !== -1) {
-        return partOfLocale
-      }
-    }
-
-    return 'en'
+    return this.availableVeeValidateLocales.includes(partOfLocale)
+      ? partOfLocale
+      : this.availableVeeValidateLocales.find(locale => locale.includes(partOfLocale)) || this.defaultLocale
   }
 }
 

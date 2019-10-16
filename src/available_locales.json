@@ -5,8 +5,48 @@
     "class": "flag-icon-gb"
   },
   {
+    "locale": "ar",
+    "localeName": "Arabic",
+    "class": "flag-icon-ar"
+  },
+  {
+    "locale": "zh_Hans",
+    "localeName": "Chinese (Simplified)",
+    "class": "flag-icon-cn"
+  },
+  {
+    "locale": "fr",
+    "localeName": "French",
+    "class": "flag-icon-fr"
+  },
+  {
     "locale": "de",
-    "localeName": "Deutsch",
+    "localeName": "German",
     "class": "flag-icon-de"
+  },
+  {
+    "locale": "hi",
+    "localeName": "Hindi",
+    "class": "flag-icon-hi"
+  },
+  {
+    "locale": "es",
+    "localeName": "Spanish",
+    "class": "flag-icon-es"
+  },
+  {
+    "locale": "ru",
+    "localeName": "Russian",
+    "class": "flag-icon-ru"
+  },
+  {
+    "locale": "tl",
+    "localeName": "Tagalog",
+    "class": "flag-icon-tl"
+  },
+  {
+    "locale": "tr",
+    "localeName": "Turkish",
+    "class": "flag-icon-tr"
   }
 ]
