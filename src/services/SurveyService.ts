@@ -4,7 +4,7 @@ import {
   Section,
   Statement,
   StatementIRI,
-  SurveyUserInfo
+  SurveyUser
 } from '@/interfaces/SurveyInterfaces'
 
 class SurveyService extends BaseApiService {
@@ -58,12 +58,22 @@ class SurveyService extends BaseApiService {
     return this.callMethod('get', `/${surveyProductType}/section/id/${surveyProductId}/statements/`)
   }
 
-  getSurveyUserInfo (surveyProductType: string, surveyProductId: number) : SurveyUserInfo {
+  getSurveyUser (surveyProductType: string, surveyProductId: number) : SurveyUser | null {
     surveyProductType = this.validateSurveyProductType(surveyProductType)
 
     return this.callMethod(
       'post',
       `/${surveyProductType}/survey/user/get/`,
+      { 'surveyId': surveyProductId }
+    )
+  }
+
+  createSurveyUser (surveyProductType: string, surveyProductId: number) : SurveyUser {
+    surveyProductType = this.validateSurveyProductType(surveyProductType)
+
+    return this.callMethod(
+      'post',
+      `/${surveyProductType}/survey/user/create/`,
       { 'surveyId': surveyProductId }
     )
   }
@@ -82,7 +92,7 @@ class SurveyService extends BaseApiService {
    * For statements to be saved, they all must be related to one section.
    * The count of passed statements must be equal to the count of the section's statements
    */
-  saveStatements (surveyProductType: string, surveyProductUserId: number, statements: Statement[]) : number {
+  saveStatements (surveyProductType: string, surveyProductUserId: number, statements: Statement[]) : number | null {
     surveyProductType = this.validateSurveyProductType(surveyProductType)
     let handleStatementsIds = this.handleStatementsToIRI(surveyProductType, statements)
 
