@@ -33,8 +33,13 @@ export default class CurrentSurveySection extends Vue {
   }
 
   async created () {
-    const section: Section = this.$store.getters['survey/getCurrentProductSurveySection']
+    const section: Section | null = this.$store.getters['survey/getCurrentProductSurveySection']
+    if (!section) {
+      throw new Error()
+      // todo::[m] if section is null
+    }
     this.statements = await SurveyService.getSectionStatements(this.surveyProduct, section.id)
+    // todo::[m] if statements don't return
 
     this.sortingOptions.list = this.statements
 

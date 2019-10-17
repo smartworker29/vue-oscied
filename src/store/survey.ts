@@ -1,6 +1,6 @@
 import { Module } from 'vuex'
 import { RootState, SurveyState } from '@/store'
-import { Section, SurveyInfo, CurrentSurveyData, CompleteSectionData } from '@/interfaces/SurveyInterfaces'
+import { Section, SurveyInfo, CurrentSurveyData, SurveyUser } from '@/interfaces/SurveyInterfaces'
 
 export interface SurveyState {
   isCurrentSurveyInitiated: boolean
@@ -10,6 +10,7 @@ export interface SurveyState {
   currentProductSurveySections: Section[]
   currentProductSurveySection: Section | null
   countCompletedSections: number
+  surveyUserInfo: SurveyUser | null
 }
 
 const survey: Module<SurveyState, RootState> = {
@@ -22,7 +23,8 @@ const survey: Module<SurveyState, RootState> = {
     currentProductSurveyType: null,
     currentProductSurveySections: [],
     currentProductSurveySection: null,
-    countCompletedSections: 0
+    countCompletedSections: 0,
+    surveyUserInfo: null
   },
 
   getters: {
@@ -47,11 +49,11 @@ const survey: Module<SurveyState, RootState> = {
     isCurrentSurveyInitiated (state: SurveyState) : boolean {
       return state.isCurrentSurveyInitiated
     },
-    getNextProductSurveySectionNumber (state: SurveyState) : number | null {
+    getNextSurveySectionNumber (state: SurveyState) : number | null {
       return state.currentProductSurveySection && state.currentProductSurveySection.position
         ? state.currentProductSurveySection.position + 1
         : null
-    },
+    }
   },
 
   mutations: {
@@ -59,11 +61,12 @@ const survey: Module<SurveyState, RootState> = {
       state.currentSurveyInfo = surveyData.surveyInfo
       state.currentProductSurveyId = surveyData.productSurveyId
       state.currentProductSurveyType = surveyData.productSurveyType
+      state.surveyUserInfo = surveyData.surveyUserInfo
       state.isCurrentSurveyInitiated = true
     },
     setCurrentSurveySections (state: SurveyState, sections: Section[]) : void {
       state.currentProductSurveySections = sections
-      state.currentProductSurveySection = sections[0] ? sections[0] : null
+      state.currentProductSurveySection = sections[0] || null
     },
     clearCurrentSurveyData (state: SurveyState) : void {
       state.isCurrentSurveyInitiated = false
@@ -71,18 +74,18 @@ const survey: Module<SurveyState, RootState> = {
       state.currentProductSurveyId = null
       state.currentProductSurveyType = null
       state.currentProductSurveySections = []
+      state.surveyUserInfo = null
     },
 
     setNextSurveySectionId (state: SurveyState, nextSectionId: number) : void {
       const nextSection: Section | undefined = state.currentProductSurveySections.find((section: Section) => {
         return section.id === nextSectionId
-      });
+      })
 
-      state.currentProductSurveySection = nextSection ? nextSection : null
+      state.currentProductSurveySection = nextSection || null
     },
 
-    addOneCompletedSection (state: SurveyState, data: CompleteSectionData): void {
-      //TODO::add functionality to precessing the `CompleteSectionData`
+    addOneCompletedSection (state: SurveyState) : void {
       state.countCompletedSections++
     }
   }
