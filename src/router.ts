@@ -6,6 +6,7 @@ import CurrentSurveySection from '@/components/survey/CurrentSurveySection.vue'
 
 import HomePage from '@/pages/HomePage.vue'
 import AccountPage from '@/pages/AccountPage.vue'
+import NotFoundPage from '@/pages/NotFoundPage.vue'
 import WelcomePage from '@/pages/survey/WelcomePage.vue'
 import CurrentSurveyPage from '@/pages/survey/CurrentSurveyPage.vue'
 import CompleteSurveyMessagePage from '@/pages/survey/CompleteSurveyMessagePage.vue'
@@ -22,13 +23,18 @@ const router = new Router({
       component: HomePage
     },
     {
+      path: '/404',
+      name: 'notFound',
+      component: NotFoundPage
+    },
+    {
       path: '/:surveyProduct(eq|values|behaviours|discovery-process)/:accessCode([a-zA-Z0-9]{50})',
       name: 'survey.welcome',
       component: WelcomePage,
       props: true
     },
     {
-      path: '/:surveyProduct(eq|values|behaviours)/:surveyProductId(\\d+)/part',
+      path: '/:surveyProduct(eq|values|behaviours)/:surveyUserId(\\d+)/part',
       component: CurrentSurveyPage,
       props: true,
       children: [
