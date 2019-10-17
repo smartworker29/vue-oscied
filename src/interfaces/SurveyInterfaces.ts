@@ -27,6 +27,7 @@ export interface CurrentSurveyData {
   productSurveyId: number
   productSurveyType: string
   surveyInfo: SurveyInfo
+  surveyUserInfo: SurveyUser
 }
 
 export interface CompleteSectionData {
@@ -41,7 +42,7 @@ export interface ResponseProductSurveyInfo {
 }
 
 
-export interface SurveyUserInfo {
+export interface SurveyUser {
   surveyUserId: number
   isAuthorised: boolean
   isCompleted: boolean
