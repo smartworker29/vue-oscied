@@ -89,8 +89,17 @@ export default class WelcomePage extends Vue {
   }
 
   async beginSurvey () {
-    const surveyUserInfo: SurveyUser | null = await SurveyService.getSurveyUser(this.surveyProduct, this.productSurveyId) ||
-      await SurveyService.createSurveyUser(this.surveyProduct, this.productSurveyId)
+    const surveyUserInfo: SurveyUser | null = await SurveyService.getSurveyUser(
+      this.surveyProduct,
+      this.productSurveyId,
+      this.accessCode
+    ) ||
+      await SurveyService.createSurveyUser(
+        this.surveyProduct,
+        this.productSurveyId,
+        this.accessCode
+      )
+
     if (!SurveyHelper.isSurveyUserAvailable(surveyUserInfo)) {
       SurveyHelper.completeSurvey(this.surveyProduct, this.productSurveyId, surveyUserInfo.surveyUserId)
       this.$router.push({ name: 'survey.complete' })

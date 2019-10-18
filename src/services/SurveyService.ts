@@ -58,23 +58,23 @@ class SurveyService extends BaseApiService {
     return this.callMethod('get', `/${surveyProductType}/section/id/${surveyProductId}/statements/`)
   }
 
-  getSurveyUser (surveyProductType: string, surveyProductId: number) : SurveyUser | null {
+  getSurveyUser (surveyProductType: string, surveyProductId: number, surveyAccessCode: string) : SurveyUser | null {
     surveyProductType = this.validateSurveyProductType(surveyProductType)
 
     return this.callMethod(
       'post',
       `/${surveyProductType}/survey/user/get/`,
-      { 'surveyId': surveyProductId }
+      { 'surveyId': surveyProductId, 'accessCode': surveyAccessCode }
     )
   }
 
-  createSurveyUser (surveyProductType: string, surveyProductId: number) : SurveyUser {
+  createSurveyUser (surveyProductType: string, surveyProductId: number, surveyAccessCode: string) : SurveyUser {
     surveyProductType = this.validateSurveyProductType(surveyProductType)
 
     return this.callMethod(
       'post',
       `/${surveyProductType}/survey/user/create/`,
-      { 'surveyId': surveyProductId }
+      { 'surveyId': surveyProductId, 'accessCode': surveyAccessCode }
     )
   }
 

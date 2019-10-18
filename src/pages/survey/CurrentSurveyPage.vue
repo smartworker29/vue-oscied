@@ -56,7 +56,11 @@ export default class CurrentSurveyPage extends Vue {
       this.surveyProduct,
       surveyUser.surveyAccessCode
     )
-    const surveyUserInfo = await SurveyService.getSurveyUser(this.surveyProduct, surveyUser.surveyProductId)
+    const surveyUserInfo = await SurveyService.getSurveyUser(
+      this.surveyProduct,
+      surveyUser.surveyProductId,
+      surveyUser.surveyAccessCode
+    )
 
     if (!surveyUserInfo ||
       surveyUserInfo.surveyUserId.toString() !== this.surveyUserId.toString() ||
