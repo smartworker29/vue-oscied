@@ -22,10 +22,10 @@
         </div>
         <div class="account-drop-down__content">
           <ul class="account-drop-down__menu-list">
-            <router-link tag="li" :to="{ name: 'account' }" >
+            <li @click="$router.push({ name: 'account' }); isActiveAccountMenu = false">
               <img :src="require('@/assets/icons/account.svg')">
               <span>Account</span>
-            </router-link>
+            </li>
             <li>
               <img :src="require('@/assets/icons/settings.svg')">
               <span>Settings</span>
