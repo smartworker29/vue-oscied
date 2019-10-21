@@ -1,42 +1,44 @@
 <template>
   <div class="navbar">
     <div class="wrap">
-      <div class="hamburger-menu-wrapper">
+      <!-- <div class="hamburger-menu-wrapper">
         <div class="hamburger-menu">
           <span></span>
           <span></span>
           <span></span>
         </div>
-      </div>
+      </div> -->
+      <img class="navbar-logo" :src="require('@/assets/logo-ccr-black.svg')" />
     </div>
     <div class="wrap">
-      <div class="header-icon">
-        <img :src="require('@/assets/icons/icon-alert-blue.svg')">
-      </div>
       <div class="account-drop-down" :class="{ 'active': isActiveAccountMenu }">
         <div
           class="account-drop-down__select"
           @click="isActiveAccountMenu = !isActiveAccountMenu">
           <img class="account-drop-down_user-image" :src="require('@/assets/user.png')">
           <span class="account-drop-down_user-name">{{ userName }}</span>
-          <img :src="require('@/assets/icons/icon-arrow-down-xs-blue.svg')">
+          <img v-if="!isActiveAccountMenu" :src="require('@/assets/icons/icon-arrow-down-xs-blue.svg')">
+          <img v-else :src="require('@/assets/icons/icon-arrow-down-xs-white.svg')">
         </div>
         <div class="account-drop-down__content">
           <ul class="account-drop-down__menu-list">
             <router-link tag="li" :to="{ name: 'account' }" >
+              <img :src="require('@/assets/icons/account.svg')">
               <span>Account</span>
-              <img :src="require('@/assets/icons/icon-arrow-down-xs-blue.svg')">
             </router-link>
             <li>
+              <img :src="require('@/assets/icons/settings.svg')">
               <span>Settings</span>
-              <img :src="require('@/assets/icons/icon-arrow-down-xs-blue.svg')">
             </li>
             <li @click.prevent="logout">
+              <img :src="require('@/assets/icons/icon-logout-white.svg')">
               <span>Log out</span>
-              <img :src="require('@/assets/icons/icon-logout-blue.svg')">
             </li>
           </ul>
         </div>
+      </div>
+      <div class="header-icon">
+        <img :src="require('@/assets/icons/icon-alert-blue.svg')">
       </div>
       <div class="header-logout header-icon"  @click.prevent="logout">
         <img :src="require('@/assets/icons/icon-logout-blue.svg')">
@@ -84,9 +86,13 @@ export default class UserHeader extends Vue {
 <style lang="scss">
   .navbar {
     display: flex;
-    height: 64px;
+    min-height: 64px;
     box-shadow: 0 2px 32px 0 rgba(0, 0, 0, 0.1);
+    padding-left: 24px;
     justify-content: space-between;
+    &-logo {
+      width: 107px;
+    }
   }
 
   .header-icon {
@@ -108,17 +114,20 @@ export default class UserHeader extends Vue {
   }
 
   .account-drop-down__menu-list {
+    padding: 19px 0;
     li {
       cursor: pointer;
       padding: 0 24px;
+      border: 1px solid transparent;
       font-size: 16px;
-      color: #0085cd;
-      border-bottom: 1px solid #bdddff;
+      color: #fff;
       align-items: center;
-      height: 70px;
+      height: 42px;
       display: flex;
       transition: 0.2s all;
-      justify-content: space-between;
+      img {
+        margin-right: 17px;
+      }
       &:hover {
         background: #bdddff;
       }
@@ -134,13 +143,9 @@ export default class UserHeader extends Vue {
     position: absolute;
     left: 0;
     top: 100%;
-    background: #ffffff;
+    background: #3d5a80;
     z-index: 1;
-    border-bottom-left-radius: 16px;
-    border-bottom-right-radius: 16px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
     width: 100%;
-    border: solid 1px #bdddff;
     @media only screen and (max-width: 760px) {
       left: auto;
       right: 0;
@@ -153,8 +158,10 @@ export default class UserHeader extends Vue {
     transition: 0.2s all;
     &.active {
       .account-drop-down__select {
-        background: #bdddff;
-        color: #3d5a80;
+        background: #3d5a80;
+      }
+      .account-drop-down_user-name {
+        color: #fff;
       }
       .account-drop-down__content {
         display: block;

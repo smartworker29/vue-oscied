@@ -139,7 +139,7 @@ export default class WelcomePage extends Vue {
   .survey-title {
     font-size: 32px;
     font-weight: 300;
-    color: #071012;
+    color: #fff;
     display: flex;
     justify-content: space-between;
     @media only screen and (max-width: 768px) {
@@ -156,7 +156,7 @@ export default class WelcomePage extends Vue {
   }
 
   .survey-header {
-    background: #e6f3fa;
+    background: #0085cd;
     overflow: hidden;
     padding: 1% 5.5% 7px 5.5%;
     p {
