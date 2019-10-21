@@ -50,7 +50,7 @@ const survey: Module<SurveyState, RootState> = {
       return state.isCurrentSurveyInitiated
     },
     getNextSurveySectionNumber (state: SurveyState) : number | null {
-      return state.currentProductSurveySection && state.currentProductSurveySection.position
+      return state.currentProductSurveySection && state.currentProductSurveySection.position != null
         ? state.currentProductSurveySection.position + 1
         : null
     }
