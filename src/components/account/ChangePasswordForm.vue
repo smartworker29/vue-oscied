@@ -25,14 +25,19 @@
         </div>
         <div class="form-half">
           <div class="form-group space"></div>
-          <div class="form-group row" :class="{ 'has-error' : errors.first('password_confirmation') }">
+          <div class="form-group row from-group-password" :class="{ 'has-error' : errors.first('password_confirmation') }">
             <label class="col-md-4 col-form-label">{{ $t('confirm') }}</label>
-            <input v-validate="'required|confirmed:newPassword'"
+            <div class="input-wrapper">
+              <input v-validate="'required|confirmed:newPassword'"
                     name="password_confirmation"
                     type="password"
                     v-model="repeatPassword"
                     class="form-control col-md-8"
                     :data-vv-as="$t('confirm')">
+              <div class="eye-block">
+                <img :src="require('@/assets/icons/icon-view-blue.svg')">
+              </div>
+            </div>
             <small class="error">{{ errors.first('password_confirmation') }}</small>
           </div>
         </div>

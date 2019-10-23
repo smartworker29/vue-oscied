@@ -1,29 +1,42 @@
 <template>
-  <div class="survey">
+  <div class="survey" v-if="isAuthenticated">
     <div class="survey-header">
       <h1 class="survey-title">{{ $t('welcome_to_survey', { surveyName: (surveyInfo) ? surveyInfo.title : '' }) }}</h1>
     </div>
     <div class="survey-content">
-      <p v-if="!isAuthenticated">{{ $t('please_register') }}</p>
       <p v-html="(surveyInfo) ? surveyInfo.welcomeMessage : ''"></p>
       <button v-if="isAuthenticated" class="btn btn-primary btn-primary-active" @click="beginSurvey">
         {{ isUncompletedSurvey ? $t('button_g.continue_survey') : $t('button_g.start_survey') }}
       </button>
-      <div class="auth-forms" v-if="!isAuthenticated">
+    </div>
+  </div>
+  <div v-else class="auth-container-wrapper">
+    <div class="auth-container">
+      <div class="auth-header">
+        <img class="logo" :src="require('@/assets/logo-ccr.svg')" />
         <div class="language">
-          <LangSwitcher/>
-        </div>
-        <div class="form-wrapper">
-          <div class="form-switcher">
-            <button @click="displayedForm = 'signUp'" :class="{ 'active': displayedForm === 'signUp' }">Register</button>
-            <button @click="displayedForm = 'signIn'" :class="{ 'active': displayedForm === 'signIn' }">Sign in</button>
+            <LangSwitcher/>
           </div>
-          <div class="form-content">
-            <div v-if="displayedForm === 'signIn'" class="sign-form">
-              <SignInForm @changeForm="changeForm"/>
+      </div>
+      <div class="auth-content">
+        <div class="welcome-info">
+          <h2 class="welcome-title">{{ $t('welcome_to_survey', { surveyName: (surveyInfo) ? surveyInfo.title : '' }) }}</h2>
+              <p class="sign-in-suggestion">Please register or <a @click="displayedForm = 'signIn'">sign in</a> if you are a existing user</p>
+              <p class="hide-mobile" v-html="(surveyInfo) ? surveyInfo.welcomeMessage : ''"></p>
+        </div>
+        <div class="auth-forms" v-if="!isAuthenticated">
+          <div class="form-wrapper">
+            <div class="form-switcher">
+              <button @click="displayedForm = 'signUp'" :class="{ 'active': displayedForm === 'signUp' }">Register</button>
+              <button @click="displayedForm = 'signIn'" :class="{ 'active': displayedForm === 'signIn' }">Sign in</button>
             </div>
-            <div v-else-if="displayedForm === 'signUp'" class="sign-form">
-              <SignUpForm @changeForm="changeForm"/>
+            <div class="form-content">
+              <div v-if="displayedForm === 'signIn'" class="sign-form">
+                <SignInForm @changeForm="changeForm"/>
+              </div>
+              <div v-else-if="displayedForm === 'signUp'" class="sign-form">
+                <SignUpForm @changeForm="changeForm"/>
+              </div>
             </div>
           </div>
         </div>
@@ -170,6 +183,7 @@ export default class WelcomePage extends Vue {
       font-size: 12px;
       color: #3d5a80;
       .progress-title {
+        color: #fff;
         margin-right: 12px;
       }
     }
@@ -178,10 +192,10 @@ export default class WelcomePage extends Vue {
   .survey-header {
     background: #0085cd;
     overflow: hidden;
+    color: #fff;
     padding: 1% 5.5% 7px 5.5%;
     p {
       margin-bottom: 30px;
-      color: #071012;
     }
   }
 
