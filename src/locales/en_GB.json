@@ -34,8 +34,8 @@
     "change_photo": "Change Picture",
     "delete_photo": "Delete Picture",
     "add_photo": "Add Picture",
-    "start_survey": "Start",
-    "continue_survey": "Continue"
+    "start_survey": "Start Survey",
+    "continue_survey": "Continue Survey"
   },
   "email_address": "Email Address",
   "remember_me": "Remember Me",
