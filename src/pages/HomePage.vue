@@ -9,11 +9,7 @@
       </div>
       <div class="auth-content">
         <div class="welcome-info">
-          <span class="welcome-sub-title">Welcome</span>
-          <h2 class="welcome-title">Survey name</h2>
-              <p class="sign-in-suggestion" v-if="!isAuthenticated">Please register or <a @click="displayedForm = 'signIn'">sign in</a> if you are a existing user</p>
-              <p class="hide-mobile">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse nec enim risus. Mauris efficitur felis lacinia, aliquam mauris a, imperdiet turpis. Morbi fringilla urna eros, at mattis dui sagittis ac. Curabitur eu enim nisl. Nullam ac feugiat sapien. Quisque eu purus ut diam imperdiet viverra sed at nulla. In pharetra hendrerit vestibulum.</p>
-              <p class="hide-mobile">Donec sollicitudin, felis ut posuere aliquam, quam lorem gravida nulla, non tempor dui felis sed magna. Nulla facilisi. Fusce rhoncus faucibus ipsum at blandit. Aenean posuere tellus nec lorem maximus, ut egestas quam varius. Integer vitae nulla consequat, cursus dui non, vestibulum sem. </p>
+          <span class="welcome-sub-title">Welcome to CCR3 Onesource</span>
         </div>
         <div class="auth-forms" v-if="!isAuthenticated">
           <div class="form-wrapper">
