@@ -127,10 +127,10 @@ export default class ProfileForm extends Vue {
   async submit () : Promise<void> {
     this.errors.clear()
     if (!this.userDataForm.gender || !this.userDataForm.gender.value) {
-      this.errors.add({
-        field: 'gender',
-        msg: this.$t('gender_is_required')
-      })
+      // this.errors.add({
+      //  field: 'gender',
+      //  msg: this.$t('gender_is_required')
+      // })
     }
 
     await this.$validator.validateAll()
@@ -198,10 +198,10 @@ export default class ProfileForm extends Vue {
 
   genderChanged (selectedOption: any) : void {
     if (!selectedOption) {
-      this.errors.add({
-        field: 'gender',
-        msg: this.$t('gender_is_required')
-      })
+      // this.errors.add({
+      //  field: 'gender',
+      //  msg: this.$t('gender_is_required')
+      // })
 
       return
     }
