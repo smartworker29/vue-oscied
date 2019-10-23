@@ -41,6 +41,12 @@ export interface ResponseProductSurveyInfo {
   survey: SurveyInfo
 }
 
+export interface SurveyLogo {
+  fileName: string
+  filePath: string
+  fileURL: string
+}
+
 
 export interface SurveyUser {
   surveyUserId: number

@@ -5,7 +5,7 @@
     </div>
     <div class="survey-content">
       <p v-html="(surveyInfo) ? surveyInfo.welcomeMessage : ''"></p>
-      <button v-if="isAuthenticated" class="btn btn-primary btn-primary-active" @click="beginSurvey">
+      <button class="btn btn-primary btn-primary-active" @click="beginSurvey">
         {{ isUncompletedSurvey ? $t('button_g.continue_survey') : $t('button_g.start_survey') }}
       </button>
     </div>
@@ -91,6 +91,12 @@ export default class WelcomePage extends Vue {
       this.surveyInfo = response.survey
       this.productSurveyId = response.surveyProductId
       this.isUncompletedSurvey = SurveyLocalStorageHelper.hasBegunSurvey(this.surveyProduct, this.productSurveyId)
+
+      this.$store.commit('survey/setCurrentSurveyData', {
+        productSurveyId: this.productSurveyId,
+        productSurveyType: this.surveyProduct,
+        surveyInfo: this.surveyInfo
+      })
     } catch (error) {
       // TODO::add handler to process for errors(go to 404)
       this.$router.push({ name: 'notFound' })
@@ -155,6 +161,23 @@ export default class WelcomePage extends Vue {
       @media only screen and (max-width: 768px) {
         display: none;
       }
+    }
+  }
+
+  .survey-logos {
+    display: flex;
+    align-items: center;
+  }
+
+  .survey-logo {
+    height: 50px;
+    margin-right: 10px;
+    @media only screen and (max-width: 768px) {
+      width: 100px
+    }
+    img {
+      display: block;
+      height: 100%;
     }
   }
 
