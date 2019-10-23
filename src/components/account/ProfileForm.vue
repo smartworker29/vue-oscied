@@ -24,16 +24,18 @@
                      class="form-control col-md-8"/>
               <small class="error">{{ errors.first('lastName') }}</small>
             </div>
-            <div class="form-group row form-group-select">
+            <div class="form-group row form-group-select" :class="{ 'has-error' : errors.first('lastName') }">
               <label class="col-md-4 col-form-label">{{ $t('gender') }}</label>
               <multiselect
                 v-model="userDataForm.gender"
-                :placeholder="'Select'"
+                :placeholder="$t('select')"
                 label="label"
                 :searchable="false"
                 :show-labels="false"
-                :options="genderOptions">
+                :options="genderOptions"
+                @select="genderChanged">
               </multiselect>
+              <small class="error">{{ errors.first('gender') }}</small>
             </div>
           </div>
           <div class="form-half">
@@ -45,6 +47,7 @@
                 class="form-control"
                 v-validate="'required'"
                 :data-vv-as="$t('email_address')"/>
+              <small class="error">{{ errors.first('email') }}</small>
             </div>
             <div class="form-group row" :class="{ 'has-error' : errors.first('phone') }">
               <label class="col-md-4 col-form-label">{{ $t('phone_number') }}</label>
@@ -122,7 +125,16 @@ export default class ProfileForm extends Vue {
   }
 
   async submit () : Promise<void> {
-    if (!await this.$validator.validateAll()) {
+    this.errors.clear()
+    if (!this.userDataForm.gender || !this.userDataForm.gender.value) {
+      this.errors.add({
+        field: 'gender',
+        msg: this.$t('gender_is_required')
+      })
+    }
+
+    await this.$validator.validateAll()
+    if (this.errors.count() !== 0) {
       this.$el.querySelector('.error')!.scrollIntoView(false)
       return
     }
@@ -139,6 +151,7 @@ export default class ProfileForm extends Vue {
       }
 
       this.$validator.pause()
+      this.errors.clear()
       this.user = await UserService.getUser(true)
 
       this.isUserDataChanged = true
@@ -180,6 +193,21 @@ export default class ProfileForm extends Vue {
       gender: this.genderOptions.find(g => g.value === this.user.gender),
       phone: this.user.phone,
       email: this.user.email
+    }
+  }
+
+  genderChanged (selectedOption: any) : void {
+    if (!selectedOption) {
+      this.errors.add({
+        field: 'gender',
+        msg: this.$t('gender_is_required')
+      })
+
+      return
+    }
+
+    if (this.errors.has('gender')) {
+      this.errors.remove('gender')
     }
   }
 }

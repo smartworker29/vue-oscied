@@ -134,6 +134,14 @@
       border: none;
     }
     .multiselect {
+      .multiselect__select:before {
+        background: url('assets/icons/icon-arrow-down-xs-blue.svg') no-repeat;
+        border: none;
+        height: 24px;
+        width: 24px;
+        top: 3px;
+        display: block;
+      }
 
       // border: solid 1px #d6efff;
       max-width: 286px;

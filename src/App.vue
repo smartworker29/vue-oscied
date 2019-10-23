@@ -43,6 +43,11 @@ export default class App extends Vue {
         }
       }
     }
+    const userLocale = LocaleHelper.getUserLocale()
+    if (userLocale) {
+      this.$i18n.locale = userLocale
+      this.localizeValidator(LocaleHelper.getLocaleForVeeValidate(userLocale))
+    }
     this.isLoaded = true
   }
 }
