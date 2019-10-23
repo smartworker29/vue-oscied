@@ -8,7 +8,8 @@
           <span></span>
         </div>
       </div> -->
-      <img class="navbar-logo" :src="require('@/assets/logo-ccr-black.svg')" />
+      <SurveyLogos v-if="currentSurveyInfo" :items="currentSurveyInfo.logos" />
+      <img v-else class="navbar-logo" :src="require('@/assets/logo-ccr-black.svg')" />
     </div>
     <div class="wrap">
       <div class="account-drop-down" :class="{ 'active': isActiveAccountMenu }">
@@ -62,11 +63,20 @@ import { Vue, Component } from 'vue-property-decorator'
 import { Getter } from 'vuex-class'
 import UserService from '@/services/UserService'
 import { User } from '@/interfaces/UserInterfaces'
+import { SurveyInfo } from '@/interfaces/SurveyInterfaces'
+import SurveyLogos from '@/components/survey/SurveyLogos.vue'
 
-@Component({})
+@Component({
+  components: {
+    SurveyLogos
+  }
+})
 export default class UserHeader extends Vue {
   @Getter('user/currentUser')
   user!: User
+
+  @Getter('survey/getCurrentSurveyInfo')
+  currentSurveyInfo!: SurveyInfo
 
   isActiveAccountMenu: boolean = false
 
