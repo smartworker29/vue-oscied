@@ -26,7 +26,7 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import { Getter } from 'vuex-class'
-import { Statement, CompleteSectionData, Section, SurveyInfo, SurveyUserInfo } from '@/interfaces/SurveyInterfaces'
+import { Statement, Section, SurveyInfo } from '@/interfaces/SurveyInterfaces'
 import CurrentSurvey from '@/components/survey/CurrentSurvey.vue'
 import SurveyProgress from '@/components/common/progressBar/SurveyProgress.vue'
 import SurveyService from '@/services/SurveyService'
@@ -51,61 +51,69 @@ export default class CurrentSurveyPage extends Vue {
   @Prop({})
   surveyProduct!: string
   @Prop({})
-  surveyProductId!: number
+  surveyUserId!: number
 
   loadSections: boolean = false
   countSection: number = 0
   sectionKey: number = 0
-  currentSurveyUserInfo!: SurveyUserInfo
 
   async created () {
-    if (this.surveyProduct !== this.currentProductSurveyType ||
-      this.surveyProductId.toString() !== this.currentProductSurveyId.toString()) {
-      this.loadSections = false
-      throw new Error('Unavailable data of the requested survey')// TODO::add handler to process the no correct current survey data
+    const nextSectionId = await this.getNextSection()
+    if (!nextSectionId) {
+      this.handleNullableNextSection()
+      return
     }
 
     await this.uploadSurveySections()
-    await this.uploadSurveyUserInfo()
-    await this.getSurveyProgress()
+    await this.handleSurveyProgress(nextSectionId)
     this.loadSections = true
   }
 
   async uploadSurveySections () : Promise<void> {
     let sections: Section[] = await SurveyService.getSurveySections(
       this.currentProductSurveyType,
-      this.surveyProductId
+      this.currentProductSurveyId
     )
 
     this.$store.commit('survey/setCurrentSurveySections', sections)
     this.countSection = sections.length
   }
 
-  async uploadSurveyUserInfo () : Promise<void> {
-    this.currentSurveyUserInfo = await SurveyService.getSurveyUserInfo(this.surveyProduct, this.surveyProductId)
-    // TODO::add logic if the survey is completed (currentSurveyUserInfo.isCompleted)
-    // TODO::add logic if the data is not got
-  }
-
-  async getSurveyProgress () : Promise<void> {
-    const nextSectionId: number | null = await SurveyService.getSurveyProgress(
-      this.surveyProduct,
-      this.currentSurveyUserInfo.surveyUserId
-    )
+  async handleSurveyProgress (nextSectionId: number | null = null) : Promise<void> {
+    if (!nextSectionId) {
+      nextSectionId = await this.getNextSection()
+    }
 
     if (nextSectionId === null) {
-      // TODO::add logic if the `nextSectionId` is equal to null (it means that the survey doesn't have the uncompleted sections)
+      this.handleNullableNextSection()
       return
     }
 
     this.$store.commit('survey/setNextSurveySectionId', nextSectionId)
-    const nextSectionNumber: number | null = this.$store.getters['survey/getNextProductSurveySectionNumber']
+    const nextSectionNumber: number | null = this.$store.getters['survey/getNextSurveySectionNumber']
 
-    if (nextSectionNumber !== null && this.$route.params['sectionNumber'] !== nextSectionNumber.toString()) {
-      this.pushToAnotherSection(nextSectionNumber)
-    } else {
-      // TODO::add logic if the `nextSection` is equal to null (it means that the survey doesn't have the uncompleted sections)
+    if (!nextSectionNumber) {
+      this.handleNullableNextSection()
+      return
     }
+
+    if (this.$route.params['sectionNumber'] !== nextSectionNumber.toString()) {
+      this.pushToAnotherSection(nextSectionNumber)
+    }
+  }
+
+  async getNextSection () : Promise<number | null> {
+    const nextSectionId = await SurveyService.getSurveyProgress(
+      this.surveyProduct,
+      this.surveyUserId
+    )
+
+    return nextSectionId
+  }
+
+  handleNullableNextSection () : void {
+    // TODO::add logic if the `nextSection` is equal to null (it means that the survey doesn't have the uncompleted sections)
+    this.$router.push({ name: 'notFound' })
   }
 
   pushToAnotherSection (sectionNumber: number) : void {
@@ -114,53 +122,38 @@ export default class CurrentSurveyPage extends Vue {
       name: 'survey.page.part',
       params: {
         surveyProduct: this.surveyProduct,
-        surveyProductId: this.surveyProductId.toString(),
+        surveyProductId: this.surveyUserId.toString(),
         sectionNumber: sectionNumber.toString()
       }
     })
   }
 
   async handleCompleteSection (statements: Statement[]) {
-    await this.handleSortedSection(statements)
+    const nextSectionId = await SurveyService.saveStatements(
+      this.surveyProduct,
+      this.surveyUserId,
+      statements
+    )
+    this.$store.commit('survey/addOneCompletedSection')
 
-    const nextSectionNumber: number | null = this.$store.getters['survey/getNextProductSurveySectionNumber']
-    if (nextSectionNumber !== null) {
-      this.pushToAnotherSection(nextSectionNumber)
-    } else {
-      // TODO::add logic if the `nextSection` is equal to null (it means that the survey doesn't have the uncompleted sections)
+    if (!nextSectionId) {
+      this.handleCompleteSurvey()
+      return
     }
-  }
 
-  async handleSortedSection (statements: Statement[]) {
-    const section: Section = this.$store.getters['survey/getCurrentProductSurveySection']
+    this.$store.commit('survey/setNextSurveySectionId', nextSectionId)
+    const nextSectionNumber: number | null = this.$store.getters['survey/getNextSurveySectionNumber']
 
-    // TODO::change logic to handle uncompleted survey
-    this.$store.commit('survey/addOneCompletedSection', { sectionNumber: 1, statements, section })
-    // SurveyHelper.addSectionToUncompletedSurvey(this.surveyProduct, this.surveyProductId, completeSectionData)
-
-    try {
-      const nextSectionId: number | number = await SurveyService.saveStatements(
-        this.surveyProduct,
-        this.currentSurveyUserInfo.surveyUserId,
-        statements
-      )
-
-      if (nextSectionId !== null) {
-        this.$store.commit('survey/setNextSurveySectionId', nextSectionId)
-      } else {
-        // TODO::add logic if the `nextSectionId` is equal to null (it means that the survey doesn't have the uncompleted sections)
-      }
-    } catch (error) {
-      // TODO::add functionality
+    if (!nextSectionNumber) {
+      this.handleNullableNextSection()
+      return
     }
+
+    this.pushToAnotherSection(nextSectionNumber)
   }
 
   handleCompleteSurvey () {
-    // TODO::add functionality to processing survey data(upload the data from localStorage if passing uncompleted survey)
-    // TODO::check if all section are completed
-    this.$store.commit('survey/clearCurrentSurveyData')
-    SurveyHelper.removeCurrentSurveyData()
-
+    SurveyHelper.completeSurvey(this.surveyProduct, this.currentProductSurveyId, this.surveyUserId)
     this.$router.push({ name: 'survey.complete' })
   }
 }

@@ -39,7 +39,8 @@ import SignInForm from '@/components/signIn/SignInForm.vue'
 import SignUpForm from '@/components/signUp/SignUpForm.vue'
 import LangSwitcher from '@/components/common/layout/LangSwitcher.vue'
 import SurveyService from '@/services/SurveyService'
-import { ResponseProductSurveyInfo, SurveyInfo } from '@/interfaces/SurveyInterfaces'
+import { ResponseProductSurveyInfo, SurveyInfo, SurveyUser } from '@/interfaces/SurveyInterfaces'
+import SurveyLocalStorageHelper from '@/utils/SurveyLocalStorageHelper'
 import SurveyHelper from '@/utils/SurveyHelper'
 import { EventBus } from '@/main'
 
@@ -76,9 +77,10 @@ export default class WelcomePage extends Vue {
 
       this.surveyInfo = response.survey
       this.productSurveyId = response.surveyProductId
-      this.isUncompletedSurvey = SurveyHelper.hasUncompletedSurvey(this.surveyProduct, this.productSurveyId)
+      this.isUncompletedSurvey = SurveyLocalStorageHelper.hasBegunSurvey(this.surveyProduct, this.productSurveyId)
     } catch (error) {
-      console.log(error)// TODO::add handler to process for errors(go to 404)
+      // TODO::add handler to process for errors(go to 404)
+      this.$router.push({ name: 'notFound' })
     }
   }
 
@@ -86,24 +88,45 @@ export default class WelcomePage extends Vue {
     this.displayedForm = formName
   }
 
-  beginSurvey () {
+  async beginSurvey () {
+    const surveyUserInfo: SurveyUser | null = await SurveyService.getSurveyUser(
+      this.surveyProduct,
+      this.productSurveyId,
+      this.accessCode
+    ) ||
+      await SurveyService.createSurveyUser(
+        this.surveyProduct,
+        this.productSurveyId,
+        this.accessCode
+      )
+
+    if (!SurveyHelper.isSurveyUserAvailable(surveyUserInfo)) {
+      SurveyHelper.completeSurvey(this.surveyProduct, this.productSurveyId, surveyUserInfo.surveyUserId)
+      this.$router.push({ name: 'survey.complete' })
+      // todo::[m] Add logic for handling completed survey
+
+      return
+    }
+
     this.$store.commit('survey/setCurrentSurveyData', {
       productSurveyId: this.productSurveyId,
       productSurveyType: this.surveyProduct,
-      surveyInfo: this.surveyInfo
+      surveyInfo: this.surveyInfo,
+      surveyUserInfo: surveyUserInfo
     })
 
-    SurveyHelper.setCurrentSurveyData(
-      this.surveyProduct,
-      this.accessCode,
-      this.productSurveyId
-    )
+    SurveyLocalStorageHelper.beginSurvey({
+      surveyProductType: this.surveyProduct,
+      surveyAccessCode: this.accessCode,
+      surveyProductId: this.productSurveyId,
+      surveyUserId: surveyUserInfo.surveyUserId
+    })
 
     this.$router.push({
       name: 'survey.page.part',
       params: {
         surveyProduct: this.surveyProduct,
-        surveyProductId: this.productSurveyId.toString(),
+        surveyUserId: surveyUserInfo.surveyUserId.toString(),
         sectionNumber: '1'
       }
     })
