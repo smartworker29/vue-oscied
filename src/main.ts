@@ -14,6 +14,7 @@ import Multiselect from 'vue-multiselect'
 import VueAxios from 'vue-axios'
 import VeeValidate from 'vee-validate'
 import VueAuthenticate from 'vue-authenticate'
+import VModal from 'vue-js-modal'
 import Vuex from 'vuex'
 
 import LocaleHelper from '@/utils/LocaleHelper'
@@ -21,6 +22,7 @@ import LocaleHelper from '@/utils/LocaleHelper'
 export const EventBus = new Vue()
 
 Vue.component('multiselect', Multiselect)
+Vue.use(VModal)
 Vue.use(BootstrapVue)
 Vue.use(VeeValidate)
 Vue.use(Vuex)

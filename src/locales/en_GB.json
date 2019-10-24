@@ -21,6 +21,7 @@
   "rights_reserved": "All Rights Reserved",
   "private_policy": "Private Policy",
   "data_policy": "Data Policy",
+  "confirmation_window": "Confirmation Window",
   "button_g": {
     "confirm_order": "Confirm Order",
     "register": "Register",
@@ -31,6 +32,7 @@
     "update_profile": "Update Profile",
     "change_password": "Change Password",
     "cancel": "Cancel",
+    "confirm": "Confirm",
     "change_photo": "Change Picture",
     "delete_photo": "Delete Picture",
     "add_photo": "Add Picture",
