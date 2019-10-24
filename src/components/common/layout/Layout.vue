@@ -1,6 +1,6 @@
 <template>
   <div class="application-wrapper">
-    <template v-if="isAuthenticated">
+    <template>
       <user-header/>
     </template>
     <div class="application-content">
@@ -22,8 +22,5 @@ import AppFooter from '@/components/footer/AppFooter.vue'
     AppFooter
   }
 })
-export default class Layout extends Vue {
-  @Getter('user/isAuthenticated')
-  private isAuthenticated!: boolean
-}
+export default class Layout extends Vue {}
 </script>

@@ -1,12 +1,12 @@
 <template>
   <div class="auth-container-wrapper">
     <div class="auth-container">
-      <div class="auth-header">
+      <!-- <div class="auth-header">
         <img class="logo" :src="require('@/assets/logo-ccr.svg')" />
         <div class="language">
             <LangSwitcher/>
           </div>
-      </div>
+      </div> -->
       <div class="auth-content">
         <div class="welcome-info">
           <span class="welcome-sub-title">Welcome to CCR3 Onesource</span>
