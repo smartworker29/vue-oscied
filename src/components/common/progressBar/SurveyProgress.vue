@@ -40,7 +40,7 @@ export default class SurveyProgress extends Vue {
   }
 
   .progress-bar {
-    height: 16px;
+    height: 15px;
     border-radius: 8px;
     border: solid 1px #bdddff;
     background: linear-gradient(to bottom, rgba(214,239,255,0.52) 0%, rgba(214,239,255,1) 100%);

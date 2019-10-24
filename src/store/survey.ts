@@ -57,6 +57,9 @@ const survey: Module<SurveyState, RootState> = {
   },
 
   mutations: {
+    setCurrentSurveyProgress (state: SurveyState, progress: number): void {
+      state.countCompletedSections = progress;
+    },
     setCurrentSurveyData (state: SurveyState, surveyData: CurrentSurveyData) : void {
       state.currentSurveyInfo = surveyData.surveyInfo
       state.currentProductSurveyId = surveyData.productSurveyId

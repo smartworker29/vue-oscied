@@ -8,7 +8,7 @@
           <span></span>
         </div>
       </div> -->
-      <SurveyLogos v-if="currentSurveyInfo" :items="currentSurveyInfo.logos" />
+      <SurveyLogos v-if="currentSurveyInfo" :items="currentSurveyInfo.logos || currentSurveyInfo.survey.logos" />
       <img v-else class="navbar-logo" :src="require('@/assets/logo-ccr-black.svg')" />
     </div>
     <div class="wrap">
