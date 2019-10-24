@@ -54,6 +54,8 @@ export default class DragAndDropSortingStatement extends Vue {
     this.messageText = this.$t('confirm_to_next_section') as string
     if (!this.isListChanged) {
       this.$modal.show('confirm-modal')
+    } else {
+      this.$emit('updateOrder', this.options.list)
     }
   }
 
