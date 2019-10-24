@@ -87,6 +87,14 @@
     margin-bottom: 16px;
     flex-wrap: wrap;
     align-items: center;
+    &.has-error {
+      &.form-group-select .multiselect__tags {
+        border-color: #ce4844
+      }
+      input {
+        border-color: #ce4844
+      }
+    }
 
     &:last-child {
       margin-bottom: 20px;
@@ -120,6 +128,7 @@
       padding: 9px 16px;
       background: #ffffff;
       border: solid 1px #d6efff;
+      transition: all 0.2;
       &:focus {
         outline: none;
       }

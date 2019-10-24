@@ -19,10 +19,10 @@
             </div>
             <div class="form-content">
               <div v-if="displayedForm === 'signIn'" class="sign-form">
-                <SignInForm @changeForm="changeForm" @authorizedComplete="authorizedComplete"/>
+                <SignInForm @changeForm="changeForm"/>
               </div>
               <div v-else-if="displayedForm === 'signUp'" class="sign-form">
-                <SignUpForm @changeForm="changeForm" @authorizedComplete="authorizedComplete"/>
+                <SignUpForm @changeForm="changeForm"/>
               </div>
             </div>
           </div>

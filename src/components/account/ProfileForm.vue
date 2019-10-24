@@ -24,7 +24,7 @@
                      class="form-control col-md-8"/>
               <small class="error">{{ errors.first('lastName') }}</small>
             </div>
-            <div class="form-group row form-group-select" :class="{ 'has-error' : errors.first('lastName') }">
+            <div class="form-group row form-group-select">
               <label class="col-md-4 col-form-label">{{ $t('gender') }}</label>
               <multiselect
                 v-model="userDataForm.gender"

@@ -12,7 +12,6 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
-import { Getter } from 'vuex-class'
 import UserHeader from '@/components/common/layout/UserHeader.vue'
 import AppFooter from '@/components/footer/AppFooter.vue'
 
