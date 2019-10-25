@@ -1,5 +1,5 @@
 <template>
-  <div class="survey-logos">
+  <div class="survey-logos" v-if="items">
     <div class="survey-logo" v-for="(logo, index) in items" :key="index">
       <img :src="logo.fileURL">
     </div>
@@ -14,7 +14,7 @@ import { SurveyLogo } from '@/interfaces/SurveyInterfaces'
 })
 export default class SurveyLogos extends Vue {
   @Prop({
-    default: []
+    default: () => ([])
   })
   items!: Array<SurveyLogo>
 }

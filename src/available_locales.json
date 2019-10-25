@@ -7,7 +7,7 @@
   {
     "locale": "ar",
     "localeName": "Arabic",
-    "class": "flag-icon-ar"
+    "class": ""
   },
   {
     "locale": "zh_Hans",
@@ -27,7 +27,7 @@
   {
     "locale": "hi",
     "localeName": "Hindi",
-    "class": "flag-icon-hi"
+    "class": "flag-icon-in"
   },
   {
     "locale": "es",
@@ -42,7 +42,7 @@
   {
     "locale": "tl",
     "localeName": "Tagalog",
-    "class": "flag-icon-tl"
+    "class": "flag-icon-ph"
   },
   {
     "locale": "tr",

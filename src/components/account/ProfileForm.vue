@@ -24,7 +24,7 @@
                      class="form-control col-md-8"/>
               <small class="error">{{ errors.first('lastName') }}</small>
             </div>
-            <div class="form-group row form-group-select" :class="{ 'has-error' : errors.first('lastName') }">
+            <div class="form-group row form-group-select">
               <label class="col-md-4 col-form-label">{{ $t('gender') }}</label>
               <multiselect
                 v-model="userDataForm.gender"
@@ -127,10 +127,10 @@ export default class ProfileForm extends Vue {
   async submit () : Promise<void> {
     this.errors.clear()
     if (!this.userDataForm.gender || !this.userDataForm.gender.value) {
-      // this.errors.add({
-      //  field: 'gender',
-      //  msg: this.$t('gender_is_required')
-      // })
+      this.errors.add({
+        field: 'gender',
+        msg: this.$t('gender_is_required').toString()
+      })
     }
 
     await this.$validator.validateAll()
@@ -198,10 +198,10 @@ export default class ProfileForm extends Vue {
 
   genderChanged (selectedOption: any) : void {
     if (!selectedOption) {
-      // this.errors.add({
-      //  field: 'gender',
-      //  msg: this.$t('gender_is_required')
-      // })
+      this.errors.add({
+        field: 'gender',
+        msg: this.$t('gender_is_required').toString()
+      })
 
       return
     }

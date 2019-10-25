@@ -21,6 +21,7 @@
   "rights_reserved": "Arabic: All Rights Reserved",
   "private_policy": "Arabic: Private Policy",
   "data_policy": "Arabic: Data Policy",
+  "confirmation_window": "Arabic: Confirmation Window",
   "button_g": {
     "confirm_order": "Arabic: Confirm Order",
     "register": "Arabic: Register",
@@ -31,6 +32,7 @@
     "update_profile": "Arabic: Update Profile",
     "change_password": "Arabic: Change Password",
     "cancel": "Arabic: Cancel",
+    "confirm": "Arabic: Confirm",
     "change_photo": "Arabic: Change Picture",
     "delete_photo": "Arabic: Delete Picture",
     "add_photo": "Arabic: Add Picture",

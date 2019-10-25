@@ -1,12 +1,12 @@
 <template>
   <div class="auth-container-wrapper">
     <div class="auth-container">
-      <div class="auth-header">
+      <!-- <div class="auth-header">
         <img class="logo" :src="require('@/assets/logo-ccr.svg')" />
         <div class="language">
             <LangSwitcher/>
           </div>
-      </div>
+      </div> -->
       <div class="auth-content">
         <div class="welcome-info">
           <span class="welcome-sub-title">Welcome to CCR3 Onesource</span>
@@ -19,10 +19,10 @@
             </div>
             <div class="form-content">
               <div v-if="displayedForm === 'signIn'" class="sign-form">
-                <SignInForm @changeForm="changeForm" @authorizedComplete="authorizedComplete"/>
+                <SignInForm @changeForm="changeForm"/>
               </div>
               <div v-else-if="displayedForm === 'signUp'" class="sign-form">
-                <SignUpForm @changeForm="changeForm" @authorizedComplete="authorizedComplete"/>
+                <SignUpForm @changeForm="changeForm"/>
               </div>
             </div>
           </div>

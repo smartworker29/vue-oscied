@@ -59,6 +59,9 @@ export default class CurrentSurveyPage extends Vue {
 
   async created () {
     const nextSectionId = await this.getNextSection()
+    if (nextSectionId && nextSectionId > 1) {
+      this.$store.commit('survey/setCurrentSurveyProgress', nextSectionId - 1)
+    }
     if (!nextSectionId) {
       this.handleNullableNextSection()
       return

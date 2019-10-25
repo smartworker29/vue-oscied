@@ -12,12 +12,12 @@
   </div>
   <div v-else class="auth-container-wrapper">
     <div class="auth-container">
-      <div class="auth-header">
+      <!-- <div class="auth-header">
         <img class="logo" :src="require('@/assets/logo-ccr.svg')" />
         <div class="language">
             <LangSwitcher/>
           </div>
-      </div>
+      </div> -->
       <div class="auth-content">
         <div class="welcome-info">
           <h2 class="welcome-title">{{ $t('welcome_to_survey', { surveyName: (surveyInfo) ? surveyInfo.title : '' }) }}</h2>
@@ -123,7 +123,8 @@ export default class WelcomePage extends Vue {
       SurveyHelper.completeSurvey(this.surveyProduct, this.productSurveyId, surveyUserInfo.surveyUserId)
       this.$router.push({ name: 'survey.complete' })
       // todo::[m] Add logic for handling completed survey
-
+      // todo::[m] It logic doesn't needed because API doesn't return the completed surveyUser at now
+      // todo::[m] I leave these comments there, because logic of the completed survey is not fully described at moment
       return
     }
 

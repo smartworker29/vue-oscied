@@ -32,7 +32,7 @@
         <small class="error" v-if="errors.first('email')">{{ errors.first('email') }}</small>
         <small class="error" v-if="!errors.first('email') && !emailIsFree">{{ $t('email_already_user') }}</small>
       </div>
-      <div class="form-group form-group-select">
+      <div class="form-group form-group-select" :class="{ 'has-error': genderRequiredError }">
         <label for="">Gender</label>
         <multiselect
           v-model="registrationData.gender"
