@@ -72,7 +72,7 @@ export default class CurrentSurveyPage extends Vue {
     this.$store.commit('survey/setCurrentSurveyData', {
       productSurveyId: response.surveyProductId,
       productSurveyType: this.surveyProduct,
-      surveyInfo: response,
+      surveyInfo: response.survey,
       surveyUserInfo: surveyUserInfo
     })
   }
