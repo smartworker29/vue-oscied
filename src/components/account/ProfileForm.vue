@@ -198,10 +198,10 @@ export default class ProfileForm extends Vue {
 
   genderChanged (selectedOption: any) : void {
     if (!selectedOption) {
-      // this.errors.add({
-      //  field: 'gender',
-      //  msg: this.$t('gender_is_required')
-      // })
+      this.errors.add({
+        field: 'gender',
+        msg: this.$t('gender_is_required').toString()
+      })
 
       return
     }

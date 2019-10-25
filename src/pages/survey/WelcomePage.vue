@@ -123,7 +123,8 @@ export default class WelcomePage extends Vue {
       SurveyHelper.completeSurvey(this.surveyProduct, this.productSurveyId, surveyUserInfo.surveyUserId)
       this.$router.push({ name: 'survey.complete' })
       // todo::[m] Add logic for handling completed survey
-
+      // todo::[m] It logic doesn't needed because API doesn't return the completed surveyUser at now
+      // todo::[m] I leave these comments there, because logic of the completed survey is not fully described at moment
       return
     }
 
