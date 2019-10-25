@@ -1,0 +1,23 @@
+.ccr-modal {
+  border: 1px solid #e6f3fa;
+  background: #fff;
+  border-radius: 12px;
+  padding: 2em;
+  &__actions {
+    margin-top: 50px;
+    &-right {
+      float: right;
+      .btn {
+        margin-right: 0;
+        margin-left: 10px;
+      }
+    }
+    .btn {
+      margin-right: 10px;
+    }
+  }
+  &__title {
+    font-size: 34px;
+    margin-bottom: 20px;
+  }
+}

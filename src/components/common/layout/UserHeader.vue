@@ -8,42 +8,47 @@
           <span></span>
         </div>
       </div> -->
-      <SurveyLogos v-if="currentSurveyInfo" :items="currentSurveyInfo.logos" />
+      <SurveyLogos v-if="currentSurveyInfo" :items="currentSurveyInfo.logos || currentSurveyInfo.survey.logos" />
       <img v-else class="navbar-logo" :src="require('@/assets/logo-ccr-black.svg')" />
     </div>
     <div class="wrap">
-      <div class="account-drop-down" :class="{ 'active': isActiveAccountMenu }">
-        <div
-          class="account-drop-down__select"
-          @click="isActiveAccountMenu = !isActiveAccountMenu">
-          <img class="account-drop-down_user-image" :src="require('@/assets/user.png')">
-          <span class="account-drop-down_user-name">{{ userName }}</span>
-          <img v-if="!isActiveAccountMenu" :src="require('@/assets/icons/icon-arrow-down-xs-blue.svg')">
-          <img v-else :src="require('@/assets/icons/icon-arrow-down-xs-white.svg')">
+      <template v-if="isAuthenticated">
+        <div class="account-drop-down" :class="{ 'active': isActiveAccountMenu }">
+          <div
+            class="account-drop-down__select"
+            @click="isActiveAccountMenu = !isActiveAccountMenu">
+            <img class="account-drop-down_user-image" :src="require('@/assets/user.png')">
+            <span class="account-drop-down_user-name">{{ userName }}</span>
+            <img v-if="!isActiveAccountMenu" :src="require('@/assets/icons/icon-arrow-down-xs-blue.svg')">
+            <img v-else :src="require('@/assets/icons/icon-arrow-down-xs-white.svg')">
+          </div>
+          <div class="account-drop-down__content">
+            <ul class="account-drop-down__menu-list">
+              <li @click="$router.push({ name: 'account' }); isActiveAccountMenu = false">
+                <img :src="require('@/assets/icons/account.svg')">
+                <span>Account</span>
+              </li>
+              <li>
+                <img :src="require('@/assets/icons/settings.svg')">
+                <span>Settings</span>
+              </li>
+              <li @click.prevent="logout">
+                <img :src="require('@/assets/icons/icon-logout-white.svg')">
+                <span>Log out</span>
+              </li>
+            </ul>
+          </div>
         </div>
-        <div class="account-drop-down__content">
-          <ul class="account-drop-down__menu-list">
-            <li @click="$router.push({ name: 'account' }); isActiveAccountMenu = false">
-              <img :src="require('@/assets/icons/account.svg')">
-              <span>Account</span>
-            </li>
-            <li>
-              <img :src="require('@/assets/icons/settings.svg')">
-              <span>Settings</span>
-            </li>
-            <li @click.prevent="logout">
-              <img :src="require('@/assets/icons/icon-logout-white.svg')">
-              <span>Log out</span>
-            </li>
-          </ul>
+        <div class="header-icon">
+          <img :src="require('@/assets/icons/icon-alert-blue.svg')">
         </div>
-      </div>
-      <div class="header-icon">
-        <img :src="require('@/assets/icons/icon-alert-blue.svg')">
-      </div>
-      <div class="header-logout header-icon"  @click.prevent="logout">
-        <img :src="require('@/assets/icons/icon-logout-blue.svg')">
-      </div>
+        <div class="header-logout header-icon"  @click.prevent="logout">
+          <img :src="require('@/assets/icons/icon-logout-blue.svg')">
+        </div>
+      </template>
+      <template v-else>
+        <LangSwitcher class="language-header" />
+      </template>
     </div>
     <!-- <div class="menu-items">
 
@@ -65,13 +70,18 @@ import UserService from '@/services/UserService'
 import { User } from '@/interfaces/UserInterfaces'
 import { SurveyInfo } from '@/interfaces/SurveyInterfaces'
 import SurveyLogos from '@/components/survey/SurveyLogos.vue'
+import LangSwitcher from '@/components/common/layout/LangSwitcher.vue'
 
 @Component({
   components: {
-    SurveyLogos
+    SurveyLogos,
+    LangSwitcher
   }
 })
 export default class UserHeader extends Vue {
+  @Getter('user/isAuthenticated')
+  private isAuthenticated!: boolean
+
   @Getter('user/currentUser')
   user!: User
 
@@ -103,6 +113,10 @@ export default class UserHeader extends Vue {
     &-logo {
       width: 107px;
     }
+  }
+
+  .language-header {
+    margin-right: 24px;
   }
 
   .header-icon {

@@ -34,9 +34,9 @@
                     v-model="repeatPassword"
                     class="form-control col-md-8"
                     :data-vv-as="$t('confirm')">
-              <div class="eye-block">
+              <!-- <div class="eye-block">
                 <img :src="require('@/assets/icons/icon-view-blue.svg')">
-              </div>
+              </div> -->
             </div>
             <small class="error">{{ errors.first('password_confirmation') }}</small>
           </div>

@@ -24,6 +24,9 @@
       </div>
     </div>
     <button class="btn btn-primary btn-primary-active" @click="updateOrder">{{ $t('button_g.confirm_order') }}</button>
+    <modal :classes="['ccr-modal']" name="confirm-modal" :height="'auto'">
+      <ConfirmModal @cancel="handleCancelModal" @confirm="handleConfirmModal" :text="messageText" />
+    </modal>
   </div>
 </template>
 
@@ -31,9 +34,10 @@
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import draggable from 'vuedraggable'
 import { StatementSortingOptions } from '@/interfaces/SortingInterfaces'
+import ConfirmModal from '@/components/modals/ConfirmModal.vue'
 
 @Component({
-  components: { draggable }
+  components: { draggable, ConfirmModal }
 })
 export default class DragAndDropSortingStatement extends Vue {
   @Prop({
@@ -44,12 +48,23 @@ export default class DragAndDropSortingStatement extends Vue {
   })
   options!: StatementSortingOptions
   isListChanged: boolean = false
+  messageText: string = ''
 
   updateOrder () {
-    const messageText: string = this.$t('confirm_to_next_section') as string
-    if (!this.isListChanged && !confirm(messageText)) {
-      return
+    this.messageText = this.$t('confirm_to_next_section') as string
+    if (!this.isListChanged) {
+      this.$modal.show('confirm-modal')
+    } else {
+      this.$emit('updateOrder', this.options.list)
     }
+  }
+
+  handleCancelModal () {
+    this.$modal.hide('confirm-modal')
+  }
+
+  handleConfirmModal () {
+    this.$modal.hide('confirm-modal')
     this.$emit('updateOrder', this.options.list)
   }
 }
