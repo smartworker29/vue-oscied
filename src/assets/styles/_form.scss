@@ -102,12 +102,12 @@
 
     .language-select {
       width: 100%;
-      max-width: 286px;
+      max-width: 100%s;
     }
 
     &.space {
       width: 100%;
-      height: 36px;
+      height: 66px;
       max-width: 286px;
       @media only screen and (max-width: 1200px) {
         height: 60px;
@@ -115,7 +115,7 @@
     }
 
     .input-wrapper {
-      max-width: 286px;
+      max-width: 100%;
       width: 100%;
       position: relative;
     }
@@ -124,17 +124,13 @@
       font-size: 14px;
       border-radius: 12px;
       width: 100%;
-      max-width: 286px;
+      max-width: 100%;
       padding: 9px 16px;
       background: #ffffff;
       border: solid 1px #d6efff;
       transition: all 0.2;
       &:focus {
         outline: none;
-      }
-
-      @media only screen and (max-width: 1000px) {
-        max-width: 100%;
       }
     }
 
@@ -169,10 +165,7 @@
 
       // border: solid 1px #d6efff;
       min-width: 200px;
-      max-width: 286px;
-      @media only screen and (max-width: 1000px) {
-        max-width: 100%;
-      }
+      max-width: 100%;
       &.multiselect--above {
         .multiselect__content-wrapper {
           top: auto;
@@ -251,10 +244,8 @@
   label {
     font-size: 16px;
     color: #071012;
-    @media only screen and (max-width: 1000px) {
-      width: 100%;
-      margin-bottom: 6px;
-    }
+    width: 100%;
+    margin-bottom: 6px;
   }
 }
 
