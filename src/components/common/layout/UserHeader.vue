@@ -108,15 +108,18 @@ export default class UserHeader extends Vue {
     display: flex;
     min-height: 64px;
     box-shadow: 0 2px 32px 0 rgba(0, 0, 0, 0.1);
-    padding-left: 24px;
     justify-content: space-between;
     &-logo {
       width: 107px;
     }
   }
 
+  .navbar-logo {
+    margin: 0 24px;
+  }
+
   .language-header {
-    margin-right: 24px;
+    margin: 0 24px;
   }
 
   .header-icon {
@@ -149,8 +152,8 @@ export default class UserHeader extends Vue {
       height: 42px;
       display: flex;
       transition: 0.2s all;
-      img {
-        margin-right: 17px;
+      span {
+        margin: 0 17px;
       }
       &:hover {
         background: #bdddff;
