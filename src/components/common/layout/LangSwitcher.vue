@@ -11,11 +11,11 @@
           :options="availableLocales">
             <template slot="singleLabel" slot-scope="{ option }">
               <span class="flag-icon" :class="option.class"></span>
-              <span class="hide-mobile">{{ option.localeName }}</span>
+              <span class="hide-mobile flag-name">{{ option.localeName }}</span>
             </template>
             <template slot="option" slot-scope="props">
               <span class="flag-icon" :class="props.option.class"></span>
-              <span class="hide-mobile">{{ props.option.localeName }}</span>
+              <span class="hide-mobile flag-name">{{ props.option.localeName }}</span>
             </template>
         </multiselect>
       </div>

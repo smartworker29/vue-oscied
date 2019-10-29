@@ -168,6 +168,7 @@ export default class WelcomePage extends Vue {
   .survey-logos {
     display: flex;
     align-items: center;
+    margin: 0 24px;
   }
 
   .survey-logo {

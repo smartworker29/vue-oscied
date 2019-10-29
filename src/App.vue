@@ -46,9 +46,18 @@ export default class App extends Vue {
     const userLocale = LocaleHelper.getUserLocale()
     if (userLocale) {
       this.$i18n.locale = userLocale
+      this.handleArabianLocale(userLocale)
       this.localizeValidator(LocaleHelper.getLocaleForVeeValidate(userLocale))
     }
     this.isLoaded = true
+  }
+
+  handleArabianLocale (userLocale: string): void {
+    if (userLocale === 'ar') {
+      document.getElementsByTagName('body')[0].classList.add('rtl')
+    } else {
+      document.getElementsByTagName('body')[0].classList.remove('rtl')
+    }
   }
 }
 </script>
