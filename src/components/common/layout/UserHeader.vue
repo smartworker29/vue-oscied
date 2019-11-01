@@ -85,7 +85,7 @@ export default class UserHeader extends Vue {
   @Getter('user/currentUser')
   user!: User
 
-  @Getter('survey/getCurrentSurveyInfo')
+  @Getter('survey/getDisplayedBaseSurveyInfo')
   currentSurveyInfo!: SurveyInfo
 
   isActiveAccountMenu: boolean = false

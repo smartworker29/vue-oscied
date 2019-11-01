@@ -1,14 +1,14 @@
-import { SurveyUser } from '@/interfaces/SurveyInterfaces'
+import { SurveyUserInfo } from '@/interfaces/SurveyInterfaces'
 import SurveyLocalStorageHelper from '@/utils/SurveyLocalStorageHelper'
 import store from '@/store'
 
 class SurveyHelper {
-  isSurveyUserAvailable (surveyUser: SurveyUser | null) : boolean {
+  isSurveyUserAvailable (surveyUser: SurveyUserInfo | null) : boolean {
     return surveyUser !== null && !surveyUser.isCompleted && surveyUser.isAuthorised
   }
 
   completeSurvey (surveyProductType: string, surveyProductId: number | null, surveyUserId: number | null) : void {
-    store.commit('survey/clearCurrentSurveyData')
+    store.commit('survey/clearTakenSurveyData')
     if (surveyProductId) {
       SurveyLocalStorageHelper.removeBegunSurvey(surveyProductType, surveyProductId)
     }

@@ -38,6 +38,10 @@ class SurveyLocalStorageHelper {
     this.saveSurveyUser(surveyData)
   }
 
+  public beginDpChildSurvey (surveyData: SurveyData) : void {
+    this.saveSurveyUser(surveyData)
+  }
+
   public hasBegunSurvey (surveyProductType: string, surveyProductId: number) : boolean {
     const begunSurveys: number[] | null = this.getData(this.getSurveyProductKey(surveyProductType))
 
