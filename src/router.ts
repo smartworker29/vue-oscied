@@ -2,14 +2,15 @@ import Vue from 'vue'
 import Router, { Route } from 'vue-router'
 import store from '@/store'
 
-import CurrentSurveySection from '@/components/survey/CurrentSurveySection.vue'
+import TakenSurveySection from '@/components/survey/TakenSurveySection.vue'
 
 import HomePage from '@/pages/HomePage.vue'
 import AccountPage from '@/pages/AccountPage.vue'
 import NotFoundPage from '@/pages/NotFoundPage.vue'
 import WelcomePage from '@/pages/survey/WelcomePage.vue'
-import CurrentSurveyPage from '@/pages/survey/CurrentSurveyPage.vue'
+import TakenSurveyPage from '@/pages/survey/TakenSurveyPage.vue'
 import CompleteSurveyMessagePage from '@/pages/survey/CompleteSurveyMessagePage.vue'
+import DpChildSurveyWelcomePage from '@/pages/survey/DpChildSurveyWelcomePage.vue'
 
 Vue.use(Router)
 
@@ -35,13 +36,32 @@ const router = new Router({
     },
     {
       path: '/:surveyProduct(eq|values|behaviours)/:surveyUserId(\\d+)/part',
-      component: CurrentSurveyPage,
+      component: TakenSurveyPage,
       props: true,
       children: [
         {
           path: ':sectionNumber(\\d+)',
           name: 'survey.page.part',
-          component: CurrentSurveySection,
+          component: TakenSurveySection,
+          props: true
+        }
+      ]
+    },
+    {
+      path: '/discovery-process/:surveyProduct(eq|values|behaviours)/:surveyProductId(\\d+)',
+      component: DpChildSurveyWelcomePage,
+      props: true,
+      name: 'survey.welcome.dp.survey_product'
+    },
+    {
+      path: '/discovery-process/:surveyProduct(eq|values|behaviours)/:surveyUserId(\\d+)/part',
+      component: TakenSurveyPage,
+      props: true,
+      children: [
+        {
+          path: ':sectionNumber(\\d+)',
+          name: 'survey.dp.page.part',
+          component: TakenSurveySection,
           props: true
         }
       ]
