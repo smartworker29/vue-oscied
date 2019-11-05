@@ -71,5 +71,12 @@
   "profile_successfully_changed": "Arabic: Changes have successfully been changed.",
   "please_register": "Arabic: Please register or sign in if you are a existing user",
   "welcome_to_survey": "Arabic: Welcome to {surveyName}",
-  "confirm_to_next_section": "Arabic: You don't re-range the statements. Do you want to go to the next section?"
+  "not_found_message": "Arabic: Sorry, we couldn't find what you were looking for.",
+  "confirm_to_next_section": "Arabic: You don't re-range the statements. Do you want to go to the next section?",
+  "select": "Arabic: Select",
+  "ready_to_start_dp_survey_part": "Arabic: You are now ready to start part {nextPartNumber} of 3 of this questionnaire",
+  "eq_title": "Arabic: E.Q. - Emotional Intelligence",
+  "values_title": "Arabic: Values",
+  "behaviours_title": "Arabic: Behaviours",
+  "continue": "Arabic: Continue"
 }

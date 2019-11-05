@@ -73,5 +73,10 @@
   "welcome_to_survey": "Welcome to {surveyName}",
   "not_found_message": "Sorry, we couldn't find what you were looking for.",
   "confirm_to_next_section": "You don't seem to have rearranged the statements. Are you sure you want to proceed?",
-  "select": "Select"
+  "select": "Select",
+  "ready_to_start_dp_survey_part": "You are now ready to start part {nextPartNumber} of 3 of this questionnaire",
+  "eq_title": "E.Q. - Emotional Intelligence",
+  "values_title": "Values",
+  "behaviours_title": "Behaviours",
+  "continue": "Continue"
 }
