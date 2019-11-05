@@ -4,4 +4,5 @@ export interface SurveyData {
   surveyProductId: number
   surveyUserId: number
   dpSurveyId: number | null
+  dpChildSurveys: string[]
 }
