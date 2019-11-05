@@ -11,6 +11,7 @@ import WelcomePage from '@/pages/survey/WelcomePage.vue'
 import TakenSurveyPage from '@/pages/survey/TakenSurveyPage.vue'
 import CompleteSurveyMessagePage from '@/pages/survey/CompleteSurveyMessagePage.vue'
 import DpChildSurveyWelcomePage from '@/pages/survey/DpChildSurveyWelcomePage.vue'
+import DpChildSurveyCompletedPage from '@/pages/survey/DpChildSurveyCompletedPage.vue'
 
 Vue.use(Router)
 
@@ -48,7 +49,7 @@ const router = new Router({
       ]
     },
     {
-      path: '/discovery-process/:surveyProduct(eq|values|behaviours)/:surveyProductId(\\d+)',
+      path: '/discovery-process/:surveyProduct(eq|values|behaviours)/:surveyUserId(\\d+)',
       component: DpChildSurveyWelcomePage,
       props: true,
       name: 'survey.welcome.dp.survey_product'
@@ -67,6 +68,12 @@ const router = new Router({
       ]
     },
     {
+      path: '/discovery-process/:surveyProduct(eq|values|behaviours)/:surveyUserId(\\d+)/completed',
+      component: DpChildSurveyCompletedPage,
+      props: true,
+      name: 'survey.dp.completed.part'
+    },
+    {
       path: '/complete',
       name: 'survey.complete',
       component: CompleteSurveyMessagePage
@@ -83,6 +90,8 @@ const router = new Router({
 })
 
 router.beforeEach((to: Route, from: Route, next: any) => {
+  // todo::[m] this incorrect works,  'user/isAuthenticated' is not initialised there
+  // todo::[m] allow access for non authenticated only at page survey.welcome, at other page we need redirect users to 404
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (store.getters['user/isAuthenticated']) {
       next()

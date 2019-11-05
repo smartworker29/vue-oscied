@@ -88,15 +88,15 @@ const survey: Module<SurveyState, RootState> = {
     setTakenSurveyData (state: SurveyState, surveyData: TakenSurveyData) : void {
       state.takenBaseSurveyInfo = surveyData.surveyInfo
       state.displayedBaseSurveyInfo = state.takenBaseSurveyInfo
+      state.takenSurveyId = surveyData.productSurveyId
+      state.takenSurveyType = surveyData.productSurveyType
 
-      if (state.takenSurveyType === 'discovery-process') {
+      if (surveyData.productSurveyType === 'discovery-process') {
         state.isDpTakenSurvey = true
         state.dpSurveyId = surveyData.productSurveyId
         state.dpBaseSurveyInfo = state.takenBaseSurveyInfo
       }
 
-      state.takenSurveyId = surveyData.productSurveyId
-      state.takenSurveyType = surveyData.productSurveyType
       state.isTakenSurveyInitiated = true
     },
     setTakenSurveyUserId (state: SurveyState, surveyUserInfo: SurveyUserDto) : void {

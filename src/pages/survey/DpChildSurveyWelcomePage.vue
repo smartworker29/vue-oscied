@@ -18,13 +18,14 @@ import { Getter } from 'vuex-class'
 import { SurveyInfo } from '@/interfaces/SurveyInterfaces'
 import SurveyLocalStorageHelper from '@/utils/SurveyLocalStorageHelper'
 import SurveyHelper from '@/utils/SurveyHelper'
+import SurveyService from '@/services/SurveyService'
 
 @Component({})
 export default class DpChildSurveyWelcomePage extends Vue {
   @Prop({})
   surveyProduct!: string
   @Prop({})
-  surveyProductId!: string
+  surveyUserId!: string
 
   @Getter('survey/getTakenSurveyId')
   takenSurveyProductId!: number
@@ -35,21 +36,100 @@ export default class DpChildSurveyWelcomePage extends Vue {
   @Getter('survey/getDpSurveyUserId')
   dpSurveyUserId!: number
 
+  @Getter('survey/isTakenSurveyInitiated')
+  isTakenSurveyInitiated!: boolean
+  @Getter('survey/isDpTakenSurvey')
+  isDpTakenSurvey!: boolean
+
   @Getter('survey/getDisplayedBaseSurveyInfo')
   surveyInfo!: SurveyInfo
 
   isUncompletedSurvey: boolean = false
 
   async created () {
-    if (this.surveyProduct !== this.takenSurveyProductType || this.takenSurveyProductId.toString() !== this.surveyProductId) {
-      // SurveyHelper.completeSurvey(this.surveyProduct, this.surveyProductId, this.takenSurveyUserId)
-      // SurveyHelper.completeSurvey('discovery-process', this.surveyProductId, this.takenSurveyUserId)
-      // todo[m]:: add logic for the uncompleted survey
+    if (!this.isTakenSurveyInitiated) {
+      const redirect = await this.uploadDpSurveyData()
+
+      if (redirect) {
+        return
+      }
+    }
+
+    if (!this.isDpTakenSurvey) {
       this.$router.push({ name: 'notFound' })
       return
     }
 
     this.isUncompletedSurvey = SurveyLocalStorageHelper.hasSurveyUser(this.surveyProduct, this.takenSurveyUserId)
+  }
+
+  async uploadDpSurveyData () : Promise<boolean> {
+    let dpSurveyUserId: boolean | number = false
+    if (SurveyLocalStorageHelper.hasSurveyUser(this.surveyProduct, parseInt(this.surveyUserId))) {
+      dpSurveyUserId = await SurveyHelper.uploadDpSurveyDataByChild(
+        SurveyLocalStorageHelper.getSurveyUser(this.surveyProduct, parseInt(this.surveyUserId))
+      )
+    } else {
+      const parentDpSurveyUserId = SurveyLocalStorageHelper.getParentDpSurveyUserId(this.surveyProduct, parseInt(this.surveyUserId))
+      if (parentDpSurveyUserId) {
+        dpSurveyUserId = await SurveyHelper.uploadDpSurveyDataFromLocalStorage(parentDpSurveyUserId)
+      }
+    }
+
+    if (typeof dpSurveyUserId === 'number') {
+      const progress = await this.getDpProgress(dpSurveyUserId)
+      return progress
+    }
+    return false
+  }
+
+  async getDpProgress (dpSurveyUserId: number) : Promise<boolean> {
+    const progress = await SurveyService.getDpSurveyProgress(dpSurveyUserId)
+
+    if (progress.isCompleted || !progress.nextSurveyPart) {
+      SurveyHelper.completeSurvey(SurveyHelper.DP, null, dpSurveyUserId)
+      this.$router.push({ name: 'survey.complete' })
+      // todo::[m] Add logic for handling completed survey
+      // todo::[m] I leave these comments there, because logic of the completed survey is not fully described at moment
+      return true
+    }
+
+    const nextSurveyProductInfo = await SurveyService.getSurveyInfoById(
+      progress.nextSurveyPart.product,
+      progress.nextSurveyPart.id
+    )
+
+    this.$store.commit('survey/setTakenSurveyData', {
+      productSurveyId: progress.nextSurveyPart.id,
+      productSurveyType: progress.nextSurveyPart.product,
+      surveyInfo: nextSurveyProductInfo
+    })
+
+    this.$store.commit('survey/setTakenSurveyUserId', {
+      productSurveyType: progress.nextSurveyPart.product,
+      surveyUserId: progress.nextSurveyPart.surveyUserId
+    })
+
+    SurveyLocalStorageHelper.addDpChildSurveyUser(
+      dpSurveyUserId,
+      progress.nextSurveyPart.product,
+      progress.nextSurveyPart.surveyUserId
+    )
+
+    if (this.$route.params['surveyProduct'] !== progress.nextSurveyPart.product ||
+      this.$route.params['surveyUserId'] !== progress.nextSurveyPart.surveyUserId.toString()
+    ) {
+      this.$router.push({
+        name: 'survey.welcome.dp.survey_product',
+        params: {
+          surveyProduct: progress.nextSurveyPart.product,
+          surveyUserId: progress.nextSurveyPart.surveyUserId.toString()
+        }
+      })
+      return true
+    }
+
+    return false
   }
 
   async beginSurvey () {
@@ -58,7 +138,8 @@ export default class DpChildSurveyWelcomePage extends Vue {
       surveyAccessCode: null,
       surveyProductId: this.takenSurveyProductId,
       surveyUserId: this.takenSurveyUserId,
-      dpSurveyId: this.dpSurveyUserId
+      dpSurveyId: this.dpSurveyUserId,
+      dpChildSurveys: []
     })
 
     this.$router.push({

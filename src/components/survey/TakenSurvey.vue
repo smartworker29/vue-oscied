@@ -30,6 +30,7 @@ import { Statement, Section } from '@/interfaces/SurveyInterfaces'
 import SurveyProgress from '@/components/common/progressBar/SurveyProgress.vue'
 import SurveyService from '@/services/SurveyService'
 import SurveyHelper from '@/utils/SurveyHelper'
+import SurveyLocalStorageHelper from '@/utils/SurveyLocalStorageHelper'
 
 @Component({
   components: {
@@ -65,6 +66,7 @@ export default class TakenSurvey extends Vue {
     if (nextSectionId && nextSectionId > 1) {
       this.$store.commit('survey/setCurrentSurveyProgress', nextSectionId - 1)
     }
+
     if (!nextSectionId) {
       await this.handleNullableNextSection()
       return
@@ -127,40 +129,18 @@ export default class TakenSurvey extends Vue {
   }
 
   async handleNullableSectionForDp () : Promise<void> {
-    const progress = await SurveyService.getDpSurveyProgress(this.dpSurveyUserId)
-
-    if (progress.isCompleted || !progress.nextSurveyPart) {
-      SurveyHelper.completeSurvey(
-        'discovery-process',
-        await this.$store.getters['survey/getDpSurveyId'],
-        this.dpSurveyUserId
-      )
-
+    if (this.surveyProduct === 'behaviours') {
+      SurveyLocalStorageHelper.removeSurveyUser(SurveyHelper.DP, this.dpSurveyUserId)
       this.$store.commit('survey/clearDpSurveyData')
       this.$router.push({ name: 'survey.complete' })
-      // todo::[m] Add logic for handling completed survey
-      // todo::[m] I leave these comments there, because logic of the completed survey is not fully described at moment
+
       return
     }
-
-    const nextSurveyProductInfo = await SurveyService.getSurveyInfoById(progress.nextSurveyPart.product, progress.nextSurveyPart.id)
-
-    this.$store.commit('survey/setTakenSurveyData', {
-      productSurveyId: progress.nextSurveyPart.id,
-      productSurveyType: progress.nextSurveyPart.product,
-      surveyInfo: nextSurveyProductInfo
-    })
-
-    this.$store.commit('survey/setTakenSurveyUserId', {
-      productSurveyType: progress.nextSurveyPart.product,
-      surveyUserId: progress.nextSurveyPart.surveyUserId
-    })
-
     this.$router.push({
-      name: 'survey.welcome.dp.survey_product',
+      name: 'survey.dp.completed.part',
       params: {
-        surveyProduct: progress.nextSurveyPart.product,
-        surveyProductId: progress.nextSurveyPart.id.toString()
+        surveyProduct: this.surveyProduct,
+        surveyUserId: this.surveyUserId.toString()
       }
     })
   }

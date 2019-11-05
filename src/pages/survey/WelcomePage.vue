@@ -133,15 +133,24 @@ export default class WelcomePage extends Vue {
       surveyUserId: this.surveyUserInfo.surveyUserId
     })
 
-    SurveyLocalStorageHelper.beginSurvey({
-      surveyProductType: this.surveyProduct,
-      surveyAccessCode: this.accessCode,
-      surveyProductId: this.productSurveyId,
-      surveyUserId: this.surveyUserInfo.surveyUserId,
-      dpSurveyId: null
-    })
+    let storageSurveyUserInfo = SurveyLocalStorageHelper.getSurveyUser(
+      this.surveyProduct,
+      this.surveyUserInfo.surveyUserId
+    )
+    if (!storageSurveyUserInfo) {
+      storageSurveyUserInfo = {
+        surveyProductType: this.surveyProduct,
+        surveyAccessCode: this.accessCode,
+        surveyProductId: this.productSurveyId,
+        surveyUserId: this.surveyUserInfo.surveyUserId,
+        dpSurveyId: null,
+        dpChildSurveys: []
+      }
+    }
 
-    if (this.surveyProduct === 'discovery-process') {
+    SurveyLocalStorageHelper.beginSurvey(storageSurveyUserInfo)
+
+    if (this.surveyProduct === SurveyHelper.DP) {
       await this.beginDpSurvey()
       return
     }
@@ -160,7 +169,7 @@ export default class WelcomePage extends Vue {
     const progress = await SurveyService.getDpSurveyProgress(this.surveyUserInfo.surveyUserId)
 
     if (progress.isCompleted || !progress.nextSurveyPart) {
-      SurveyHelper.completeSurvey(this.surveyProduct, this.productSurveyId, this.surveyUserInfo.surveyUserId)
+      SurveyHelper.completeSurvey(SurveyHelper.DP, this.productSurveyId, this.surveyUserInfo.surveyUserId)
       this.$router.push({ name: 'survey.complete' })
       // todo::[m] Add logic for handling completed survey
       // todo::[m] I leave these comments there, because logic of the completed survey is not fully described at moment
@@ -183,11 +192,17 @@ export default class WelcomePage extends Vue {
       surveyUserId: progress.nextSurveyPart.surveyUserId
     })
 
+    SurveyLocalStorageHelper.addDpChildSurveyUser(
+      this.surveyUserInfo.surveyUserId,
+      progress.nextSurveyPart.product,
+      progress.nextSurveyPart.surveyUserId
+    )
+
     this.$router.push({
       name: 'survey.welcome.dp.survey_product',
       params: {
         surveyProduct: progress.nextSurveyPart.product,
-        surveyProductId: progress.nextSurveyPart.id.toString()
+        surveyUserId: progress.nextSurveyPart.surveyUserId.toString()
       }
     })
   }

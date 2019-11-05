@@ -100,26 +100,22 @@ export default class TakenSurveyPage extends Vue {
       throw new Error()
     }
     const response = await SurveyService.getProductSurveyInfo(
-      'discovery-process',
+      SurveyHelper.DP,
       dpSurveyUser.surveyAccessCode
     )
     const surveyUserInfo = await SurveyService.getSurveyUser(
-      'discovery-process',
+      SurveyHelper.DP,
       dpSurveyUser.surveyProductId,
       dpSurveyUser.surveyAccessCode
     )
 
     if (!surveyUserInfo) {
-      // SurveyHelper.completeSurvey('discovery-process', dpSurveyUser.surveyProductId, dpSurveyUser.surveyUserId)
-      // SurveyHelper.completeSurvey(surveyUser.surveyProductType, surveyUser.surveyProductId, surveyUser.surveyUserId)
       throw new Error()
     }
 
     const progress = await SurveyService.getDpSurveyProgress(dpSurveyUser.surveyUserId)
 
     if (progress.isCompleted || !progress.nextSurveyPart) {
-      // SurveyHelper.completeSurvey('discovery-process', dpSurveyUser.surveyProductId, dpSurveyUser.surveyUserId)
-      // SurveyHelper.completeSurvey(surveyUser.surveyProductType, surveyUser.surveyProductId, surveyUser.surveyUserId)
       this.$router.push({ name: 'survey.complete' })
       // todo::[m] Add logic for handling completed survey
       // todo::[m] I leave these comments there, because logic of the completed survey is not fully described at moment
