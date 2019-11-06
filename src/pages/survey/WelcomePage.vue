@@ -52,7 +52,7 @@ import SignInForm from '@/components/signIn/SignInForm.vue'
 import SignUpForm from '@/components/signUp/SignUpForm.vue'
 import LangSwitcher from '@/components/common/layout/LangSwitcher.vue'
 import SurveyService from '@/services/SurveyService'
-import { ResponseProductSurveyInfo, SurveyInfo, SurveyUser } from '@/interfaces/SurveyInterfaces'
+import { ResponseProductSurveyInfo, SurveyInfo, SurveyUserInfo } from '@/interfaces/SurveyInterfaces'
 import SurveyLocalStorageHelper from '@/utils/SurveyLocalStorageHelper'
 import SurveyHelper from '@/utils/SurveyHelper'
 import { EventBus } from '@/main'
@@ -77,10 +77,11 @@ export default class WelcomePage extends Vue {
   surveyInfo: SurveyInfo | null = null
   productSurveyId!: number
   isUncompletedSurvey: boolean = false
+  surveyUserInfo!: SurveyUserInfo
 
   async created () {
-    EventBus.$on('authorizedComplete', () => {
-      this.beginSurvey()
+    EventBus.$on('authorizedComplete', async () => {
+      await this.beginSurvey()
     })
     try {
       const response: ResponseProductSurveyInfo = await SurveyService.getProductSurveyInfo(
@@ -92,7 +93,7 @@ export default class WelcomePage extends Vue {
       this.productSurveyId = response.surveyProductId
       this.isUncompletedSurvey = SurveyLocalStorageHelper.hasBegunSurvey(this.surveyProduct, this.productSurveyId)
 
-      this.$store.commit('survey/setCurrentSurveyData', {
+      this.$store.commit('survey/setTakenSurveyData', {
         productSurveyId: this.productSurveyId,
         productSurveyType: this.surveyProduct,
         surveyInfo: this.surveyInfo
@@ -108,7 +109,7 @@ export default class WelcomePage extends Vue {
   }
 
   async beginSurvey () {
-    const surveyUserInfo: SurveyUser | null = await SurveyService.getSurveyUser(
+    this.surveyUserInfo = await SurveyService.getSurveyUser(
       this.surveyProduct,
       this.productSurveyId,
       this.accessCode
@@ -119,35 +120,89 @@ export default class WelcomePage extends Vue {
         this.accessCode
       )
 
-    if (!SurveyHelper.isSurveyUserAvailable(surveyUserInfo)) {
-      SurveyHelper.completeSurvey(this.surveyProduct, this.productSurveyId, surveyUserInfo.surveyUserId)
+    if (!SurveyHelper.isSurveyUserAvailable(this.surveyUserInfo)) {
+      SurveyHelper.completeSurvey(this.surveyProduct, this.productSurveyId, this.surveyUserInfo.surveyUserId)
       this.$router.push({ name: 'survey.complete' })
       // todo::[m] Add logic for handling completed survey
-      // todo::[m] It logic doesn't needed because API doesn't return the completed surveyUser at now
       // todo::[m] I leave these comments there, because logic of the completed survey is not fully described at moment
       return
     }
 
-    this.$store.commit('survey/setCurrentSurveyData', {
-      productSurveyId: this.productSurveyId,
+    this.$store.commit('survey/setTakenSurveyUserId', {
       productSurveyType: this.surveyProduct,
-      surveyInfo: this.surveyInfo,
-      surveyUserInfo: surveyUserInfo
+      surveyUserId: this.surveyUserInfo.surveyUserId
     })
 
-    SurveyLocalStorageHelper.beginSurvey({
-      surveyProductType: this.surveyProduct,
-      surveyAccessCode: this.accessCode,
-      surveyProductId: this.productSurveyId,
-      surveyUserId: surveyUserInfo.surveyUserId
-    })
+    let storageSurveyUserInfo = SurveyLocalStorageHelper.getSurveyUser(
+      this.surveyProduct,
+      this.surveyUserInfo.surveyUserId
+    )
+    if (!storageSurveyUserInfo) {
+      storageSurveyUserInfo = {
+        surveyProductType: this.surveyProduct,
+        surveyAccessCode: this.accessCode,
+        surveyProductId: this.productSurveyId,
+        surveyUserId: this.surveyUserInfo.surveyUserId,
+        dpSurveyId: null,
+        dpChildSurveys: []
+      }
+    }
+
+    SurveyLocalStorageHelper.beginSurvey(storageSurveyUserInfo)
+
+    if (this.surveyProduct === SurveyHelper.DP) {
+      await this.beginDpSurvey()
+      return
+    }
 
     this.$router.push({
       name: 'survey.page.part',
       params: {
         surveyProduct: this.surveyProduct,
-        surveyUserId: surveyUserInfo.surveyUserId.toString(),
+        surveyUserId: this.surveyUserInfo.surveyUserId.toString(),
         sectionNumber: '1'
+      }
+    })
+  }
+
+  async beginDpSurvey () : Promise<void> {
+    const progress = await SurveyService.getDpSurveyProgress(this.surveyUserInfo.surveyUserId)
+
+    if (progress.isCompleted || !progress.nextSurveyPart) {
+      SurveyHelper.completeSurvey(SurveyHelper.DP, this.productSurveyId, this.surveyUserInfo.surveyUserId)
+      this.$router.push({ name: 'survey.complete' })
+      // todo::[m] Add logic for handling completed survey
+      // todo::[m] I leave these comments there, because logic of the completed survey is not fully described at moment
+      return
+    }
+
+    const nextSurveyProductInfo = await SurveyService.getSurveyInfoById(
+      progress.nextSurveyPart.product,
+      progress.nextSurveyPart.id
+    )
+
+    this.$store.commit('survey/setTakenSurveyData', {
+      productSurveyId: progress.nextSurveyPart.id,
+      productSurveyType: progress.nextSurveyPart.product,
+      surveyInfo: nextSurveyProductInfo
+    })
+
+    this.$store.commit('survey/setTakenSurveyUserId', {
+      productSurveyType: progress.nextSurveyPart.product,
+      surveyUserId: progress.nextSurveyPart.surveyUserId
+    })
+
+    SurveyLocalStorageHelper.addDpChildSurveyUser(
+      this.surveyUserInfo.surveyUserId,
+      progress.nextSurveyPart.product,
+      progress.nextSurveyPart.surveyUserId
+    )
+
+    this.$router.push({
+      name: 'survey.welcome.dp.survey_product',
+      params: {
+        surveyProduct: progress.nextSurveyPart.product,
+        surveyUserId: progress.nextSurveyPart.surveyUserId.toString()
       }
     })
   }

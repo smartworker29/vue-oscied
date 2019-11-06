@@ -43,7 +43,6 @@
   "remember_me": "Deutsch: Remember Me",
   "password": "Deutsch: Password",
   "password_confirm": "Deutsch: Confirm Password",
-  "forgotten_pwd": "Deutsch: Forgotten Password?",
   "first_name": "Deutsch: First Name",
   "last_name": "Deutsch: Last Name",
   "gender": "Deutsch: Gender",
@@ -71,8 +70,12 @@
   "profile_successfully_changed": "Deutsch: Changes have successfully been changed.",
   "please_register": "Deutsch: Please register or sign in if you are a existing user",
   "welcome_to_survey": "Deutsch: Welcome to {surveyName}",
-  "confirm_to_next_section": "Deutsch: You don't re-range the statements. Do you want to go to the next section?",
   "not_found_message": "Deutsch: Something didn't find",
   "confirm_to_next_section": "Deutsch: You don't seem to have rearranged the statements. Are you sure you want to proceed?",
-  "select": "Deutsch: Select"
+  "select": "Deutsch: Select",
+  "ready_to_start_dp_survey_part": "Deutsch: You are now ready to start part {nextPartNumber} of 3 of this questionnaire",
+  "eq_title": "Deutsch: E.Q. - Emotional Intelligence",
+  "values_title": "Deutsch: Values",
+  "behaviours_title": "Deutsch: Behaviours",
+  "continue": "Deutsch: Continue"
 }

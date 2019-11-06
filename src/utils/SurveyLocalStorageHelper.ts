@@ -1,4 +1,6 @@
 import { SurveyData } from '@/interfaces/LocalStorageInterfaces'
+import store from '@/store'
+import SurveyHelper from '@/utils/SurveyHelper'
 
 class SurveyLocalStorageHelper {
   private setData (key: string, data: any) : void {
@@ -38,6 +40,10 @@ class SurveyLocalStorageHelper {
     this.saveSurveyUser(surveyData)
   }
 
+  public beginDpChildSurvey (surveyData: SurveyData) : void {
+    this.saveSurveyUser(surveyData)
+  }
+
   public hasBegunSurvey (surveyProductType: string, surveyProductId: number) : boolean {
     const begunSurveys: number[] | null = this.getData(this.getSurveyProductKey(surveyProductType))
 
@@ -61,11 +67,65 @@ class SurveyLocalStorageHelper {
   }
 
   public removeSurveyUser (surveyProductType: string, surveyUserId: number) : void {
+    if (surveyProductType === SurveyHelper.DP) {
+      store.commit('survey/clearDpSurveyData')
+      const dpSurveyUserInfo = this.getSurveyUser(
+        SurveyHelper.DP,
+        surveyUserId
+      )
+      if (dpSurveyUserInfo) {
+        dpSurveyUserInfo.dpChildSurveys.forEach((childSurveyString: string) => {
+          const childSurveyField = childSurveyString.split('_')
+          this.removeSurveyUser(childSurveyField[0], parseInt(childSurveyField[1]))
+        })
+      }
+    }
+
     window.localStorage.removeItem(this.getSurveyUserKey(surveyProductType, surveyUserId))
   }
 
   public getSurveyUser (surveyProductType: string, surveyUserId: number) : SurveyData | null {
     return this.getData(this.getSurveyUserKey(surveyProductType, surveyUserId))
+  }
+
+  public addDpChildSurveyUser (
+    dpSurveyUserId: number,
+    childSurveyProductType: string,
+    childSurveyUserId: number
+  ) : void {
+    let dpSurveyUser = this.getSurveyUser('discovery-process', dpSurveyUserId)
+    if (!dpSurveyUser) {
+      return
+    }
+
+    if (!dpSurveyUser.dpChildSurveys.includes(`${childSurveyProductType}_${childSurveyUserId}`)) {
+      dpSurveyUser.dpChildSurveys.push(`${childSurveyProductType}_${childSurveyUserId}`)
+      this.saveSurveyUser(dpSurveyUser)
+    }
+  }
+
+  public getParentDpSurveyUserId (childSurveyUserProduct: string, childSurveyUserId: number) : number | null {
+    let neededKeys: string[] = []
+    for (let keyIndex = 0; keyIndex < window.localStorage.length; keyIndex++) {
+      const stringKey = window.localStorage.key(keyIndex)
+
+      if (stringKey && stringKey.match(/s_discovery-process_\d/)) {
+        neededKeys.push(stringKey)
+      }
+    }
+
+    let dpSurveyUserId = null
+    try {
+      neededKeys.forEach((storageKey: string) => {
+        const dpSurveyUser: SurveyData = this.getData(storageKey)
+        if (dpSurveyUser.dpChildSurveys.includes(`${childSurveyUserProduct}_${childSurveyUserId}`)) {
+          dpSurveyUserId = dpSurveyUser.surveyUserId
+          throw new Error()
+        }
+      })
+    } catch (error) {}
+
+    return dpSurveyUserId
   }
 }
 

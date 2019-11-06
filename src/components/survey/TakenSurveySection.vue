@@ -21,7 +21,7 @@ import TapSortingStatement from '@/components/common/sorting/TapSortingStatement
     TapSortingStatement
   }
 })
-export default class CurrentSurveySection extends Vue {
+export default class TakenSurveySection extends Vue {
   @Prop({})
   surveyProduct!: string
 
@@ -33,7 +33,7 @@ export default class CurrentSurveySection extends Vue {
   }
 
   async created () {
-    const section: Section | null = this.$store.getters['survey/getCurrentProductSurveySection']
+    const section: Section | null = this.$store.getters['survey/getNextTakenSurveySection']
     if (!section) {
       throw new Error()
       // todo::[m] if section is null
