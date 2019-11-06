@@ -26,27 +26,31 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import { Getter } from 'vuex-class'
-import { Statement, Section, SurveyInfo } from '@/interfaces/SurveyInterfaces'
-import CurrentSurvey from '@/components/survey/CurrentSurvey.vue'
+import { Statement, Section } from '@/interfaces/SurveyInterfaces'
 import SurveyProgress from '@/components/common/progressBar/SurveyProgress.vue'
 import SurveyService from '@/services/SurveyService'
 import SurveyHelper from '@/utils/SurveyHelper'
+import SurveyLocalStorageHelper from '@/utils/SurveyLocalStorageHelper'
 
 @Component({
   components: {
-    CurrentSurvey,
     SurveyProgress
   }
 })
-export default class CurrentSurveyPage extends Vue {
-  @Getter('survey/getCurrentSurveyInfo')
-  currentSurveyInfo!: SurveyInfo
-  @Getter('survey/getCurrentProductSurveyId')
+export default class TakenSurvey extends Vue {
+  @Getter('survey/getTakenSurveyId')
   currentProductSurveyId!: number
-  @Getter('survey/getCurrentProductSurveyType')
+  @Getter('survey/getTakenSurveyType')
   currentProductSurveyType!: string
-  @Getter('survey/getCurrentProductSurveySection')
+  @Getter('survey/getNextTakenSurveySection')
   currentSectionData!: Section
+
+  @Getter('survey/isDpTakenSurvey')
+  isDpTakenSurvey!: boolean
+  @Getter('survey/getDpSurveyUserId')
+  dpSurveyUserId!: number
+  @Getter('survey/getDpSurveyProductId')
+  dpSurveyProductId!: number
 
   @Prop({})
   surveyProduct!: string
@@ -62,8 +66,9 @@ export default class CurrentSurveyPage extends Vue {
     if (nextSectionId && nextSectionId > 1) {
       this.$store.commit('survey/setCurrentSurveyProgress', nextSectionId - 1)
     }
+
     if (!nextSectionId) {
-      this.handleNullableNextSection()
+      await this.handleNullableNextSection()
       return
     }
 
@@ -78,7 +83,7 @@ export default class CurrentSurveyPage extends Vue {
       this.currentProductSurveyId
     )
 
-    this.$store.commit('survey/setCurrentSurveySections', sections)
+    this.$store.commit('survey/setTakenSurveySections', sections)
     this.countSection = sections.length
   }
 
@@ -88,7 +93,7 @@ export default class CurrentSurveyPage extends Vue {
     }
 
     if (nextSectionId === null) {
-      this.handleNullableNextSection()
+      await this.handleNullableNextSection()
       return
     }
 
@@ -96,7 +101,7 @@ export default class CurrentSurveyPage extends Vue {
     const nextSectionNumber: number | null = this.$store.getters['survey/getNextSurveySectionNumber']
 
     if (!nextSectionNumber) {
-      this.handleNullableNextSection()
+      await this.handleNullableNextSection()
       return
     }
 
@@ -114,33 +119,56 @@ export default class CurrentSurveyPage extends Vue {
     return nextSectionId
   }
 
-  handleNullableNextSection () : void {
+  async handleNullableNextSection () : Promise<void> {
     // TODO::add logic if the `nextSection` is equal to null (it means that the survey doesn't have the uncompleted sections)
+    if (this.isDpTakenSurvey) {
+      await this.handleNullableSectionForDp()
+      return
+    }
     this.$router.push({ name: 'notFound' })
   }
 
-  pushToAnotherSection (sectionNumber: number) : void {
-    this.sectionKey++
+  async handleNullableSectionForDp () : Promise<void> {
+    if (this.surveyProduct === 'behaviours') {
+      SurveyLocalStorageHelper.removeSurveyUser(SurveyHelper.DP, this.dpSurveyUserId)
+      this.$store.commit('survey/clearDpSurveyData')
+      this.$router.push({ name: 'survey.complete' })
+
+      return
+    }
     this.$router.push({
-      name: 'survey.page.part',
+      name: 'survey.dp.completed.part',
       params: {
         surveyProduct: this.surveyProduct,
-        surveyProductId: this.surveyUserId.toString(),
+        surveyUserId: this.surveyUserId.toString()
+      }
+    })
+  }
+
+  pushToAnotherSection (sectionNumber: number) : void {
+    const routeName = this.isDpTakenSurvey ? 'survey.dp.page.part' : 'survey.page.part'
+    this.sectionKey++
+    this.$router.push({
+      name: routeName,
+      params: {
+        surveyProduct: this.surveyProduct,
+        surveyUserId: this.surveyUserId.toString(),
         sectionNumber: sectionNumber.toString()
       }
     })
   }
 
-  async handleCompleteSection (statements: Statement[]) {
+  async handleCompleteSection (statements: Statement[]) : Promise<void> {
     const nextSectionId = await SurveyService.saveStatements(
       this.surveyProduct,
       this.surveyUserId,
       statements
     )
+
     this.$store.commit('survey/addOneCompletedSection')
 
     if (!nextSectionId) {
-      this.handleCompleteSurvey()
+      await this.handleCompleteSurvey()
       return
     }
 
@@ -155,8 +183,12 @@ export default class CurrentSurveyPage extends Vue {
     this.pushToAnotherSection(nextSectionNumber)
   }
 
-  handleCompleteSurvey () {
+  async handleCompleteSurvey () : Promise<void> {
     SurveyHelper.completeSurvey(this.surveyProduct, this.currentProductSurveyId, this.surveyUserId)
+    if (this.isDpTakenSurvey) {
+      await this.handleNullableSectionForDp()
+      return
+    }
     this.$router.push({ name: 'survey.complete' })
   }
 }

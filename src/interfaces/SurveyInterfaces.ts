@@ -23,17 +23,10 @@ export interface SurveyInfo {
   validTo: Date | null
 }
 
-export interface CurrentSurveyData {
+export interface TakenSurveyData {
   productSurveyId: number
   productSurveyType: string
   surveyInfo: SurveyInfo
-  surveyUserInfo: SurveyUser
-}
-
-export interface CompleteSectionData {
-  section: Section
-  sectionNumber: number
-  statements: Statement[]
 }
 
 export interface ResponseProductSurveyInfo {
@@ -47,19 +40,30 @@ export interface SurveyLogo {
   fileURL: string
 }
 
-
-export interface SurveyUser {
+export interface SurveyUserInfo {
   surveyUserId: number
   isAuthorised: boolean
   isCompleted: boolean
 }
 
-export interface StatementIRI {
-  statementId: string
+export interface SurveyUserDto {
+  surveyUserId: number
+  productSurveyType: string
 }
 
 export interface SurveyLogo {
   fileURL: string
   filePath: string
   fileName: string
+}
+
+export interface NextDpSurveyPart {
+  id: number
+  product: string
+  surveyUserId: number
+}
+
+export interface DpProgress {
+  nextSurveyPart: NextDpSurveyPart | null
+  isCompleted: boolean
 }

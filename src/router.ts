@@ -2,14 +2,16 @@ import Vue from 'vue'
 import Router, { Route } from 'vue-router'
 import store from '@/store'
 
-import CurrentSurveySection from '@/components/survey/CurrentSurveySection.vue'
+import TakenSurveySection from '@/components/survey/TakenSurveySection.vue'
 
 import HomePage from '@/pages/HomePage.vue'
 import AccountPage from '@/pages/AccountPage.vue'
 import NotFoundPage from '@/pages/NotFoundPage.vue'
 import WelcomePage from '@/pages/survey/WelcomePage.vue'
-import CurrentSurveyPage from '@/pages/survey/CurrentSurveyPage.vue'
+import TakenSurveyPage from '@/pages/survey/TakenSurveyPage.vue'
 import CompleteSurveyMessagePage from '@/pages/survey/CompleteSurveyMessagePage.vue'
+import DpChildSurveyWelcomePage from '@/pages/survey/DpChildSurveyWelcomePage.vue'
+import DpChildSurveyCompletedPage from '@/pages/survey/DpChildSurveyCompletedPage.vue'
 
 Vue.use(Router)
 
@@ -35,16 +37,41 @@ const router = new Router({
     },
     {
       path: '/:surveyProduct(eq|values|behaviours)/:surveyUserId(\\d+)/part',
-      component: CurrentSurveyPage,
+      component: TakenSurveyPage,
       props: true,
       children: [
         {
           path: ':sectionNumber(\\d+)',
           name: 'survey.page.part',
-          component: CurrentSurveySection,
+          component: TakenSurveySection,
           props: true
         }
       ]
+    },
+    {
+      path: '/discovery-process/:surveyProduct(eq|values|behaviours)/:surveyUserId(\\d+)',
+      component: DpChildSurveyWelcomePage,
+      props: true,
+      name: 'survey.welcome.dp.survey_product'
+    },
+    {
+      path: '/discovery-process/:surveyProduct(eq|values|behaviours)/:surveyUserId(\\d+)/part',
+      component: TakenSurveyPage,
+      props: true,
+      children: [
+        {
+          path: ':sectionNumber(\\d+)',
+          name: 'survey.dp.page.part',
+          component: TakenSurveySection,
+          props: true
+        }
+      ]
+    },
+    {
+      path: '/discovery-process/:surveyProduct(eq|values|behaviours)/:surveyUserId(\\d+)/completed',
+      component: DpChildSurveyCompletedPage,
+      props: true,
+      name: 'survey.dp.completed.part'
     },
     {
       path: '/complete',
@@ -63,6 +90,8 @@ const router = new Router({
 })
 
 router.beforeEach((to: Route, from: Route, next: any) => {
+  // todo::[m] this incorrect works,  'user/isAuthenticated' is not initialised there
+  // todo::[m] allow access for non authenticated only at page survey.welcome, at other page we need redirect users to 404
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (store.getters['user/isAuthenticated']) {
       next()
