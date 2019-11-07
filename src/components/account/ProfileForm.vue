@@ -40,7 +40,7 @@
           </div>
           <div class="form-half">
             <div class="form-group" :class="{'has-error' : errors.first('email')}">
-              <label for="">Email address</label>
+              <label>{{ $t('email_address') }}</label>
               <input name="email"
                 type="text"
                 v-model="userDataForm.email"
@@ -84,8 +84,8 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Watch } from 'vue-property-decorator'
-import { LocaleData, UpdateUserData, UpdateUserDataForm, User } from '@/interfaces/UserInterfaces'
+import { Vue, Component } from 'vue-property-decorator'
+import { LocaleData, UpdateUserDataForm, User } from '@/interfaces/UserInterfaces'
 import LocaleHelper from '@/utils/LocaleHelper'
 import UserService from '@/services/UserService'
 import LanguageSelect from '@/components/form/LanguageSelect.vue'

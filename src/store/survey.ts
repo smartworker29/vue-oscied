@@ -40,7 +40,7 @@ const survey: Module<SurveyState, RootState> = {
 
     dpBaseSurveyInfo: null,
     dpSurveyId: null,
-    dpSurveyUserId: null,
+    dpSurveyUserId: null
   },
 
   getters: {
@@ -106,7 +106,7 @@ const survey: Module<SurveyState, RootState> = {
         state.dpSurveyUserId = surveyUserInfo.surveyUserId
       }
     },
-    useDpBaseSurveyInfo(state: SurveyState) : void {
+    useDpBaseSurveyInfo (state: SurveyState) : void {
       state.displayedBaseSurveyInfo = state.dpBaseSurveyInfo
     },
     setCurrentSurveyProgress (state: SurveyState, progress: number) : void {
@@ -145,7 +145,7 @@ const survey: Module<SurveyState, RootState> = {
     },
     addOneCompletedSection (state: SurveyState) : void {
       state.countCompletedSections++
-    },
+    }
   }
 }
 

@@ -1,7 +1,7 @@
 <template>
   <div class="survey" v-if="isAuthenticated">
     <div class="survey-header">
-      <h1 class="survey-title">{{ $t('welcome_to_survey', { surveyName: (surveyInfo) ? surveyInfo.title : '' }) }}</h1>
+      <h1 class="survey-title">{{ $t('welcome_to_survey', { surveyName: (surveyInfo) ? surveyInfo.title : 'CCR3 Onesource' }) }}</h1>
     </div>
     <div class="survey-content">
       <p v-html="(surveyInfo) ? surveyInfo.welcomeMessage : ''"></p>
@@ -21,14 +21,16 @@
       <div class="auth-content">
         <div class="welcome-info">
           <h2 class="welcome-title">{{ $t('welcome_to_survey', { surveyName: (surveyInfo) ? surveyInfo.title : '' }) }}</h2>
-              <p class="sign-in-suggestion">Please register or <a @click="displayedForm = 'signIn'">sign in</a> if you are a existing user</p>
-              <p class="hide-mobile" v-html="(surveyInfo) ? surveyInfo.welcomeMessage : ''"></p>
+          <p class="sign-in-suggestion"
+             v-html="$t('please_register', { signIn: `<a id='${signInLinkId}'>${$t('sign_in').toLowerCase()}</a>` })"
+          ></p>
+          <p class="hide-mobile" v-html="(surveyInfo) ? surveyInfo.welcomeMessage : ''"></p>
         </div>
         <div class="auth-forms" v-if="!isAuthenticated">
           <div class="form-wrapper">
             <div class="form-switcher">
-              <button @click="displayedForm = 'signUp'" :class="{ 'active': displayedForm === 'signUp' }">Register</button>
-              <button @click="displayedForm = 'signIn'" :class="{ 'active': displayedForm === 'signIn' }">Sign in</button>
+              <button @click="displayedForm = 'signUp'" :class="{ 'active': displayedForm === 'signUp' }">{{ $t('register') }}</button>
+              <button @click="displayedForm = 'signIn'" :class="{ 'active': displayedForm === 'signIn' }">{{ $t('sign_in') }}</button>
             </div>
             <div class="form-content">
               <div v-if="displayedForm === 'signIn'" class="sign-form">
@@ -78,6 +80,7 @@ export default class WelcomePage extends Vue {
   productSurveyId!: number
   isUncompletedSurvey: boolean = false
   surveyUserInfo!: SurveyUserInfo
+  signInLinkId = 'sign-in-link-in-welcome'
 
   async created () {
     EventBus.$on('authorizedComplete', async () => {
@@ -101,6 +104,11 @@ export default class WelcomePage extends Vue {
     } catch (error) {
       // TODO::add handler to process for errors(go to 404)
       this.$router.push({ name: 'notFound' })
+    }
+
+    let signInLink = document.querySelector(`#${this.signInLinkId}`)
+    if (signInLink) {
+      signInLink.addEventListener('click', (): void => { this.displayedForm = 'signIn' })
     }
   }
 

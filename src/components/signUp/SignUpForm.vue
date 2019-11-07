@@ -1,7 +1,7 @@
 <template>
   <form @submit.prevent="submit" class="form" novalidate>
     <div class="form-group" :class="{'has-error' : errors.first('firstName')}">
-      <label for="">First name</label>
+      <label>{{ $t('first_name') }}</label>
       <input name="firstName"
               type="text"
               v-model="registrationData.firstName"
@@ -11,7 +11,7 @@
       <small v-if="errors.first('firstName')" class="error">{{ errors.first('firstName') }}</small>
     </div>
     <div class="form-group" :class="{'has-error' : errors.first('lastName')}">
-      <label for="">Last name</label>
+      <label>{{ $t('last_name') }}</label>
       <input name="lastName"
               type="text"
               v-model="registrationData.lastName"
@@ -21,7 +21,7 @@
       <small v-if="errors.first('lastName')" class="error">{{ errors.first('lastName') }}</small>
     </div>
       <div class="form-group" :class="{'has-error' : (errors.first('email') || !emailIsFree)}">
-        <label for="">Email address</label>
+        <label>{{ $t('email_address') }}</label>
         <input name="email"
                 type="email"
                 v-model="registrationData.email"
@@ -33,10 +33,10 @@
         <small class="error" v-if="!errors.first('email') && !emailIsFree">{{ $t('email_already_user') }}</small>
       </div>
       <div class="form-group form-group-select" :class="{ 'has-error': genderRequiredError }">
-        <label for="">Gender</label>
+        <label>{{ $t('gender') }}</label>
         <multiselect
           v-model="registrationData.gender"
-          :placeholder="'Select'"
+          :placeholder="$t('select')"
           label="label"
           :searchable="false"
           :show-labels="false"
@@ -48,7 +48,7 @@
         class="form-group"
         v-if="availableRegistrationFields.includes('phone')"
         :class="{'has-error' : errors.first('phone')}">
-        <label for="">Phone number</label>
+        <label>{{ $t('phone_number') }}</label>
         <input name="phone"
                 type="text"
                 v-model="registrationData.phone"

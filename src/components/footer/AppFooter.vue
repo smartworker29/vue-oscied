@@ -1,10 +1,10 @@
 <template>
   <footer class="footer">
-    <span>2019 &copy; CCR3i All Rights Reserved.</span>
+    <span v-html="$t('copy_right', { years: '2019'})"></span>
     <ul>
-      <li><a>Privacy Policy</a></li>
+      <li><a>{{ $t('private_policy') }}</a></li>
       <li>|</li>
-      <li><a>Data Policy</a></li>
+      <li><a>{{ $t('data_policy') }}</a></li>
     </ul>
   </footer>
 </template>
