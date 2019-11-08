@@ -24,7 +24,7 @@ class SurveyHelper {
     }
   }
 
-  async uploadDpSurveyDataByChild (childSurveyUserData: SurveyData  | null) : Promise<boolean | number> {
+  async uploadDpSurveyDataByChild (childSurveyUserData: SurveyData | null) : Promise<boolean | number> {
     if (!childSurveyUserData || !childSurveyUserData.dpSurveyId) {
       return false
     }
@@ -46,7 +46,7 @@ class SurveyHelper {
     if (!SurveyLocalStorageHelper.hasSurveyUser(this.DP, dpSurveyUserId)) {
       return false
     }
-    try{
+    try {
       const dpSurveyUserInfo = SurveyLocalStorageHelper.getSurveyUser(this.DP, dpSurveyUserId)
       if (!dpSurveyUserInfo ||
         dpSurveyUserInfo.surveyProductType !== this.DP ||

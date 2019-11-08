@@ -16,7 +16,6 @@
         <span class="hide-mobile flag-name">{{ props.option.localeName }}</span>
       </template>
   </multiselect>
-  <!-- </div> -->
 </template>
 
 <script lang="ts">

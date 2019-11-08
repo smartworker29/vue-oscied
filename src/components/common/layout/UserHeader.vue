@@ -26,15 +26,15 @@
             <ul class="account-drop-down__menu-list">
               <li @click="$router.push({ name: 'account' }); isActiveAccountMenu = false">
                 <img :src="require('@/assets/icons/account.svg')">
-                <span>Account</span>
+                <span>{{ $t('account') }}</span>
               </li>
               <li>
                 <img :src="require('@/assets/icons/settings.svg')">
-                <span>Settings</span>
+                <span>{{ $t('settings')}}</span>
               </li>
               <li @click.prevent="logout">
                 <img :src="require('@/assets/icons/icon-logout-white.svg')">
-                <span>Log out</span>
+                <span>{{ $t('logout') }}</span>
               </li>
             </ul>
           </div>

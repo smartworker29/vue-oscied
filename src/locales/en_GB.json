@@ -68,7 +68,7 @@
   "profile_picture": "Profile Picture",
   "password_successfully_changed": "Your new password has successfully been changed",
   "profile_successfully_changed": "Your changes have been saved.",
-  "please_register": "If you are already registered, please sign in. Otherwise please use our quick registration form.",
+  "please_register": "If you are already registered, please {signIn}. Otherwise please use our quick registration form.",
   "welcome_to_survey": "Welcome to {surveyName}",
   "not_found_message": "Sorry, we couldn't find what you were looking for.",
   "confirm_to_next_section": "You don't seem to have rearranged any of the statements. Are you sure you want to proceed?",
@@ -77,5 +77,8 @@
   "eq_title": "E.Q. - Emotional Intelligence",
   "values_title": "Values",
   "behaviours_title": "Behaviours",
-  "continue": "Continue"
+  "continue": "Continue",
+  "copy_right": "{years} &copy; CCR3i All Rights Reserved.",
+  "register": "Register",
+  "completed_survey": "You completed the survey!"
 }

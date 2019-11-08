@@ -9,13 +9,13 @@
       </div> -->
       <div class="auth-content">
         <div class="welcome-info">
-          <span class="welcome-sub-title">Welcome to CCR3 Onesource</span>
+          <span class="welcome-sub-title">{{ $t('welcome_to_survey', { surveyName: 'CCR3 Onesource' }) }}</span>
         </div>
         <div class="auth-forms" v-if="!isAuthenticated">
           <div class="form-wrapper">
             <div class="form-switcher">
-              <button @click="displayedForm = 'signUp'" :class="{ 'active': displayedForm === 'signUp' }">Register</button>
-              <button @click="displayedForm = 'signIn'" :class="{ 'active': displayedForm === 'signIn' }">Sign in</button>
+              <button @click="displayedForm = 'signUp'" :class="{ 'active': displayedForm === 'signUp' }">{{ $t('register') }}</button>
+              <button @click="displayedForm = 'signIn'" :class="{ 'active': displayedForm === 'signIn' }">{{ $t('sign_in') }}</button>
             </div>
             <div class="form-content">
               <div v-if="displayedForm === 'signIn'" class="sign-form">

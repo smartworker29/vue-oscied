@@ -74,6 +74,7 @@ class SurveyLocalStorageHelper {
         surveyUserId
       )
       if (dpSurveyUserInfo) {
+        this.removeBegunSurvey(SurveyHelper.DP, dpSurveyUserInfo.surveyProductId)
         dpSurveyUserInfo.dpChildSurveys.forEach((childSurveyString: string) => {
           const childSurveyField = childSurveyString.split('_')
           this.removeSurveyUser(childSurveyField[0], parseInt(childSurveyField[1]))

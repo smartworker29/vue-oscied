@@ -1,7 +1,7 @@
 <template>
   <form class="form sign-in-form" @submit.prevent="submit" novalidate>
     <div class="form-group" :class="{'has-error' : errors.first('email')}">
-      <label for="">Email address</label>
+      <label>{{ $t('email_address') }}</label>
       <input name="email"
         type="text"
         v-model="signInData.email"
@@ -10,7 +10,7 @@
         :data-vv-as="$t('email_address')"/>
     </div>
     <div class="form-group" :class="{'has-error' : errors.first('password')}">
-      <label for="">Password</label>
+      <label>{{ $t('password') }}</label>
       <input name="password"
         v-validate="'required'"
         :data-vv-as="$t('password')"
@@ -28,11 +28,10 @@
       <div class="form-actions form-actions-justified">
         <div class="checkbox-input">
           <input type="checkbox">
-          <label>Remember me</label>
+          <label>{{ $t('remember_me') }}</label>
         </div>
         <button type="submit" class="btn btn-success col-12">{{ $t('button_g.sign_in') }}</button>
       </div>
-      <!-- <button type="button" class="btn btn-link" @click="changeForm('signUp')">{{ $t('no_account') }}</button> -->
     </div>
   </form>
 </template>

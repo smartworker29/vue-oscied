@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-12">
-        <h1>You completed the survey!</h1>
+        <h1>{{ $t('completed_survey') }}</h1>
       </div>
     </div>
   </div>
