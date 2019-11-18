@@ -1,8 +1,7 @@
 <template>
   <div class="ccr-confirm">
     <h2 class="ccr-modal__title">{{ $t('confirmation_window') }}</h2>
-    <div>
-      {{ text }}
+    <div v-html="text">
     </div>
     <div class="ccr-modal__actions ccr-modal__actions-right">
       <button class="btn btn-primary" @click="$emit('cancel')">{{ $t('button_g.cancel') }}</button>
