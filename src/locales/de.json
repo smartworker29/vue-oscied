@@ -21,7 +21,6 @@
   "rights_reserved": "Deutsch: All Rights Reserved",
   "private_policy": "Deutsch: Private Policy",
   "data_policy": "Deutsch: Data Policy",
-  "confirmation_window": "Deutsch: Confirmation Window",
   "button_g": {
     "confirm_order": "Deutsch: Confirm Order",
     "register": "Deutsch: Register",
@@ -71,6 +70,7 @@
   "please_register": "Deutsch: If you are already registered, please {signIn}. Otherwise please use our quick registration form.",
   "welcome_to_survey": "Deutsch: Welcome to {surveyName}",
   "not_found_message": "Deutsch: Something didn't find",
+  "confirmation_window": "Deutsch: Confirmation Window",
   "confirm_to_next_section": "Deutsch: You don't seem to have rearranged the statements. Are you sure you want to proceed?",
   "select": "Deutsch: Select",
   "ready_to_start_dp_survey_part": "Deutsch: You are now ready to start part {nextPartNumber} of 3 of this questionnaire",
