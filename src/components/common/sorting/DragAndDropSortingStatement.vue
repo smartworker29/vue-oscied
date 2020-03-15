@@ -4,9 +4,6 @@
       <p><fa class="icon" icon="info-circle"/> {{ $t('sorting_g.drag.tip') }}</p>
     </div>
     <div class="drag-and-drop-content">
-      <div class="drag-and-drop-numbers">
-        <p v-for="(item, index) in options.list" :key="index" class="dd-sorting-list-item-num">{{ index + 1 }}</p>
-      </div>
       <div class="drag-and-drop">
         <draggable class="dd-sorting-list"
                    :list="options.list"
