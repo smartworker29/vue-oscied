@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <section v-if="statements">
-      <DragAndDropSortingStatement v-if="isWideScreen" :options="sortingOptions" @updateOrder="completeSection"/>
+      <DragAndDropSortingStatement v-if="isWideScreen" :options="sortingOptions" :surveyProduct="surveyProduct" @updateOrder="completeSection"/>
       <TapSortingStatement v-else :options="sortingOptions" @updateOrder="completeSection"/>
     </section>
   </div>

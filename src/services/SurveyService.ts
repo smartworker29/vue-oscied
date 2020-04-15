@@ -85,7 +85,7 @@ class SurveyService extends BaseApiService {
       `/${surveyProductType}/survey/user/${surveyProductUserId}/submit/`,
       { 'statements': statements.map(
         (statement: Statement) : any => { return { statementId: statement.id } }
-      )},
+      ) },
       'nextSection'
     )
   }

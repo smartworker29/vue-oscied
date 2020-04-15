@@ -1,7 +1,7 @@
 <template>
   <div class="ccr-confirm">
-    <h2 class="ccr-modal__title">{{ $t('confirmation_window') }}</h2>
-    <div v-html="text">
+    <h2 class="ccr-modal__title">{{ $t(`${surveyProduct}.confirmation_window`) }}</h2>
+    <div v-html="$t(`${surveyProduct}.confirm_to_next_section`)">
     </div>
     <div class="ccr-modal__actions ccr-modal__actions-right">
       <button class="btn btn-primary" @click="$emit('cancel')">{{ $t('button_g.cancel') }}</button>
@@ -15,11 +15,7 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 
 @Component({})
 export default class ConfirmModal extends Vue {
-  @Prop()
-  text!: string
+  @Prop({})
+  surveyProduct!: string
 }
 </script>
-
-<style lang="scss">
-
-</style>

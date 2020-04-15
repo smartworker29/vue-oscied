@@ -2,13 +2,13 @@
   <div>
     <div>
       <input id="eq_completed" type="radio" name="eq_completed" :checked="partCompleted > 0">
-      <label for="eq_completed">{{ $t('eq_title') }}</label>
+      <label for="eq_completed">{{ $t('eq.title') }}</label>
 
       <input id="values_completed" type="radio" name="values_completed" :checked="partCompleted > 1">
-      <label for="values_completed">{{ $t('values_title') }}</label>
+      <label for="values_completed">{{ $t('values.title') }}</label>
 
       <input id="behaviours_completed" type="radio" name="behaviours_completed" :checked="partCompleted > 2">
-      <label for="behaviours_completed">{{ $t('behaviours_title') }}</label>
+      <label for="behaviours_completed">{{ $t('behaviours.title') }}</label>
     </div>
     <div>
       {{ $t('ready_to_start_dp_survey_part', { nextPartNumber: partCompleted + 1 }) }}

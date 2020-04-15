@@ -22,7 +22,7 @@
     </div>
     <button class="btn btn-primary btn-primary-active" @click="updateOrder">{{ $t('button_g.confirm_order') }}</button>
     <modal :classes="['ccr-modal']" name="confirm-modal" :height="'auto'">
-      <ConfirmModal @cancel="handleCancelModal" @confirm="handleConfirmModal" :text="messageText" />
+      <ConfirmModal :surveyProduct="surveyProduct" @cancel="handleCancelModal" @confirm="handleConfirmModal" />
     </modal>
   </div>
 </template>
@@ -37,6 +37,9 @@ import ConfirmModal from '@/components/modals/ConfirmModal.vue'
   components: { draggable, ConfirmModal }
 })
 export default class DragAndDropSortingStatement extends Vue {
+  @Prop({})
+  surveyProduct!: string
+
   @Prop({
     default: {
       list: [],
@@ -45,10 +48,8 @@ export default class DragAndDropSortingStatement extends Vue {
   })
   options!: StatementSortingOptions
   isListChanged: boolean = false
-  messageText: string = ''
 
   updateOrder () {
-    this.messageText = this.$t('confirm_to_next_section') as string
     if (!this.isListChanged) {
       this.$modal.show('confirm-modal')
     } else {

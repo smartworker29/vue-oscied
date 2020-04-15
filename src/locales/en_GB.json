@@ -70,15 +70,25 @@
   "please_register": "If you are already registered, please {signIn}. Otherwise please use our quick registration form.",
   "welcome_to_survey": "Welcome to {surveyName}",
   "not_found_message": "Sorry, we couldn't find what you were looking for.",
-  "confirmation_window": "Please Confirm Your Choices!",
-  "confirm_to_next_section": "<p>You are seeing this message because either:</p><p><strong>You have decided not to complete the ranking of <u>ALL 18</u> statements which is important if you are to benefit from the findings of this questionnaire and you may fail the process you are involved in.</strong></p><p>Or</p><p><strong>You have ranked All 18 statements as you see it.</strong></p><p>If you believe that the ranking you have made on <u>ALL 18</u> statements are correct for you, then simply confirm this below.</p>",
   "select": "Select",
   "ready_to_start_dp_survey_part": "You are now ready to start part {nextPartNumber} of 3 of this questionnaire",
-  "eq_title": "E.Q. - Emotional Intelligence",
-  "values_title": "Values",
-  "behaviours_title": "Behaviours",
   "continue": "Continue",
   "copy_right": "{years} &copy; CCR3i All Rights Reserved.",
   "register": "Register",
-  "completed_survey": "You completed the survey!"
+  "completed_survey": "You completed the survey!",
+  "eq": {
+    "title": "E.Q. - Emotional Intelligence",
+    "confirmation_window": "Please Confirm Your Choices!",
+    "confirm_to_next_section": "<p>You are seeing this message because either:</p><p><strong>You have decided not to complete the ranking of <u>ALL 18</u> statements which is important if you are to benefit from the findings of this questionnaire and you may fail the process you are involved in.</strong></p><p>Or</p><p><strong>You have ranked All 18 statements as you see it.</strong></p><p>If you believe that the ranking you have made on <u>ALL 18</u> statements are correct for you, then simply confirm this below.</p>"
+  },
+  "values": {
+    "title": "Values",
+    "confirmation_window": "Please Confirm Your Choices!",
+    "confirm_to_next_section": "Please drag & drop all the answers."
+  },
+  "behaviours": {
+    "title": "Behaviours",
+    "confirmation_window": "Please Confirm Your Choices!",
+    "confirm_to_next_section": "Please drag & drop all the answers."
+  }
 }
