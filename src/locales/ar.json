@@ -69,16 +69,26 @@
   "profile_successfully_changed": "تم حفظ التغييرات.",
   "welcome_to_survey": "مرحبًا بك في {surveyName}",
   "not_found_message": "آسف ، لم نتمكن من العثور على ما كنت تبحث عنه.",
-  "confirmation_window": "يرجى تأكيد اختياراتك بدقة!",
-  "confirm_to_next_section": "<p>لقد تلقيت هذه الرسالة لسبب مما يلي:</p><p><strong>إما أنك قررت عدم استكمال تصنيف جميع الثمانية عشر تقريرًا، وهو أمر ضروري إذا كنت ترغب في الاستفادة من نتائج هذا الاستبيان وقد تتعرض للإخفاق فيما تقوم به.</strong></p><p>أو</p><p><strong>أنك قمت بتصنيف جميع الثمانية عشر تقريرًا حسب رؤيتك الشخصية.</strong></p><p>إذا كنت ترى أن التصنيف الذي أجريته على جميع الثمانية عشر تقريرًا سليم من وجهة نظرك، يرجى تأكيد ذلك أدناه.</p>",
   "select": "تحديد",
   "ready_to_start_dp_survey_part": "أنت الآن جاهز لبدء الجزء {nextPartNumber} من 3 من هذا الاستبيان",
-  "eq_title": "E.Q. - Emotional Intelligence",
-  "values_title": "Values",
-  "behaviours_title": "Behaviours",
   "continue": "استمر",
   "register": "تسجيل",
   "copy_right": "Arabic: {years} &copy; CCR3i All Rights Reserved.",
   "completed_survey": "Arabic: You completed the survey!",
-  "please_register": "Arabic: If you are already registered, please {signIn}. Otherwise please use our quick registration form."
+  "please_register": "Arabic: If you are already registered, please {signIn}. Otherwise please use our quick registration form.",
+  "eq": {
+    "title": "Arabic: E.Q. - Emotional Intelligence",
+    "confirmation_window": "يرجى تأكيد اختياراتك بدقة",
+    "confirm_to_next_section": "<p>لقد تلقيت هذه الرسالة لسبب مما يلي:</p><p><strong>إما أنك قررت عدم استكمال تصنيف جميع الثمانية عشر تقريرًا، وهو أمر ضروري إذا كنت ترغب في الاستفادة من نتائج هذا الاستبيان وقد تتعرض للإخفاق فيما تقوم به.</strong></p><p>أو</p><p><strong>أنك قمت بتصنيف جميع الثمانية عشر تقريرًا حسب رؤيتك الشخصية.</strong></p><p>إذا كنت ترى أن التصنيف الذي أجريته على جميع الثمانية عشر تقريرًا سليم من وجهة نظرك، يرجى تأكيد ذلك أدناه.</p>"
+  },
+  "values": {
+    "title": "Arabic: Values",
+    "confirmation_window": "يرجى تأكيد اختياراتك بدقة",
+    "confirm_to_next_section": "Arabic: Please drag & drop all the answers."
+  },
+  "behaviours": {
+    "title": "Arabic: Behaviours",
+    "confirmation_window": "يرجى تأكيد اختياراتك بدقة",
+    "confirm_to_next_section": "Arabic: Please drag & drop all the answers."
+  }
 }
