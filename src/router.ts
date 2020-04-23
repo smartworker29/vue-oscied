@@ -3,11 +3,15 @@ import Router, { Route } from 'vue-router'
 import store from '@/store'
 
 import TakenSurveySection from '@/components/survey/TakenSurveySection.vue'
+import TakenIcoachSection from '@/components/icoach/TakenIcoachSection.vue'
 
 import HomePage from '@/pages/HomePage.vue'
 import AccountPage from '@/pages/AccountPage.vue'
 import NotFoundPage from '@/pages/NotFoundPage.vue'
 import WelcomePage from '@/pages/survey/WelcomePage.vue'
+import IcoachWelcomePage from '@/pages/icoach/WelcomePage.vue'
+import IcoachDashboardPage from '@/pages/icoach/DashboardPage.vue'
+import TakenIcoachPage from '@/pages/icoach/TakenIcoachPage.vue'
 import TakenSurveyPage from '@/pages/survey/TakenSurveyPage.vue'
 import CompleteSurveyMessagePage from '@/pages/survey/CompleteSurveyMessagePage.vue'
 import DpChildSurveyWelcomePage from '@/pages/survey/DpChildSurveyWelcomePage.vue'
@@ -34,6 +38,31 @@ const router = new Router({
       name: 'survey.welcome',
       component: WelcomePage,
       props: true
+    },
+    {
+      path: '/icoach/:accessCode([a-zA-Z0-9]{50})',
+      name: 'icoach.welcome',
+      component: IcoachWelcomePage,
+      props: true
+    },
+    {
+      path: '/icoach/dashboard',
+      name: 'icoach.dashboard',
+      component: IcoachDashboardPage,
+      props: true
+    },
+    {
+      path: '/icoach/:icoachUserId(\\d+)/part',
+      component: TakenIcoachPage,
+      props: true,
+      children: [
+        {
+          path: ':sectionNumber(\\d+)',
+          name: 'icoach.page.part',
+          component: TakenIcoachSection,
+          props: true
+        }
+      ]
     },
     {
       path: '/:surveyProduct(eq|values|behaviours)/:surveyUserId(\\d+)/part',

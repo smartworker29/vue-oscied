@@ -36,7 +36,8 @@
     "delete_photo": "Deutsch: Delete Picture",
     "add_photo": "Deutsch: Add Picture",
     "start_survey": "Deutsch: Start",
-    "continue_survey": "Deutsch: Continue"
+    "continue_survey": "Deutsch: Continue",
+    "start_icoach": "Deutsch: Start icoach"
   },
   "email_address": "Deutsch: Email Address",
   "remember_me": "Deutsch: Remember Me",
@@ -76,6 +77,7 @@
   "copy_right": "Deutsch: {years} &copy; CCR3i All Rights Reserved.",
   "register": "Deutsch: Register",
   "completed_survey": "Deutsch: You completed the survey!",
+  "welcome_to_icoach": "Deutsch: Welcome to {icoachName}",
   "eq": {
     "title": "Deutsch: E.Q. - Emotional Intelligence",
     "confirmation_window": "Deutsch: Please Confirm Your Choices!",
