@@ -20,3 +20,12 @@ export interface IcoachUserInfo {
   id: number
   isAuthorised: boolean
 }
+
+export interface IcoachCategory {
+  id: number
+  name: boolean
+}
+
+export interface icoachDashboardInfo {
+  categories: IcoachCategory[]
+}

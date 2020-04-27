@@ -46,7 +46,7 @@ const router = new Router({
       props: true
     },
     {
-      path: '/icoach/dashboard',
+      path: '/icoach/:icoachUserId(\\d+)/dashboard',
       name: 'icoach.dashboard',
       component: IcoachDashboardPage,
       props: true

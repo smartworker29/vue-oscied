@@ -46,65 +46,69 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 import { Getter } from 'vuex-class'
 import SignInForm from '@/components/signIn/SignInForm.vue'
 import SignUpForm from '@/components/signUp/SignUpForm.vue'
-import LangSwitcher from '@/components/common/layout/LangSwitcher.vue'
 import { EventBus } from '@/main'
 import { IcoachCourse, IcoachUserInfo } from '@/interfaces/IcoachInterfaces'
 import IcoachService from '@/services/IcoachService'
 
-  @Component({
-    components: {
-      SignInForm,
-      SignUpForm,
-      LangSwitcher
-    }
-  })
+@Component({
+  components: {
+    SignInForm,
+    SignUpForm
+  }
+})
 export default class WelcomePage extends Vue {
-    @Getter('user/isAuthenticated')
-    isAuthenticated!: boolean
+  @Getter('user/isAuthenticated')
+  isAuthenticated!: boolean
 
-    @Prop({})
-    accessCode!: string
+  @Prop({})
+  accessCode!: string
 
-    displayedForm: string = 'signUp'
-    icoachUserInfo!: IcoachUserInfo
-    icoachCourse: IcoachCourse | null = null
-    signInLinkId = 'sign-in-link-in-welcome'
+  displayedForm: string = 'signUp'
+  icoachUserInfo!: IcoachUserInfo
+  icoachCourse: IcoachCourse | null = null
+  signInLinkId = 'sign-in-link-in-welcome'
 
-    async created () {
-      EventBus.$on('authorizedComplete', async () => {
-        await this.beginIcoach()
-      })
+  async created () {
+    EventBus.$on('authorizedComplete', async () => {
+      await this.beginIcoach()
+    })
 
-      try {
-        this.icoachCourse = await IcoachService.getIcoachCourseInfo(this.accessCode)
-      } catch (error) {
-        this.$router.push({ name: 'notFound' })
+    try {
+      this.icoachCourse = await IcoachService.getIcoachCourseInfo(this.accessCode)
+    } catch (error) {
+      this.$router.push({ name: 'notFound' })
+    }
+
+    let signInLink = document.querySelector(`#${this.signInLinkId}`)
+    if (signInLink) {
+      signInLink.addEventListener('click', (): void => { this.displayedForm = 'signIn' })
+    }
+  }
+
+  async beginIcoach () {
+    this.icoachUserInfo = await IcoachService.getIcoachUser(
+      this.icoachCourse!.id,
+      this.accessCode
+    ) || await IcoachService.createIcoachUser(
+      this.icoachCourse!.id,
+      this.accessCode
+    )
+
+    this.$store.commit('icoach/setIcoachUserId', this.icoachUserInfo.id)
+
+    // @todo[m]::store data
+
+    this.$router.push({
+      name: 'icoach.dashboard',
+      params: {
+        icoachUserId: this.icoachUserInfo.id.toString()
       }
+    })
+  }
 
-      let signInLink = document.querySelector(`#${this.signInLinkId}`)
-      if (signInLink) {
-        signInLink.addEventListener('click', (): void => { this.displayedForm = 'signIn' })
-      }
-    }
-
-    async beginIcoach () {
-      this.icoachUserInfo = await IcoachService.getIcoachUser(
-        this.icoachCourse!.id,
-        this.accessCode
-      )
-
-      this.$router.push({
-        name: 'icoach.page.part',
-        params: {
-          icoachUserId: this.icoachUserInfo.id.toString(),
-          sectionNumber: '1'
-        }
-      })
-    }
-
-    changeForm (formName: string) {
-      this.displayedForm = formName
-    }
+  changeForm (formName: string) {
+    this.displayedForm = formName
+  }
 }
 </script>
 

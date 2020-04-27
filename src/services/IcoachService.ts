@@ -13,6 +13,18 @@ class IcoachService extends BaseApiService {
       { 'icoachId': icoachId, 'accessCode': icoachAccessCode }
     )
   }
+
+  getIcoachDashboardInfo (icoachUserId: number): void {
+    // todo[m]:: get icoach dashboard info
+  }
+
+  createIcoachUser (icoachId: number, icoachAccessCode: string) : IcoachUserInfo {
+    return this.callMethod(
+      'post',
+      `/icoach/user/create/`,
+      { 'icoachId': icoachId, 'accessCode': icoachAccessCode }
+    )
+  }
 }
 
 export default new IcoachService()
