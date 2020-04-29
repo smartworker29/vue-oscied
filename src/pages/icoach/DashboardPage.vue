@@ -19,16 +19,21 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import { Getter } from 'vuex-class'
+import { IcoachDashboardInfo, IcoachGeneralInfo } from '@/interfaces/IcoachInterfaces'
+import IcoachService from '@/services/IcoachService'
 
 @Component({})
 export default class DashboardPage extends Vue {
   @Getter('user/isAuthenticated')
   isAuthenticated!: boolean
 
+  @Getter('icoach/getIcoachInfo')
+  icoachInfo!: IcoachGeneralInfo
+
   @Prop({})
   icoachUserId!: number
 
-  icoachDashboardInfo: null = null
+  icoachDashboardInfo: IcoachDashboardInfo | null = null
 
   async created () {
     if (!this.icoachUserId || !this.isAuthenticated) {
@@ -38,15 +43,7 @@ export default class DashboardPage extends Vue {
     }
 
     try {
-      await this.uploadIcoachInfo()
-    } catch (error) {
-      this.$router.push({ name: 'notFound' })
-    }
-  }
-
-  async uploadIcoachInfo () : Promise<void> {
-    try {
-      // this.icoachDashboardInfo = await IcoachService.getIcoachDashboardInfo(this.icoachUserId)
+      this.icoachDashboardInfo = await IcoachService.getIcoachDashboardInfo(this.icoachInfo.accessCode)
     } catch (error) {
       this.$router.push({ name: 'notFound' })
     }

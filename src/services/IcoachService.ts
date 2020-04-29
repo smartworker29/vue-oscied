@@ -1,5 +1,5 @@
 import { BaseApiService } from '@/services/BaseApiService'
-import { IcoachCourse, IcoachUserInfo } from '@/interfaces/IcoachInterfaces'
+import { IcoachCourse, IcoachDashboardInfo, IcoachUserInfo } from '@/interfaces/IcoachInterfaces'
 
 class IcoachService extends BaseApiService {
   getIcoachCourseInfo (accessCode: string) : IcoachCourse {
@@ -14,8 +14,11 @@ class IcoachService extends BaseApiService {
     )
   }
 
-  getIcoachDashboardInfo (icoachUserId: number): void {
-    // todo[m]:: get icoach dashboard info
+  getIcoachDashboardInfo (icoachAccessCode: string) : IcoachDashboardInfo {
+    return this.callMethod(
+      'get',
+      `/icoach/dashboard/${icoachAccessCode}`
+    )
   }
 
   createIcoachUser (icoachId: number, icoachAccessCode: string) : IcoachUserInfo {

@@ -21,11 +21,23 @@ export interface IcoachUserInfo {
   isAuthorised: boolean
 }
 
-export interface IcoachCategory {
-  id: number
-  name: boolean
+export interface IcoachGeneralInfo {
+  userId: number
+  accessCode: string
 }
 
-export interface icoachDashboardInfo {
-  categories: IcoachCategory[]
+export interface IcoachCategorySkill {
+  id: number,
+  category: number,
+  name: 'string'
+}
+
+export enum IcoachCategories {
+  SOFT_SKILLS = 1,
+  ESSENTIAL_BUSINESS_SKILLS = 2,
+  ORGANISATIONAL_SKILLS = 3
+}
+
+export type IcoachDashboardInfo = {
+  [key in IcoachCategories]: IcoachCategorySkill[]
 }

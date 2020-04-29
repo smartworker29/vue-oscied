@@ -1,26 +1,27 @@
 import { Module } from 'vuex'
 import { RootState } from '@/store'
+import { IcoachGeneralInfo } from '@/interfaces/IcoachInterfaces'
 
 export interface IcoachState {
-  icoachUserId: number | null
+  icoachGeneralInfo: IcoachGeneralInfo | null
 }
 
 const survey: Module<IcoachState, RootState> = {
   namespaced: true,
 
   state: {
-    icoachUserId: null
+    icoachGeneralInfo: null
   },
 
   getters: {
-    getIcoachUserId (state: IcoachState) : number | null {
-      return state.icoachUserId
+    getIcoachInfo (state: IcoachState) : IcoachGeneralInfo | null {
+      return state.icoachGeneralInfo
     }
   },
 
   mutations: {
-    setIcoachUserId (state: IcoachState, icoachUserId: number) : void {
-      state.icoachUserId = icoachUserId
+    setIcoachInfo (state: IcoachState, data: IcoachGeneralInfo) : void {
+      state.icoachGeneralInfo = data
     }
   }
 }
