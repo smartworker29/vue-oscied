@@ -1,8 +1,9 @@
 import { IcoachData } from '@/interfaces/LocalStorageInterfaces'
+import { IcoachCategories } from '@/interfaces/IcoachInterfaces'
 
 class IcoachLocalStorageHelper {
-  readonly icoach = 'icoach'
-  readonly icoachBegun = 'begun_icoach'
+  private readonly icoach = 'icoach'
+  private readonly icoachBegun = 'begun_icoach'
 
   private setData (key: string, data: any) : void {
     window.localStorage.setItem(key, JSON.stringify(data))
@@ -43,6 +44,13 @@ class IcoachLocalStorageHelper {
 
   public getIcoachUser (icoachUserId: number) : IcoachData | null {
     return this.getData(this.getIcoachUserKey(icoachUserId))
+  }
+
+  public updateCurrentCategory (icoachUserId: number, icoachSkillCategoryId: IcoachCategories): void {
+    let icoachCurrentData: IcoachData = this.getData(this.getIcoachUserKey(icoachUserId))
+    icoachCurrentData.icoachSkillCategoryId = icoachSkillCategoryId
+
+    this.setData(this.getIcoachUserKey(icoachUserId), icoachCurrentData)
   }
 }
 

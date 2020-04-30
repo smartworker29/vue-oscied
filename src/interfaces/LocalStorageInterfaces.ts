@@ -1,3 +1,5 @@
+import { IcoachCategories } from '@/interfaces/IcoachInterfaces'
+
 export interface SurveyData {
   surveyProductType: string
   surveyAccessCode: string | null
@@ -12,4 +14,5 @@ export interface IcoachData {
   icoachCourseId: number
   icoachUserId: number
   icoachCourseTitle: string
+  icoachSkillCategoryId: IcoachCategories
 }

@@ -10,6 +10,12 @@ export interface IcoachCourse {
   validTo: Date | null
 }
 
+export interface IcoachSkill {
+  id: number
+  category: number
+  name: string
+}
+
 export interface IcoachLogo {
   fileName: string
   filePath: string
@@ -32,11 +38,19 @@ export interface IcoachCategorySkill {
   name: 'string'
 }
 
-export enum IcoachCategories {
+export enum IcoachCategoriesEnum {
   SOFT_SKILLS = 1,
-  ESSENTIAL_BUSINESS_SKILLS = 2,
-  ORGANISATIONAL_SKILLS = 3
+  ESSENTIAL_BUSINESS_SKILLS,
+  ORGANISATIONAL_SKILLS
 }
+
+namespace IcoachCategories {
+  export const SoftSkills = 1
+  export const EssentialBusinessSkills = 2
+  export const OrganisationalSkills = 3
+}
+
+export type IcoachCategories = typeof IcoachCategories[keyof typeof IcoachCategories];
 
 export type IcoachDashboardInfo = {
   [key in IcoachCategories]: IcoachCategorySkill[]

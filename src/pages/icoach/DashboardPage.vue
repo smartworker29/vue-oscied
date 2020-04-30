@@ -12,8 +12,8 @@
       <div class="icoach-categories">
         <ul class="icoach-category-list">
           <li
-            v-for="(category, index) in icoachDashboardInfo" :key="index"
-            @click="changeIndex(index)"
+            v-for="(_, index) in icoachDashboardInfo" :key="index"
+            @click="changeIndex(parseInt(index))"
             :class="{ 'active': activeIndex === index }">
             <span>{{ $t(`skills.categories.${index}`) }}</span>
           </li>
@@ -25,8 +25,11 @@
         </h2>
         <div class="icoach-skills">
           <router-link
-            class="icoach-skill" v-for="(skills, index) in icoachDashboardInfo[activeIndex]" :key="index"
-            :to="{ name: 'icoach.skill', params: { icoachUserId: icoachUserId, skillId: skills.id, stepId: 1 } }">
+            v-for="(skills, index) in icoachDashboardInfo[activeIndex]" :key="index"
+            @click.native="openSkill"
+            class="icoach-skill"
+            :to="{ name: 'icoach.skill', params: { icoachUserId: icoachUserId, skillId: skills.id, stepId: 1 } }"
+          >
             <span>{{ skills.name }}</span>
           </router-link>
         </div>
@@ -37,7 +40,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
-import { IcoachCategories, IcoachDashboardInfo } from '@/interfaces/IcoachInterfaces'
+import { IcoachCategories, IcoachCategoriesEnum, IcoachDashboardInfo } from '@/interfaces/IcoachInterfaces'
 import IcoachService from '@/services/IcoachService'
 import IcoachLocalStorageHelper from '@/utils/IcoachLocalStorageHelper'
 
@@ -47,7 +50,7 @@ export default class DashboardPage extends Vue {
   icoachUserId!: number
 
   icoachDashboardInfo: IcoachDashboardInfo | null = null
-  activeIndex: number = 1
+  activeIndex: IcoachCategories = IcoachCategoriesEnum.SOFT_SKILLS
   icoachTitle: string = ''
 
   async created () {
@@ -71,7 +74,12 @@ export default class DashboardPage extends Vue {
     }
 
     this.icoachTitle = icoachUser.icoachCourseTitle
+    this.activeIndex = icoachUser.icoachSkillCategoryId
     this.icoachDashboardInfo = await IcoachService.getIcoachDashboardInfo(icoachUser.icoachAccessCode)
+  }
+
+  openSkill () {
+    IcoachLocalStorageHelper.updateCurrentCategory(this.icoachUserId, this.activeIndex)
   }
 
   changeIndex (index: IcoachCategories) {

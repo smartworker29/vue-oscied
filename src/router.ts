@@ -11,7 +11,7 @@ import NotFoundPage from '@/pages/NotFoundPage.vue'
 import WelcomePage from '@/pages/survey/WelcomePage.vue'
 import IcoachWelcomePage from '@/pages/icoach/WelcomePage.vue'
 import IcoachDashboardPage from '@/pages/icoach/DashboardPage.vue'
-import TakenIcoachPage from '@/pages/icoach/TakenIcoachPage.vue'
+import IcoachCoursePage from '@/pages/icoach/IcoachCoursePage.vue'
 import TakenSurveyPage from '@/pages/survey/TakenSurveyPage.vue'
 import CompleteSurveyMessagePage from '@/pages/survey/CompleteSurveyMessagePage.vue'
 import DpChildSurveyWelcomePage from '@/pages/survey/DpChildSurveyWelcomePage.vue'
@@ -47,7 +47,7 @@ const router = new Router({
     },
     {
       path: '/icoach/:icoachUserId(\\d+)/skill/:skillId(\\d+)/step/:stepId(\\d+)',
-      component: TakenIcoachPage,
+      component: IcoachCoursePage,
       props: true,
       children: [
         {

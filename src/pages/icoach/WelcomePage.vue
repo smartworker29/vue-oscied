@@ -47,7 +47,7 @@ import { Getter } from 'vuex-class'
 import SignInForm from '@/components/signIn/SignInForm.vue'
 import SignUpForm from '@/components/signUp/SignUpForm.vue'
 import { EventBus } from '@/main'
-import { IcoachCourse, IcoachUserInfo } from '@/interfaces/IcoachInterfaces'
+import { IcoachCategoriesEnum, IcoachCourse, IcoachUserInfo } from '@/interfaces/IcoachInterfaces'
 import IcoachService from '@/services/IcoachService'
 import IcoachLocalStorageHelper from '@/utils/IcoachLocalStorageHelper'
 
@@ -108,7 +108,8 @@ export default class WelcomePage extends Vue {
         icoachAccessCode: this.accessCode,
         icoachCourseId: this.icoachCourse!.id,
         icoachUserId: this.icoachUserInfo.id,
-        icoachCourseTitle: this.icoachCourse!.title
+        icoachCourseTitle: this.icoachCourse!.title,
+        icoachSkillCategoryId: IcoachCategoriesEnum.SOFT_SKILLS
       }
     }
 
