@@ -49,6 +49,7 @@ import SignUpForm from '@/components/signUp/SignUpForm.vue'
 import { EventBus } from '@/main'
 import { IcoachCourse, IcoachUserInfo } from '@/interfaces/IcoachInterfaces'
 import IcoachService from '@/services/IcoachService'
+import IcoachLocalStorageHelper from '@/utils/IcoachLocalStorageHelper'
 
 @Component({
   components: {
@@ -98,6 +99,20 @@ export default class WelcomePage extends Vue {
       'userId': this.icoachUserInfo.id,
       'icoachCourse': this.icoachCourse
     })
+
+    let storageIcoachUserInfo = IcoachLocalStorageHelper.getIcoachUser(
+      this.icoachUserInfo.id
+    )
+    if (!storageIcoachUserInfo) {
+      storageIcoachUserInfo = {
+        icoachAccessCode: this.accessCode,
+        icoachCourseId: this.icoachCourse!.id,
+        icoachUserId: this.icoachUserInfo.id,
+        icoachCourseTitle: this.icoachCourse!.title
+      }
+    }
+
+    IcoachLocalStorageHelper.beginIcoach(storageIcoachUserInfo)
 
     this.$router.push({
       name: 'icoach.dashboard',

@@ -6,3 +6,10 @@ export interface SurveyData {
   dpSurveyId: number | null
   dpChildSurveys: string[]
 }
+
+export interface IcoachData {
+  icoachAccessCode: string | null
+  icoachCourseId: number
+  icoachUserId: number
+  icoachCourseTitle: string
+}

@@ -2,7 +2,7 @@
   <div class="icoach">
     <div class="icoach-header">
       <h1 class="icoach-title">
-        <span>{{ icoachInfo.icoachCourse.title }}</span>
+        <span>{{ icoachTitle }}</span>
       </h1>
     </div>
     <div class="icoach-dashboard" v-if="icoachDashboardInfo">
@@ -37,37 +37,41 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
-import { Getter } from 'vuex-class'
-import { IcoachCategories, IcoachDashboardInfo, IcoachGeneralInfo } from '@/interfaces/IcoachInterfaces'
+import { IcoachCategories, IcoachDashboardInfo } from '@/interfaces/IcoachInterfaces'
 import IcoachService from '@/services/IcoachService'
+import IcoachLocalStorageHelper from '@/utils/IcoachLocalStorageHelper'
 
 @Component({})
 export default class DashboardPage extends Vue {
-  icoachDashboardInfo: IcoachDashboardInfo | null = null
-
-  activeIndex: number = 1
-  @Getter('user/isAuthenticated')
-  isAuthenticated!: boolean
-
-  @Getter('icoach/getIcoachInfo')
-  icoachInfo!: IcoachGeneralInfo
-
   @Prop({})
   icoachUserId!: number
 
+  icoachDashboardInfo: IcoachDashboardInfo | null = null
+  activeIndex: number = 1
+  icoachTitle: string = ''
+
   async created () {
-    if (!this.icoachUserId || !this.isAuthenticated) {
+    if (!IcoachLocalStorageHelper.hasIcoachUser(this.icoachUserId)) {
       this.$router.push({ name: 'notFound' })
 
       return
     }
 
-    // save to localStorage not to make the same query each time
     try {
-      this.icoachDashboardInfo = await IcoachService.getIcoachDashboardInfo(this.icoachInfo.icoachCourse.accessCode)
+      this.uploadIcoachInfo()
     } catch (error) {
       this.$router.push({ name: 'notFound' })
     }
+  }
+
+  async uploadIcoachInfo () {
+    const icoachUser = IcoachLocalStorageHelper.getIcoachUser(this.icoachUserId)
+    if (icoachUser === null || icoachUser.icoachAccessCode === null) {
+      throw new Error()
+    }
+
+    this.icoachTitle = icoachUser.icoachCourseTitle
+    this.icoachDashboardInfo = await IcoachService.getIcoachDashboardInfo(icoachUser.icoachAccessCode)
   }
 
   changeIndex (index: IcoachCategories) {
@@ -85,27 +89,32 @@ export default class DashboardPage extends Vue {
   .icoach-categories {
     max-width: 30%;
   }
+
   .icoach-category-list {
     padding: 10px;
+
     li {
       cursor: pointer;
       padding: 0 24px;
       margin: 5px 0;
-      border: 1px solid #bdddff;
-      border-radius: 10px;
       font-size: 16px;
       align-items: center;
       height: 42px;
       display: flex;
       transition: 0.2s all;
+
       span {
         margin: 0 17px;
       }
+
       &:hover {
         background: #bdddff;
       }
     }
-    li.active {
+
+    li.active, li:hover {
+      border: 1px solid #bdddff;
+      border-radius: 10px;
       background: #e6f3fa;
     }
   }
@@ -127,6 +136,9 @@ export default class DashboardPage extends Vue {
     background-color: #f7fcff;
     border-radius: 5px;
     border: 1px solid #edf6fb;
+    text-decoration: none;
+    color: #071012;
+    font-size: 16px;
   }
 
   .icoach-not-found {
