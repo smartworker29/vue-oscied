@@ -5,7 +5,10 @@
         <span>{{ icoachTitle }}</span>
       </h1>
     </div>
-    <div class="icoach-dashboard" v-if="icoachDashboardInfo">
+    <div class="icoach-not-found" v-if="!icoachDashboardInfo || !Object.keys(icoachDashboardInfo).length">
+      {{ $t('skills.no_skills') }}
+    </div>
+    <div class="icoach-dashboard" v-else>
       <div class="icoach-categories">
         <ul class="icoach-category-list">
           <li
@@ -28,9 +31,6 @@
           </router-link>
         </div>
       </div>
-    </div>
-    <div class="icoach-not-found" v-else>
-      {{ $t('skills.no_skills') }}
     </div>
   </div>
 </template>
