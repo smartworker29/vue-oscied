@@ -34,12 +34,6 @@ const router = new Router({
       component: NotFoundPage
     },
     {
-      path: '/:surveyProduct(eq|values|behaviours|discovery-process)/:accessCode([a-zA-Z0-9]{50})',
-      name: 'survey.welcome',
-      component: WelcomePage,
-      props: true
-    },
-    {
       path: '/icoach/:accessCode([a-zA-Z0-9]{50})',
       name: 'icoach.welcome',
       component: IcoachWelcomePage,
@@ -52,17 +46,23 @@ const router = new Router({
       props: true
     },
     {
-      path: '/icoach/:icoachUserId(\\d+)/part',
+      path: '/icoach/:icoachUserId(\\d+)/skill/:skillId(\\d+)/step/:stepId(\\d+)',
       component: TakenIcoachPage,
       props: true,
       children: [
         {
-          path: ':sectionNumber(\\d+)',
-          name: 'icoach.page.part',
+          path: ':stepId(\\d+)',
+          name: 'icoach.skill',
           component: TakenIcoachSection,
           props: true
         }
       ]
+    },
+    {
+      path: '/:surveyProduct(eq|values|behaviours|discovery-process)/:accessCode([a-zA-Z0-9]{50})',
+      name: 'survey.welcome',
+      component: WelcomePage,
+      props: true
     },
     {
       path: '/:surveyProduct(eq|values|behaviours)/:surveyUserId(\\d+)/part',

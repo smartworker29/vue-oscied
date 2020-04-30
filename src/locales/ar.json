@@ -92,5 +92,13 @@
     "title": "Arabic: Behaviours",
     "confirmation_window": "يرجى تأكيد اختياراتك بدقة",
     "confirm_to_next_section": "Arabic: Please drag & drop all the answers."
+  },
+  "skills": {
+    "categories": {
+      "1": "Arabic: Soft skill",
+      "2": "Arabic: Essential business skills",
+      "3": "Arabic: Organisational skills"
+    },
+    "no_skills": "Arabic: There are no skills for this course"
   }
 }

@@ -23,7 +23,7 @@ export interface IcoachUserInfo {
 
 export interface IcoachGeneralInfo {
   userId: number
-  accessCode: string
+  icoachCourse: IcoachCourse
 }
 
 export interface IcoachCategorySkill {

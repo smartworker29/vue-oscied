@@ -92,5 +92,13 @@
     "title": "Behaviours",
     "confirmation_window": "Please Confirm Your Choices!",
     "confirm_to_next_section": "Please drag & drop all the answers."
+  },
+  "skills": {
+    "categories": {
+      "1": "Soft skills",
+      "2": "Essential business skills",
+      "3": "Organisational skills"
+    },
+    "no_skills": "There are no skills for this course"
   }
 }

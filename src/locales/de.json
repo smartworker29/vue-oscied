@@ -92,5 +92,13 @@
     "title": "Deutsch: Behaviours",
     "confirmation_window": "Deutsch: Please Confirm Your Choices!",
     "confirm_to_next_section": "Deutsch: Please drag & drop all the answers."
+  },
+  "skills": {
+    "categories": {
+      "1": "Deutsch: Soft skill",
+      "2": "Deutsch: Essential business skills",
+      "3": "Deutsch: Organisational skills"
+    },
+    "no_skills": "Deutsch: There are no skills for this course"
   }
 }

@@ -96,7 +96,7 @@ export default class WelcomePage extends Vue {
 
     this.$store.commit('icoach/setIcoachInfo', {
       'userId': this.icoachUserInfo.id,
-      'accessCode': this.accessCode
+      'icoachCourse': this.icoachCourse
     })
 
     this.$router.push({

@@ -2,16 +2,35 @@
   <div class="icoach">
     <div class="icoach-header">
       <h1 class="icoach-title">
-        <span>title</span>
+        <span>{{ icoachInfo.icoachCourse.title }}</span>
       </h1>
     </div>
-    <div class="icoach-dashboard">
+    <div class="icoach-dashboard" v-if="icoachDashboardInfo">
       <div class="icoach-categories">
-        <div class="icoach-category">Soft skills</div>
-        <div class="icoach-category">Essential business skills</div>
-        <div class="icoach-category">Organisational skills</div>
+        <ul class="icoach-category-list">
+          <li
+            v-for="(category, index) in icoachDashboardInfo" :key="index"
+            @click="changeIndex(index)"
+            :class="{ 'active': activeIndex === index }">
+            <span>{{ $t(`skills.categories.${index}`) }}</span>
+          </li>
+        </ul>
       </div>
-      <div class="icoach-skills"></div>
+      <div class="icoach-content">
+        <h2>
+          {{ $t(`skills.categories.${activeIndex}`) }}
+        </h2>
+        <div class="icoach-skills">
+          <router-link
+            class="icoach-skill" v-for="(skills, index) in icoachDashboardInfo[activeIndex]" :key="index"
+            :to="{ name: 'icoach.skill', params: { icoachUserId: icoachUserId, skillId: skills.id, stepId: 1 } }">
+            <span>{{ skills.name }}</span>
+          </router-link>
+        </div>
+      </div>
+    </div>
+    <div class="icoach-not-found" v-else>
+      {{ $t('skills.no_skills') }}
     </div>
   </div>
 </template>
@@ -19,11 +38,14 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import { Getter } from 'vuex-class'
-import { IcoachDashboardInfo, IcoachGeneralInfo } from '@/interfaces/IcoachInterfaces'
+import { IcoachCategories, IcoachDashboardInfo, IcoachGeneralInfo } from '@/interfaces/IcoachInterfaces'
 import IcoachService from '@/services/IcoachService'
 
 @Component({})
 export default class DashboardPage extends Vue {
+  icoachDashboardInfo: IcoachDashboardInfo | null = null
+
+  activeIndex: number = 1
   @Getter('user/isAuthenticated')
   isAuthenticated!: boolean
 
@@ -33,8 +55,6 @@ export default class DashboardPage extends Vue {
   @Prop({})
   icoachUserId!: number
 
-  icoachDashboardInfo: IcoachDashboardInfo | null = null
-
   async created () {
     if (!this.icoachUserId || !this.isAuthenticated) {
       this.$router.push({ name: 'notFound' })
@@ -42,11 +62,16 @@ export default class DashboardPage extends Vue {
       return
     }
 
+    // save to localStorage not to make the same query each time
     try {
-      this.icoachDashboardInfo = await IcoachService.getIcoachDashboardInfo(this.icoachInfo.accessCode)
+      this.icoachDashboardInfo = await IcoachService.getIcoachDashboardInfo(this.icoachInfo.icoachCourse.accessCode)
     } catch (error) {
       this.$router.push({ name: 'notFound' })
     }
+  }
+
+  changeIndex (index: IcoachCategories) {
+    this.activeIndex = index
   }
 }
 </script>
@@ -55,5 +80,56 @@ export default class DashboardPage extends Vue {
   .icoach-dashboard {
     display: flex;
     flex-wrap: wrap;
+  }
+
+  .icoach-categories {
+    max-width: 30%;
+  }
+  .icoach-category-list {
+    padding: 10px;
+    li {
+      cursor: pointer;
+      padding: 0 24px;
+      margin: 5px 0;
+      border: 1px solid #bdddff;
+      border-radius: 10px;
+      font-size: 16px;
+      align-items: center;
+      height: 42px;
+      display: flex;
+      transition: 0.2s all;
+      span {
+        margin: 0 17px;
+      }
+      &:hover {
+        background: #bdddff;
+      }
+    }
+    li.active {
+      background: #e6f3fa;
+    }
+  }
+
+  .icoach-content {
+    max-width: 70%;
+  }
+
+  .icoach-skills {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .icoach-skill {
+    flex: 1 0 21%;
+    padding: 5px;
+    margin: 5px;
+    height: 100px;
+    background-color: #f7fcff;
+    border-radius: 5px;
+    border: 1px solid #edf6fb;
+  }
+
+  .icoach-not-found {
+    padding: 1% 5.5% 7px 5.5%;
   }
 </style>
