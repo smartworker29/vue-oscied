@@ -99,6 +99,9 @@
       "2": "Essential business skills",
       "3": "Organisational skills"
     },
-    "no_skills": "There are no skills for this course"
+    "no_skills": "There are no skills for this course",
+    "back": "Back",
+    "next": "Next",
+    "last": "Finish skill"
   }
 }

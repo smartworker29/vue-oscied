@@ -99,6 +99,9 @@
       "2": "Arabic: Essential business skills",
       "3": "Arabic: Organisational skills"
     },
-    "no_skills": "Arabic: There are no skills for this course"
+    "no_skills": "Arabic: There are no skills for this course",
+    "back": "Arabic: Back",
+    "next": "Arabic: Next",
+    "last": "Arabic: Finish skill"
   }
 }

@@ -13,7 +13,14 @@ export interface IcoachCourse {
 export interface IcoachSkill {
   id: number
   category: number
-  name: string
+  name: string,
+  icoachSkillContents: IcoachSkillContent[]
+}
+
+export interface IcoachSkillContent {
+  id: number,
+  content: string,
+  area: number
 }
 
 export interface IcoachLogo {

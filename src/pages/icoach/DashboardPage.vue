@@ -14,7 +14,7 @@
           <li
             v-for="(_, index) in icoachDashboardInfo" :key="index"
             @click="changeIndex(parseInt(index))"
-            :class="{ 'active': activeIndex === index }">
+            :class="{ 'active': activeIndex === parseInt(index) }">
             <span>{{ $t(`skills.categories.${index}`) }}</span>
           </li>
         </ul>

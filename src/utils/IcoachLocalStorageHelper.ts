@@ -38,6 +38,18 @@ class IcoachLocalStorageHelper {
     this.saveIcoachUser(icoachData)
   }
 
+  public removeBegunIcoach (icoachCourseId: number) : void {
+    const begunIcoachs: number[] | null = this.getData(this.icoachBegun)
+
+    if (!begunIcoachs || !begunIcoachs.includes(icoachCourseId)) {
+      return
+    }
+
+    const result: number[] = begunIcoachs.filter((storedIcoachId) => { return storedIcoachId !== icoachCourseId })
+
+    this.setData(this.icoachBegun, result)
+  }
+
   public hasIcoachUser (icoachUserId: number) : boolean {
     return window.localStorage.getItem(this.getIcoachUserKey(icoachUserId)) !== null
   }
@@ -51,6 +63,10 @@ class IcoachLocalStorageHelper {
     icoachCurrentData.icoachSkillCategoryId = icoachSkillCategoryId
 
     this.setData(this.getIcoachUserKey(icoachUserId), icoachCurrentData)
+  }
+
+  public removeIcoachUser (icoachUserId: number) : void {
+    window.localStorage.removeItem(this.getIcoachUserKey(icoachUserId))
   }
 }
 

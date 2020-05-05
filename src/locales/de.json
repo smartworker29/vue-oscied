@@ -99,6 +99,9 @@
       "2": "Deutsch: Essential business skills",
       "3": "Deutsch: Organisational skills"
     },
-    "no_skills": "Deutsch: There are no skills for this course"
+    "no_skills": "Deutsch: There are no skills for this course",
+    "back": "Deutsch: Back",
+    "next": "Deutsch: Next",
+    "last": "Deutsch: Finish skill"
   }
 }
