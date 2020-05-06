@@ -62,3 +62,8 @@ export type IcoachCategories = typeof IcoachCategories[keyof typeof IcoachCatego
 export type IcoachDashboardInfo = {
   [key in IcoachCategories]: IcoachCategorySkill[]
 }
+
+export enum IcoachSkillDirections {
+  PREV = 'prev',
+  NEXT = 'next'
+}

@@ -2,9 +2,9 @@
   <div class="icoach-categories">
     <ul class="icoach-category-list hide">
       <li
-        v-for="(skill, key) in icoachDashboardInfo[icoachSkill.category]"
+        v-for="skill in icoachDashboardInfo[icoachSkill.category]"
         :class="{ 'active': icoachSkill.id === skill.id }"
-        :key="key"
+        :key="skill.id"
       >
         <router-link
           :to="{ name: 'icoach.skill', params: { icoachUserId: icoachUserData.icoachUserId, skillId: skill.id, stepId: 1 } }"
@@ -16,8 +16,8 @@
     <ul class="icoach-category-list">
       <li
         v-for="(_, key) in icoachSkill.icoachSkillContents"
-        :class="{ 'active': icoachSkillCurrentStep - 1 === parseInt(key) }"
-        @click="goToStep(key + 1)"
+        :class="{ 'active': stepId - 1 === parseInt(key) }"
+        @click="changeStep(key + 1)"
         :key="key"
       >
         step {{ key + 1 }}
@@ -27,29 +27,24 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Emit, Prop, Vue } from 'vue-property-decorator'
 import { IcoachDashboardInfo, IcoachSkill } from '@/interfaces/IcoachInterfaces'
 import { IcoachData } from '@/interfaces/LocalStorageInterfaces'
-import { Getter } from 'vuex-class'
 
 @Component({ name: 'IcoachSkillList' })
 export default class IcoachSkillList extends Vue {
-  @Getter('icoach/getIcoachSkillStepId')
-  icoachSkillCurrentStep!: number
-
-  @Prop({})
+  @Prop({ required: true })
   icoachSkill!: IcoachSkill
-
-  @Prop({})
+  @Prop({ required: true })
   icoachUserData!: IcoachData
-
-  @Prop({})
+  @Prop({ required: true })
   icoachDashboardInfo!: IcoachDashboardInfo
+  @Prop({ required: true })
+  stepId!: number
 
-  goToStep (index: number) {
+  @Emit()
+  changeStep (index: number) {
     this.$store.commit('icoach/setIcoachSkillStepId', index)
-
-    this.$emit('changeStep', index)
 
     this.$router.push({
       name: 'icoach.skill',
@@ -59,11 +54,13 @@ export default class IcoachSkillList extends Vue {
         stepId: index.toString()
       }
     })
+
+    return index
   }
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   .hide {
     display: none;
   }

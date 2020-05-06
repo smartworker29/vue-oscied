@@ -5,11 +5,11 @@
         <router-link :to="{ name: 'icoach.welcome', params: { accessCode: icoachUserData.icoachAccessCode } }" class="breadcrumbs__item">
           <span>{{ icoachUserData.icoachCourseTitle }}</span>
         </router-link>
-        <img :src="require('@/assets/icons/icon-arrow-down-xs-blue.svg')" class="breadcrumbs__arrow-right">
+        <img src="@/assets/icons/icon-arrow-down-xs-blue.svg" class="breadcrumbs__arrow-right">
         <router-link :to="{ name: 'icoach.dashboard', params: { icoachUserId: icoachUserId } }" class="breadcrumbs__item">
           <span>{{ $t(`skills.categories.${icoachUserData.icoachSkillCategoryId}`) }}</span>
         </router-link>
-        <img :src="require('@/assets/icons/icon-arrow-down-xs-blue.svg')" class="breadcrumbs__arrow-right">
+        <img src="@/assets/icons/icon-arrow-down-xs-blue.svg" class="breadcrumbs__arrow-right">
         <span class="breadcrumbs__item breadcrumbs__item--last">{{ icoachSkill ? icoachSkill.name : '' }}</span>
       </div>
     </div>
@@ -19,13 +19,14 @@
         :icoach-skill="icoachSkill"
         :icoach-user-data="icoachUserData"
         :icoach-dashboard-info="icoachDashboardInfo"
-        @changeStep="pushToAnotherSection"
+        :step-id="icoachSkillStep"
+        @change-step="pushToAnotherStep"
       />
       <icoach-skill-section
         :icoach-skill="icoachSkill"
         :icoach-user-data="icoachUserData"
         :step-id="icoachSkillStep"
-        @changeStep="pushToAnotherSection"
+        @change-step="pushToAnotherStep"
       />
     </div>
 
@@ -46,11 +47,11 @@ import IcoachSkillList from '@/components/icoach/IcoachSkillList.vue'
   components: { IcoachSkillSection, IcoachSkillList }
 })
 export default class IcoachSkillPage extends Vue {
-  @Prop({})
+  @Prop({ required: true })
   icoachUserId!: number
-  @Prop({})
+  @Prop({ required: true })
   skillId!: number
-  @Prop({})
+  @Prop({ required: true })
   stepId!: number
 
   icoachUserData: IcoachData | null = null
@@ -89,13 +90,13 @@ export default class IcoachSkillPage extends Vue {
     this.$store.commit('icoach/setIcoachSkillStepId', 1)
   }
 
-  pushToAnotherSection (stepId: number) : void {
+  pushToAnotherStep (stepId: number) : void {
     this.icoachSkillStep = stepId
   }
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   .icoach-skill-page {
     background: #fff;
     height: 100%;

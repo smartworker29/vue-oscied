@@ -1,7 +1,7 @@
 <template>
   <div class="icoach-content">
     <h4>page {{ currentStep }} of {{ stepsCount }}</h4>
-    <div v-html="icoachSkill ? icoachSkill.icoachSkillContents[currentStep - 1].content : ''"></div>
+    <div v-html="content"></div>
 
     <button v-if="!isFirstStep" class="btn btn-primary btn-primary-active" @click="changeStep('prev')">{{ $t('skills.back')}}</button>
     <button class="btn btn-primary btn-primary-active" @click="changeStep('next')">
@@ -11,20 +11,18 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
-import { IcoachSkill } from '@/interfaces/IcoachInterfaces'
+import { Component, Emit, Prop, Vue, Watch } from 'vue-property-decorator'
+import { IcoachSkill, IcoachSkillDirections } from '@/interfaces/IcoachInterfaces'
 import { IcoachData } from '@/interfaces/LocalStorageInterfaces'
 import IcoachHelper from '@/utils/IcoachHelper'
 
 @Component({ name: 'IcoachSkillSection' })
 export default class IcoachSkillSection extends Vue {
-  @Prop({})
+  @Prop({ required: true })
   icoachSkill!: IcoachSkill
-
-  @Prop({})
+  @Prop({ required: true })
   icoachUserData!: IcoachData
-
-  @Prop({})
+  @Prop({ required: true })
   stepId!: number
 
   stepsCount: number = 0
@@ -33,7 +31,7 @@ export default class IcoachSkillSection extends Vue {
   isFirstStep: boolean = false
 
   @Watch('stepId')
-  onValueChanged () {
+  onStepIdChange () {
     this.currentStep = this.stepId
     this.updateCurrentStep()
   }
@@ -42,6 +40,10 @@ export default class IcoachSkillSection extends Vue {
     this.stepsCount = this.icoachSkill.icoachSkillContents.length
     this.currentStep = this.stepId
     this.updateCurrentStep()
+  }
+
+  get content (): string {
+    return this.icoachSkill ? this.icoachSkill.icoachSkillContents[this.currentStep - 1].content : ''
   }
 
   updateCurrentStep () {
@@ -57,18 +59,17 @@ export default class IcoachSkillSection extends Vue {
     }
   }
 
-  changeStep (direction: string) {
+  @Emit()
+  changeStep (direction: IcoachSkillDirections) {
     switch (direction) {
-      case 'prev':
+      case IcoachSkillDirections.PREV:
         this.currentStep--
         break
-      case 'next':
+      case IcoachSkillDirections.NEXT:
         this.currentStep++
     }
 
     this.updateCurrentStep()
-
-    this.$emit('changeStep', this.currentStep)
 
     this.$store.commit('icoach/setIcoachSkillStepId', this.currentStep)
     if (this.currentStep > this.stepsCount) {
@@ -84,6 +85,8 @@ export default class IcoachSkillSection extends Vue {
         stepId: this.currentStep.toString()
       }
     })
+
+    return this.currentStep
   }
 }
 </script>
