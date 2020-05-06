@@ -44,7 +44,7 @@ import UserService from '@/services/UserService'
 import LocaleHelper from '@/utils/LocaleHelper'
 import { EventBus } from '@/main'
 
-@Component({})
+@Component({ name: 'SignInForm' })
 export default class SignInForm extends Vue {
   signInData: SignInData = {
     email: '',

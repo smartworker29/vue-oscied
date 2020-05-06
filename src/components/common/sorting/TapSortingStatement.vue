@@ -42,6 +42,7 @@ import TapSortingStatementItem from '@/components/common/sorting/TapSortingState
 import { StatementSortingOptions } from '@/interfaces/SortingInterfaces'
 
 @Component({
+  name: 'TapSortingStatement',
   components: { TapSortingStatementItem }
 })
 export default class TapSortingStatement extends Vue {

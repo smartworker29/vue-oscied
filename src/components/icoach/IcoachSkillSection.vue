@@ -16,7 +16,7 @@ import { IcoachSkill } from '@/interfaces/IcoachInterfaces'
 import { IcoachData } from '@/interfaces/LocalStorageInterfaces'
 import IcoachHelper from '@/utils/IcoachHelper'
 
-@Component
+@Component({ name: 'IcoachSkillSection' })
 export default class IcoachSkillSection extends Vue {
   @Prop({})
   icoachSkill!: IcoachSkill

@@ -52,6 +52,7 @@ import IcoachService from '@/services/IcoachService'
 import IcoachLocalStorageHelper from '@/utils/IcoachLocalStorageHelper'
 
 @Component({
+  name: 'WelcomePage',
   components: {
     SignInForm,
     SignUpForm

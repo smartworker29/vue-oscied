@@ -42,6 +42,7 @@ import IcoachSkillSection from '@/components/icoach/IcoachSkillSection.vue'
 import IcoachSkillList from '@/components/icoach/IcoachSkillList.vue'
 
 @Component({
+  name: 'IcoachSkillPage',
   components: { IcoachSkillSection, IcoachSkillList }
 })
 export default class IcoachSkillPage extends Vue {

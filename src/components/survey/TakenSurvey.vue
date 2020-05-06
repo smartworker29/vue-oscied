@@ -33,6 +33,7 @@ import SurveyHelper from '@/utils/SurveyHelper'
 import SurveyLocalStorageHelper from '@/utils/SurveyLocalStorageHelper'
 
 @Component({
+  name: 'TakenSurvey',
   components: {
     SurveyProgress
   }

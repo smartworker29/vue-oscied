@@ -14,6 +14,7 @@ import SurveyService from '@/services/SurveyService'
 import { SurveyData } from '@/interfaces/LocalStorageInterfaces'
 
 @Component({
+  name: 'TakenSurveyPage',
   components: {
     TakenSurvey
   }

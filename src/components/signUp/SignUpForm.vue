@@ -74,7 +74,7 @@ import { RegistrationFormData } from '@/interfaces/UserInterfaces'
 import LocaleHelper from '@/utils/LocaleHelper'
 import { EventBus } from '@/main'
 
-@Component({})
+@Component({ name: 'SignUpForm' })
 export default class SignUpForm extends Vue {
   registrationData: RegistrationFormData = {
     email: '',

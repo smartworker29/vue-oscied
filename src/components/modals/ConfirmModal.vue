@@ -13,7 +13,7 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 
-@Component({})
+@Component({ name: 'ConfirmModal' })
 export default class ConfirmModal extends Vue {
   @Prop({})
   surveyProduct!: string

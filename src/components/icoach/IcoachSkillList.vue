@@ -32,7 +32,7 @@ import { IcoachDashboardInfo, IcoachSkill } from '@/interfaces/IcoachInterfaces'
 import { IcoachData } from '@/interfaces/LocalStorageInterfaces'
 import { Getter } from 'vuex-class'
 
-@Component
+@Component({ name: 'IcoachSkillList' })
 export default class IcoachSkillList extends Vue {
   @Getter('icoach/getIcoachSkillStepId')
   icoachSkillCurrentStep!: number

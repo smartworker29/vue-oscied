@@ -60,6 +60,7 @@ import SurveyHelper from '@/utils/SurveyHelper'
 import { EventBus } from '@/main'
 
 @Component({
+  name: 'WelcomePage',
   components: {
     SignInForm,
     SignUpForm,

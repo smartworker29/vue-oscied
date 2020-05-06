@@ -44,7 +44,7 @@ import { IcoachCategories, IcoachCategoriesEnum, IcoachDashboardInfo } from '@/i
 import IcoachService from '@/services/IcoachService'
 import IcoachLocalStorageHelper from '@/utils/IcoachLocalStorageHelper'
 
-@Component({})
+@Component({ name: 'DashboardPage' })
 export default class DashboardPage extends Vue {
   @Prop({})
   icoachUserId!: number
@@ -101,7 +101,7 @@ export default class DashboardPage extends Vue {
   .icoach-category-list {
     padding: 10px;
 
-    li {
+    li, button {
       cursor: pointer;
       padding: 0 24px;
       margin: 5px 0;
@@ -120,7 +120,7 @@ export default class DashboardPage extends Vue {
       }
     }
 
-    li.active, li:hover {
+    li.active, li:hover, button.active, button:hover {
       border: 1px solid #bdddff;
       border-radius: 10px;
       background: #e6f3fa;
