@@ -15,12 +15,12 @@
     </ul>
     <ul class="icoach-category-list">
       <li
-        v-for="(_, key) in icoachSkill.icoachSkillContents"
+        v-for="(content, key) in icoachSkill.icoachSkillContents"
         :class="{ 'active': stepId - 1 === parseInt(key) }"
         @click="changeStep(key + 1)"
         :key="key"
       >
-        step {{ key + 1 }}
+        {{ content.icoachSkillArea.title }}
       </li>
     </ul>
   </div>

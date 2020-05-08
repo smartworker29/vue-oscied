@@ -1,6 +1,7 @@
 <template>
   <div class="icoach-content">
     <h4>page {{ currentStep }} of {{ stepsCount }}</h4>
+    <h2>{{ icoachSkill.icoachSkillContents[currentStep - 1].icoachSkillArea.title }}</h2>
     <div v-html="content"></div>
 
     <button v-if="!isFirstStep" class="btn btn-primary btn-primary-active" @click="changeStep('prev')">{{ $t('skills.back')}}</button>

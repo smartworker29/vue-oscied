@@ -22,7 +22,12 @@ export interface IcoachSkill {
 export interface IcoachSkillContent {
   id: number,
   content: string,
-  area: number
+  icoachSkillArea: IcoachSkillArea
+}
+
+export interface IcoachSkillArea {
+  title: string,
+  isTest: boolean
 }
 
 export interface IcoachSkillComment {
