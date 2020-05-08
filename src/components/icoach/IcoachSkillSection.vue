@@ -4,10 +4,21 @@
     <h2>{{ icoachSkill.icoachSkillContents[currentStep - 1].icoachSkillArea.title }}</h2>
     <div v-html="content"></div>
 
-    <button v-if="!isFirstStep" class="btn btn-primary btn-primary-active" @click="changeStep('prev')">{{ $t('skills.back')}}</button>
-    <button class="btn btn-primary btn-primary-active" @click="changeStep('next')">
-      {{ isLastStep ? $t('skills.last') : $t('skills.next') }}
-    </button>
+    <div v-if="icoachSkill.icoachSkillContents[currentStep - 1].icoachSkillArea.isTest">
+      <icoach-skill-form
+        :icoach-skill="icoachSkill"
+        :icoach-user-data="icoachUserData"
+        :step-id="currentStep"
+        @back-step="changeStep"
+      />
+    </div>
+
+    <div v-else>
+      <button v-if="!isFirstStep" class="btn btn-primary btn-primary-active" @click="changeStep('prev')">{{ $t('skills.back')}}</button>
+      <button class="btn btn-primary btn-primary-active" @click="changeStep('next')">
+        {{ isLastStep ? $t('skills.last') : $t('skills.next') }}
+      </button>
+    </div>
 
     <hr class="separator">
 
@@ -25,10 +36,11 @@ import { IcoachSkill, IcoachSkillDirections } from '@/interfaces/IcoachInterface
 import { IcoachData } from '@/interfaces/LocalStorageInterfaces'
 import IcoachHelper from '@/utils/IcoachHelper'
 import IcoachSkillComment from '@/components/icoach/IcoachSkillComment.vue'
+import IcoachSkillForm from '@/components/icoach/IcoachSkillForm.vue'
 
 @Component({
   name: 'IcoachSkillSection',
-  components: { IcoachSkillComment }
+  components: { IcoachSkillComment, IcoachSkillForm }
 })
 export default class IcoachSkillSection extends Vue {
   @Prop({ required: true })

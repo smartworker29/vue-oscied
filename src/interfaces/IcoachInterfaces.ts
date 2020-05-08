@@ -36,6 +36,15 @@ export interface IcoachSkillComment {
   user: IcoachCommentUser
 }
 
+export interface IcoachSkillQuestion {
+  name: string,
+  icoachSkillQuestionOptions: IcoachSkillQuestionOption[]
+}
+
+export interface IcoachSkillQuestionOption {
+  name: string
+}
+
 interface IcoachCommentUser {
   fullName: string,
   image: Image
