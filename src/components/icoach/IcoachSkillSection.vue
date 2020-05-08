@@ -7,6 +7,14 @@
     <button class="btn btn-primary btn-primary-active" @click="changeStep('next')">
       {{ isLastStep ? $t('skills.last') : $t('skills.next') }}
     </button>
+
+    <hr class="separator">
+
+    <icoach-skill-comment
+      :icoach-skill="icoachSkill"
+      :icoach-user-data="icoachUserData"
+      :step-id="currentStep"
+    />
   </div>
 </template>
 
@@ -15,8 +23,12 @@ import { Component, Emit, Prop, Vue, Watch } from 'vue-property-decorator'
 import { IcoachSkill, IcoachSkillDirections } from '@/interfaces/IcoachInterfaces'
 import { IcoachData } from '@/interfaces/LocalStorageInterfaces'
 import IcoachHelper from '@/utils/IcoachHelper'
+import IcoachSkillComment from '@/components/icoach/IcoachSkillComment.vue'
 
-@Component({ name: 'IcoachSkillSection' })
+@Component({
+  name: 'IcoachSkillSection',
+  components: { IcoachSkillComment }
+})
 export default class IcoachSkillSection extends Vue {
   @Prop({ required: true })
   icoachSkill!: IcoachSkill
@@ -90,3 +102,13 @@ export default class IcoachSkillSection extends Vue {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+  .separator {
+    margin-top: 20px;
+    height: 1px;
+    color: #d8efff;
+    background-color: #d8efff;
+    border: none;
+  }
+</style>

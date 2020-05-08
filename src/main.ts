@@ -7,6 +7,7 @@ import store from './store'
 import './icons'
 import i18n from './i18n'
 import './mixin'
+import './filters'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import BootstrapVue from 'bootstrap-vue'

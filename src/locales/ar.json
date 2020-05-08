@@ -28,6 +28,7 @@
     "sign_up": "تسجيل",
     "change": "يتغيرون",
     "save": "حفظ",
+    "submit": "Arabic: Submit",
     "update_profile": "تحديث الملف",
     "change_password": "تغيير كلمة المرور",
     "cancel": "إلغاء",
@@ -102,6 +103,12 @@
     "no_skills": "Arabic: There are no skills for this course",
     "back": "Arabic: Back",
     "next": "Arabic: Next",
-    "last": "Arabic: Finish skill"
+    "last": "Arabic: Finish skill",
+    "comments": {
+      "leave_a_comment": "Arabic: Leave a comment",
+      "leave_your_comment": "Arabic: Leave your comment",
+      "comments": "Arabic: Comments",
+      "on": "Arabic: on"
+    }
   }
 }

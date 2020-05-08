@@ -29,7 +29,7 @@ class IcoachLocalStorageHelper {
     this.setData(this.icoachBegun, begunIcoachs)
   }
 
-  private saveIcoachUser(icoachData: IcoachData) : void {
+  private saveIcoachUser (icoachData: IcoachData) : void {
     this.setData(this.getIcoachUserKey(icoachData.icoachUserId), icoachData)
   }
 

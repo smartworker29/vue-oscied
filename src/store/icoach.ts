@@ -7,7 +7,7 @@ export interface IcoachState {
   icoachSkillStepId: number | null
 }
 
-const survey: Module<IcoachState, RootState> = {
+const icoach: Module<IcoachState, RootState> = {
   namespaced: true,
 
   state: {
@@ -28,7 +28,7 @@ const survey: Module<IcoachState, RootState> = {
     setIcoachInfo (state: IcoachState, data: IcoachGeneralInfo) : void {
       state.icoachGeneralInfo = data
     },
-    setIcoachSkillStepId(state: IcoachState, step: number) : void {
+    setIcoachSkillStepId (state: IcoachState, step: number) : void {
       state.icoachSkillStepId = step
     },
     clearIcoachInfo (state: IcoachState) : void {
@@ -37,4 +37,4 @@ const survey: Module<IcoachState, RootState> = {
   }
 }
 
-export default survey
+export default icoach

@@ -28,6 +28,7 @@
     "sign_up": "Deutsch: Sign Up",
     "change": "Deutsch: Change",
     "save": "Deutsch: Save",
+    "submit": "Deutsch: Submit",
     "update_profile": "Deutsch: Update Profile",
     "change_password": "Deutsch: Change Password",
     "cancel": "Deutsch: Cancel",
@@ -102,6 +103,12 @@
     "no_skills": "Deutsch: There are no skills for this course",
     "back": "Deutsch: Back",
     "next": "Deutsch: Next",
-    "last": "Deutsch: Finish skill"
+    "last": "Deutsch: Finish skill",
+    "comments": {
+      "leave_a_comment": "Deutsch: Leave a comment",
+      "leave_your_comment": "Deutsch: Leave your comment",
+      "comments": "Deutsch: Comments",
+      "on": "Deutsch: on"
+    }
   }
 }

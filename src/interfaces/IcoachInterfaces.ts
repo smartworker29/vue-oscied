@@ -1,3 +1,5 @@
+import { Image } from '@/interfaces/GeneralInterfaces'
+
 export interface IcoachCourse {
   id: number
   title: string
@@ -23,11 +25,18 @@ export interface IcoachSkillContent {
   area: number
 }
 
-export interface IcoachLogo {
-  fileName: string
-  filePath: string
-  fileURL: string
+export interface IcoachSkillComment {
+  comment: string,
+  date: string | null
+  user: IcoachCommentUser
 }
+
+interface IcoachCommentUser {
+  fullName: string,
+  image: Image
+}
+
+export interface IcoachLogo extends Image {}
 
 export interface IcoachUserInfo {
   id: number

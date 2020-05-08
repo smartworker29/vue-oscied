@@ -17,7 +17,7 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 
-@Component({ name: 'AvatarForm'})
+@Component({ name: 'AvatarForm' })
 export default class AvatarForm extends Vue {
 
 }

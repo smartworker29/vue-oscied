@@ -120,6 +120,7 @@ export default class IcoachSkillPage extends Vue {
     }
 
     &__item {
+      color: #0085cd;
       padding: 0 3px;
 
       &--last {
@@ -128,6 +129,7 @@ export default class IcoachSkillPage extends Vue {
     }
 
     a {
+      color: #0085cd;
       text-decoration: none;
 
       &:visited {
