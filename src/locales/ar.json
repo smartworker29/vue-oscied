@@ -28,6 +28,7 @@
     "sign_up": "تسجيل",
     "change": "يتغيرون",
     "save": "حفظ",
+    "submit": "Arabic: Submit",
     "update_profile": "تحديث الملف",
     "change_password": "تغيير كلمة المرور",
     "cancel": "إلغاء",
@@ -36,7 +37,8 @@
     "delete_photo": "حذف الصورة",
     "add_photo": "إضافة الصورة",
     "start_survey": "بداية",
-    "continue_survey": "استمر"
+    "continue_survey": "استمر",
+    "start_icoach": "Arabic: Start icoach"
   },
   "email_address": "عنوان بريد الكتروني",
   "remember_me": "تذكرنى",
@@ -76,6 +78,7 @@
   "copy_right": "Arabic: {years} &copy; CCR3i All Rights Reserved.",
   "completed_survey": "Arabic: You completed the survey!",
   "please_register": "Arabic: If you are already registered, please {signIn}. Otherwise please use our quick registration form.",
+  "welcome_to_icoach": "Arabic: Welcome to {icoachName}",
   "eq": {
     "title": "Arabic: E.Q. - Emotional Intelligence",
     "confirmation_window": "يرجى تأكيد اختياراتك بدقة",
@@ -90,5 +93,22 @@
     "title": "Arabic: Behaviours",
     "confirmation_window": "يرجى تأكيد اختياراتك بدقة",
     "confirm_to_next_section": "Arabic: Please drag & drop all the answers."
+  },
+  "skills": {
+    "categories": {
+      "1": "Arabic: Soft skill",
+      "2": "Arabic: Essential business skills",
+      "3": "Arabic: Organisational skills"
+    },
+    "no_skills": "Arabic: There are no skills for this course",
+    "back": "Arabic: Back",
+    "next": "Arabic: Next",
+    "last": "Arabic: Finish skill",
+    "comments": {
+      "leave_a_comment": "Arabic: Leave a comment",
+      "leave_your_comment": "Arabic: Leave your comment",
+      "comments": "Arabic: Comments",
+      "on": "Arabic: on"
+    }
   }
 }

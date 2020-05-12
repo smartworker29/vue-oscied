@@ -3,11 +3,15 @@ import Router, { Route } from 'vue-router'
 import store from '@/store'
 
 import TakenSurveySection from '@/components/survey/TakenSurveySection.vue'
+import IcoachSkillSection from '@/components/icoach/IcoachSkillSection.vue'
 
 import HomePage from '@/pages/HomePage.vue'
 import AccountPage from '@/pages/AccountPage.vue'
 import NotFoundPage from '@/pages/NotFoundPage.vue'
 import WelcomePage from '@/pages/survey/WelcomePage.vue'
+import IcoachWelcomePage from '@/pages/icoach/WelcomePage.vue'
+import IcoachDashboardPage from '@/pages/icoach/DashboardPage.vue'
+import IcoachSkillPage from '@/pages/icoach/IcoachSkillPage.vue'
 import TakenSurveyPage from '@/pages/survey/TakenSurveyPage.vue'
 import CompleteSurveyMessagePage from '@/pages/survey/CompleteSurveyMessagePage.vue'
 import DpChildSurveyWelcomePage from '@/pages/survey/DpChildSurveyWelcomePage.vue'
@@ -28,6 +32,36 @@ const router = new Router({
       path: '/404',
       name: 'notFound',
       component: NotFoundPage
+    },
+    {
+      path: '/icoach/:accessCode([a-zA-Z0-9]{50})',
+      name: 'icoach.welcome',
+      component: IcoachWelcomePage,
+      props: true
+    },
+    {
+      path: '/icoach/:icoachUserId(\\d+)/dashboard',
+      name: 'icoach.dashboard',
+      component: IcoachDashboardPage,
+      props: true
+    },
+    {
+      path: '/icoach/:icoachUserId(\\d+)/skill/:skillId(\\d+)/step',
+      component: IcoachSkillPage,
+      props: true,
+      children: [
+        {
+          path: ':stepId(\\d+)',
+          name: 'icoach.skill',
+          component: IcoachSkillSection,
+          props: true
+        }
+      ]
+    },
+    {
+      path: '/icoach/complete',
+      name: 'icoach.skill.complete',
+      component: CompleteSurveyMessagePage
     },
     {
       path: '/:surveyProduct(eq|values|behaviours|discovery-process)/:accessCode([a-zA-Z0-9]{50})',

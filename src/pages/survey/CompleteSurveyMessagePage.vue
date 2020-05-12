@@ -11,7 +11,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 
-@Component({})
+@Component({ name: 'CompleteSurveyMessagePage' })
 export default class CompleteSurveyMessagePage extends Vue {
 }
 </script>

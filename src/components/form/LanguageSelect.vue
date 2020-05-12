@@ -24,8 +24,7 @@ import LocaleHelper from '@/utils/LocaleHelper'
 import { LocaleData } from '@/interfaces/UserInterfaces'
 import { Locale } from '@/interfaces/Locale'
 
-@Component({
-})
+@Component({ name: 'LanguageSelect' })
 export default class LanguageSelect extends Vue {
   @Prop({})
   value!: string;

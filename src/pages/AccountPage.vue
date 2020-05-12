@@ -18,6 +18,7 @@ import ChangePasswordForm from '@/components/account/ChangePasswordForm.vue'
 import ProfileForm from '@/components/account/ProfileForm.vue'
 
 @Component({
+  name: 'AccountPage',
   components: {
     AvatarForm,
     ChangePasswordForm,

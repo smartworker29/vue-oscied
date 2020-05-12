@@ -73,6 +73,7 @@ import SurveyLogos from '@/components/survey/SurveyLogos.vue'
 import LangSwitcher from '@/components/common/layout/LangSwitcher.vue'
 
 @Component({
+  name: 'UserHeader',
   components: {
     SurveyLogos,
     LangSwitcher

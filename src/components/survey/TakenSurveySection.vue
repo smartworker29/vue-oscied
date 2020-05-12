@@ -16,6 +16,7 @@ import DragAndDropSortingStatement from '@/components/common/sorting/DragAndDrop
 import TapSortingStatement from '@/components/common/sorting/TapSortingStatement.vue'
 
 @Component({
+  name: 'TakenSurveySection',
   components: {
     DragAndDropSortingStatement,
     TapSortingStatement

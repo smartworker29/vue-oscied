@@ -34,6 +34,7 @@ import { StatementSortingOptions } from '@/interfaces/SortingInterfaces'
 import ConfirmModal from '@/components/modals/ConfirmModal.vue'
 
 @Component({
+  name: 'DragAndDropSortingStatement',
   components: { draggable, ConfirmModal }
 })
 export default class DragAndDropSortingStatement extends Vue {

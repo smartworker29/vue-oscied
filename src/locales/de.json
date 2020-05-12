@@ -28,6 +28,7 @@
     "sign_up": "Deutsch: Sign Up",
     "change": "Deutsch: Change",
     "save": "Deutsch: Save",
+    "submit": "Deutsch: Submit",
     "update_profile": "Deutsch: Update Profile",
     "change_password": "Deutsch: Change Password",
     "cancel": "Deutsch: Cancel",
@@ -36,7 +37,8 @@
     "delete_photo": "Deutsch: Delete Picture",
     "add_photo": "Deutsch: Add Picture",
     "start_survey": "Deutsch: Start",
-    "continue_survey": "Deutsch: Continue"
+    "continue_survey": "Deutsch: Continue",
+    "start_icoach": "Deutsch: Start icoach"
   },
   "email_address": "Deutsch: Email Address",
   "remember_me": "Deutsch: Remember Me",
@@ -76,6 +78,7 @@
   "copy_right": "Deutsch: {years} &copy; CCR3i All Rights Reserved.",
   "register": "Deutsch: Register",
   "completed_survey": "Deutsch: You completed the survey!",
+  "welcome_to_icoach": "Deutsch: Welcome to {icoachName}",
   "eq": {
     "title": "Deutsch: E.Q. - Emotional Intelligence",
     "confirmation_window": "Deutsch: Please Confirm Your Choices!",
@@ -90,5 +93,22 @@
     "title": "Deutsch: Behaviours",
     "confirmation_window": "Deutsch: Please Confirm Your Choices!",
     "confirm_to_next_section": "Deutsch: Please drag & drop all the answers."
+  },
+  "skills": {
+    "categories": {
+      "1": "Deutsch: Soft skill",
+      "2": "Deutsch: Essential business skills",
+      "3": "Deutsch: Organisational skills"
+    },
+    "no_skills": "Deutsch: There are no skills for this course",
+    "back": "Deutsch: Back",
+    "next": "Deutsch: Next",
+    "last": "Deutsch: Finish skill",
+    "comments": {
+      "leave_a_comment": "Deutsch: Leave a comment",
+      "leave_your_comment": "Deutsch: Leave your comment",
+      "comments": "Deutsch: Comments",
+      "on": "Deutsch: on"
+    }
   }
 }
