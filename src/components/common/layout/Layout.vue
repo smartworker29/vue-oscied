@@ -16,6 +16,7 @@ import UserHeader from '@/components/common/layout/UserHeader.vue'
 import AppFooter from '@/components/footer/AppFooter.vue'
 
 @Component({
+  name: 'Layout',
   components: {
     UserHeader,
     AppFooter

@@ -24,7 +24,7 @@ import SurveyService from '@/services/SurveyService'
 import SurveyHelper from '@/utils/SurveyHelper'
 import SurveyLocalStorageHelper from '@/utils/SurveyLocalStorageHelper'
 
-@Component({})
+@Component({ name: 'DpChildSurveyCompletedPage' })
 export default class DpChildSurveyCompletedPage extends Vue {
   @Prop({})
   surveyProduct!: string

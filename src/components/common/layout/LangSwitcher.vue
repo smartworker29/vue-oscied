@@ -29,7 +29,7 @@ import LocaleHelper from '@/utils/LocaleHelper'
 import { LocaleData } from '@/interfaces/UserInterfaces'
 import { Locale } from '@/interfaces/Locale'
 
-@Component({})
+@Component({ name: 'LangSwitcher' })
 export default class LangSwitcher extends Vue {
   currentLocale: Locale | null = { locale: '', localeName: '' }
   availableLocales: LocaleData[] = []

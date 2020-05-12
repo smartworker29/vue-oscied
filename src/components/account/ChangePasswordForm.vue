@@ -66,7 +66,7 @@ import { Getter } from 'vuex-class'
 import { UpdatePasswordData, User } from '@/interfaces/UserInterfaces'
 import UserService from '@/services/UserService'
 
-@Component({})
+@Component({ name: 'ChangePasswordForm' })
 export default class ChangePasswordForm extends Vue {
   @Getter('user/currentUser')
   user!: User

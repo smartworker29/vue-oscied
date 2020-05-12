@@ -1,3 +1,5 @@
+import { Image } from '@/interfaces/GeneralInterfaces'
+
 export interface Statement {
   id: number
   statement: string
@@ -34,11 +36,7 @@ export interface ResponseProductSurveyInfo {
   survey: SurveyInfo
 }
 
-export interface SurveyLogo {
-  fileName: string
-  filePath: string
-  fileURL: string
-}
+export interface SurveyLogo extends Image {}
 
 export interface SurveyUserInfo {
   surveyUserId: number
@@ -49,12 +47,6 @@ export interface SurveyUserInfo {
 export interface SurveyUserDto {
   surveyUserId: number
   productSurveyType: string
-}
-
-export interface SurveyLogo {
-  fileURL: string
-  filePath: string
-  fileName: string
 }
 
 export interface NextDpSurveyPart {

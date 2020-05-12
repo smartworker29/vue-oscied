@@ -20,7 +20,7 @@ import SurveyLocalStorageHelper from '@/utils/SurveyLocalStorageHelper'
 import SurveyHelper from '@/utils/SurveyHelper'
 import SurveyService from '@/services/SurveyService'
 
-@Component({})
+@Component({ name: 'DpChildSurveyWelcomePage' })
 export default class DpChildSurveyWelcomePage extends Vue {
   @Prop({})
   surveyProduct!: string

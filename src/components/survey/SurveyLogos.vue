@@ -10,8 +10,7 @@
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import { SurveyLogo } from '@/interfaces/SurveyInterfaces'
 
-@Component({
-})
+@Component({ name: 'SurveyLogos' })
 export default class SurveyLogos extends Vue {
   @Prop({
     default: () => ([])

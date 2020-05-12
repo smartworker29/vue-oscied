@@ -9,7 +9,7 @@
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import { TapStatementSortingItemOptions } from '@/interfaces/SortingInterfaces'
 
-@Component({})
+@Component({ name: 'TapSortingStatementItem' })
 export default class TapSortingStatementItem extends Vue {
   readonly typeOrdered: string = 'ordered'
   readonly typeRaw: string = 'raw'

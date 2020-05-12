@@ -40,6 +40,7 @@ import SignUpForm from '@/components/signUp/SignUpForm.vue'
 import LangSwitcher from '@/components/common/layout/LangSwitcher.vue'
 
 @Component({
+  name: 'HomePage',
   components: {
     SignInForm,
     SignUpForm,

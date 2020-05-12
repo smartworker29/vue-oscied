@@ -91,6 +91,7 @@ import UserService from '@/services/UserService'
 import LanguageSelect from '@/components/form/LanguageSelect.vue'
 
 @Component({
+  name: 'ProfileForm',
   components: {
     LanguageSelect
   }

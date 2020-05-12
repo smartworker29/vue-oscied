@@ -14,7 +14,7 @@
 import { Component, Vue } from 'vue-property-decorator'
 import { Getter } from 'vuex-class'
 
-@Component({})
+@Component({ name: 'SurveyProgress' })
 export default class SurveyProgress extends Vue {
   @Getter('survey/getCurrentProductSurveySectionCount')
   totalProgressItemsCount?: number
