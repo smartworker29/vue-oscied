@@ -48,7 +48,7 @@ class IcoachService extends BaseApiService {
     )
   }
 
-  createIcoachSkillComment (icoachId: number, skillId: number, stepId: number, comment: string) : IcoachUserInfo {
+  createIcoachSkillComment (icoachId: number, skillId: number, stepId: number, comment: string) : IcoachSkillComment {
     return this.callMethod(
       'post',
       `/icoach/comment/create/`,
