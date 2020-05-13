@@ -22,10 +22,10 @@ class IcoachService extends BaseApiService {
     )
   }
 
-  getIcoachDashboardInfo (icoachAccessCode: string) : IcoachDashboardInfo {
+  getIcoachDashboardInfo (icoachAccessCode: string, icoachUserId: number) : IcoachDashboardInfo {
     return this.callMethod(
       'get',
-      `/icoach/dashboard/${icoachAccessCode}`
+      `/icoach/dashboard/${icoachAccessCode}/${icoachUserId}`
     )
   }
 
