@@ -72,7 +72,10 @@ export interface IcoachGeneralInfo {
 export interface IcoachCategorySkill {
   id: number,
   category: number,
-  name: 'string'
+  name: string,
+  completed: number,
+  total: number,
+  isCompleted: boolean
 }
 
 export enum IcoachCategoriesEnum {

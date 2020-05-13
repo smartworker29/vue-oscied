@@ -22,7 +22,7 @@
         <img :src="comment.user.image.fileURL" class="icoach-skill-comment__logo" :alt="comment.comment">
         <span>
           <span class="icoach-skill-comment__name">{{ comment.user.fullName }}</span>
-          {{ $t('skills.comments.on')}} {{ comment.date | formatDate('MMMM D, YYYY [at] h:mm:ss a') }}
+          {{ $t('skills.comments.on')}} {{ comment.date | formatDate('MMMM Do, YYYY [at] h:mm a') }}
         </span>
         <div>{{ comment.comment }}</div>
       </div>
@@ -77,7 +77,7 @@ export default class IcoachSkillComment extends Vue {
 
       this.comment = ''
       await this.$validator.reset()
-      this.publishedComments.push(skillComment)
+      this.publishedComments.unshift(skillComment)
     } catch (error) {
       throw error
     }

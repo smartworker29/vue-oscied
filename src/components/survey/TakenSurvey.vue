@@ -6,7 +6,7 @@
           {{ currentSectionData && currentSectionData.title
           ? currentSectionData.title : $t('world_view') }}
         </span>
-         <SurveyProgress/>
+         <Progress/>
       </h1>
       <p>
         {{ currentSectionData && currentSectionData.instructions
@@ -27,15 +27,15 @@
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import { Getter } from 'vuex-class'
 import { Statement, Section } from '@/interfaces/SurveyInterfaces'
-import SurveyProgress from '@/components/common/progressBar/SurveyProgress.vue'
 import SurveyService from '@/services/SurveyService'
 import SurveyHelper from '@/utils/SurveyHelper'
 import SurveyLocalStorageHelper from '@/utils/SurveyLocalStorageHelper'
+import Progress from '@/components/common/progressBar/Progress.vue'
 
 @Component({
   name: 'TakenSurvey',
   components: {
-    SurveyProgress
+    Progress
   }
 })
 export default class TakenSurvey extends Vue {
