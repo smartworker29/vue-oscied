@@ -12,10 +12,11 @@
       <div class="icoach-categories">
         <ul class="icoach-category-list">
           <li
-            v-for="(_, index) in icoachDashboardInfo" :key="index"
+            v-for="(category, index) in icoachDashboardInfo" :key="index"
             @click="changeIndex(parseInt(index))"
             :class="{ 'active': activeIndex === parseInt(index) }">
             <span>{{ $t(`skills.categories.${index}`) }}</span>
+            <span> {{ completedSkills(category) }}/{{ category.length }} {{ $t('skills.completed')}}</span>
           </li>
         </ul>
       </div>
@@ -25,12 +26,17 @@
         </h2>
         <div class="icoach-skills">
           <router-link
-            v-for="(skills, index) in icoachDashboardInfo[activeIndex]" :key="index"
+            v-for="(skill, index) in icoachDashboardInfo[activeIndex]" :key="index"
             @click.native="openSkill"
             class="icoach-skill"
-            :to="{ name: 'icoach.skill', params: { icoachUserId: icoachUserId, skillId: skills.id, stepId: 1 } }"
+            :to="{ name: 'icoach.skill', params: { icoachUserId: icoachUserId, skillId: skill.id, stepId: 1 } }"
           >
-            <span>{{ skills.name }}</span>
+            <span>{{ skill.name }}</span>
+            <Progress
+              :processed-props-items-count="skill.completed"
+              :total-props-progress-items-count="skill.total"
+              percentage="true"
+            />
           </router-link>
         </div>
       </div>
@@ -40,11 +46,22 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
-import { IcoachCategories, IcoachCategoriesEnum, IcoachDashboardInfo } from '@/interfaces/IcoachInterfaces'
+import {
+  IcoachCategories,
+  IcoachCategoriesEnum,
+  IcoachCategorySkill,
+  IcoachDashboardInfo
+} from '@/interfaces/IcoachInterfaces'
 import IcoachService from '@/services/IcoachService'
 import IcoachLocalStorageHelper from '@/utils/IcoachLocalStorageHelper'
+import Progress from '@/components/common/progressBar/Progress.vue'
 
-@Component({ name: 'DashboardPage' })
+@Component({
+  name: 'DashboardPage',
+  components: {
+    Progress
+  }
+})
 export default class DashboardPage extends Vue {
   @Prop({})
   icoachUserId!: number
@@ -75,7 +92,19 @@ export default class DashboardPage extends Vue {
 
     this.icoachTitle = icoachUser.icoachCourseTitle
     this.activeIndex = icoachUser.icoachSkillCategoryId
-    this.icoachDashboardInfo = await IcoachService.getIcoachDashboardInfo(icoachUser.icoachAccessCode)
+    this.icoachDashboardInfo = await IcoachService.getIcoachDashboardInfo(icoachUser.icoachAccessCode, icoachUser.icoachUserId)
+  }
+
+  completedSkills (category: IcoachCategorySkill[]) : number {
+    let total: number = 0
+
+    category.forEach((skill) => {
+      if (skill.isCompleted) {
+        total++
+      }
+    })
+
+    return total
   }
 
   openSkill () {
