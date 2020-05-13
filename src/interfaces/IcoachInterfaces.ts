@@ -37,12 +37,19 @@ export interface IcoachSkillComment {
 }
 
 export interface IcoachSkillQuestion {
+  id: number,
   name: string,
   icoachSkillQuestionOptions: IcoachSkillQuestionOption[]
 }
 
 export interface IcoachSkillQuestionOption {
+  id: number,
   name: string
+}
+
+export interface IcoachSkillScore {
+  id: number,
+  score: number
 }
 
 interface IcoachCommentUser {

@@ -9,7 +9,7 @@
         :icoach-skill="icoachSkill"
         :icoach-user-data="icoachUserData"
         :step-id="currentStep"
-        @back-step="changeStep"
+        @change-step="changeStep"
       />
     </div>
 
@@ -18,15 +18,15 @@
       <button class="btn btn-primary btn-primary-active" @click="changeStep('next')">
         {{ isLastStep ? $t('skills.last') : $t('skills.next') }}
       </button>
+
+      <hr class="separator">
+
+      <icoach-skill-comment
+        :icoach-skill="icoachSkill"
+        :icoach-user-data="icoachUserData"
+        :step-id="currentStep"
+      />
     </div>
-
-    <hr class="separator">
-
-    <icoach-skill-comment
-      :icoach-skill="icoachSkill"
-      :icoach-user-data="icoachUserData"
-      :step-id="currentStep"
-    />
   </div>
 </template>
 
