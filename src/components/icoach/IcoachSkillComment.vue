@@ -51,7 +51,7 @@ export default class IcoachSkillComment extends Vue {
   @Watch('stepId')
   onStepIdChange () {
     this.uploadComments()
-    this.$validator.reset()
+    this.resetComments()
   }
 
   async created () {
@@ -68,7 +68,7 @@ export default class IcoachSkillComment extends Vue {
     }
 
     try {
-      await IcoachService.createIcoachSkillComment(
+      const skillComment = await IcoachService.createIcoachSkillComment(
         this.icoachUserData.icoachCourseId,
         this.icoachSkill.id,
         Number(this.stepId),
@@ -77,6 +77,7 @@ export default class IcoachSkillComment extends Vue {
 
       this.comment = ''
       await this.$validator.reset()
+      this.publishedComments.push(skillComment)
     } catch (error) {
       throw error
     }
@@ -88,6 +89,11 @@ export default class IcoachSkillComment extends Vue {
       this.stepId,
       this.icoachUserData.icoachUserId
     )
+  }
+
+  private resetComments () {
+    this.$validator.reset()
+    this.publishedComments = []
   }
 }
 </script>
