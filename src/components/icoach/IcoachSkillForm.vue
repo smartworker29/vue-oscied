@@ -1,17 +1,35 @@
 <template>
   <div>
-    <form action="" class="icoach-skill-form" @submit.prevent="submit">
-      <div v-for="(question, id) in questions" class="icoach-skill-form__block" :key="id">
+    <div v-if="totalScore">
+      <p>{{ $t('skills.you_have_answered_already') }}</p>
+      <button class="btn btn-primary btn-primary-active" @click="changeStep('prev')">{{ $t('skills.back')}}</button>
+      <button class="btn btn-primary btn-primary-active" @click="changeStep('next')">{{ $t('skills.next')}}</button>
+    </div>
+
+    <form class="icoach-skill-form" v-else @submit.prevent="submit">
+      <div v-for="question in questions" class="icoach-skill-form__block" :key="question.id">
         <div class="icoach-skill-form__title">{{ question.name }}</div>
-        <label :for="`${id}_${key}`" v-for="(option, key) in question.icoachSkillQuestionOptions" class="icoach-skill-form__options" :key="key">
+        <label
+          :for="`${question.id}_${option.id}`"
+          v-for="option in question.icoachSkillQuestionOptions"
+          class="icoach-skill-form__options"
+          :key="option.id"
+        >
           {{ option.name }}
-          <input :id="`${id}_${key}`" type="radio" :name="`${id}_option`" :value="key" v-validate="'required'"/>
+          <input
+            :id="`${question.id}_${option.id}`"
+            type="radio"
+            :name="`${question.id}_option`"
+            :value="option.id"
+            v-validate="'required'"
+            v-model="resultList[question.id]"
+          />
           <span></span>
         </label>
-        <p class="error" v-if="errors.has(`${id}_option`)">This field is required</p>
+        <p class="error" v-if="errors.has(`${question.id}_option`)">This field is required</p>
       </div>
 
-      <button class="btn btn-primary btn-primary-active" @click="backStep('prev')">{{ $t('skills.back')}}</button>
+      <button class="btn btn-primary btn-primary-active" @click="changeStep('prev')">{{ $t('skills.back')}}</button>
       <button class="btn btn-primary btn-primary-active" type="submit">Submit test</button>
     </form>
   </div>
@@ -33,11 +51,8 @@ export default class IcoachSkillForm extends Vue {
   stepId!: number
 
   questions: IcoachSkillQuestion[] = []
-
-  @Watch('stepId')
-  onStepIdChange () {
-    // watch it
-  }
+  resultList: object = {}
+  totalScore: number | null = null
 
   async created () {
     await this.uploadQuestions()
@@ -49,22 +64,33 @@ export default class IcoachSkillForm extends Vue {
     }
 
     try {
-      await IcoachService.sendTest('')
+      const result = await IcoachService.sendScoreForm(
+        this.resultList,
+        this.icoachSkill.id,
+        this.icoachUserData.icoachUserId
+      )
 
-      // @todo::[m] fade the form, like isDisplayed - false
-      await this.$validator.reset()
+      this.resetForm()
+      this.totalScore = result.score
     } catch (error) {
       throw error
     }
   }
 
   async uploadQuestions () {
+    const totalScore = await IcoachService.getIcoachSkillScore(this.icoachSkill.id, this.icoachUserData.icoachUserId)
+    this.totalScore = totalScore.score
     this.questions = await IcoachService.getIcoachSkillQuestions(this.icoachSkill.id)
   }
 
   @Emit()
-  backStep () {
-    return IcoachSkillDirections.PREV
+  changeStep (direction: IcoachSkillDirections) {
+    return direction
+  }
+
+  private resetForm () {
+    this.$validator.reset()
+    this.resultList = {}
   }
 }
 </script>

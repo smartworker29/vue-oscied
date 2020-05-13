@@ -5,6 +5,7 @@ import {
   IcoachSkill,
   IcoachSkillComment,
   IcoachSkillQuestion,
+  IcoachSkillScore,
   IcoachUserInfo
 } from '@/interfaces/IcoachInterfaces'
 
@@ -40,6 +41,10 @@ class IcoachService extends BaseApiService {
     return this.callMethod('get', `/icoach/question/${skillId}`)
   }
 
+  getIcoachSkillScore (skillId: number, icoachUserId: number): IcoachSkillScore {
+    return this.callMethod('get', `/icoach/score/${skillId}/${icoachUserId}`)
+  }
+
   createIcoachUser (icoachId: number, accessCode: string) : IcoachUserInfo {
     return this.callMethod(
       'post',
@@ -48,7 +53,7 @@ class IcoachService extends BaseApiService {
     )
   }
 
-  createIcoachSkillComment (icoachId: number, skillId: number, stepId: number, comment: string) : IcoachUserInfo {
+  createIcoachSkillComment (icoachId: number, skillId: number, stepId: number, comment: string) : IcoachSkillComment {
     return this.callMethod(
       'post',
       `/icoach/comment/create/`,
@@ -56,8 +61,11 @@ class IcoachService extends BaseApiService {
     )
   }
 
-  sendTest (data: any): any {
-    return this.callMethod('post', data)
+  sendScoreForm (answers: object, skillId: number, icoachUserId: number): IcoachSkillScore {
+    return this.callMethod('post',
+      '/icoach/score/create/',
+      { answers, skillId, icoachUserId }
+    )
   }
 }
 
