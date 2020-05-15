@@ -22,7 +22,8 @@ export interface IcoachSkill {
 export interface IcoachSkillContent {
   id: number,
   content: string,
-  icoachSkillArea: IcoachSkillArea
+  icoachSkillArea: IcoachSkillArea,
+  isCompleted: boolean
 }
 
 export interface IcoachSkillArea {
@@ -72,7 +73,10 @@ export interface IcoachGeneralInfo {
 export interface IcoachCategorySkill {
   id: number,
   category: number,
-  name: 'string'
+  name: string,
+  completed: number,
+  total: number,
+  isCompleted: boolean
 }
 
 export enum IcoachCategoriesEnum {
