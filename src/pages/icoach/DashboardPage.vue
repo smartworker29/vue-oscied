@@ -18,11 +18,8 @@
             <p>
               <span>{{ $t(`skills.categories.${index}`) }}</span>
             </p>
-            <span class="icoach-category-item-progress">
-              0/2 Skills completed
-            </span>
-            <span>{{ $t(`skills.categories.${index}`) }}</span>
-            <span> {{ completedSkills(category) }}/{{ category.length }} {{ $t('skills.completed')}}</span>
+            <span class="icoach-category-item-progress"> {{ completedSkills(category) }}/{{ category.length }} {{ $t('skills.completed')}}</span>
+            <img :src="require('@/assets/icons/arrow-down-xs.svg')">
           </li>
         </ul>
       </div>
@@ -40,8 +37,10 @@
             class="icoach-skill"
             :to="{ name: 'icoach.skill', params: { icoachUserId: icoachUserId, skillId: skill.id, stepId: 1 } }"
           >
-            <span>{{ skill.name }}</span>
+            <span class="icoach-skill-name">{{ skill.name }}</span>
             <Progress
+              :show-title="false"
+              :show-percent-inside="false"
               :processed-props-items-count="skill.completed"
               :total-props-progress-items-count="skill.total"
               percentage="true"
@@ -136,6 +135,9 @@ export default class DashboardPage extends Vue {
   .icoach-categories {
     max-width: 275px;
     width: 100%;
+    @media only screen and (max-width: 600px) {
+      max-width: 100%;;
+    }
   }
 
   .icoach-category-list {
@@ -152,8 +154,32 @@ export default class DashboardPage extends Vue {
     }
 
     li {
-      padding: 8px 16px;
+      position: relative;
+      padding: 8px 34px 8px 16px;
+      img {
+        position: absolute;
+        right: 13px;
+        top: calc(50% - 13px);
+      }
     }
+
+    @media only screen and (max-width: 600px) {
+      overflow-x: scroll;
+      white-space: nowrap;
+      li {
+        display: inline-block;
+        margin-right: 5px;
+        font-size: 14px;
+        padding: 8px 11px;
+        img {
+          display: none;
+        }
+        .icoach-category-item-progress {
+          display: none;
+        }
+      }
+    }
+
     .icoach-category-item-progress {
       font-size: 12px;
       color: #3d5a80;
@@ -168,7 +194,7 @@ export default class DashboardPage extends Vue {
   }
 
   .icoach-content {
-    padding: 0 0 0 4.3%;
+    padding: 0 1.4% 0 4.3%;
     width: 100%;
     justify-content: space-between;
 
@@ -187,6 +213,16 @@ export default class DashboardPage extends Vue {
       line-height: 1.4;
       color: #071012;
       max-width: 500px;
+    }
+
+    @media only screen and (max-width: 600px) {
+      padding: 8px 0 0 0;
+      .icoach-content-title {
+        font-size: 24px;
+      }
+      .icoach-content-subtitle {
+        font-size: 18px;
+      }
     }
   }
 
@@ -207,6 +243,59 @@ export default class DashboardPage extends Vue {
     color: #071012;
     text-decoration: none;
     padding: 16px 15px;
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+
+    @media only screen and (max-width: 1280px) {
+      width: calc(33% - 14px);
+    }
+
+    @media only screen and (max-width: 980px) {
+      width: calc(50% - 14px);
+    }
+
+    @media only screen and (max-width: 768px) {
+      width: 100%;
+    }
+
+    .progress {
+        width: calc(100% - 50px);
+        height: 9px;
+        background-color: #e6f3fa;
+        border-color: transparent;
+        margin-right: 10px;
+    }
+
+    .progress-wrapper {
+      padding-right: 4px;
+      width: 100%;
+      align-self: flex-end;
+    }
+
+    .progress-percentage {
+      font-size: 16px;
+    }
+  }
+
+  .icoach-skill-name {
+      font-size: 20px;
+      font-weight: 200;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.4;
+      letter-spacing: normal;
+      color: #071012;
+      display: block;
+      margin-bottom: 13px;
+
+      @media only screen and (max-width: 1280px) {
+        font-size: 16px;
+      }
+
+      @media only screen and (max-width: 600px) {
+        font-size: 20px;
+      }
   }
 
   .icoach-not-found {

@@ -1,12 +1,15 @@
 <template>
   <div class="progress-wrapper">
-    <span class="progress-title">{{ $t('progress') }}</span>
-    <div class="progress">
-      <div class="progress-bar progress-bar-striped progress-bar-animated"
-           v-if="processedPercent"
-           role="progressbar"
-           :style="`width: ${processedPercent}%;`"></div>
-      <span class="progress-percentage" v-if="percentage">{{ formattedProcessedItemsCount }}%</span>
+    <span v-if="showTitle" class="progress-title">{{ $t('progress') }}</span>
+    <div :class="{'progress-flex': !showPercentInside }">
+      <div class="progress">
+        <div class="progress-bar progress-bar-striped progress-bar-animated"
+            v-if="processedPercent"
+            role="progressbar"
+            :style="`width: ${processedPercent}%;`" />
+        <span v-if="showPercentInside && percentage" class="progress-percentage">{{ formattedProcessedItemsCount }}%</span>
+      </div>
+      <span v-if="!(showPercentInside && percentage)" class="progress-percentage">{{ formattedProcessedItemsCount }}%</span>
     </div>
   </div>
 </template>
@@ -25,6 +28,12 @@ export default class Progress extends Vue {
 
   @Prop({})
   totalPropsProgressItemsCount?: number
+
+  @Prop({ default: true })
+  showTitle?: boolean
+
+  @Prop({ default: true })
+  showPercentInside?: boolean
 
   @Prop({})
   processedPropsItemsCount?: number
@@ -86,9 +95,19 @@ export default class Progress extends Vue {
   }
 
   .progress-percentage {
-    position: absolute;
-    top: -2px;
-    right: 0;
     font-size: 14px;
+  }
+  .progress {
+    .progress-percentage {
+      position: absolute;
+      top: -2px;
+      right: 0;
+    }
+  }
+
+  .progress-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 </style>

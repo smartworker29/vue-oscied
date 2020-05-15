@@ -162,6 +162,11 @@ export default class WelcomePage extends Vue {
   .icoach-wrapper {
     padding: 35px 5.5% 0 5.5%;
 
+    @media only screen and (max-width: 600px) {
+      flex-wrap: wrap;
+      padding: 20px 5.5% 0 5.5%;
+    }
+
     .start-icoach-btn {
       padding: 14px 30px
     }
