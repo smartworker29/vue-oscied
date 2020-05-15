@@ -3,11 +3,13 @@
     <div class="icoach-header">
       <h1 class="icoach-title">{{ $t('welcome_to_icoach', { icoachName: (icoachCourse) ? icoachCourse.title : 'CCR3 Onesource' }) }}</h1>
     </div>
-    <div class="icoach-content">
-      <p v-html="(icoachCourse) ? icoachCourse.welcomeMessage : ''"></p>
-      <button class="btn btn-primary btn-primary-active" @click="beginIcoach">
-        {{ $t('button_g.start_icoach') }}
-      </button>
+    <div class="icoach-wrapper">
+      <div class="icoach-welcome">
+        <p v-html="(icoachCourse) ? icoachCourse.welcomeMessage : ''"></p>
+        <button class="start-icoach-btn btn btn-success btn-primary-active" @click="beginIcoach">
+          {{ $t('button_g.start_icoach') }}
+        </button>
+      </div>
     </div>
   </div>
   <div v-else class="auth-container-wrapper">
@@ -137,7 +139,7 @@ export default class WelcomePage extends Vue {
   }
 
   .icoach-title {
-    font-size: 32px;
+    font-size: 24px;
     font-weight: 300;
     color: #fff;
     display: flex;
@@ -151,29 +153,31 @@ export default class WelcomePage extends Vue {
     background: #0085cd;
     overflow: hidden;
     color: #fff;
-    padding: 1% 5.5% 7px 5.5%;
+    padding: 9px 5.5% 10px 5.5%;
     p {
       margin-bottom: 30px;
     }
   }
 
-  .icoach-content {
+  .icoach-wrapper {
+    padding: 35px 5.5% 0 5.5%;
+
+    .start-icoach-btn {
+      padding: 14px 30px
+    }
+  }
+
+  .icoach-welcome {
     color: #071012;
     overflow: hidden;
-    padding: 3.1% 10% 60px 5.5%;
     @media only screen and (max-width: 768px) {
       padding: 12px 12px 1px 10px;
       .btn {
         width: 100%;
       }
     }
-    h2 {
-      font-size: 20px;
-      font-weight: 300;
-      margin: 0 0 30px 0;
-    }
     p {
-      margin-bottom: 30px;
+      margin-bottom: 25px;
       @media only screen and (max-width: 768px) {
         margin-bottom: 19px;
       }

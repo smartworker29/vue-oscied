@@ -8,21 +8,29 @@
     <div class="icoach-not-found" v-if="!icoachDashboardInfo || !Object.keys(icoachDashboardInfo).length">
       {{ $t('skills.no_skills') }}
     </div>
-    <div class="icoach-dashboard" v-else>
+    <div class="icoach-wrapper flex" v-else>
       <div class="icoach-categories">
         <ul class="icoach-category-list">
           <li
             v-for="(_, index) in icoachDashboardInfo" :key="index"
             @click="changeIndex(parseInt(index))"
             :class="{ 'active': activeIndex === parseInt(index) }">
-            <span>{{ $t(`skills.categories.${index}`) }}</span>
+            <p>
+              <span>{{ $t(`skills.categories.${index}`) }}</span>
+            </p>
+            <span class="icoach-category-item-progress">
+              0/2 Skills completed
+            </span>
           </li>
         </ul>
       </div>
       <div class="icoach-content">
-        <h2>
+        <h2 class="icoach-content-title">
           {{ $t(`skills.categories.${activeIndex}`) }}
         </h2>
+        <p class="icoach-content-subtitle">
+          Develop the skills and competencies that are linked to your emotional intelligence.
+        </p>
         <div class="icoach-skills">
           <router-link
             v-for="(skills, index) in icoachDashboardInfo[activeIndex]" :key="index"
@@ -91,62 +99,84 @@ export default class DashboardPage extends Vue {
 <style lang="scss">
   .icoach-dashboard {
     display: flex;
+    padding: 35px 5.5% 0 5.5%;
     flex-wrap: wrap;
   }
 
   .icoach-categories {
-    max-width: 30%;
+    max-width: 275px;
+    width: 100%;
   }
 
   .icoach-category-list {
-    padding: 10px;
-
+    font-weight: 100;
     li, button {
       cursor: pointer;
-      padding: 0 24px;
-      margin: 5px 0;
+      margin: 5px 0 11px;
       font-size: 16px;
       align-items: center;
-      height: 42px;
-      display: flex;
       transition: 0.2s all;
-
-      span {
-        margin: 0 17px;
-      }
-
       &:hover {
         background: #bdddff;
       }
     }
 
+    li {
+      padding: 8px 16px;
+    }
+    .icoach-category-item-progress {
+      font-size: 12px;
+      color: #3d5a80;
+      margin-top: 1px;
+      display: block;
+    }
+
     li.active, li:hover, button.active, button:hover {
-      border: 1px solid #bdddff;
       border-radius: 10px;
       background: #e6f3fa;
     }
   }
 
   .icoach-content {
-    max-width: 70%;
+    padding: 0 0 0 4.3%;
+    width: 100%;
+    justify-content: space-between;
+
+    .icoach-content-title {
+      font-size: 32px;
+      font-weight: 600;
+      color: #3d5a80;
+      margin-bottom: 13px;
+      margin-top: 3px;
+    }
+
+    .icoach-content-subtitle {
+      font-size: 20px;
+      font-weight: 400;
+      margin-bottom: 22px;
+      line-height: 1.4;
+      color: #071012;
+      max-width: 500px;
+    }
   }
 
   .icoach-skills {
+    justify-content: space-between;
     display: flex;
     flex-wrap: wrap;
   }
 
   .icoach-skill {
-    flex: 1 0 21%;
-    padding: 5px;
-    margin: 5px;
-    height: 100px;
+    width: calc(33% - 27px);
+    border-radius: 12px;
+    border: solid 1px #e6f3fa;
     background-color: #f7fcff;
-    border-radius: 5px;
-    border: 1px solid #edf6fb;
-    text-decoration: none;
+    font-size: 20px;
+    line-height: 1.4;
+    letter-spacing: normal;
     color: #071012;
-    font-size: 16px;
+    text-decoration: none;
+    padding: 16px 15px;
   }
 
   .icoach-not-found {
