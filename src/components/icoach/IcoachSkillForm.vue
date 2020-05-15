@@ -78,9 +78,22 @@ export default class IcoachSkillForm extends Vue {
   }
 
   async uploadQuestions () {
-    const totalScore = await IcoachService.getIcoachSkillScore(this.icoachSkill.id, this.icoachUserData.icoachUserId)
-    this.totalScore = totalScore.score
-    this.questions = await IcoachService.getIcoachSkillQuestions(this.icoachSkill.id)
+    try {
+      const totalScore = await IcoachService.getIcoachSkillScore(this.icoachSkill.id, this.icoachUserData.icoachUserId)
+      if (totalScore && totalScore.score) {
+        this.totalScore = totalScore.score
+      }
+
+      this.questions = await IcoachService.getIcoachSkillQuestions(this.icoachSkill.id)
+    } catch (error) {
+      if ('response' in error && error.response.status === 400) {
+        this.handleScoreErrors(error.response.data)
+      }
+    }
+  }
+
+  handleScoreErrors (data: object) {
+    // todo::add handle logic
   }
 
   @Emit()

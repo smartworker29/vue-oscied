@@ -22,7 +22,8 @@ export interface IcoachSkill {
 export interface IcoachSkillContent {
   id: number,
   content: string,
-  icoachSkillArea: IcoachSkillArea
+  icoachSkillArea: IcoachSkillArea,
+  isCompleted: boolean
 }
 
 export interface IcoachSkillArea {
