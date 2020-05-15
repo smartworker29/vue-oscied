@@ -81,7 +81,7 @@ export default class IcoachSkillPage extends Vue {
     }
 
     try {
-      this.icoachSkill = await IcoachService.getIcoachSkillInfo(this.skillId)
+      this.icoachSkill = await IcoachService.getIcoachSkillInfo(this.icoachUserData.icoachAccessCode, this.skillId)
       this.icoachDashboardInfo = await IcoachService.getIcoachDashboardInfo(this.icoachUserData.icoachAccessCode, this.icoachUserId)
     } catch (e) {
       this.$router.push({ name: 'notFound' })

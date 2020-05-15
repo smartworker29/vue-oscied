@@ -10,6 +10,11 @@
           :to="{ name: 'icoach.skill', params: { icoachUserId: icoachUserData.icoachUserId, skillId: skill.id, stepId: 1 } }"
         >
           <span>{{ skill.name }}</span>
+          <Progress
+            :processed-props-items-count="skill.completed"
+            :total-props-progress-items-count="skill.total"
+            percentage="true"
+          />
         </router-link>
       </li>
     </ul>
@@ -21,6 +26,7 @@
         :key="key"
       >
         {{ content.icoachSkillArea.title }}
+        completed: {{ content.isCompleted }}
       </li>
     </ul>
   </div>
@@ -30,8 +36,14 @@
 import { Component, Emit, Prop, Vue } from 'vue-property-decorator'
 import { IcoachDashboardInfo, IcoachSkill } from '@/interfaces/IcoachInterfaces'
 import { IcoachData } from '@/interfaces/LocalStorageInterfaces'
+import Progress from '@/components/common/progressBar/Progress.vue'
 
-@Component({ name: 'IcoachSkillList' })
+@Component({
+  name: 'IcoachSkillList',
+  components: {
+    Progress
+  }
+})
 export default class IcoachSkillList extends Vue {
   @Prop({ required: true })
   icoachSkill!: IcoachSkill
