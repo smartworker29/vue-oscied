@@ -1,17 +1,7 @@
 <template>
   <div class="icoach-skill-page">
     <div class="icoach-skill-page__header">
-      <div class="breadcrumbs">
-        <router-link :to="{ name: 'icoach.welcome', params: { accessCode: icoachUserData.icoachAccessCode } }" class="breadcrumbs__item">
-          <span>{{ icoachUserData.icoachCourseTitle }}</span>
-        </router-link>
-        <img src="@/assets/icons/icon-arrow-down-xs-blue.svg" class="breadcrumbs__arrow-right">
-        <router-link :to="{ name: 'icoach.dashboard', params: { icoachUserId: icoachUserId } }" class="breadcrumbs__item">
-          <span>{{ $t(`skills.categories.${icoachUserData.icoachSkillCategoryId}`) }}</span>
-        </router-link>
-        <img src="@/assets/icons/icon-arrow-down-xs-blue.svg" class="breadcrumbs__arrow-right">
-        <span class="breadcrumbs__item breadcrumbs__item--last">{{ icoachSkill ? icoachSkill.name : '' }}</span>
-      </div>
+      <Breadcrumb :items="breadcrumbsData"/>
     </div>
 
     <div v-if="displaySkill" class="icoach-skill-page__content">
@@ -41,10 +31,12 @@ import { IcoachDashboardInfo, IcoachSkill } from '@/interfaces/IcoachInterfaces'
 import IcoachService from '@/services/IcoachService'
 import IcoachSkillSection from '@/components/icoach/IcoachSkillSection.vue'
 import IcoachSkillList from '@/components/icoach/IcoachSkillList.vue'
+import Breadcrumb from '@/components/common/breadcrumbs/Breadcrumb.vue'
+import { BreadcrumbElement } from '@/interfaces/BreadcrumbsInterfaces'
 
 @Component({
   name: 'IcoachSkillPage',
-  components: { IcoachSkillSection, IcoachSkillList }
+  components: { IcoachSkillSection, IcoachSkillList, Breadcrumb }
 })
 export default class IcoachSkillPage extends Vue {
   @Prop({ required: true })
@@ -73,6 +65,22 @@ export default class IcoachSkillPage extends Vue {
 
     this.icoachSkillStep = this.stepId
     this.displaySkill = true
+  }
+
+  get breadcrumbsData (): BreadcrumbElement[] {
+    return [
+      {
+        name: this.icoachUserData!.icoachCourseTitle,
+        link: { name: 'icoach.welcome', params: { accessCode: this.icoachUserData && this.icoachUserData.icoachAccessCode ? this.icoachUserData.icoachAccessCode : '' } }
+      },
+      {
+        name: this.$t(`skills.categories.${this.icoachUserData!.icoachSkillCategoryId}`),
+        link: { name: 'icoach.dashboard', params: { icoachUserId: this.icoachUserId.toString() } }
+      },
+      {
+        name: this.icoachSkill ? this.icoachSkill.name : ''
+      }
+    ]
   }
 
   async uploadIcoachSkillInfo (): Promise<void> {
@@ -107,34 +115,6 @@ export default class IcoachSkillPage extends Vue {
 
     &__content {
       display: flex;
-    }
-  }
-
-  .breadcrumbs {
-    color: #0085cd;
-    display: flex;
-    padding: 5px 10px;
-
-    &__arrow-right {
-      transform: rotate(270deg);
-    }
-
-    &__item {
-      color: #0085cd;
-      padding: 0 3px;
-
-      &--last {
-        color: #3d5a80;
-      }
-    }
-
-    a {
-      color: #0085cd;
-      text-decoration: none;
-
-      &:visited {
-        color: #0085cd;
-      }
     }
   }
 </style>
