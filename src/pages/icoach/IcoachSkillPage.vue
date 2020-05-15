@@ -8,7 +8,7 @@
       <icoach-skill-list
         :icoach-skill="icoachSkill"
         :icoach-user-data="icoachUserData"
-        :icoach-dashboard-info="icoachDashboardInfo"
+        :icoach-category-info="icoachSkillCategoryInfo"
         :step-id="icoachSkillStep"
         @change-step="pushToAnotherStep"
       />
@@ -27,7 +27,7 @@
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import IcoachLocalStorageHelper from '@/utils/IcoachLocalStorageHelper'
 import { IcoachData } from '@/interfaces/LocalStorageInterfaces'
-import { IcoachDashboardInfo, IcoachSkill } from '@/interfaces/IcoachInterfaces'
+import { IcoachCategorySkill, IcoachSkill } from '@/interfaces/IcoachInterfaces'
 import IcoachService from '@/services/IcoachService'
 import IcoachSkillSection from '@/components/icoach/IcoachSkillSection.vue'
 import IcoachSkillList from '@/components/icoach/IcoachSkillList.vue'
@@ -49,8 +49,8 @@ export default class IcoachSkillPage extends Vue {
   icoachUserData: IcoachData | null = null
   icoachSkill: IcoachSkill | null = null
   displaySkill: boolean = false
-  icoachDashboardInfo: IcoachDashboardInfo | null = null
   icoachSkillStep: number = 0
+  icoachSkillCategoryInfo: IcoachCategorySkill | null = null
 
   async created () {
     if (!IcoachLocalStorageHelper.hasIcoachUser(this.icoachUserId)) {
@@ -90,7 +90,11 @@ export default class IcoachSkillPage extends Vue {
 
     try {
       this.icoachSkill = await IcoachService.getIcoachSkillInfo(this.icoachUserData.icoachAccessCode, this.skillId)
-      this.icoachDashboardInfo = await IcoachService.getIcoachDashboardInfo(this.icoachUserData.icoachAccessCode, this.icoachUserId)
+      this.icoachSkillCategoryInfo = await IcoachService.getIcoachSkillCategory(
+        this.icoachUserData.icoachCourseId,
+        this.icoachUserData.icoachUserId,
+        this.icoachSkill.category
+      )
     } catch (e) {
       this.$router.push({ name: 'notFound' })
     }

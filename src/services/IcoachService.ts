@@ -1,5 +1,6 @@
 import { BaseApiService } from '@/services/BaseApiService'
 import {
+  IcoachCategorySkill,
   IcoachCourse,
   IcoachDashboardInfo,
   IcoachSkill,
@@ -22,10 +23,10 @@ class IcoachService extends BaseApiService {
     )
   }
 
-  getIcoachDashboardInfo (icoachAccessCode: string, icoachUserId: number) : IcoachDashboardInfo {
+  getIcoachDashboardInfo (icoachCourseId: number, icoachUserId: number) : IcoachDashboardInfo {
     return this.callMethod(
       'get',
-      `/icoach/dashboard/${icoachAccessCode}/${icoachUserId}`
+      `/icoach/dashboard/${icoachCourseId}/${icoachUserId}`
     )
   }
 
@@ -43,6 +44,10 @@ class IcoachService extends BaseApiService {
 
   getIcoachSkillScore (skillId: number, icoachUserId: number): IcoachSkillScore {
     return this.callMethod('get', `/icoach/score/${skillId}/${icoachUserId}`)
+  }
+
+  getIcoachSkillCategory (icoachCourseId: number, icoachUserId: number, icoachCategoryId: number): IcoachCategorySkill {
+    return this.callMethod('get', `icoach/skill/category/${icoachCourseId}/${icoachUserId}/${icoachCategoryId}`)
   }
 
   createIcoachUser (icoachId: number, accessCode: string) : IcoachUserInfo {

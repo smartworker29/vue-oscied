@@ -2,7 +2,7 @@
   <div class="icoach-categories">
     <ul class="icoach-category-list hide">
       <li
-        v-for="skill in icoachDashboardInfo[icoachSkill.category]"
+        v-for="skill in icoachCategoryInfo"
         :class="{ 'active': icoachSkill.id === skill.id }"
         :key="skill.id"
       >
@@ -34,7 +34,7 @@
 
 <script lang="ts">
 import { Component, Emit, Prop, Vue } from 'vue-property-decorator'
-import { IcoachDashboardInfo, IcoachSkill } from '@/interfaces/IcoachInterfaces'
+import { IcoachCategorySkill, IcoachSkill } from '@/interfaces/IcoachInterfaces'
 import { IcoachData } from '@/interfaces/LocalStorageInterfaces'
 import Progress from '@/components/common/progressBar/Progress.vue'
 
@@ -50,7 +50,7 @@ export default class IcoachSkillList extends Vue {
   @Prop({ required: true })
   icoachUserData!: IcoachData
   @Prop({ required: true })
-  icoachDashboardInfo!: IcoachDashboardInfo
+  icoachCategoryInfo!: IcoachCategorySkill
   @Prop({ required: true })
   stepId!: number
 
