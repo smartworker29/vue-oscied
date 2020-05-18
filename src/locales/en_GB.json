@@ -38,7 +38,7 @@
     "add_photo": "Add Picture",
     "start_survey": "Start Survey",
     "continue_survey": "Continue Survey",
-    "start_icoach": "Start icoach"
+    "start_icoach": "Start"
   },
   "email_address": "Email Address",
   "remember_me": "Remember Me",
@@ -96,9 +96,9 @@
   },
   "skills": {
     "categories": {
-      "1": "Soft skills",
-      "2": "Essential business skills",
-      "3": "Organisational skills"
+      "1": "Soft Skills",
+      "2": "Essential Business Skills",
+      "3": "Organisational Skills"
     },
     "no_skills": "There are no skills for this course",
     "back": "Back",

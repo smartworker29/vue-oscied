@@ -1,7 +1,17 @@
 <template>
   <div class="icoach-skill-page">
     <div class="icoach-skill-page__header">
-      <Breadcrumb :items="breadcrumbsData"/>
+      <div class="breadcrumbs">
+        <router-link :to="{ name: 'icoach.welcome', params: { accessCode: icoachUserData.icoachAccessCode } }" class="breadcrumbs__item">
+          <span>{{ icoachUserData.icoachCourseTitle }}</span>
+        </router-link>
+        <img src="@/assets/icons/arrow-down-xs.svg" class="breadcrumbs__arrow-right">
+        <router-link :to="{ name: 'icoach.dashboard', params: { icoachUserId: icoachUserId } }" class="breadcrumbs__item">
+          <span>{{ $t(`skills.categories.${icoachUserData.icoachSkillCategoryId}`) }}</span>
+        </router-link>
+        <img src="@/assets/icons/arrow-down-xs.svg" class="breadcrumbs__arrow-right">
+        <span class="breadcrumbs__item breadcrumbs__item--last">{{ icoachSkill ? icoachSkill.name : '' }}</span>
+      </div>
     </div>
 
     <div v-if="displaySkill" class="icoach-skill-page__content">
@@ -110,6 +120,8 @@ export default class IcoachSkillPage extends Vue {
 
 <style lang="scss" scoped>
   .icoach-skill-page {
+    position: relative;
+    z-index: 1;
     background: #fff;
     height: 100%;
 
@@ -119,6 +131,44 @@ export default class IcoachSkillPage extends Vue {
 
     &__content {
       display: flex;
+      max-width: 1140px;
+      height: 100%;
+      .icoach-skills-list {
+        max-width: initial;
+        padding: 55px 16px 24px;
+        width: 45%;
+        background-color: #fafdff;
+        border-right: 1px solid #deeeff;
+        position: relative;
+      }
+    }
+  }
+  .breadcrumbs {
+    color: #0085cd;
+    display: flex;
+    padding: 10px 20px;
+
+    img {
+      width: 12px;
+      margin: 0 8px;
+    }
+    &__item {
+      color: #0085cd;
+      font-size: 12px;
+      padding: 0 3px;
+
+      &--last {
+        color: #3d5a80;
+      }
+    }
+
+    a {
+      color: #0085cd;
+      text-decoration: none;
+
+      &:visited {
+        color: #0085cd;
+      }
     }
   }
 </style>
