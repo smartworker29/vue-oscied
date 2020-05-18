@@ -92,7 +92,7 @@ export default class DashboardPage extends Vue {
 
     this.icoachTitle = icoachUser.icoachCourseTitle
     this.activeIndex = icoachUser.icoachSkillCategoryId
-    this.icoachDashboardInfo = await IcoachService.getIcoachDashboardInfo(icoachUser.icoachAccessCode, icoachUser.icoachUserId)
+    this.icoachDashboardInfo = await IcoachService.getIcoachDashboardInfo(icoachUser.icoachCourseId, icoachUser.icoachUserId)
   }
 
   completedSkills (category: IcoachCategorySkill[]) : number {
