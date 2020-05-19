@@ -118,7 +118,7 @@ export default class IcoachSkillSection extends Vue {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
   .separator {
     margin-top: 35px;
     height: 1px;

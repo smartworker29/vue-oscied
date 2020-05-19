@@ -83,7 +83,7 @@ export default class IcoachSkillList extends Vue {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
  .icoach-skills-expand {
     position: absolute;
     top: 24px;
@@ -123,13 +123,14 @@ export default class IcoachSkillList extends Vue {
         border-radius: 8px;
         box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1);
         border: solid 1px #e1e6e9;
-        background-color: #ffffff;
+        background: #ffffff;
         left: -33px;
         top: calc(50% - 8px);
       }
       &.completed {
         &:after {
-          background-color: #00cdbf;
+          background: url('../../assets/icons/icon-check.svg') no-repeat;
+          background-size: 100%;
           box-shadow: none;
           border-color: #00cdbf;
         }

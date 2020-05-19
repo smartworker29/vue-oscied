@@ -2,8 +2,10 @@
   <div>
     <div v-if="totalScore">
       <p>{{ $t('skills.you_have_answered_already') }}</p>
-      <button class="btn btn-primary btn-primary-active" @click="changeStep('prev')">{{ $t('skills.back')}}</button>
-      <button class="btn btn-primary btn-primary-active" @click="changeStep('next')">{{ $t('skills.next')}}</button>
+      <div class="icoach-skill-buttons">
+        <button class="btn btn-primary" @click="changeStep('prev')">{{ $t('skills.back')}}</button>
+        <button class="btn btn-primary btn-primary-active" @click="changeStep('next')">{{ $t('skills.next')}}</button>
+      </div>
     </div>
 
     <form class="icoach-skill-form" v-else @submit.prevent="submit">
@@ -28,9 +30,10 @@
         </label>
         <p class="error" v-if="errors.has(`${question.id}_option`)">This field is required</p>
       </div>
-
-      <button class="btn btn-primary btn-primary-active" @click="changeStep('prev')">{{ $t('skills.back')}}</button>
-      <button class="btn btn-primary btn-primary-active" type="submit">Submit test</button>
+      <div class="icoach-skill-buttons">
+        <button class="btn btn-primary" @click="changeStep('prev')">{{ $t('skills.back')}}</button>
+        <button class="btn btn-primary btn-primary-active" type="submit">Submit test</button>
+      </div>
     </form>
   </div>
 </template>
@@ -110,20 +113,23 @@ export default class IcoachSkillForm extends Vue {
 
 <style lang="scss" scoped>
   .icoach-skill-form {
-    padding: 10px;
+    padding-top: 20px;
     width: 100%;
 
     &__block {
       border-bottom: 1px solid #d8efff;
+      padding-bottom: 20px;
+      margin-bottom: 30px;
     }
 
     &__title {
       color: #0085cd;
-      font-size: 18px;
-      padding: 10px 0;
+      font-size: 20px;
+      margin-bottom: 20px;
     }
 
     &__options {
+      font-weight: 300;
       display: block;
       position: relative;
       padding-left: 35px;
@@ -139,22 +145,26 @@ export default class IcoachSkillForm extends Vue {
 
       span {
         position: absolute;
-        top: 0;
+        top: calc(50% - 8px);
         left: 0;
-        height: 20px;
-        width: 20px;
-        border-radius: 50%;
-        border: 1px #e2e7e9 solid;
+        height: 16px;
+        width: 16px;
+        border-radius: 8px;
+        box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1);
+        border: solid 1px #e1e6e9;
       }
 
-      span:after {
-        content: "\2713";
-        position: absolute;
-        display: none;
-      }
+      // span:after {
+      //   content: "";
+      //   position: absolute;
+      //   display: none;
+      // }
 
       input:checked ~ span {
-        background-color: #2196F3;
+        background: url('../../assets/icons/icon-check.svg') no-repeat;
+        background-size: 100%;
+        border: none;
+        box-shadow: none;
       }
 
       input:checked ~ span:after {
