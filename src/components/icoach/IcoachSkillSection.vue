@@ -1,6 +1,6 @@
 <template>
-  <div class="icoach-content">
-    <h4>page {{ currentStep }} of {{ stepsCount }}</h4>
+  <div class="icoach-content icoach-skill-content">
+    <h4>Step {{ currentStep }} of {{ stepsCount }}</h4>
     <h2>{{ icoachSkill.icoachSkillContents[currentStep - 1].icoachSkillArea.title }}</h2>
     <div v-html="content"></div>
 
@@ -14,10 +14,12 @@
     </div>
 
     <div v-else>
-      <button v-if="!isFirstStep" class="btn btn-primary btn-primary-active" @click="changeStep('prev')">{{ $t('skills.back')}}</button>
-      <button class="btn btn-primary btn-primary-active" @click="changeStep('next')">
-        {{ isLastStep ? $t('skills.last') : $t('skills.next') }}
-      </button>
+      <div class="icoach-skill-buttons">
+        <button v-if="!isFirstStep" class="btn btn-primary" style="border-color: transparent" @click="changeStep('prev')">{{ $t('skills.back')}}</button>
+        <button class="btn btn-primary btn-primary-active" @click="changeStep('next')">
+          {{ isLastStep ? $t('skills.last') : $t('skills.next') }}
+        </button>
+      </div>
 
       <hr class="separator">
 
@@ -118,10 +120,39 @@ export default class IcoachSkillSection extends Vue {
 
 <style lang="scss" scoped>
   .separator {
-    margin-top: 20px;
+    margin-top: 35px;
     height: 1px;
     color: #d8efff;
     background-color: #d8efff;
     border: none;
+  }
+
+  .icoach-skill-content {
+    padding-top: 30px;
+    padding-right: 0;
+    h4 {
+      margin-top: 0;
+      font-size: 14px;
+      color: #0085cd;
+      font-weight: 600;
+      margin-bottom: 3px;
+    }
+
+    h2 {
+      font-size: 32px;
+      font-weight: 600;
+      color: #3d5a80;
+      margin-top: 0px;
+    }
+  }
+
+  .icoach-skill-buttons {
+    text-align: right;
+    margin-top: 24px;
+    button {
+      font-size: 16px;
+      font-weight: 500;
+      margin-left: 6%;
+    }
   }
 </style>

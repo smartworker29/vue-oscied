@@ -260,11 +260,19 @@ export default class DashboardPage extends Vue {
     }
 
     .progress {
-        width: calc(100% - 50px);
+      width: calc(100% - 50px);
+      background-color: #e6f3fa;
+      border-color: transparent;
+      margin-right: 10px;
+      height: 9px;
+      .progress-bar {
         height: 9px;
-        background-color: #e6f3fa;
-        border-color: transparent;
-        margin-right: 10px;
+        border-radius: 5px;
+        background: #00cdbf;
+        border: none;
+        margin-top: -1px;
+        margin-left: -1px;
+      }
     }
 
     .progress-wrapper {
