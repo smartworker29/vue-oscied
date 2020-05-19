@@ -172,7 +172,7 @@ export default class UserHeader extends Vue {
     left: 0;
     top: 100%;
     background: #3d5a80;
-    z-index: 1;
+    z-index: 3;
     width: 100%;
     @media only screen and (max-width: 760px) {
       left: auto;
