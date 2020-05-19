@@ -34,7 +34,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import IcoachLocalStorageHelper from '@/utils/IcoachLocalStorageHelper'
 import { IcoachData } from '@/interfaces/LocalStorageInterfaces'
 import { IcoachCategorySkill, IcoachSkill } from '@/interfaces/IcoachInterfaces'
@@ -56,6 +56,11 @@ export default class IcoachSkillPage extends Vue {
   @Prop({ required: true })
   stepId!: number
 
+  @Watch('skillId')
+  onIcoachUserIdChanged () {
+    this.loadData()
+  }
+
   icoachUserData: IcoachData | null = null
   icoachSkill: IcoachSkill | null = null
   displaySkill: boolean = false
@@ -63,6 +68,10 @@ export default class IcoachSkillPage extends Vue {
   icoachSkillCategoryInfo: IcoachCategorySkill | null = null
 
   async created () {
+    this.loadData()
+  }
+
+  async loadData (): Promise<void> {
     if (!IcoachLocalStorageHelper.hasIcoachUser(this.icoachUserId)) {
       this.$router.push({ name: 'notFound' })
 
@@ -118,7 +127,7 @@ export default class IcoachSkillPage extends Vue {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
   .icoach-skill-page {
     position: relative;
     z-index: 1;
@@ -131,15 +140,66 @@ export default class IcoachSkillPage extends Vue {
 
     &__content {
       display: flex;
-      max-width: 1140px;
+      max-width: 1160px;
+      padding-right: 20px;
       height: 100%;
       .icoach-skills-list {
         max-width: initial;
         padding: 55px 16px 24px;
-        width: 45%;
+        flex: 0 0 31.2%;
+        margin-right: 0.5%;
         background-color: #fafdff;
         border-right: 1px solid #deeeff;
         position: relative;
+        .icoach-category-list {
+          display: none;
+        }
+        .icoach-skill {
+          width: 100%;
+        }
+        &.icoach-sidebar-open {
+          position: absolute;
+          height: 100%;
+          width: 38.7%;
+          min-width: 693px;
+          display: flex;
+          align-items: flex-start;
+          box-shadow: 2px 7px 14px 0 rgba(0, 0, 0, 0.16);
+          &+.icoach-content {
+            padding-left: 36%;
+          }
+          .icoach-skills-category-list {
+            width: calc(55% - 26px);
+            max-width: 320px;
+          }
+          .icoach-category-list {
+            width: 45%;
+            padding-left: 7px;
+            padding-top: 5px;
+            margin-right: 26px;
+            display: inline-block;
+            .active {
+              border: solid 1px #0085cd;
+              background-color: #0085cd;
+              color: #fff;
+              position: relative;
+              &:after {
+                content: '';
+                position: absolute;
+                right: -9px;
+                top: calc(50% - 8px);
+                width: 0;
+                height: 0;
+                border-style: solid;
+                border-width: 8px 0 8px 8px;
+                border-color: transparent transparent transparent #0085cd;
+              }
+              .icoach-skill-name {
+                color: #fff
+              }
+            }
+          }
+        }
       }
     }
   }
