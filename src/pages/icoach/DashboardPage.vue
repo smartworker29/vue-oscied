@@ -100,7 +100,7 @@ export default class DashboardPage extends Vue {
 
     this.icoachTitle = icoachUser.icoachCourseTitle
     this.activeIndex = icoachUser.icoachSkillCategoryId
-    this.icoachDashboardInfo = await IcoachService.getIcoachDashboardInfo(icoachUser.icoachAccessCode, icoachUser.icoachUserId)
+    this.icoachDashboardInfo = await IcoachService.getIcoachDashboardInfo(icoachUser.icoachCourseId, icoachUser.icoachUserId)
   }
 
   completedSkills (category: IcoachCategorySkill[]) : number {
@@ -261,11 +261,12 @@ export default class DashboardPage extends Vue {
 
     .progress {
       width: calc(100% - 50px);
-      height: 9px;
       background-color: #e6f3fa;
       border-color: transparent;
       margin-right: 10px;
+      height: 9px;
       .progress-bar {
+        height: 9px;
         border-radius: 5px;
         background: #00cdbf;
         border: none;
