@@ -1,34 +1,36 @@
 <template>
   <div class="icoach-content icoach-skill-content">
-    <h4>Step {{ currentStep }} of {{ stepsCount }}</h4>
-    <h2>{{ icoachSkill.icoachSkillContents[currentStep - 1].icoachSkillArea.title }}</h2>
-    <div v-html="content"></div>
+    <div class="icoach-content-wrapper">
+      <h4>Step {{ currentStep }} of {{ stepsCount }}</h4>
+      <h2>{{ icoachSkill.icoachSkillContents[currentStep - 1].icoachSkillArea.title }}</h2>
+      <div v-html="content"></div>
 
-    <div v-if="icoachSkill.icoachSkillContents[currentStep - 1].icoachSkillArea.isTest">
-      <icoach-skill-form
-        :icoach-skill="icoachSkill"
-        :icoach-user-data="icoachUserData"
-        :step-id="currentStep"
-        @change-step="changeStep"
-      />
-    </div>
-
-    <div v-else>
-      <div class="icoach-skill-buttons">
-        <button v-if="!isFirstStep" class="btn btn-primary" style="border-color: transparent" @click="changeStep('prev')">{{ $t('skills.back')}}</button>
-        <button class="btn btn-primary btn-primary-active" @click="changeStep('next')">
-          {{ isLastStep ? $t('skills.last') : $t('skills.next') }}
-        </button>
+      <div v-if="icoachSkill.icoachSkillContents[currentStep - 1].icoachSkillArea.isTest">
+        <icoach-skill-form
+          :icoach-skill="icoachSkill"
+          :icoach-user-data="icoachUserData"
+          :step-id="currentStep"
+          @change-step="changeStep"
+        />
       </div>
 
+      <div v-else>
+        <div class="icoach-skill-buttons">
+          <button v-if="!isFirstStep" class="btn btn-primary" style="border-color: transparent" @click="changeStep('prev')">{{ $t('skills.back')}}</button>
+          <button class="btn btn-primary btn-primary-active" @click="changeStep('next')">
+            {{ isLastStep ? $t('skills.last') : $t('skills.next') }}
+          </button>
+        </div>
+      </div>
       <hr class="separator">
+
+    </div>
 
       <icoach-skill-comment
         :icoach-skill="icoachSkill"
         :icoach-user-data="icoachUserData"
         :step-id="currentStep"
       />
-    </div>
   </div>
 </template>
 
@@ -127,15 +129,24 @@ export default class IcoachSkillSection extends Vue {
     border: none;
   }
 
-  .icoach-skill-content {
+  .icoach-content.icoach-skill-content {
     padding-top: 30px;
     padding-right: 0;
-    h4 {
-      margin-top: 0;
-      font-size: 14px;
-      color: #0085cd;
-      font-weight: 600;
-      margin-bottom: 3px;
+    @media screen and (max-width: 600px) {
+      padding-top: 0;
+    }
+    .icoach-content-wrapper {
+      h4 {
+        margin-top: 0;
+        font-size: 14px;
+        color: #0085cd;
+        font-weight: 600;
+        margin-bottom: 3px;
+
+        @media screen and (max-width: 600px) {
+          font-size: 12px;
+        }
+      }
     }
 
     h2 {
@@ -143,6 +154,16 @@ export default class IcoachSkillSection extends Vue {
       font-weight: 600;
       color: #3d5a80;
       margin-top: 0px;
+
+      @media screen and (max-width: 600px) {
+        font-size: 24px;
+      }
+    }
+  }
+
+  .icoach-content-wrapper {
+    @media only screen and (max-width: 600px) {
+      padding: 20px 5.5% 0 5.5%;
     }
   }
 
@@ -153,6 +174,16 @@ export default class IcoachSkillSection extends Vue {
       font-size: 16px;
       font-weight: 500;
       margin-left: 6%;
+    }
+    @media only screen and (max-width: 600px) {
+      display: flex;
+      button {
+        margin: 0;
+        width: 100%;
+        &:nth-child(2) {
+          margin-left: 15px;
+        }
+      }
     }
   }
 </style>

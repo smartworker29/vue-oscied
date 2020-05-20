@@ -30,7 +30,7 @@
         :key="key"
       >
         {{ content.icoachSkillArea.title }}
-        <img src="@/assets/icons/arrow-down-xs.svg" class="">
+        <img class="hide-mobile" src="@/assets/icons/arrow-down-xs.svg">
         <!-- completed: {{ content.isCompleted }} -->
       </li>
     </ul>
@@ -98,10 +98,16 @@ export default class IcoachSkillList extends Vue {
     display: flex;
     align-items: center;
     justify-content: center;
+    @media screen and (max-width: 600px) {
+      right: 12px;
+    }
   }
 
   .icoach-skills-category-list {
     padding-left: 24px;
+    @media screen and (max-width: 600px) {
+      padding-left: 18px;
+    }
     li {
       cursor: pointer;
       font-weight: 100;
@@ -110,6 +116,14 @@ export default class IcoachSkillList extends Vue {
       position: relative;
       right: -8px;
       top: calc(50% - 11px);
+      @media screen and (max-width: 700px) {
+        font-size: 14px;
+      }
+
+      @media screen and (max-width: 600px) {
+        font-size: 16px;
+        border-bottom: none;
+      }
       img {
         position: absolute;
         right: 0;
@@ -126,6 +140,9 @@ export default class IcoachSkillList extends Vue {
         background: #ffffff;
         left: -33px;
         top: calc(50% - 8px);
+        @media only screen and (max-width: 600px) {
+          left: -26px;
+        }
       }
       &.completed {
         &:after {
