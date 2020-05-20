@@ -48,7 +48,17 @@ const router = new Router({
     {
       path: '/icoach/:icoachUserId(\\d+)/skill/:skillId(\\d+)/step',
       component: IcoachSkillPage,
-      props: true,
+      // todo::check for better solution to cast to number without ts-ignore, see https://router.vuejs.org/guide/essentials/passing-props.html#function-mode
+      props (route) {
+        const props = { ...route.params }
+        // @ts-ignore
+        props.icoachUserId = +props.icoachUserId
+        // @ts-ignore
+        props.stepId = +props.stepId
+        // @ts-ignore
+        props.skillId = +props.skillId
+        return props
+      },
       children: [
         {
           path: ':stepId(\\d+)',
