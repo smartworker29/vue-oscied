@@ -81,6 +81,11 @@ export default class IcoachSkillComment extends Vue {
       this.comment = ''
       await this.$validator.reset()
       this.publishedComments.unshift(skillComment)
+
+      this.$store.commit('icoach/updateIcoachProgress', {
+        currentSkill: this.icoachSkill.id,
+        currentStep: this.stepId
+      })
     } catch (error) {
       throw error
     }

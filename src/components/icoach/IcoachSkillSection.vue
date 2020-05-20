@@ -81,7 +81,7 @@ export default class IcoachSkillSection extends Vue {
       this.isLastStep = true
     }
 
-    if (this.currentStep === 1) {
+    if (+this.currentStep === 1) {
       this.isFirstStep = true
     }
   }
