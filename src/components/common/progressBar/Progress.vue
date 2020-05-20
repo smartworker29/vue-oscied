@@ -71,8 +71,8 @@ export default class Progress extends Vue {
       : 0
   }
 
-  get formattedProcessedItemsCount () : string|0 {
-    return this.percentage && this.processedPercent ? this.processedPercent.toFixed(2) : 0
+  get formattedProcessedItemsCount () : number {
+    return this.percentage && this.processedPercent ? Math.ceil(this.processedPercent) : 0
   }
 }
 </script>
