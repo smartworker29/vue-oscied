@@ -72,6 +72,10 @@ export default class IcoachSkillForm extends Vue {
 
       this.resetForm()
       this.totalScore = result.score
+      this.$store.commit('icoach/updateIcoachProgress', {
+        currentSkill: this.icoachSkill.id,
+        currentStep: this.stepId
+      })
     } catch (error) {
       throw error
     }
