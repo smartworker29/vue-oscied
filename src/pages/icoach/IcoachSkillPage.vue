@@ -16,9 +16,7 @@
 
     <div v-if="displaySkill" class="icoach-skill-page__content">
       <icoach-skill-list
-        :icoach-skill="icoachSkill"
         :icoach-user-data="icoachUserData"
-        :icoach-category-info="icoachSkillCategoryInfo"
         :step-id="icoachSkillStep"
         @change-step="pushToAnotherStep"
       />
@@ -109,11 +107,15 @@ export default class IcoachSkillPage extends Vue {
 
     try {
       this.icoachSkill = await IcoachService.getIcoachSkillInfo(this.icoachUserData.icoachAccessCode, this.skillId)
-      this.icoachSkillCategoryInfo = await IcoachService.getIcoachSkillCategory(
+
+      const icoachSkillCategoryInfo = await IcoachService.getIcoachSkillCategory(
         this.icoachUserData.icoachCourseId,
         this.icoachUserData.icoachUserId,
         this.icoachSkill.category
       )
+
+      this.$store.commit('icoach/setIcoachSkill', this.icoachSkill)
+      this.$store.commit('icoach/setIcoachSkillMenu', icoachSkillCategoryInfo)
     } catch (e) {
       this.$router.push({ name: 'notFound' })
     }

@@ -70,6 +70,11 @@ export interface IcoachGeneralInfo {
   icoachCourse: IcoachCourse
 }
 
+export interface IcoachSkillProgressData {
+  currentSkill: number,
+  currentStep: number
+}
+
 export interface IcoachCategorySkill {
   id: number,
   category: number,

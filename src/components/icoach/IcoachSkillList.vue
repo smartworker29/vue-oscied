@@ -8,7 +8,7 @@
       <router-link
         class="icoach-skill"
         v-for="skill in icoachCategoryInfo"
-        :class="{ 'active': icoachSkill.id === skill.id }"
+        :class="{ 'active': icoachSkillInfo.id === skill.id }"
         :key="skill.id"
         :to="{ name: 'icoach.skill', params: { icoachUserId: icoachUserData.icoachUserId, skillId: skill.id, stepId: 1 } }"
       >
@@ -24,7 +24,7 @@
     </div>
     <ul class="icoach-skills-category-list">
       <li
-        v-for="(content, key) in icoachSkill.icoachSkillContents"
+        v-for="(content, key) in icoachSkillInfo.icoachSkillContents"
         :class="{ 'active': stepId - 1 === parseInt(key), 'completed': content.isCompleted }"
         @click="changeStep(key + 1)"
         :key="key"
@@ -42,6 +42,7 @@ import { Component, Emit, Prop, Vue } from 'vue-property-decorator'
 import { IcoachCategorySkill, IcoachSkill } from '@/interfaces/IcoachInterfaces'
 import { IcoachData } from '@/interfaces/LocalStorageInterfaces'
 import Progress from '@/components/common/progressBar/Progress.vue'
+import { Getter } from 'vuex-class'
 
 @Component({
   name: 'IcoachSkillList',
@@ -50,16 +51,17 @@ import Progress from '@/components/common/progressBar/Progress.vue'
   }
 })
 export default class IcoachSkillList extends Vue {
-  @Prop({ required: true })
-  icoachSkill!: IcoachSkill
+  @Getter('icoach/getIcoachSkillMenu')
+  icoachCategoryInfo!: IcoachCategorySkill[]
+  @Getter('icoach/getIcoachSkill')
+  icoachSkillInfo!: IcoachSkill
+
   @Prop({ required: true })
   icoachUserData!: IcoachData
   @Prop({ required: true })
-  icoachCategoryInfo!: IcoachCategorySkill
-  @Prop({ required: true })
   stepId!: number
 
-  isCollapsed = true
+  isCollapsed: boolean = true
 
   @Emit()
   changeStep (index: number) {
@@ -69,7 +71,7 @@ export default class IcoachSkillList extends Vue {
       name: 'icoach.skill',
       params: {
         icoachUserId: this.icoachUserData.icoachUserId.toString(),
-        skillId: this.icoachSkill.id.toString(),
+        skillId: this.icoachSkillInfo.id.toString(),
         stepId: index.toString()
       }
     })
@@ -83,7 +85,7 @@ export default class IcoachSkillList extends Vue {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
  .icoach-skills-expand {
     position: absolute;
     top: 24px;
@@ -123,13 +125,14 @@ export default class IcoachSkillList extends Vue {
         border-radius: 8px;
         box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1);
         border: solid 1px #e1e6e9;
-        background-color: #ffffff;
+        background: #ffffff;
         left: -33px;
         top: calc(50% - 8px);
       }
       &.completed {
         &:after {
-          background-color: #00cdbf;
+          background: url('../../assets/icons/icon-check.svg') no-repeat;
+          background-size: 100%;
           box-shadow: none;
           border-color: #00cdbf;
         }

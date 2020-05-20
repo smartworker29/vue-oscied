@@ -35,7 +35,7 @@
             v-for="(skill, index) in icoachDashboardInfo[activeIndex]" :key="index"
             @click.native="openSkill"
             class="icoach-skill"
-            :to="{ name: 'icoach.skill', params: { icoachUserId: icoachUserId, skillId: skill.id, stepId: 1 } }"
+            :to="{ name: 'icoach.skill', params: { icoachUserId: parseInt(icoachUserId), skillId: parseInt(skill.id), stepId: 1 } }"
           >
             <span class="icoach-skill-name">{{ skill.name }}</span>
             <Progress
