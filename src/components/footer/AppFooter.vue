@@ -60,6 +60,8 @@ export default class AppFooter extends Vue {}
     }
   }
 
+  .survey-completed-page + .footer,
+  .survey-completed-page-completed + .footer,
   .account-page + .footer,
   .auth-container-wrapper + .footer {
     color: #fff;

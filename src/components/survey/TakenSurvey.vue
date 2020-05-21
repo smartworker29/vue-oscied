@@ -6,7 +6,7 @@
           {{ currentSectionData && currentSectionData.title
           ? currentSectionData.title : $t('world_view') }}
         </span>
-         <Progress/>
+         <Progress :percentage="true" />
       </h1>
       <p>
         {{ currentSectionData && currentSectionData.instructions
