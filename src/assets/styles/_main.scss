@@ -3,9 +3,16 @@
   color: $main-text-color;
 }
 
-.hide-mobile {
+body .hide-mobile {
   @media only screen and (max-width: 600px) {
     display: none;
+  }
+}
+
+body .show-mobile {
+  display: none;
+  @media only screen and (max-width: 600px) {
+    display: inline-block;
   }
 }
 

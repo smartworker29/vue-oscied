@@ -2,22 +2,24 @@
   <div class="icoach-skill-comment">
     <h4>{{ $t('skills.comments.leave_a_comment')}}</h4>
     <form class="icoach-skill-comment__form" @submit.prevent="submit" novalidate>
-      <div class="flex">
-        <input
+      <div class="icoach-skill-comment__wrapper flex">
+        <textarea
           class="icoach-skill-comment__input"
           type="text"
           name="comment"
           :placeholder="$t('skills.comments.leave_your_comment')"
           v-model="comment"
           v-validate="'required'"
-        >
+        />
         <button type="submit" class="icoach-skill-comment__submit">{{ $t('button_g.submit') }}</button>
       </div>
       <p class="error" v-if="errors">{{ errors.first('comment') }}</p>
     </form>
 
     <div class="icoach-skill-comment__published-comments" v-if="publishedComments.length">
-      <h4>{{ $t('skills.comments.comments')}}</h4>
+      <div>
+        <h4>{{ $t('skills.comments.comments')}} <span class="show-mobile">({{ publishedComments.length }})</span></h4>
+      </div>
       <div class="published-comment"  v-for="(comment, key) in publishedComments" :key="key">
         <img v-if="comment.user.image.fileURL" :src="comment.user.image.fileURL" class="icoach-skill-comment__logo" :alt="comment.comment">
         <img v-else :src="require('@/assets/user.png')" class="icoach-skill-comment__logo">
@@ -107,6 +109,11 @@ export default class IcoachSkillComment extends Vue {
 </script>
 
 <style lang="scss" scoped>
+  .icoach-skill-comment__wrapper {
+    @media screen and (max-width: 600px) {
+      flex-wrap: wrap;
+    }
+  }
   .icoach-skill-comment {
     border: 1px solid #d8efff;
     background: #f7fcff;
@@ -131,8 +138,13 @@ export default class IcoachSkillComment extends Vue {
       background: #fff;
       width: 80%;
       font-size: 14px;
+      height: 32px;
       flex: 1;
       color: rgba(7, 16, 18, 0.5);
+      @media screen and (max-width: 600px) {
+        height: 86px;
+        flex: auto;
+      }
       &:focus {
         outline: none;
       }
@@ -147,6 +159,10 @@ export default class IcoachSkillComment extends Vue {
       padding: 7px 20px;
       color: #fff;
       margin-left: 16px;
+      @media screen and (max-width: 600px) {
+        width: 100%;
+        margin: 16px 0 0;
+      }
     }
 
     &__published-comments {

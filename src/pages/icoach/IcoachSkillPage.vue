@@ -1,7 +1,7 @@
 <template>
   <div class="icoach-skill-page">
     <div class="icoach-skill-page__header">
-      <div class="breadcrumbs">
+      <div class="breadcrumbs hide-mobile">
         <router-link :to="{ name: 'icoach.welcome', params: { accessCode: icoachUserData.icoachAccessCode } }" class="breadcrumbs__item">
           <span>{{ icoachUserData.icoachCourseTitle }}</span>
         </router-link>
@@ -11,6 +11,12 @@
         </router-link>
         <img src="@/assets/icons/arrow-down-xs.svg" class="breadcrumbs__arrow-right">
         <span class="breadcrumbs__item breadcrumbs__item--last">{{ icoachSkill ? icoachSkill.name : '' }}</span>
+      </div>
+      <div class="breadcrumbs show-mobile">
+        <router-link :to="{ name: 'icoach.dashboard', params: { icoachUserId: icoachUserId } }" class="breadcrumbs__item">
+          <img src="@/assets/icons/icon-arrow-down-blue.svg" class="breadcrumbs__arrow-left">
+          <span>{{ $t(`skills.categories.${icoachUserData.icoachSkillCategoryId}`) }}</span>
+        </router-link>
       </div>
     </div>
 
@@ -145,6 +151,11 @@ export default class IcoachSkillPage extends Vue {
       max-width: 1160px;
       padding-right: 20px;
       height: 100%;
+      @media screen and (max-width: 600px) {
+        flex-wrap: wrap;
+        padding: 0;
+        height: auto;
+      }
       .icoach-skills-list {
         max-width: initial;
         padding: 55px 16px 24px;
@@ -153,11 +164,36 @@ export default class IcoachSkillPage extends Vue {
         background-color: #fafdff;
         border-right: 1px solid #deeeff;
         position: relative;
+        @media screen and (max-width: 600px) {
+          flex: 0 0 100%;
+          padding: 0 5.5%;
+          max-width: 100%;
+          border-bottom: 1px solid #e6f3fa;
+          .icoach-skills-category-list {
+            li:not(.active) {
+              display: none;
+            }
+          }
+        }
         .icoach-category-list {
           display: none;
         }
         .icoach-skill {
           width: 100%;
+          @media only screen and (max-width: 600px) {
+            display: inline-block;
+            max-width: 190px;
+            border-radius: 4px;
+            padding: 8px 9px;
+            margin-right: 12px;
+            &:after {
+              display: none;
+            }
+            .icoach-skill-name {
+              font-size: 16px;
+              white-space: break-spaces;
+            }
+          }
         }
         &.icoach-sidebar-open {
           position: absolute;
@@ -167,6 +203,20 @@ export default class IcoachSkillPage extends Vue {
           display: flex;
           align-items: flex-start;
           box-shadow: 2px 7px 14px 0 rgba(0, 0, 0, 0.16);
+          @media only screen and (max-width: 800px) {
+            min-width: 500px;
+          }
+          @media only screen and (max-width: 600px) {
+            width: 100%;
+            min-width: 100%;
+            display: block;
+            overflow-x: scroll;
+            white-space: nowrap;
+            position: fixed;
+            top: 0;
+            padding: 17px 20px;
+            height: auto;
+          }
           &+.icoach-content {
             padding-left: 36%;
           }
@@ -180,6 +230,10 @@ export default class IcoachSkillPage extends Vue {
             padding-top: 5px;
             margin-right: 26px;
             display: inline-block;
+            @media screen and (max-width: 600px) {
+              width: 100%;
+              padding: 5px 0 0;
+            }
             .active {
               border: solid 1px #0085cd;
               background-color: #0085cd;
@@ -209,6 +263,17 @@ export default class IcoachSkillPage extends Vue {
     color: #0085cd;
     display: flex;
     padding: 10px 20px;
+
+    @media only screen and (max-width: 600px) {
+      padding: 6px 12px;
+    }
+
+    .breadcrumbs__arrow-left {
+      transform: rotate(90deg);
+      margin: 0px 10px 0px 0px;
+      width: 8px;
+      height: 8px;
+    }
 
     img {
       width: 12px;
