@@ -85,6 +85,7 @@ export default class IcoachSkillList extends Vue {
 
 <style lang="scss">
  .icoach-skills-expand {
+    z-index: 1;
     position: absolute;
     top: 24px;
     right: -14px;
