@@ -7,7 +7,7 @@
         </router-link>
         <img src="@/assets/icons/arrow-down-xs.svg" class="breadcrumbs__arrow-right">
         <router-link :to="{ name: 'icoach.dashboard', params: { icoachUserId: icoachUserId } }" class="breadcrumbs__item">
-          <span>{{ $t(`skills.categories.${icoachUserData.icoachSkillCategoryId}`) }}</span>
+          <span>{{ $t(`icoach.categories.${icoachUserData.icoachSkillCategoryId}`) }}</span>
         </router-link>
         <img src="@/assets/icons/arrow-down-xs.svg" class="breadcrumbs__arrow-right">
         <span class="breadcrumbs__item breadcrumbs__item--last">{{ icoachSkill ? icoachSkill.name : '' }}</span>
@@ -91,7 +91,7 @@ export default class IcoachSkillPage extends Vue {
         link: { name: 'icoach.welcome', params: { accessCode: this.icoachUserData && this.icoachUserData.icoachAccessCode ? this.icoachUserData.icoachAccessCode : '' } }
       },
       {
-        name: this.$t(`skills.categories.${this.icoachUserData!.icoachSkillCategoryId}`),
+        name: this.$t(`icoach.categories.${this.icoachUserData!.icoachSkillCategoryId}`),
         link: { name: 'icoach.dashboard', params: { icoachUserId: this.icoachUserId.toString() } }
       },
       {

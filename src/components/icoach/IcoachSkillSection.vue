@@ -15,9 +15,9 @@
 
     <div v-else>
       <div class="icoach-skill-buttons">
-        <button v-if="!isFirstStep" class="btn btn-primary" style="border-color: transparent" @click="changeStep('prev')">{{ $t('skills.back')}}</button>
+        <button v-if="!isFirstStep" class="btn btn-primary" style="border-color: transparent" @click="changeStep('prev')">{{ $t('icoach.back')}}</button>
         <button class="btn btn-primary btn-primary-active" @click="changeStep('next')">
-          {{ isLastStep ? $t('skills.last') : $t('skills.next') }}
+          {{ isLastStep ? $t('icoach.last') : $t('icoach.next') }}
         </button>
       </div>
 
