@@ -12,6 +12,7 @@ import SurveyLocalStorageHelper from '@/utils/SurveyLocalStorageHelper'
 import SurveyHelper from '@/utils/SurveyHelper'
 import SurveyService from '@/services/SurveyService'
 import { SurveyData } from '@/interfaces/LocalStorageInterfaces'
+import { SurveyInfo } from '@/interfaces/SurveyInterfaces'
 
 @Component({
   name: 'TakenSurveyPage',
@@ -29,6 +30,9 @@ export default class TakenSurveyPage extends Vue {
 
   @Getter('survey/isTakenSurveyInitiated')
   isTakenSurveyInitiated!: boolean
+
+  @Getter('survey/getDisplayedBaseSurveyInfo')
+  surveyInfo!: SurveyInfo
 
   async created () {
     if (!SurveyLocalStorageHelper.hasSurveyUser(this.surveyProduct, this.surveyUserId)) {
@@ -117,7 +121,7 @@ export default class TakenSurveyPage extends Vue {
     const progress = await SurveyService.getDpSurveyProgress(dpSurveyUser.surveyUserId)
 
     if (progress.isCompleted || !progress.nextSurveyPart) {
-      this.$router.push({ name: 'survey.complete' })
+      this.$router.push({ name: 'survey.complete', params: { title: this.surveyInfo.title } })
       // todo::[m] Add logic for handling completed survey
       // todo::[m] I leave these comments there, because logic of the completed survey is not fully described at moment
       return

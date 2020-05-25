@@ -58,6 +58,7 @@ import { ResponseProductSurveyInfo, SurveyInfo, SurveyUserInfo } from '@/interfa
 import SurveyLocalStorageHelper from '@/utils/SurveyLocalStorageHelper'
 import SurveyHelper from '@/utils/SurveyHelper'
 import { EventBus } from '@/main'
+import { SurveyData } from '@/interfaces/LocalStorageInterfaces'
 
 @Component({
   name: 'WelcomePage',
@@ -82,6 +83,7 @@ export default class WelcomePage extends Vue {
   isUncompletedSurvey: boolean = false
   surveyUserInfo!: SurveyUserInfo
   signInLinkId = 'sign-in-link-in-welcome'
+  surveyData: SurveyData | null = null
 
   async created () {
     EventBus.$on('authorizedComplete', async () => {
@@ -96,6 +98,7 @@ export default class WelcomePage extends Vue {
       this.surveyInfo = response.survey
       this.productSurveyId = response.surveyProductId
       this.isUncompletedSurvey = SurveyLocalStorageHelper.hasBegunSurvey(this.surveyProduct, this.productSurveyId)
+      this.surveyData = SurveyLocalStorageHelper.getSurveyUser(this.surveyProduct, this.surveyUserInfo.surveyUserId)
 
       this.$store.commit('survey/setTakenSurveyData', {
         productSurveyId: this.productSurveyId,
@@ -130,8 +133,9 @@ export default class WelcomePage extends Vue {
       )
 
     if (!SurveyHelper.isSurveyUserAvailable(this.surveyUserInfo)) {
+      const title = this.surveyData ? this.surveyData.surveyProductTitle : ''
       SurveyHelper.completeSurvey(this.surveyProduct, this.productSurveyId, this.surveyUserInfo.surveyUserId)
-      this.$router.push({ name: 'survey.complete' })
+      this.$router.push({ name: 'survey.complete', params: { title } })
       // todo::[m] Add logic for handling completed survey
       // todo::[m] I leave these comments there, because logic of the completed survey is not fully described at moment
       return
@@ -151,6 +155,7 @@ export default class WelcomePage extends Vue {
         surveyProductType: this.surveyProduct,
         surveyAccessCode: this.accessCode,
         surveyProductId: this.productSurveyId,
+        surveyProductTitle: this.surveyInfo!.title,
         surveyUserId: this.surveyUserInfo.surveyUserId,
         dpSurveyId: null,
         dpChildSurveys: []
@@ -178,8 +183,9 @@ export default class WelcomePage extends Vue {
     const progress = await SurveyService.getDpSurveyProgress(this.surveyUserInfo.surveyUserId)
 
     if (progress.isCompleted || !progress.nextSurveyPart) {
+      const title = this.surveyData ? this.surveyData.surveyProductTitle : ''
       SurveyHelper.completeSurvey(SurveyHelper.DP, this.productSurveyId, this.surveyUserInfo.surveyUserId)
-      this.$router.push({ name: 'survey.complete' })
+      this.$router.push({ name: 'survey.complete', params: { title } })
       // todo::[m] Add logic for handling completed survey
       // todo::[m] I leave these comments there, because logic of the completed survey is not fully described at moment
       return

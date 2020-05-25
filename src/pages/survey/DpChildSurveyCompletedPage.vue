@@ -39,6 +39,7 @@ import { Getter } from 'vuex-class'
 import SurveyService from '@/services/SurveyService'
 import SurveyHelper from '@/utils/SurveyHelper'
 import SurveyLocalStorageHelper from '@/utils/SurveyLocalStorageHelper'
+import { SurveyInfo } from '@/interfaces/SurveyInterfaces'
 
 @Component({ name: 'DpChildSurveyCompletedPage' })
 export default class DpChildSurveyCompletedPage extends Vue {
@@ -54,6 +55,9 @@ export default class DpChildSurveyCompletedPage extends Vue {
   isDpTakenSurvey!: boolean
   @Getter('survey/getDpSurveyUserId')
   dpSurveyUserId!: number
+
+  @Getter('survey/getDisplayedBaseSurveyInfo')
+  surveyInfo!: SurveyInfo
 
   partCompleted = 0
 
@@ -89,7 +93,7 @@ export default class DpChildSurveyCompletedPage extends Vue {
       )
 
       this.$store.commit('survey/clearDpSurveyData')
-      this.$router.push({ name: 'survey.complete' })
+      this.$router.push({ name: 'survey.complete', params: { title: this.surveyInfo.title } })
       return
     }
 
