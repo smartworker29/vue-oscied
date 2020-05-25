@@ -9,7 +9,7 @@
             :style="`width: ${processedPercent}%;`" />
         <span v-if="showPercentInside && percentage" class="progress-percentage">{{ formattedProcessedItemsCount }}%</span>
       </div>
-      <span v-if="!(showPercentInside && percentage)" class="progress-percentage">{{ formattedProcessedItemsCount }}%</span>
+      <span v-if="!(showPercentInside && percentage)" class="progress-percentage">{{ processedPercent }}%</span>
     </div>
   </div>
 </template>
@@ -67,7 +67,7 @@ export default class Progress extends Vue {
 
   get processedPercent () : number {
     return (this.processedItemsCount && this.totalProgressItemsCount)
-      ? this.processedItemsCount / this.totalProgressItemsCount * 100
+      ? Math.ceil(this.processedItemsCount / this.totalProgressItemsCount * 100)
       : 0
   }
 
