@@ -16,21 +16,31 @@
 
       <div v-else>
         <div class="icoach-skill-buttons">
-          <button v-if="!isFirstStep" class="btn btn-primary" style="border-color: transparent" @click="changeStep('prev')">{{ $t('skills.back')}}</button>
-          <button class="btn btn-primary btn-primary-active" @click="changeStep('next')">
-            {{ isLastStep ? $t('skills.last') : $t('skills.next') }}
+          <button
+            v-if="!isFirstStep"
+            class="btn btn-primary"
+            style="border-color: transparent"
+            @click="changeStep('prev')"
+          >
+            {{ $t('icoach.back')}}
+          </button>
+          <button
+            v-if="!isLastStep"
+            class="btn btn-primary btn-primary-active"
+            @click="changeStep('next')"
+          >
+            {{ $t('icoach.next') }}
           </button>
         </div>
       </div>
       <hr class="separator">
-
     </div>
 
-      <icoach-skill-comment
-        :icoach-skill="icoachSkill"
-        :icoach-user-data="icoachUserData"
-        :step-id="currentStep"
-      />
+    <icoach-skill-comment
+      :icoach-skill="icoachSkill"
+      :icoach-user-data="icoachUserData"
+      :step-id="currentStep"
+    />
   </div>
 </template>
 
@@ -42,81 +52,81 @@ import IcoachHelper from '@/utils/IcoachHelper'
 import IcoachSkillComment from '@/components/icoach/IcoachSkillComment.vue'
 import IcoachSkillForm from '@/components/icoach/IcoachSkillForm.vue'
 
-@Component({
-  name: 'IcoachSkillSection',
-  components: { IcoachSkillComment, IcoachSkillForm }
-})
+  @Component({
+    name: 'IcoachSkillSection',
+    components: { IcoachSkillComment, IcoachSkillForm }
+  })
 export default class IcoachSkillSection extends Vue {
-  @Prop({ required: true })
-  icoachSkill!: IcoachSkill
-  @Prop({ required: true })
-  icoachUserData!: IcoachData
-  @Prop({ required: true })
-  stepId!: number
+    @Prop({ required: true })
+    icoachSkill!: IcoachSkill
+    @Prop({ required: true })
+    icoachUserData!: IcoachData
+    @Prop({ required: true })
+    stepId!: number
 
-  stepsCount: number = 0
-  currentStep: number = 0
-  isLastStep: boolean = false
-  isFirstStep: boolean = false
+    stepsCount: number = 0
+    currentStep: number = 0
+    isLastStep: boolean = false
+    isFirstStep: boolean = false
 
-  @Watch('stepId')
-  onStepIdChange () {
-    this.currentStep = this.stepId
-    this.updateCurrentStep()
-  }
-
-  created () {
-    this.stepsCount = this.icoachSkill.icoachSkillContents.length
-    this.currentStep = this.stepId
-    this.updateCurrentStep()
-  }
-
-  get content (): string {
-    return this.icoachSkill ? this.icoachSkill.icoachSkillContents[this.currentStep - 1].content : ''
-  }
-
-  updateCurrentStep () {
-    this.isFirstStep = false
-    this.isLastStep = false
-
-    if (this.currentStep === this.stepsCount) {
-      this.isLastStep = true
+    @Watch('stepId')
+    onStepIdChange () {
+      this.currentStep = this.stepId
+      this.updateCurrentStep()
     }
 
-    if (+this.currentStep === 1) {
-      this.isFirstStep = true
-    }
-  }
-
-  @Emit()
-  changeStep (direction: IcoachSkillDirections) {
-    switch (direction) {
-      case IcoachSkillDirections.PREV:
-        this.currentStep--
-        break
-      case IcoachSkillDirections.NEXT:
-        this.currentStep++
+    created () {
+      this.stepsCount = this.icoachSkill.icoachSkillContents.length
+      this.currentStep = this.stepId
+      this.updateCurrentStep()
     }
 
-    this.updateCurrentStep()
-
-    this.$store.commit('icoach/setIcoachSkillStepId', this.currentStep)
-    if (this.currentStep > this.stepsCount) {
-      IcoachHelper.completeIcoachSkill(this.icoachUserData.icoachCourseId, this.icoachUserData.icoachUserId)
-      return this.$router.push({ name: 'icoach.skill.complete' })
+    get content (): string {
+      return this.icoachSkill ? this.icoachSkill.icoachSkillContents[this.currentStep - 1].content : ''
     }
 
-    this.$router.push({
-      name: 'icoach.skill',
-      params: {
-        icoachUserId: this.icoachUserData.icoachUserId.toString(),
-        skillId: this.icoachSkill.id.toString(),
-        stepId: this.currentStep.toString()
+    updateCurrentStep () {
+      this.isFirstStep = false
+      this.isLastStep = false
+
+      if (this.currentStep === this.stepsCount) {
+        this.isLastStep = true
       }
-    })
 
-    return this.currentStep
-  }
+      if (+this.currentStep === 1) {
+        this.isFirstStep = true
+      }
+    }
+
+    @Emit()
+    changeStep (direction: IcoachSkillDirections) {
+      switch (direction) {
+        case IcoachSkillDirections.PREV:
+          this.currentStep--
+          break
+        case IcoachSkillDirections.NEXT:
+          this.currentStep++
+      }
+
+      this.updateCurrentStep()
+
+      this.$store.commit('icoach/setIcoachSkillStepId', this.currentStep)
+      if (this.currentStep > this.stepsCount) {
+        IcoachHelper.completeIcoachSkill(this.icoachUserData.icoachCourseId, this.icoachUserData.icoachUserId)
+        return this.$router.push({ name: 'icoach.skill.complete' })
+      }
+
+      this.$router.push({
+        name: 'icoach.skill',
+        params: {
+          icoachUserId: this.icoachUserData.icoachUserId.toString(),
+          skillId: this.icoachSkill.id.toString(),
+          stepId: this.currentStep.toString()
+        }
+      })
+
+      return this.currentStep
+    }
 }
 </script>
 
@@ -135,6 +145,7 @@ export default class IcoachSkillSection extends Vue {
     @media screen and (max-width: 600px) {
       padding-top: 0;
     }
+
     .icoach-content-wrapper {
       h4 {
         margin-top: 0;
@@ -170,16 +181,19 @@ export default class IcoachSkillSection extends Vue {
   .icoach-skill-buttons {
     text-align: right;
     margin-top: 24px;
+
     button {
       font-size: 16px;
       font-weight: 500;
       margin-left: 6%;
     }
+
     @media only screen and (max-width: 600px) {
       display: flex;
       button {
         margin: 0;
         width: 100%;
+
         &:nth-child(2) {
           margin-left: 15px;
         }

@@ -94,7 +94,7 @@
     "confirmation_window": "Deutsch: Please Confirm Your Choices!",
     "confirm_to_next_section": "Deutsch: Please drag & drop all the answers."
   },
-  "skills": {
+  "icoach": {
     "categories": {
       "1": "Deutsch: Soft skill",
       "2": "Deutsch: Essential business skills",
@@ -103,7 +103,6 @@
     "no_skills": "Deutsch: There are no skills for this course",
     "back": "Deutsch: Back",
     "next": "Deutsch: Next",
-    "last": "Deutsch: Finish skill",
     "completed": "Deutsch: Skills completed",
     "you_have_answered_already": "Deutsch: You've already answered to the questions",
     "comments": {
