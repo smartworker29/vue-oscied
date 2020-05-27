@@ -5,6 +5,7 @@ export abstract class BaseApiService {
 
   constructor () {
     this.api = axios
+    this.api.defaults.headers.common['X-AUTH-TOKEN'] = process.env.VUE_APP_TOKEN
   }
 
   protected callMethod (

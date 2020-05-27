@@ -6,7 +6,7 @@
       </h1>
     </div>
     <div class="icoach-not-found" v-if="!icoachDashboardInfo || !Object.keys(icoachDashboardInfo).length">
-      {{ $t('skills.no_skills') }}
+      {{ $t('icoach.no_skills') }}
     </div>
     <div class="icoach-wrapper flex" v-else>
       <div class="icoach-categories">
@@ -16,16 +16,16 @@
             @click="changeIndex(parseInt(index))"
             :class="{ 'active': activeIndex === parseInt(index) }">
             <p>
-              <span>{{ $t(`skills.categories.${index}`) }}</span>
+              <span>{{ $t(`icoach.categories.${index}`) }}</span>
             </p>
-            <span class="icoach-category-item-progress"> {{ completedSkills(category) }}/{{ category.length }} {{ $t('skills.completed')}}</span>
+            <span class="icoach-category-item-progress"> {{ completedSkills(category) }}/{{ category.length }} {{ $t('icoach.completed')}}</span>
             <img :src="require('@/assets/icons/arrow-down-xs.svg')">
           </li>
         </ul>
       </div>
       <div class="icoach-content">
         <h2 class="icoach-content-title">
-          {{ $t(`skills.categories.${activeIndex}`) }}
+          {{ $t(`icoach.categories.${activeIndex}`) }}
         </h2>
         <p class="icoach-content-subtitle">
           Develop the skills and competencies that are linked to your emotional intelligence.

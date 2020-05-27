@@ -1,13 +1,13 @@
 <template>
   <div class="icoach-skill-comment">
-    <h4>{{ $t('skills.comments.leave_a_comment')}}</h4>
+    <h4>{{ $t('icoach.comments.leave_a_comment')}}</h4>
     <form class="icoach-skill-comment__form" @submit.prevent="submit" novalidate>
       <div class="icoach-skill-comment__wrapper flex">
         <textarea
           class="icoach-skill-comment__input"
           type="text"
           name="comment"
-          :placeholder="$t('skills.comments.leave_your_comment')"
+          :placeholder="$t('icoach.comments.leave_your_comment')"
           v-model="comment"
           v-validate="'required'"
         />
@@ -18,7 +18,7 @@
 
     <div class="icoach-skill-comment__published-comments" v-if="publishedComments.length">
       <div>
-        <h4>{{ $t('skills.comments.comments')}} <span class="show-mobile">({{ publishedComments.length }})</span></h4>
+        <h4>{{ $t('icoach.comments.comments')}} <span class="show-mobile">({{ publishedComments.length }})</span></h4>
       </div>
       <div class="published-comment"  v-for="(comment, key) in publishedComments" :key="key">
         <img v-if="comment.user.image.fileURL" :src="comment.user.image.fileURL" class="icoach-skill-comment__logo" :alt="comment.comment">
@@ -26,7 +26,7 @@
         <div class="icoach-skill-comment__content">
           <span>
             <span class="icoach-skill-comment__name">{{ comment.user.fullName }}</span>
-            {{ $t('skills.comments.on')}} {{ comment.date | formatDate('MMMM Do, YYYY [at] h:mm a') }}
+            {{ $t('icoach.comments.on')}} {{ comment.date | formatDate('MMMM Do, YYYY [at] h:mm a') }}
           </span>
           <div>{{ comment.comment }}</div>
         </div>

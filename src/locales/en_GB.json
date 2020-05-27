@@ -94,7 +94,7 @@
     "confirmation_window": "Please Confirm Your Choices!",
     "confirm_to_next_section": "Please drag & drop all the answers."
   },
-  "skills": {
+  "icoach": {
     "categories": {
       "1": "Soft Skills",
       "2": "Essential Business Skills",
@@ -103,7 +103,6 @@
     "no_skills": "There are no skills for this course",
     "back": "Back",
     "next": "Next",
-    "last": "Finish skill",
     "completed": "Skills completed",
     "you_have_answered_already": "You've already answered to the questions",
     "comments": {
