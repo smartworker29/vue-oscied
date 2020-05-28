@@ -185,7 +185,7 @@ export default class IcoachSkillPage extends Vue {
             max-width: 190px;
             border-radius: 4px;
             padding: 8px 9px;
-            margin-right: 12px;
+            margin-right: 12px !important;
             &:after {
               display: none;
             }
@@ -203,6 +203,20 @@ export default class IcoachSkillPage extends Vue {
           display: flex;
           align-items: flex-start;
           box-shadow: 2px 7px 14px 0 rgba(0, 0, 0, 0.16);
+          @media screen and (max-width: 600px) {
+            .icoach-skills-category-list {
+              width: 100% !important;
+              margin: 0;
+              max-width: 100% !important;
+              li {
+                border-bottom: 1px solid #e6f3fa;
+                display: block !important;
+                &:last-child {
+                  border: none;
+                }
+              }
+            }
+          }
           @media only screen and (max-width: 800px) {
             min-width: 500px;
           }
@@ -210,7 +224,6 @@ export default class IcoachSkillPage extends Vue {
             width: 100%;
             min-width: 100%;
             display: block;
-            overflow-x: scroll;
             white-space: nowrap;
             position: fixed;
             top: 0;
@@ -219,6 +232,9 @@ export default class IcoachSkillPage extends Vue {
           }
           &+.icoach-content {
             padding-left: 36%;
+            @media screen and (max-width: 600px) {
+              padding-left: 0;
+            }
           }
           .icoach-skills-category-list {
             width: calc(55% - 26px);
