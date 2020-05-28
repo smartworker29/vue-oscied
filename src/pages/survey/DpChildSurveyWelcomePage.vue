@@ -88,7 +88,7 @@ export default class DpChildSurveyWelcomePage extends Vue {
 
     if (progress.isCompleted || !progress.nextSurveyPart) {
       SurveyHelper.completeSurvey(SurveyHelper.DP, null, dpSurveyUserId)
-      this.$router.push({ name: 'survey.complete' })
+      this.$router.push({ name: 'survey.complete', params: { title: this.surveyInfo.title } })
       // todo::[m] Add logic for handling completed survey
       // todo::[m] I leave these comments there, because logic of the completed survey is not fully described at moment
       return true
@@ -137,6 +137,7 @@ export default class DpChildSurveyWelcomePage extends Vue {
       surveyProductType: this.takenSurveyProductType,
       surveyAccessCode: null,
       surveyProductId: this.takenSurveyProductId,
+      surveyProductTitle: this.surveyInfo.title,
       surveyUserId: this.takenSurveyUserId,
       dpSurveyId: this.dpSurveyUserId,
       dpChildSurveys: []

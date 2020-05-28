@@ -78,6 +78,7 @@ class SurveyHelper {
           surveyProductType: this.DP,
           surveyAccessCode: dpSurveyUserInfo.surveyAccessCode,
           surveyProductId: surveyProductInfo.surveyProductId,
+          surveyProductTitle: surveyProductInfo.survey.title,
           surveyUserId: surveyUserInfo.surveyUserId,
           dpSurveyId: null,
           dpChildSurveys: []
