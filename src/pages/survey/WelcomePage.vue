@@ -98,7 +98,10 @@ export default class WelcomePage extends Vue {
       this.surveyInfo = response.survey
       this.productSurveyId = response.surveyProductId
       this.isUncompletedSurvey = SurveyLocalStorageHelper.hasBegunSurvey(this.surveyProduct, this.productSurveyId)
-      this.surveyData = SurveyLocalStorageHelper.getSurveyUser(this.surveyProduct, this.surveyUserInfo.surveyUserId)
+
+      if (this.surveyUserInfo && SurveyLocalStorageHelper.hasSurveyUser(this.surveyProduct, this.surveyUserInfo.surveyUserId)) {
+        this.surveyData = SurveyLocalStorageHelper.getSurveyUser(this.surveyProduct, this.surveyUserInfo.surveyUserId)
+      }
 
       this.$store.commit('survey/setTakenSurveyData', {
         productSurveyId: this.productSurveyId,
