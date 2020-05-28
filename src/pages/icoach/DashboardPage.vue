@@ -227,7 +227,7 @@ export default class DashboardPage extends Vue {
   }
 
   .icoach-skills {
-    justify-content: space-between;
+    justify-content: flex-start;
     display: flex;
     flex-wrap: wrap;
   }
@@ -235,6 +235,7 @@ export default class DashboardPage extends Vue {
   .icoach-skill {
     width: calc(33% - 27px);
     border-radius: 12px;
+    margin-right: 40px;
     border: solid 1px #e6f3fa;
     background-color: #f7fcff;
     font-size: 20px;
@@ -247,16 +248,31 @@ export default class DashboardPage extends Vue {
     flex-wrap: wrap;
     margin-bottom: 16px;
 
+    &:nth-child(3n) {
+      margin-right: 0;
+    }
+
     @media only screen and (max-width: 1280px) {
       width: calc(33% - 14px);
+      margin-right: 21px;
     }
 
     @media only screen and (max-width: 980px) {
       width: calc(50% - 14px);
+      margin-right: 28px;
+
+      &:nth-child(3n) {
+        margin-right: 28px;
+      }
+
+      &:nth-child(2n) {
+        margin-right: 0px;
+      }
     }
 
     @media only screen and (max-width: 768px) {
       width: 100%;
+      margin-right: 0px !important;
     }
 
     .progress {

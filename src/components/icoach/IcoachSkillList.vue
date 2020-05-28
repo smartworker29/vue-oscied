@@ -103,6 +103,14 @@ export default class IcoachSkillList extends Vue {
     justify-content: center;
     @media screen and (max-width: 600px) {
       right: 12px;
+      top: auto;
+      bottom: -12px;
+    }
+  }
+
+  .icoach-sidebar-open .icoach-skills-expand {
+    @media screen and (max-width: 600px) {
+      transform: rotate(90deg);
     }
   }
 
