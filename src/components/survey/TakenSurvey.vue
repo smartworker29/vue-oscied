@@ -50,8 +50,6 @@ export default class TakenSurvey extends Vue {
   isDpTakenSurvey!: boolean
   @Getter('survey/getDpSurveyUserId')
   dpSurveyUserId!: number
-  @Getter('survey/getDpSurveyProductId')
-  dpSurveyProductId!: number
 
   @Prop({})
   surveyProduct!: string
