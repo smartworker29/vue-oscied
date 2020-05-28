@@ -125,6 +125,7 @@ const survey: Module<SurveyState, RootState> = {
       state.takenSurveyUserId = null
       state.takenSurveySections = []
       state.takenSurveySection = null
+      state.countCompletedSections = 0
     },
     clearDpSurveyData (state: SurveyState) : void {
       state.displayedBaseSurveyInfo = null

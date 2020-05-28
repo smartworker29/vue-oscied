@@ -2,7 +2,7 @@
   <div class="survey-completed-page-completed">
     <h1>{{ $t('completed_survey') }}</h1>
     <div>
-      <h2>Survey name</h2>
+      <h2>{{ title }}</h2>
     </div>
     <div>
       <p>
@@ -15,10 +15,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-property-decorator'
 
 @Component({ name: 'CompleteSurveyMessagePage' })
 export default class CompleteSurveyMessagePage extends Vue {
+  @Prop({ default: '' })
+  title?: string
 }
 </script>
 

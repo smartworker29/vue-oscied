@@ -24,13 +24,14 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-property-decorator'
 import { Getter } from 'vuex-class'
-import { Statement, Section } from '@/interfaces/SurveyInterfaces'
+import { Section, Statement } from '@/interfaces/SurveyInterfaces'
 import SurveyService from '@/services/SurveyService'
 import SurveyHelper from '@/utils/SurveyHelper'
 import SurveyLocalStorageHelper from '@/utils/SurveyLocalStorageHelper'
 import Progress from '@/components/common/progressBar/Progress.vue'
+import { SurveyData } from '@/interfaces/LocalStorageInterfaces'
 
 @Component({
   name: 'TakenSurvey',
@@ -50,8 +51,6 @@ export default class TakenSurvey extends Vue {
   isDpTakenSurvey!: boolean
   @Getter('survey/getDpSurveyUserId')
   dpSurveyUserId!: number
-  @Getter('survey/getDpSurveyProductId')
-  dpSurveyProductId!: number
 
   @Prop({})
   surveyProduct!: string
@@ -61,6 +60,7 @@ export default class TakenSurvey extends Vue {
   loadSections: boolean = false
   countSection: number = 0
   sectionKey: number = 0
+  surveyData: SurveyData | null = null
 
   async created () {
     const nextSectionId = await this.getNextSection()
@@ -75,6 +75,8 @@ export default class TakenSurvey extends Vue {
 
     await this.uploadSurveySections()
     await this.handleSurveyProgress(nextSectionId)
+
+    this.surveyData = SurveyLocalStorageHelper.getSurveyUser(this.surveyProduct, this.surveyUserId)
     this.loadSections = true
   }
 
@@ -131,9 +133,10 @@ export default class TakenSurvey extends Vue {
 
   async handleNullableSectionForDp () : Promise<void> {
     if (this.surveyProduct === 'behaviours') {
+      const title = this.surveyData ? this.surveyData.surveyProductTitle : ''
       SurveyLocalStorageHelper.removeSurveyUser(SurveyHelper.DP, this.dpSurveyUserId)
       this.$store.commit('survey/clearDpSurveyData')
-      this.$router.push({ name: 'survey.complete' })
+      this.$router.push({ name: 'survey.complete', params: { title } })
 
       return
     }
@@ -185,12 +188,14 @@ export default class TakenSurvey extends Vue {
   }
 
   async handleCompleteSurvey () : Promise<void> {
+    const title = this.surveyData ? this.surveyData.surveyProductTitle : ''
     SurveyHelper.completeSurvey(this.surveyProduct, this.currentProductSurveyId, this.surveyUserId)
     if (this.isDpTakenSurvey) {
       await this.handleNullableSectionForDp()
       return
     }
-    this.$router.push({ name: 'survey.complete' })
+
+    this.$router.push({ name: 'survey.complete', params: { title } })
   }
 }
 </script>

@@ -120,6 +120,7 @@ const router = new Router({
     {
       path: '/complete',
       name: 'survey.complete',
+      props: true,
       component: CompleteSurveyMessagePage
     },
     {
