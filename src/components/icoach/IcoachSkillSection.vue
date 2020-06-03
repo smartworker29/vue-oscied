@@ -147,6 +147,9 @@ export default class IcoachSkillSection extends Vue {
     }
 
     .icoach-content-wrapper {
+      p {
+        margin-bottom: 15px;
+      }
       h4 {
         margin-top: 0;
         font-size: 14px;

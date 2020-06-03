@@ -42,9 +42,9 @@
         <div class="header-icon">
           <img :src="require('@/assets/icons/icon-alert-blue.svg')">
         </div>
-        <div class="header-logout header-icon"  @click.prevent="logout">
+        <!-- <div class="header-logout header-icon"  @click.prevent="logout">
           <img :src="require('@/assets/icons/icon-logout-blue.svg')">
-        </div>
+        </div> -->
       </template>
       <template v-else>
         <LangSwitcher class="language-header" />
