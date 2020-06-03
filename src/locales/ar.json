@@ -6,6 +6,7 @@
   "tap" : "صنبور",
   "drag" : "سحب",
   "sorting": "فرز",
+  "back": "Arabic: Back",
   "sorting_g": {
     "description": "أعد ترتيب العبارات أدناه بما تعتبره الأفضل في الأعلى",
     "drag": {
@@ -21,6 +22,7 @@
   "rights_reserved": "كل الحقوق محفوظة",
   "private_policy": "سياسة خاصة",
   "data_policy": "سياسة البيانات",
+  "request_reset_password_title": "Arabic: Enter your email address below and we will get in touch with instructions on how to reset your password",
   "button_g": {
     "confirm_order": "أكد الطلب",
     "register": "تسجيل",
@@ -38,7 +40,8 @@
     "add_photo": "إضافة الصورة",
     "start_survey": "بداية",
     "continue_survey": "استمر",
-    "start_icoach": "Arabic: Start icoach"
+    "start_icoach": "Arabic: Start icoach",
+    "reset": "Arabic: Reset"
   },
   "email_address": "عنوان بريد الكتروني",
   "remember_me": "تذكرنى",

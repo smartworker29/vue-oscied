@@ -24,7 +24,7 @@
       </div>
     </div>
     <div class="form-actions form-actions-right form-actions-justified wrap">
-      <div class="switch-form" @click="changeForm('signUp')">{{ $t('forgot_password') }}</div>
+      <div class="switch-form" @click="resetPassword">{{ $t('forgot_password') }}</div>
       <div class="form-actions form-actions-justified">
         <div class="checkbox-input">
           <input type="checkbox">
@@ -84,6 +84,10 @@ export default class SignInForm extends Vue {
 
   changeForm (formName: string) {
     this.$emit('changeForm', formName)
+  }
+
+  resetPassword () {
+    this.$router.push({ name: 'requestResetPassword' })
   }
 }
 </script>
