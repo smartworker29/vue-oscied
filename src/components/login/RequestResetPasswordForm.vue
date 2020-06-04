@@ -1,6 +1,6 @@
 <template>
   <form class="form request-reset-password-form" @submit.prevent="submit" novalidate>
-    <h4>{{ $t('request_reset_password_title') }}</h4>
+    <h4>{{ $t('password_reset.request_instructions') }}</h4>
     <div class="form-group" :class="{'has-error' : errors.first('email')}">
       <label>{{ $t('email_address') }}</label>
       <input name="email"
@@ -17,8 +17,8 @@
     </div>
 
     <div class="form-actions form-actions-justified">
-      <span class="switch-form" @click="$router.back()">{{ $t('back') }}</span>
-      <button type="submit" class="btn btn-success">{{ $t('button_g.reset') }}</button>
+      <span class="switch-form" @click="$router.back()">{{ $t('password_reset.request_cancel') }}</span>
+      <button type="submit" class="btn btn-success">{{ $t('password_reset.request_confirm') }}</button>
     </div>
   </form>
 </template>
