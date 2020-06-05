@@ -28,11 +28,11 @@ class IcoachHelper {
     const to = dayjs(icoachCourse.validTo).format('YYYY-MM-DD')
 
     if (now < from) {
-      throw new Error('This Icoach is not yet active.')
+      throw new TypeError('This Icoach is not yet active.')
     }
 
     if (now > to) {
-      throw new Error('This Icoach has now expired.')
+      throw new TypeError('This Icoach has now expired.')
     }
   }
 }

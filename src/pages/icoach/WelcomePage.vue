@@ -4,12 +4,13 @@
       <h1 class="icoach-title">{{ $t('welcome_to_icoach', { icoachName: (icoachCourse) ? icoachCourse.title : 'CCR3 Onesource' }) }}</h1>
     </div>
     <div class="icoach-wrapper">
-      <div class="icoach-welcome">
-        <p v-html="(icoachCourse) ? icoachCourse.welcomeMessage : error"></p>
+      <div class="icoach-welcome" v-if="icoachCourse">
+        <p v-html="icoachCourse.welcomeMessage || ''"></p>
         <button class="start-icoach-btn btn btn-success btn-primary-active" @click="beginIcoach">
           {{ $t('button_g.start_icoach') }}
         </button>
       </div>
+      <p v-else-if="error">{{ error }}</p>
     </div>
   </div>
   <div v-else class="auth-container-wrapper">
@@ -84,8 +85,8 @@ export default class WelcomePage extends Vue {
       IcoachHelper.checkIcoachCourse(response)
       this.icoachCourse = response
     } catch (error) {
-      if (error) {
-        this.error = error
+      if (error instanceof TypeError) {
+        this.error = error.message
       } else {
         this.$router.push({ name: 'notFound' })
       }

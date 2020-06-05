@@ -118,11 +118,11 @@ class SurveyHelper {
     const to = dayjs(survey.validTo).format('YYYY-MM-DD')
 
     if (now < from) {
-      throw new Error('This Survey is not yet active.')
+      throw new TypeError('This Survey is not yet active.')
     }
 
     if (now > to) {
-      throw new Error('This Survey has now expired.')
+      throw new TypeError('This Survey has now expired.')
     }
   }
 }

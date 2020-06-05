@@ -3,12 +3,13 @@
     <div class="survey-header">
       <h1 class="survey-title">{{ $t('welcome_to_survey', { surveyName: (surveyInfo) ? surveyInfo.title : 'CCR3 Onesource' }) }}</h1>
     </div>
-    <div class="survey-content">
-      <p v-html="(surveyInfo) ? surveyInfo.welcomeMessage : ''"></p>
+    <div class="survey-content" v-if="surveyInfo">
+      <p v-html="surveyInfo.welcomeMessage || ''"></p>
       <button class="btn btn-primary btn-primary-active" @click="beginSurvey">
         {{ isUncompletedSurvey ? $t('button_g.continue_survey') : $t('button_g.start_survey') }}
       </button>
     </div>
+    <p v-else-if="error">{{ error }}</p>
   </div>
   <div v-else class="auth-container-wrapper">
     <div class="auth-container">
@@ -84,6 +85,7 @@ export default class WelcomePage extends Vue {
   surveyUserInfo!: SurveyUserInfo
   signInLinkId = 'sign-in-link-in-welcome'
   surveyData: SurveyData | null = null
+  error: string = ''
 
   async created () {
     EventBus.$on('authorizedComplete', async () => {
@@ -112,7 +114,11 @@ export default class WelcomePage extends Vue {
       })
     } catch (error) {
       // TODO::add handler to process for errors(go to 404)
-      this.$router.push({ name: 'notFound' })
+      if (error instanceof TypeError) {
+        this.error = error.message
+      } else {
+        this.$router.push({ name: 'notFound' })
+      }
     }
 
     let signInLink = document.querySelector(`#${this.signInLinkId}`)
@@ -200,8 +206,6 @@ export default class WelcomePage extends Vue {
       progress.nextSurveyPart.product,
       progress.nextSurveyPart.id
     )
-
-    SurveyHelper.checkSurveyInfo(nextSurveyProductInfo)
 
     this.$store.commit('survey/setTakenSurveyData', {
       productSurveyId: progress.nextSurveyPart.id,
