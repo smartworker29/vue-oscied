@@ -22,10 +22,19 @@
   "rights_reserved": "🇩🇪 All Rights Reserved",
   "private_policy": "🇩🇪 Private Policy",
   "data_policy": "🇩🇪 Data Policy",
+  "password_request": {
+    "heading1": "🇩🇪Reset your password",
+    "heading2": "🇩🇪Step 1",
+    "instructions": "🇩🇪Enter the email address you used when you set up your account. We will then email you a link to a secure page where you can create a new password.",
+    "cancel": "🇩🇪Cancel",
+    "confirm": "🇩🇪Confirm"
+  },
   "password_reset": {
-    "request_instructions": "🇩🇪 Enter the email address you used when you set up your account. We will then email you a link to a secure page where you can create a new password.",
-    "request_cancel": "🇩🇪 Cancel",
-    "request_confirm": "🇩🇪 Confirm"
+    "heading1": "🇩🇪Reset your password",
+    "heading2": "🇩🇪Step 2",
+    "instructions": "Create your new CCR3 password. You will be asked for this password the next time you book cheap flights or log into your account.",
+    "cancel": "🇩🇪Cancel",
+    "confirm": "🇩🇪Confirm"
   },
   "button_g": {
     "confirm_order": "🇩🇪 Confirm Order",
