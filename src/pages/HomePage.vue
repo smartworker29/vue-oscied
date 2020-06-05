@@ -18,6 +18,7 @@
               <button @click="displayedForm = 'signIn'" :class="{ 'active': displayedForm === 'signIn' }">{{ $t('sign_in') }}</button>
             </div>
             <div class="form-content">
+              <p class="message" v-if="message">{{ message }}</p>
               <div v-if="displayedForm === 'signIn'" class="sign-form">
                 <SignInForm @changeForm="changeForm"/>
               </div>
@@ -33,7 +34,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-property-decorator'
 import { Getter } from 'vuex-class'
 import SignInForm from '@/components/signIn/SignInForm.vue'
 import SignUpForm from '@/components/signUp/SignUpForm.vue'
@@ -51,6 +52,9 @@ export default class HomePage extends Vue {
   @Getter('user/isAuthenticated')
   isAuthenticated!: boolean
   displayedForm: string = 'signUp'
+
+  @Prop({ default: '' })
+  message?: string
 
   changeForm (formName: string) {
     this.displayedForm = formName
@@ -168,6 +172,11 @@ export default class HomePage extends Vue {
     height: 54px;
     object-fit: contain;
     background-color: #ffffff;
+  }
+
+  .message {
+    margin-top: 5px;
+    color: #000;
   }
 
 </style>
