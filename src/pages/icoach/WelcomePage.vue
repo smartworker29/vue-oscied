@@ -4,12 +4,13 @@
       <h1 class="icoach-title">{{ $t('welcome_to_icoach', { icoachName: (icoachCourse) ? icoachCourse.title : 'CCR3 Onesource' }) }}</h1>
     </div>
     <div class="icoach-wrapper">
-      <div class="icoach-welcome">
-        <p v-html="(icoachCourse) ? icoachCourse.welcomeMessage : ''"></p>
+      <div class="icoach-welcome" v-if="icoachCourse">
+        <p v-html="icoachCourse.welcomeMessage || ''"></p>
         <button class="start-icoach-btn btn btn-success btn-primary-active" @click="beginIcoach">
           {{ $t('button_g.start_icoach') }}
         </button>
       </div>
+      <p v-else-if="error">{{ error }}</p>
     </div>
   </div>
   <div v-else class="auth-container-wrapper">
@@ -52,6 +53,7 @@ import { EventBus } from '@/main'
 import { IcoachCategoriesEnum, IcoachCourse, IcoachUserInfo } from '@/interfaces/IcoachInterfaces'
 import IcoachService from '@/services/IcoachService'
 import IcoachLocalStorageHelper from '@/utils/IcoachLocalStorageHelper'
+import IcoachHelper from '@/utils/IcoachHelper'
 
 @Component({
   name: 'WelcomePage',
@@ -71,6 +73,7 @@ export default class WelcomePage extends Vue {
   icoachUserInfo!: IcoachUserInfo
   icoachCourse: IcoachCourse | null = null
   signInLinkId = 'sign-in-link-in-welcome'
+  error: string = ''
 
   async created () {
     EventBus.$on('authorizedComplete', async () => {
@@ -78,9 +81,15 @@ export default class WelcomePage extends Vue {
     })
 
     try {
-      this.icoachCourse = await IcoachService.getIcoachCourseInfo(this.accessCode)
+      const response = await IcoachService.getIcoachCourseInfo(this.accessCode)
+      IcoachHelper.checkIcoachCourse(response)
+      this.icoachCourse = response
     } catch (error) {
-      this.$router.push({ name: 'notFound' })
+      if (error instanceof TypeError) {
+        this.error = error.message
+      } else {
+        this.$router.push({ name: 'notFound' })
+      }
     }
 
     let signInLink = document.querySelector(`#${this.signInLinkId}`)
