@@ -79,6 +79,9 @@ export default class TakenSurveyPage extends Vue {
       this.surveyProduct,
       surveyUser.surveyAccessCode
     )
+
+    SurveyHelper.checkSurveyInfo(response.survey)
+
     const surveyUserInfo = await SurveyService.getSurveyUser(
       this.surveyProduct,
       surveyUser.surveyProductId,
@@ -131,6 +134,8 @@ export default class TakenSurveyPage extends Vue {
       progress.nextSurveyPart.product,
       progress.nextSurveyPart.id
     )
+
+    SurveyHelper.checkSurveyInfo(nextSurveyProductInfo)
 
     this.$store.commit('survey/setTakenSurveyData', {
       productSurveyId: dpSurveyUser.surveyProductId,

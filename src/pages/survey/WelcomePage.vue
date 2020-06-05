@@ -95,6 +95,8 @@ export default class WelcomePage extends Vue {
         this.accessCode
       )
 
+      SurveyHelper.checkSurveyInfo(response.survey)
+
       this.surveyInfo = response.survey
       this.productSurveyId = response.surveyProductId
       this.isUncompletedSurvey = SurveyLocalStorageHelper.hasBegunSurvey(this.surveyProduct, this.productSurveyId)
@@ -198,6 +200,8 @@ export default class WelcomePage extends Vue {
       progress.nextSurveyPart.product,
       progress.nextSurveyPart.id
     )
+
+    SurveyHelper.checkSurveyInfo(nextSurveyProductInfo)
 
     this.$store.commit('survey/setTakenSurveyData', {
       productSurveyId: progress.nextSurveyPart.id,

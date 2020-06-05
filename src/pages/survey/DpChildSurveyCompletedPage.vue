@@ -102,6 +102,8 @@ export default class DpChildSurveyCompletedPage extends Vue {
       progress.nextSurveyPart.id
     )
 
+    SurveyHelper.checkSurveyInfo(nextSurveyProductInfo)
+
     await this.$store.commit('survey/setTakenSurveyData', {
       productSurveyId: progress.nextSurveyPart.id,
       productSurveyType: progress.nextSurveyPart.product,

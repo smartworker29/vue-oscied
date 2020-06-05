@@ -1,8 +1,9 @@
-import { ResponseProductSurveyInfo, SurveyUserInfo } from '@/interfaces/SurveyInterfaces'
+import { ResponseProductSurveyInfo, SurveyInfo, SurveyUserInfo } from '@/interfaces/SurveyInterfaces'
 import SurveyLocalStorageHelper from '@/utils/SurveyLocalStorageHelper'
 import store from '@/store'
 import SurveyService from '@/services/SurveyService'
 import { SurveyData } from '@/interfaces/LocalStorageInterfaces'
+import dayjs from 'dayjs'
 
 class SurveyHelper {
   public readonly DP = 'discovery-process'
@@ -61,6 +62,8 @@ class SurveyHelper {
         dpSurveyUserInfo.surveyAccessCode
       )
 
+      this.checkSurveyInfo(surveyProductInfo.survey)
+
       const surveyUserInfo = await SurveyService.getSurveyUser(
         this.DP,
         surveyProductInfo.surveyProductId,
@@ -101,6 +104,25 @@ class SurveyHelper {
       SurveyLocalStorageHelper.removeSurveyUser(this.DP, dpSurveyUserId)
 
       return false
+    }
+  }
+
+  checkSurveyInfo (survey: SurveyInfo) {
+    const now = dayjs().format('YYYY-MM-DD')
+
+    if (!survey.validFrom || !survey.validTo) {
+      return
+    }
+
+    const from = dayjs(survey.validFrom).format('YYYY-MM-DD')
+    const to = dayjs(survey.validTo).format('YYYY-MM-DD')
+
+    if (now < from) {
+      throw new Error('This Survey is not yet active.')
+    }
+
+    if (now > to) {
+      throw new Error('This Survey has now expired.')
     }
   }
 }
