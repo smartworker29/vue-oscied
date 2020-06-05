@@ -63,3 +63,13 @@ export interface UpdatePasswordData {
   oldPassword: string
   newPassword: string
 }
+
+export interface ResetPasswordData {
+  newPassword: string
+  confirmPassword: string
+}
+
+export interface RequestResetPasswordData {
+  username: string,
+  origin: string
+}

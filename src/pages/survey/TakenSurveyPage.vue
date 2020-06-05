@@ -2,6 +2,7 @@
   <taken-survey v-if="displaySurvey"
     :surveyProduct="surveyProduct"
     :surveyUserId="surveyUserId"/>
+  <p v-else-if="error">{{ error }}</p>
 </template>
 
 <script lang="ts">
@@ -27,6 +28,7 @@ export default class TakenSurveyPage extends Vue {
   surveyUserId!: number
 
   displaySurvey: boolean = false
+  error: string = ''
 
   @Getter('survey/isTakenSurveyInitiated')
   isTakenSurveyInitiated!: boolean
@@ -47,8 +49,11 @@ export default class TakenSurveyPage extends Vue {
         await this.uploadSurveyInfo()
       } catch (error) {
         // todo[m]:: Add handler to process for errors(go to 404)
-        this.$router.push({ name: 'notFound' })
-
+        if (error instanceof TypeError) {
+          this.error = error.message
+        } else {
+          this.$router.push({ name: 'notFound' })
+        }
         return
       }
     }
@@ -79,6 +84,9 @@ export default class TakenSurveyPage extends Vue {
       this.surveyProduct,
       surveyUser.surveyAccessCode
     )
+
+    SurveyHelper.checkSurveyInfo(response.survey)
+
     const surveyUserInfo = await SurveyService.getSurveyUser(
       this.surveyProduct,
       surveyUser.surveyProductId,
@@ -131,6 +139,8 @@ export default class TakenSurveyPage extends Vue {
       progress.nextSurveyPart.product,
       progress.nextSurveyPart.id
     )
+
+    SurveyHelper.checkSurveyInfo(nextSurveyProductInfo)
 
     this.$store.commit('survey/setTakenSurveyData', {
       productSurveyId: dpSurveyUser.surveyProductId,

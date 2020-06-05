@@ -6,6 +6,7 @@
   "tap" : "Tap",
   "drag" : "Drag",
   "sorting": "Sorting",
+  "back": "Back",
   "sorting_g": {
     "description": "Reorder the phrases below with what you consider the best at the top",
     "drag": {
@@ -21,6 +22,11 @@
   "rights_reserved": "All Rights Reserved",
   "private_policy": "Privacy Policy",
   "data_policy": "Data Policy",
+  "password_reset": {
+    "request_instructions": "Enter the email address you used when you set up your account. We will then email you a link to a secure page where you can create a new password.",
+    "request_cancel": "Cancel",
+    "request_confirm": "Confirm"
+  },
   "button_g": {
     "confirm_order": "Confirm Order",
     "register": "Register",
@@ -52,7 +58,7 @@
   "phone_number": "Phone Number",
   "email_already_user": "Email Address is already used",
   "gender_is_required": "Gender field is required",
-  "forgot_password": "Forgotten your Password?",
+  "forgot_password": "Forgotten your details?",
   "no_account": "No account? Sign up",
   "already_registered": "Already registered? Sign in",
   "current_password": "Current",
@@ -71,13 +77,14 @@
   "profile_successfully_changed": "Your changes have been saved.",
   "please_register": "If you are already registered, please {signIn}. Otherwise please use our quick registration form.",
   "welcome_to_survey": "Welcome to {surveyName}",
+  "welcome_to_survey": "Welcome to {surveyName}",
   "not_found_message": "Sorry, we couldn't find what you were looking for.",
   "select": "Select",
   "ready_to_start_dp_survey_part": "You are now ready to start part {nextPartNumber} of 3 of this questionnaire",
   "continue": "Continue",
   "copy_right": "{years} &copy; CCR3i All Rights Reserved.",
   "register": "Register",
-  "completed_survey": "Congratulations, you have completed!",
+  "survey_completed_heading": "Congratulations, you have completed this survey",
   "welcome_to_icoach": "Welcome to {icoachName}",
   "eq": {
     "title": "E.Q. - Emotional Intelligence",
