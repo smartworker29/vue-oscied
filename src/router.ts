@@ -16,6 +16,7 @@ import TakenSurveyPage from '@/pages/survey/TakenSurveyPage.vue'
 import CompleteSurveyMessagePage from '@/pages/survey/CompleteSurveyMessagePage.vue'
 import DpChildSurveyWelcomePage from '@/pages/survey/DpChildSurveyWelcomePage.vue'
 import DpChildSurveyCompletedPage from '@/pages/survey/DpChildSurveyCompletedPage.vue'
+import ResetPasswordPage from '@/pages/ResetPasswordPage.vue'
 
 Vue.use(Router)
 
@@ -32,6 +33,17 @@ const router = new Router({
       path: '/404',
       name: 'notFound',
       component: NotFoundPage
+    },
+    {
+      path: '/request-reset-password',
+      name: 'requestResetPassword',
+      component: ResetPasswordPage
+    },
+    {
+      path: '/reset-password/:email/:token',
+      name: 'resetPassword',
+      component: ResetPasswordPage,
+      props: true
     },
     {
       path: '/icoach/:accessCode([a-zA-Z0-9]{50})',

@@ -1,6 +1,13 @@
 import store from '@/store'
 import { BaseApiService } from '@/services/BaseApiService'
-import { User, RegistrationData, SignInData, UpdatePasswordData, UpdateUserData } from '@/interfaces/UserInterfaces'
+import {
+  User,
+  RegistrationData,
+  SignInData,
+  UpdatePasswordData,
+  UpdateUserData,
+  ResetPasswordData, RequestResetPasswordData,
+} from '@/interfaces/UserInterfaces'
 
 class UserService extends BaseApiService {
   checkEmailAvailability (email: string) : boolean {
@@ -46,6 +53,14 @@ class UserService extends BaseApiService {
       `/user/${userId}/change_password`,
       { updatePasswordForm: passwordData }
     )
+  }
+
+  requestResetPassword (passwordData: RequestResetPasswordData): boolean {
+    return this.callMethod('post', '/public/request-reset-password', { passwordRequestForm: passwordData })
+  }
+
+  resetPassword (email: string, token: string, passwordData: ResetPasswordData): boolean {
+    return this.callMethod('post', `public/reset-password/${email}/${token}`, { passwordResetForm: passwordData })
   }
 }
 
