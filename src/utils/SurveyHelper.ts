@@ -107,7 +107,7 @@ class SurveyHelper {
     }
   }
 
-  checkSurveyInfo (survey: SurveyInfo) {
+  checkSurveyInfo (survey: SurveyInfo) : void {
     const now = dayjs().format('YYYY-MM-DD')
 
     if (!survey.validFrom || !survey.validTo) {
