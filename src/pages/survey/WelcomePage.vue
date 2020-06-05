@@ -107,6 +107,18 @@ export default class WelcomePage extends Vue {
         this.surveyData = SurveyLocalStorageHelper.getSurveyUser(this.surveyProduct, this.surveyUserInfo.surveyUserId)
       }
 
+      if (this.isAuthenticated && !this.isUncompletedSurvey && this.surveyInfo && !this.surveyInfo.isUnlimitedAccess) {
+        const completedSurveyUserInfo = await SurveyService.getCompletedSurveyUser(
+          this.surveyProduct,
+          this.productSurveyId,
+          this.accessCode
+        )
+
+        if (completedSurveyUserInfo && completedSurveyUserInfo.isCompleted) {
+          this.$router.push({ name: 'survey.complete', params: { title: `You've already passed this survey` } })
+        }
+      }
+
       this.$store.commit('survey/setTakenSurveyData', {
         productSurveyId: this.productSurveyId,
         productSurveyType: this.surveyProduct,
