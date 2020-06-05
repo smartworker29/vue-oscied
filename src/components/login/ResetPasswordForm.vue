@@ -1,6 +1,9 @@
 <template>
   <form class="form reset-password-form" @submit.prevent="submit" novalidate>
-    <div class="form-group" :class="{'has-error' : errors.first('newPassword')}">
+    <h2>{{ $t('password_reset.heading1') }}</h2>
+    <p><strong>{{ $t('password_reset.heading2') }}</strong></p>
+    <p>{{ $t('password_reset.instructions') }}</p>
+    <div class="form-group" :class="{'has-error' : errors.first('newPassword')}" style="margin-top: 25px">
       <label>{{ $t('password') }}</label>
       <input name="newPassword"
              type="password"
@@ -85,3 +88,9 @@ export default class ResetPasswordForm extends Vue {
   }
 }
 </script>
+
+<style>
+  .reset-password-form {
+    color: black;
+  }
+</style>
