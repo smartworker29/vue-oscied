@@ -37,7 +37,7 @@
     "confirm": "Confirm"
   },
   "button_g": {
-    "confirm_order": "Confirm Order",
+    "confirm_order": "Confirm",
     "register": "Register",
     "sign_in": "Sign In",
     "sign_up": "Sign Up",
@@ -89,11 +89,11 @@
   "welcome_to_survey": "Welcome to {surveyName}",
   "not_found_message": "Sorry, we couldn't find what you were looking for.",
   "select": "Select",
-  "ready_to_start_dp_survey_part": "You are now ready to start part {nextPartNumber} of 3 of this questionnaire",
+  "ready_to_start_dp_survey_part": "You are now ready to start part {nextPartNumber} of this 3 part questionnaire",
   "continue": "Continue",
   "copy_right": "{years} &copy; CCR3i All Rights Reserved.",
   "register": "Register",
-  "survey_completed_heading": "Congratulations, you have completed this survey",
+  "survey_completed_heading": "Thank you, we have received your questionnaire.",
   "welcome_to_icoach": "Welcome to {icoachName}",
   "eq": {
     "title": "E.Q. - Emotional Intelligence",
