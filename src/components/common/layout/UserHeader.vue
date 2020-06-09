@@ -24,13 +24,13 @@
           </div>
           <div class="account-drop-down__content">
             <ul class="account-drop-down__menu-list">
+              <li>
+                <img :src="require('@/assets/icons/icon-dashboard-white.svg')">
+                <span>{{ $t('dashboard') }}</span>
+              </li>
               <li @click="$router.push({ name: 'account' }); isActiveAccountMenu = false">
                 <img :src="require('@/assets/icons/account.svg')">
                 <span>{{ $t('account') }}</span>
-              </li>
-              <li>
-                <img :src="require('@/assets/icons/settings.svg')">
-                <span>{{ $t('settings')}}</span>
               </li>
               <li @click.prevent="logout">
                 <img :src="require('@/assets/icons/icon-logout-white.svg')">
