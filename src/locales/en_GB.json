@@ -23,6 +23,8 @@
   "private_policy": "Privacy Policy",
   "data_policy": "Data Policy",
   "request_reset_password_title": "Enter your email address below and we will get in touch with instructions on how to reset your password",
+  "request_reset_password_message": "We have sent you an email to '{email}'. Please check your mailbox. If you don't get an email please check your spam mail folder and settings.",
+  "reset_password_success": "Your password was successfully updated!",
   "button_g": {
     "confirm_order": "Confirm Order",
     "register": "Register",

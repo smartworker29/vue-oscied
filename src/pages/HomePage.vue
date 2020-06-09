@@ -8,6 +8,7 @@
           </div>
       </div> -->
       <div class="auth-content">
+        <p class="message" v-if="message">{{ message }}</p>
         <div class="welcome-info">
           <span class="welcome-sub-title">{{ $t('welcome_to_survey', { surveyName: 'CCR3 Onesource' }) }}</span>
         </div>
@@ -18,7 +19,6 @@
               <button @click="displayedForm = 'signIn'" :class="{ 'active': displayedForm === 'signIn' }">{{ $t('sign_in') }}</button>
             </div>
             <div class="form-content">
-              <p class="message" v-if="message">{{ message }}</p>
               <div v-if="displayedForm === 'signIn'" class="sign-form">
                 <SignInForm @changeForm="changeForm"/>
               </div>
@@ -108,8 +108,8 @@ export default class HomePage extends Vue {
   .auth-content {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
     @media only screen and (max-width: 600px) {
-      flex-wrap: wrap;
       .welcome-info {
         max-width: 100%;
       }
@@ -175,8 +175,12 @@ export default class HomePage extends Vue {
   }
 
   .message {
-    margin-top: 5px;
-    color: #000;
+    width: 100%;
+    background: #77bb41;
+    margin: -15px 0 10px;
+    text-align: center;
+    padding: 10px;
+    font-size: 20px;
   }
 
 </style>

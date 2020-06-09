@@ -23,6 +23,8 @@
   "private_policy": "سياسة خاصة",
   "data_policy": "سياسة البيانات",
   "request_reset_password_title": "Arabic: Enter your email address below and we will get in touch with instructions on how to reset your password",
+  "request_reset_password_message": "Arabic: We have sent you an email to '{email}'. Please check your mailbox. If you don't get an email please check your spam mail folder and settings.",
+  "reset_password_success": "Arabic: Your password was successfully updated!",
   "button_g": {
     "confirm_order": "أكد الطلب",
     "register": "تسجيل",
