@@ -1,9 +1,7 @@
 <template>
   <div class="survey-completed-page-completed">
-    <h1>{{ $t('completed_survey') }}</h1>
-    <div>
-      <h2>{{ title }}</h2>
-    </div>
+    <h1> {{ title || 'CCR3 Onesource' }}</h1>
+    {{ reason ? $t(reason) : $t('completed_survey') }}
     <div>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse nec enim risus. Mauris efficitur felis lacinia, aliquam mauris a, imperdiet turpis. Morbi fringilla urna eros, at mattis dui sagittis ac. Curabitur eu enim nisl. Nullam ac feugiat sapien. Quisque eu purus ut diam imperdiet viverra sed at nulla. In pharetra hendrerit vestibulum.
@@ -21,6 +19,9 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 export default class CompleteSurveyMessagePage extends Vue {
   @Prop({ default: '' })
   title?: string
+
+  @Prop({ default: null })
+  reason?: string | null
 }
 </script>
 

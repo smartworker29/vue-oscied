@@ -77,6 +77,7 @@
   "register": "تسجيل",
   "copy_right": "Arabic: {years} &copy; CCR3i All Rights Reserved.",
   "completed_survey": "Arabic: You completed the survey!",
+  "survey_has_already_passed": "Arabic: You've already passed this survey",
   "please_register": "Arabic: If you are already registered, please {signIn}. Otherwise please use our quick registration form.",
   "welcome_to_icoach": "Arabic: Welcome to {icoachName}",
   "eq": {

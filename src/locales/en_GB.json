@@ -78,6 +78,7 @@
   "copy_right": "{years} &copy; CCR3i All Rights Reserved.",
   "register": "Register",
   "completed_survey": "Congratulations, you have completed!",
+  "survey_has_already_passed": "You've already passed this survey",
   "welcome_to_icoach": "Welcome to {icoachName}",
   "eq": {
     "title": "E.Q. - Emotional Intelligence",

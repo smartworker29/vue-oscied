@@ -78,6 +78,7 @@
   "copy_right": "Deutsch: {years} &copy; CCR3i All Rights Reserved.",
   "register": "Deutsch: Register",
   "completed_survey": "Deutsch: You completed the survey!",
+  "survey_has_already_passed": "Deutsch: You've already passed this survey",
   "welcome_to_icoach": "Deutsch: Welcome to {icoachName}",
   "eq": {
     "title": "Deutsch: E.Q. - Emotional Intelligence",
