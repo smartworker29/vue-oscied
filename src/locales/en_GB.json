@@ -8,9 +8,9 @@
   "sorting": "Sorting",
   "back": "Back",
   "sorting_g": {
-    "description": "Reorder the phrases below with what you consider the best at the top",
+    "description": "Reorder the phrases below with what you consider the best at the top.",
     "drag": {
-      "tip": "Drag and drop these phrases and rank them in order from top to bottom"
+      "tip": "Drag and drop these phrases and rank them in order from top to bottom."
     },
     "tap": {
       "tip": "Tap these phrases in order to rank them from top to bottom"
