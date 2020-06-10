@@ -1,6 +1,9 @@
 <template>
   <form class="form reset-password-form" @submit.prevent="submit" novalidate>
-    <div class="form-group" :class="{'has-error' : errors.first('newPassword')}">
+    <h2>{{ $t('password_reset.heading1') }}</h2>
+    <p><strong>{{ $t('password_reset.heading2') }}</strong></p>
+    <p>{{ $t('password_reset.instructions') }}</p>
+    <div class="form-group" :class="{'has-error' : errors.first('newPassword')}" style="margin-top: 25px">
       <label>{{ $t('password') }}</label>
       <input name="newPassword"
              type="password"
@@ -63,7 +66,7 @@ export default class ResetPasswordForm extends Vue {
 
     try {
       const passwordResponse = await UserService.resetPassword(this.email, this.token, this.passwordForm)
-      this.$router.push({ name: 'home', params: { message: this.$tc('reset_password_success') } })
+      this.$router.push({ name: 'home', params: { message: this.$tc('password_reset.success_message') } })
     } catch (error) {
       if ('response' in error && error.response.status === 400) {
         this.handleResetPasswordErrors(error.response.data, this.passwordForm)
@@ -85,3 +88,9 @@ export default class ResetPasswordForm extends Vue {
   }
 }
 </script>
+
+<style>
+  .reset-password-form {
+    color: black;
+  }
+</style>

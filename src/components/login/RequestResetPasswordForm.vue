@@ -1,7 +1,9 @@
 <template>
   <form class="form request-reset-password-form" @submit.prevent="submit" novalidate>
-    <h4>{{ $t('request_reset_password_title') }}</h4>
-    <div class="form-group" :class="{'has-error' : errors.first('email')}">
+    <h2>{{ $t('password_request.heading1') }}</h2>
+    <p><strong>{{ $t('password_request.heading2') }}</strong></p>
+    <p>{{ $t('password_request.instructions') }}</p>
+    <div class="form-group" :class="{'has-error' : errors.first('email')}" style="margin-top: 25px">
       <label>{{ $t('email_address') }}</label>
       <input name="email"
              type="text"
@@ -17,8 +19,8 @@
     </div>
 
     <div class="form-actions form-actions-justified">
-      <span class="switch-form" @click="$router.back()">{{ $t('back') }}</span>
-      <button type="submit" class="btn btn-success">{{ $t('button_g.reset') }}</button>
+      <span class="switch-form" @click="$router.back()">{{ $t('password_request.cancel') }}</span>
+      <button type="submit" class="btn btn-success">{{ $t('password_request.confirm') }}</button>
     </div>
   </form>
 </template>
@@ -42,7 +44,7 @@ export default class RequestResetPasswordForm extends Vue {
       const passwordResponse = await UserService.requestResetPassword({ username: this.email, origin: this.$router.resolve('reset-password').href })
       this.$validator.reset()
       this.error = ''
-      this.$router.push({ name: 'home', params: { message: this.$tc('request_reset_password_message', 1, { email: this.email }) } })
+      this.$router.push({ name: 'home', params: { message: this.$tc('password_request.message', 1, { email: this.email }) } })
     } catch (error) {
       const response: AxiosResponse = error.response
       if (response) {

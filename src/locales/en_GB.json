@@ -22,8 +22,22 @@
   "rights_reserved": "All Rights Reserved",
   "private_policy": "Privacy Policy",
   "data_policy": "Data Policy",
+  "password_request": {
+    "heading1": "Reset your password",
+    "heading2": "Step 1",
+    "instructions": "Enter the email address you used when you set up your account. We will then email you a link to a secure page where you can create a new password.",
+    "message": "We have sent you an email to '{email}'. Please check your mailbox. If you don't get an email please check your spam mail folder and settings.",
+    "cancel": "Cancel",
+    "confirm": "Confirm"
+  },
+  "password_reset": {
+    "heading1": "Reset your password",
+    "heading2": "Step 2",
+    "instructions": "Create your new CCR3 password. You will be asked for this password the next time you book cheap flights or log into your account.",
+    "cancel": "Cancel",
+    "confirm": "Confirm"
+  },
   "request_reset_password_title": "Enter your email address below and we will get in touch with instructions on how to reset your password",
-  "request_reset_password_message": "We have sent you an email to '{email}'. Please check your mailbox. If you don't get an email please check your spam mail folder and settings.",
   "reset_password_success": "Your password was successfully updated!",
   "button_g": {
     "confirm_order": "Confirm Order",
@@ -42,8 +56,7 @@
     "add_photo": "Add Picture",
     "start_survey": "Start Survey",
     "continue_survey": "Continue Survey",
-    "start_icoach": "Start",
-    "reset": "Reset"
+    "start_icoach": "Start"
   },
   "email_address": "Email Address",
   "remember_me": "Remember Me",
@@ -57,7 +70,7 @@
   "phone_number": "Phone Number",
   "email_already_user": "Email Address is already used",
   "gender_is_required": "Gender field is required",
-  "forgot_password": "Forgotten your Password?",
+  "forgot_password": "Forgotten your details?",
   "no_account": "No account? Sign up",
   "already_registered": "Already registered? Sign in",
   "current_password": "Current",
