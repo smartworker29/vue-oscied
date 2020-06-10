@@ -4,10 +4,9 @@
     <div :class="{'progress-flex': !showPercentInside }">
       <div class="progress">
         <div class="progress-bar progress-bar-striped progress-bar-animated"
-            v-if="processedPercent"
-            role="progressbar"
-            :style="`width: ${processedPercent}%;`" />
-        <span v-if="showPercentInside && percentage" class="progress-percentage">{{ formattedProcessedItemsCount }}%</span>
+             v-if="processedPercent"
+             role="progressbar"
+             :style="`width: ${processedPercent}%;`"/>
       </div>
       <span v-if="!(showPercentInside && percentage)" class="progress-percentage">{{ processedPercent }}%</span>
     </div>
@@ -72,7 +71,7 @@ export default class Progress extends Vue {
   }
 
   get formattedProcessedItemsCount () : string|0 {
-    return this.percentage && this.processedPercent ? this.processedPercent.toFixed(2) : 0
+    return this.percentage && this.processedPercent ? this.processedPercent.toFixed(0) : 0
   }
 }
 </script>
@@ -80,18 +79,21 @@ export default class Progress extends Vue {
 <style lang="scss">
   .progress {
     width: 240px;
-    height: 16px;
+    background-color: #e6f3fa;
+    border-color: transparent;
+    height: 9px;
     border-radius: 8px;
-    border: solid 1px #d6efff;
-    background-color: #ffffff;
     position: relative;
+    margin-top: 6px;
   }
 
   .progress-bar {
-    height: 15px;
-    border-radius: 8px;
-    border: solid 1px #bdddff;
-    background: linear-gradient(to bottom, rgba(214,239,255,0.52) 0%, rgba(214,239,255,1) 100%);
+    height: 9px;
+    border-radius: 5px;
+    background: #00cdbf;
+    border: none;
+    margin-top: -1px;
+    margin-left: -1px;
   }
 
   .progress-percentage {

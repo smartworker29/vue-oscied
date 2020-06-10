@@ -29,9 +29,9 @@
                                  @moveToOrder="moveItemToOrder"/>
       </div>
     </div>
-    <button class="btn btn-primary btn-primary-active"
+    <button class="btn"
             @click="updateOrder"
-            :class="{ disabled : isConfirmDisabled }"
+            :class="{ 'btn-primary' : isConfirmDisabled, 'btn-success' : !isConfirmDisabled}"
             :disabled="isConfirmDisabled ">{{ $t('button_g.confirm_order') }}</button>
   </div>
 </template>
