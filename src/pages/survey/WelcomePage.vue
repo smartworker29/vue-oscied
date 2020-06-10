@@ -115,7 +115,7 @@ export default class WelcomePage extends Vue {
         )
 
         if (completedSurveyUserInfo && completedSurveyUserInfo.isCompleted) {
-          this.$router.push({ name: 'survey.complete', params: { title: `You've already passed this survey` } })
+          this.$router.push({ name: 'survey.complete', params: { title: this.surveyInfo.title, reason: 'survey_has_already_passed' } })
         }
       }
 

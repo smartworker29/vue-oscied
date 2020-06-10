@@ -96,6 +96,7 @@
   "copy_right": "🇦🇪 {years} &copy; CCR3i All Rights Reserved.",
   "survey_completed_heading": "🇦🇪 You completed the survey!",
   "please_register": "🇦🇪 If you are already registered, please {signIn}. Otherwise please use our quick registration form.",
+  "survey_has_already_passed": "Arabic: You've already passed this survey",
   "welcome_to_icoach": "🇦🇪 Welcome to {icoachName}",
   "eq": {
     "title": "🇦🇪 E.Q. - Emotional Intelligence",
