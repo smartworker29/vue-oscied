@@ -87,7 +87,6 @@
   "profile_successfully_changed": "Your changes have been saved.",
   "please_register": "If you are already registered, please {signIn}. Otherwise please use our quick registration form.",
   "welcome_to_survey": "Welcome to {surveyName}",
-  "welcome_to_survey": "Welcome to {surveyName}",
   "not_found_message": "Sorry, we couldn't find what you were looking for.",
   "select": "Select",
   "ready_to_start_dp_survey_part": "You are now ready to start part {nextPartNumber} of this 3 part questionnaire",
@@ -122,6 +121,8 @@
     "next": "Next",
     "completed": "Skills completed",
     "you_have_answered_already": "You've already answered to the questions",
+    "required_field": "This field is required",
+    "submit_test": "Submit test",
     "comments": {
       "leave_a_comment": "Leave a comment",
       "leave_your_comment": "Leave your comment",
