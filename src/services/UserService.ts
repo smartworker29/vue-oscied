@@ -6,7 +6,8 @@ import {
   SignInData,
   UpdatePasswordData,
   UpdateUserData,
-  ResetPasswordData, RequestResetPasswordData,
+  ResetPasswordData,
+  RequestResetPasswordData
 } from '@/interfaces/UserInterfaces'
 
 class UserService extends BaseApiService {
@@ -61,6 +62,14 @@ class UserService extends BaseApiService {
 
   resetPassword (email: string, token: string, passwordData: ResetPasswordData): boolean {
     return this.callMethod('post', `public/reset-password/${email}/${token}`, { passwordResetForm: passwordData })
+  }
+
+  async uploadImage (userId: number, data: FormData) {
+    return this.callMethod('post', `/user/${userId}/upload_picture`, data)
+  }
+
+  async deleteImage (userId: number, fileName: string) {
+    return this.callMethod('delete', `/user/${userId}/delete_picture`, null, null, { data: { fileName } })
   }
 }
 
