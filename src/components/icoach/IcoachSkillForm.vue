@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="totalScore">
-      <p>{{ $t('skills.you_have_answered_already') }}</p>
+      <p>{{ $t('icoach.you_have_answered_already') }}</p>
       <div class="icoach-skill-buttons">
         <button class="btn btn-primary" @click="changeStep('prev')">{{ $t('icoach.back')}}</button>
         <button class="btn btn-primary btn-primary-active" @click="changeStep('next')">{{ $t('icoach.next')}}</button>
@@ -28,11 +28,11 @@
           />
           <span></span>
         </label>
-        <p class="error" v-if="errors.has(`${question.id}_option`)">This field is required</p>
+        <p class="error" v-if="errors.has(`${question.id}_option`)">{{ $t('icoach.required_field') }}</p>
       </div>
       <div class="icoach-skill-buttons">
         <button class="btn btn-primary" @click="changeStep('prev')">{{ $t('icoach.back')}}</button>
-        <button class="btn btn-primary btn-primary-active" type="submit">Submit test</button>
+        <button class="btn btn-primary btn-primary-active" type="submit">{{ $t('icoach.submit_test')}}</button>
       </div>
     </form>
   </div>

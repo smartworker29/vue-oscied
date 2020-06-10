@@ -126,6 +126,8 @@
     "next": "Next",
     "completed": "Skills completed",
     "you_have_answered_already": "You've already answered to the questions",
+    "required_field": "This field is required",
+    "submit_test": "Submit test",
     "comments": {
       "leave_a_comment": "Leave a comment",
       "leave_your_comment": "Leave your comment",

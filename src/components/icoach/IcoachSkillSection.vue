@@ -32,15 +32,14 @@
             {{ $t('icoach.next') }}
           </button>
         </div>
+        <hr class="separator">
+        <icoach-skill-comment
+          :icoach-skill="icoachSkill"
+          :icoach-user-data="icoachUserData"
+          :step-id="currentStep"
+        />
       </div>
-      <hr class="separator">
     </div>
-
-    <icoach-skill-comment
-      :icoach-skill="icoachSkill"
-      :icoach-user-data="icoachUserData"
-      :step-id="currentStep"
-    />
   </div>
 </template>
 

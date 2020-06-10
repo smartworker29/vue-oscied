@@ -15,7 +15,7 @@
       <div class="breadcrumbs show-mobile">
         <router-link :to="{ name: 'icoach.dashboard', params: { icoachUserId: icoachUserId } }" class="breadcrumbs__item">
           <img src="@/assets/icons/icon-arrow-down-blue.svg" class="breadcrumbs__arrow-left">
-          <span>{{ $t(`skills.categories.${icoachUserData.icoachSkillCategoryId}`) }}</span>
+          <span>{{ $t(`icoach.categories.${icoachUserData.icoachSkillCategoryId}`) }}</span>
         </router-link>
       </div>
     </div>
