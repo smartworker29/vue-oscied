@@ -103,6 +103,10 @@ export default class WelcomePage extends Vue {
       this.productSurveyId = response.surveyProductId
       this.isUncompletedSurvey = SurveyLocalStorageHelper.hasBegunSurvey(this.surveyProduct, this.productSurveyId)
 
+      if (!this.isAuthenticated) {
+        EventBus.$emit('languageChanged', this.surveyInfo.defaultLanguage)
+      }
+
       if (this.surveyUserInfo && SurveyLocalStorageHelper.hasSurveyUser(this.surveyProduct, this.surveyUserInfo.surveyUserId)) {
         this.surveyData = SurveyLocalStorageHelper.getSurveyUser(this.surveyProduct, this.surveyUserInfo.surveyUserId)
       }
