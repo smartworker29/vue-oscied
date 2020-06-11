@@ -7,7 +7,7 @@
           track-by="locale"
           label="localeName"
           :show-labels="false"
-          @select="changeLocale($event)"
+          @select="changeLocaleSwitcher($event)"
           :options="availableLocales">
             <template slot="singleLabel" slot-scope="{ option }">
               <span class="flag-icon" :class="option.class"></span>
@@ -24,10 +24,11 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-property-decorator'
 import LocaleHelper from '@/utils/LocaleHelper'
 import { LocaleData } from '@/interfaces/UserInterfaces'
 import { Locale } from '@/interfaces/Locale'
+import { EventBus } from '@/main'
 
 @Component({ name: 'LangSwitcher' })
 export default class LangSwitcher extends Vue {
@@ -35,13 +36,28 @@ export default class LangSwitcher extends Vue {
   availableLocales: LocaleData[] = []
 
   created () {
+    EventBus.$on('languageChanged', (changedLanguage: string) => {
+      if (!LocaleHelper.getDefaultLocale()) {
+        const locale = this.availableLocales.find(lang => lang.locale === changedLanguage) || this.availableLocales.find(lang => lang.locale === 'en_GB')
+
+        if (locale && this.currentLocale && locale.locale !== this.currentLocale.locale) {
+          this.changeLocale(locale)
+        }
+      }
+    })
+
     let locale = process.env.VUE_APP_I18N_FALLBACK_LOCALE || 'en_GB'
     this.availableLocales = LocaleHelper.availableLocalesData
     locale = LocaleHelper.getUserLocale()
     this.currentLocale = this.availableLocales.find(lang => lang.locale === locale) || null
   }
 
-  changeLocale (locale: Locale) {
+  changeLocaleSwitcher (locale: Locale) {
+    LocaleHelper.setDefaultLocale(locale.locale)
+    this.changeLocale(locale)
+  }
+
+  private changeLocale (locale: Locale) {
     this.currentLocale = locale
     LocaleHelper.setUserLocale(this.currentLocale.locale)
     window.location.reload()

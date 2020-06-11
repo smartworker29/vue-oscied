@@ -84,6 +84,10 @@ export default class WelcomePage extends Vue {
       const response = await IcoachService.getIcoachCourseInfo(this.accessCode)
       IcoachHelper.checkIcoachCourse(response)
       this.icoachCourse = response
+
+      if (!this.isAuthenticated) {
+        EventBus.$emit('languageChanged', this.icoachCourse.defaultLanguage)
+      }
     } catch (error) {
       if (error instanceof TypeError) {
         this.error = error.message

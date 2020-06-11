@@ -27,7 +27,8 @@ const router = new Router({
     {
       path: '/',
       name: 'home',
-      component: HomePage
+      component: HomePage,
+      props: true
     },
     {
       path: '/404',

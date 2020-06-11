@@ -66,7 +66,7 @@ export default class ResetPasswordForm extends Vue {
 
     try {
       const passwordResponse = await UserService.resetPassword(this.email, this.token, this.passwordForm)
-      this.$router.push({ name: 'home' })
+      this.$router.push({ name: 'home', params: { message: this.$tc('password_reset.success_message') } })
     } catch (error) {
       if ('response' in error && error.response.status === 400) {
         this.handleResetPasswordErrors(error.response.data, this.passwordForm)

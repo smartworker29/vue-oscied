@@ -103,6 +103,10 @@ export default class WelcomePage extends Vue {
       this.productSurveyId = response.surveyProductId
       this.isUncompletedSurvey = SurveyLocalStorageHelper.hasBegunSurvey(this.surveyProduct, this.productSurveyId)
 
+      if (!this.isAuthenticated) {
+        EventBus.$emit('languageChanged', this.surveyInfo.defaultLanguage)
+      }
+
       if (this.surveyUserInfo && SurveyLocalStorageHelper.hasSurveyUser(this.surveyProduct, this.surveyUserInfo.surveyUserId)) {
         this.surveyData = SurveyLocalStorageHelper.getSurveyUser(this.surveyProduct, this.surveyUserInfo.surveyUserId)
       }
@@ -115,7 +119,7 @@ export default class WelcomePage extends Vue {
         )
 
         if (completedSurveyUserInfo && completedSurveyUserInfo.isCompleted) {
-          this.$router.push({ name: 'survey.complete', params: { title: `You've already passed this survey` } })
+          this.$router.push({ name: 'survey.complete', params: { title: this.surveyInfo.title, reason: 'survey_has_already_passed' } })
         }
       }
 
