@@ -17,7 +17,7 @@
           <div
             class="account-drop-down__select"
             @click="isActiveAccountMenu = !isActiveAccountMenu">
-            <img class="account-drop-down_user-image" :src="require('@/assets/user.png')">
+            <img class="account-drop-down_user-image" :src="user.image.fileURL || require('@/assets/user.png')">
             <span class="account-drop-down_user-name">{{ userName }}</span>
             <img v-if="!isActiveAccountMenu" :src="require('@/assets/icons/icon-arrow-down-xs-blue.svg')">
             <img v-else :src="require('@/assets/icons/icon-arrow-down-xs-white.svg')">

@@ -45,6 +45,13 @@ export abstract class BaseApiService {
             return responseKey && response.data.hasOwnProperty(responseKey)
               ? response.data[responseKey] : response.data
           })
+
+      case 'delete':
+        return this.api.delete(url, config)
+          .then((response: AxiosResponse) => {
+            return responseKey && response.data.hasOwnProperty(responseKey)
+              ? response.data[responseKey] : response.data
+          })
       default:
         throw new Error('An undefined method called.')
     }
