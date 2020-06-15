@@ -48,6 +48,8 @@ class SurveyService extends BaseApiService {
   }
 
   getCompletedSurveyUser (surveyProductType: string, surveyProductId: number, surveyAccessCode: string) : SurveyUserInfo | null {
+    surveyProductType = this.validateSurveyProductType(surveyProductType)
+
     return this.callMethod(
       'post',
       `/${surveyProductType}/survey/completed/user/get/`,

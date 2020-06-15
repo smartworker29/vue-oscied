@@ -6,7 +6,8 @@ import {
   SignInData,
   UpdatePasswordData,
   UpdateUserData,
-  ResetPasswordData, RequestResetPasswordData,
+  ResetPasswordData,
+  RequestResetPasswordData
 } from '@/interfaces/UserInterfaces'
 
 class UserService extends BaseApiService {
