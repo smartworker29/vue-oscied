@@ -24,9 +24,9 @@
           </div>
           <div class="account-drop-down__content">
             <ul class="account-drop-down__menu-list">
-              <li>
+              <li @click="$router.push({ name: 'home' }); isActiveAccountMenu = false">
                 <img :src="require('@/assets/icons/icon-dashboard-white.svg')">
-                <span>{{ $t('dashboard') }}</span>
+                <span>{{ $t('dashboard.title') }}</span>
               </li>
               <li @click="$router.push({ name: 'account' }); isActiveAccountMenu = false">
                 <img :src="require('@/assets/icons/account.svg')">
