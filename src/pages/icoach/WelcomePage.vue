@@ -51,6 +51,7 @@ import SignInForm from '@/components/signIn/SignInForm.vue'
 import SignUpForm from '@/components/signUp/SignUpForm.vue'
 import { EventBus } from '@/main'
 import { IcoachCategoriesEnum, IcoachCourse, IcoachUserInfo } from '@/interfaces/IcoachInterfaces'
+import { MainLogosTypes } from '@/interfaces/GeneralInterfaces'
 import IcoachService from '@/services/IcoachService'
 import IcoachLocalStorageHelper from '@/utils/IcoachLocalStorageHelper'
 import IcoachHelper from '@/utils/IcoachHelper'
@@ -88,6 +89,9 @@ export default class WelcomePage extends Vue {
       if (!this.isAuthenticated) {
         EventBus.$emit('languageChanged', this.icoachCourse.defaultLanguage)
       }
+
+      this.$store.commit('mainLogo/setLogos', response.logos)
+      this.$store.commit('mainLogo/setType', MainLogosTypes.ICOACH_LOGOS)
     } catch (error) {
       if (error instanceof TypeError) {
         this.error = error.message

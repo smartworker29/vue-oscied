@@ -55,7 +55,8 @@ import SignInForm from '@/components/signIn/SignInForm.vue'
 import SignUpForm from '@/components/signUp/SignUpForm.vue'
 import LangSwitcher from '@/components/common/layout/LangSwitcher.vue'
 import SurveyService from '@/services/SurveyService'
-import { ResponseProductSurveyInfo, SurveyInfo, SurveyUserInfo } from '@/interfaces/SurveyInterfaces'
+import { SurveyInfo, SurveyUserInfo } from '@/interfaces/SurveyInterfaces'
+import { MainLogosTypes } from '@/interfaces/GeneralInterfaces'
 import SurveyLocalStorageHelper from '@/utils/SurveyLocalStorageHelper'
 import SurveyHelper from '@/utils/SurveyHelper'
 import { EventBus } from '@/main'
@@ -92,7 +93,7 @@ export default class WelcomePage extends Vue {
       await this.beginSurvey()
     })
     try {
-      const response: ResponseProductSurveyInfo = await SurveyService.getProductSurveyInfo(
+      const response = await SurveyService.getProductSurveyInfo(
         this.surveyProduct,
         this.accessCode
       )
@@ -120,6 +121,7 @@ export default class WelcomePage extends Vue {
 
         if (completedSurveyUserInfo && completedSurveyUserInfo.isCompleted) {
           this.$router.push({ name: 'survey.complete', params: { title: this.surveyInfo.title, reason: 'survey_has_already_passed' } })
+          return
         }
       }
 
@@ -128,6 +130,9 @@ export default class WelcomePage extends Vue {
         productSurveyType: this.surveyProduct,
         surveyInfo: this.surveyInfo
       })
+
+      this.$store.commit('mainLogo/setLogos', response.survey.logos)
+      this.$store.commit('mainLogo/setType', MainLogosTypes.SURVEY_LOGOS)
     } catch (error) {
       // TODO::add handler to process for errors(go to 404)
       if (error instanceof TypeError) {
@@ -228,6 +233,9 @@ export default class WelcomePage extends Vue {
       productSurveyType: progress.nextSurveyPart.product,
       surveyInfo: nextSurveyProductInfo
     })
+
+    this.$store.commit('mainLogo/setLogos', nextSurveyProductInfo.logos)
+    this.$store.commit('mainLogo/setType', MainLogosTypes.SURVEY_LOGOS)
 
     this.$store.commit('survey/setTakenSurveyUserId', {
       productSurveyType: progress.nextSurveyPart.product,

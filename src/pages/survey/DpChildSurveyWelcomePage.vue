@@ -16,6 +16,7 @@
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import { Getter } from 'vuex-class'
 import { SurveyInfo } from '@/interfaces/SurveyInterfaces'
+import { MainLogosTypes } from '@/interfaces/GeneralInterfaces'
 import SurveyLocalStorageHelper from '@/utils/SurveyLocalStorageHelper'
 import SurveyHelper from '@/utils/SurveyHelper'
 import SurveyService from '@/services/SurveyService'
@@ -104,6 +105,9 @@ export default class DpChildSurveyWelcomePage extends Vue {
       productSurveyType: progress.nextSurveyPart.product,
       surveyInfo: nextSurveyProductInfo
     })
+
+    this.$store.commit('mainLogo/setLogos', nextSurveyProductInfo.logos)
+    this.$store.commit('mainLogo/setType', MainLogosTypes.SURVEY_LOGOS)
 
     this.$store.commit('survey/setTakenSurveyUserId', {
       productSurveyType: progress.nextSurveyPart.product,
