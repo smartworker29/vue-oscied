@@ -1,0 +1,151 @@
+.dashboard-content {
+  padding: 0 1.4% 0 4.3%;
+  width: 100%;
+  justify-content: space-between;
+
+  .dashboard-content-title {
+    font-size: 30px;
+    font-weight: 400;
+    color: $main-text-color;
+    margin-bottom: 15px;
+    margin-top: 15px;
+  }
+
+  @media only screen and (max-width: 600px) {
+    padding: 8px 0 0 0;
+    .dashboard-content-title {
+      font-size: 24px;
+    }
+    .dashboard-content-subtitle {
+      font-size: 18px;
+    }
+  }
+}
+
+.dashboard-items {
+  justify-content: flex-start;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.dashboard-item {
+  cursor: pointer;
+  width: calc(23% - 10px);
+  border-radius: 12px;
+  margin-right: 40px;
+  border: solid 1px #e6f3fa;
+  background-color: #f7fcff;
+  font-size: 20px;
+  line-height: 1.4;
+  letter-spacing: normal;
+  color: #071012;
+  text-decoration: none;
+  padding: 16px 15px;
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+
+  &:nth-child(4n) {
+    margin-right: 0;
+  }
+
+  @media only screen and (max-width: 1280px) {
+    width: calc(33% - 22px);
+    margin-right: 21px;
+
+    &:nth-child(4n) {
+      margin-right: 21px;
+    }
+
+    &:nth-child(3n) {
+      margin-right: 0;
+    }
+  }
+
+  @media only screen and (max-width: 980px) {
+    width: calc(50% - 14px);
+    margin-right: 28px;
+
+    &:nth-child(4n) {
+      margin-right: 28px;
+    }
+
+    &:nth-child(3n) {
+      margin-right: 28px;
+    }
+
+    &:nth-child(2n) {
+      margin-right: 0px;
+    }
+  }
+
+  @media only screen and (max-width: 768px) {
+    width: 100%;
+    margin-right: 0px !important;
+  }
+
+  .progress {
+    width: calc(100% - 50px);
+    background-color: #e6f3fa;
+    border-color: transparent;
+    margin-right: 10px;
+    height: 9px;
+    .progress-bar {
+      height: 9px;
+      border-radius: 5px;
+      background: #00cdbf;
+      border: none;
+      margin-top: -1px;
+      margin-left: -1px;
+    }
+  }
+
+  .progress-wrapper {
+    padding-right: 4px;
+    width: 100%;
+    align-self: flex-end;
+  }
+
+  .progress-percentage {
+    font-size: 16px;
+  }
+}
+
+.dashboard-item-name,
+.dashboard-item-type,
+.dashboard-item-date {
+  font-stretch: normal;
+  font-style: normal;
+  letter-spacing: normal;
+  color: #071012;
+  width: 100%;
+}
+
+.dashboard-item-name {
+  font-size: 20px;
+  font-weight: 200;
+  line-height: 1.4;
+  margin-bottom: 0px;
+
+  @media only screen and (max-width: 1280px) {
+    font-size: 16px;
+  }
+
+  @media only screen and (max-width: 600px) {
+    font-size: 20px;
+  }
+}
+
+.dashboard-item-date {
+  font-size: 15px;
+  font-weight: 200;
+  line-height: 1.4;
+  margin-bottom: 2px;
+}
+
+.dashboard-item-type {
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 1.4;
+  margin-bottom: 2px;
+}
