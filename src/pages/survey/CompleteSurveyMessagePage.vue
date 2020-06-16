@@ -17,6 +17,10 @@ export default class CompleteSurveyMessagePage extends Vue {
 
   @Prop({ default: null })
   reason?: string | null
+
+  created (): void {
+    this.$store.commit('mainLogo/clearLogos')
+  }
 }
 </script>
 

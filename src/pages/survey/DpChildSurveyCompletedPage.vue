@@ -40,6 +40,7 @@ import SurveyService from '@/services/SurveyService'
 import SurveyHelper from '@/utils/SurveyHelper'
 import SurveyLocalStorageHelper from '@/utils/SurveyLocalStorageHelper'
 import { SurveyInfo } from '@/interfaces/SurveyInterfaces'
+import { MainLogosTypes } from '@/interfaces/GeneralInterfaces'
 
 @Component({ name: 'DpChildSurveyCompletedPage' })
 export default class DpChildSurveyCompletedPage extends Vue {
@@ -76,6 +77,8 @@ export default class DpChildSurveyCompletedPage extends Vue {
       return
     }
 
+    this.$store.commit('mainLogo/setLogos', this.$store.getters['survey/getDpSurveyLogo'])
+
     this.partCompleted = this.surveyProduct === 'eq' ? 1
       : this.surveyProduct === 'values' ? 2
         : this.surveyProduct === 'behaviours' ? 3
@@ -107,6 +110,9 @@ export default class DpChildSurveyCompletedPage extends Vue {
       productSurveyType: progress.nextSurveyPart.product,
       surveyInfo: nextSurveyProductInfo
     })
+
+    this.$store.commit('mainLogo/setLogos', nextSurveyProductInfo.logos)
+    this.$store.commit('mainLogo/setType', MainLogosTypes.SURVEY_LOGOS)
 
     await this.$store.commit('survey/setTakenSurveyUserId', {
       productSurveyType: progress.nextSurveyPart.product,

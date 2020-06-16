@@ -14,6 +14,7 @@ import SurveyHelper from '@/utils/SurveyHelper'
 import SurveyService from '@/services/SurveyService'
 import { SurveyData } from '@/interfaces/LocalStorageInterfaces'
 import { SurveyInfo } from '@/interfaces/SurveyInterfaces'
+import { MainLogosTypes } from '@/interfaces/GeneralInterfaces'
 
 @Component({
   name: 'TakenSurveyPage',
@@ -147,6 +148,9 @@ export default class TakenSurveyPage extends Vue {
       productSurveyType: 'discovery-process',
       surveyInfo: response.survey
     })
+
+    this.$store.commit('mainLogo/setLogos', nextSurveyProductInfo.logos)
+    this.$store.commit('mainLogo/setType', MainLogosTypes.SURVEY_LOGOS)
 
     this.$store.commit('survey/setTakenSurveyUserId', {
       productSurveyType: 'discovery-process',

@@ -1,5 +1,6 @@
 <template>
-  <div class="auth-container-wrapper">
+  <Dashboard  v-if="isAuthenticated"/>
+  <div class="auth-container-wrapper" v-else>
     <div class="auth-container">
       <!-- <div class="auth-header">
         <img class="logo" :src="require('@/assets/logo-ccr.svg')" />
@@ -12,7 +13,7 @@
         <div class="welcome-info">
           <span class="welcome-sub-title">{{ $t('welcome_to_survey', { surveyName: 'CCR3 Onesource' }) }}</span>
         </div>
-        <div class="auth-forms" v-if="!isAuthenticated">
+        <div class="auth-forms">
           <div class="form-wrapper">
             <div class="form-switcher">
               <button @click="displayedForm = 'signUp'" :class="{ 'active': displayedForm === 'signUp' }">{{ $t('register') }}</button>
@@ -38,6 +39,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 import { Getter } from 'vuex-class'
 import SignInForm from '@/components/signIn/SignInForm.vue'
 import SignUpForm from '@/components/signUp/SignUpForm.vue'
+import Dashboard from '@/components/dashboard/Dashboard.vue'
 import LangSwitcher from '@/components/common/layout/LangSwitcher.vue'
 
 @Component({
@@ -45,7 +47,8 @@ import LangSwitcher from '@/components/common/layout/LangSwitcher.vue'
   components: {
     SignInForm,
     SignUpForm,
-    LangSwitcher
+    LangSwitcher,
+    Dashboard
   }
 })
 export default class HomePage extends Vue {

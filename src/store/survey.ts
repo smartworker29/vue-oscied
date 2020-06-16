@@ -1,6 +1,13 @@
 import { Module } from 'vuex'
 import { RootState, SurveyState } from '@/store'
-import { Section, SurveyInfo, TakenSurveyData, NextDpSurveyPart, SurveyUserDto } from '@/interfaces/SurveyInterfaces'
+import {
+  Section,
+  SurveyInfo,
+  TakenSurveyData,
+  NextDpSurveyPart,
+  SurveyUserDto,
+  SurveyLogo
+} from '@/interfaces/SurveyInterfaces'
 
 export interface SurveyState {
   displayedBaseSurveyInfo: SurveyInfo | null
@@ -81,6 +88,14 @@ const survey: Module<SurveyState, RootState> = {
       return state.takenSurveySection && state.takenSurveySection.position != null
         ? state.takenSurveySection.position + 1
         : null
+    },
+    getDpSurveyLogo (state: SurveyState) : SurveyLogo[] {
+      return state.dpBaseSurveyInfo ? state.dpBaseSurveyInfo.logos : []
+    },
+    getCurrentLogos (state: SurveyState) : SurveyLogo[] {
+      return state.takenBaseSurveyInfo
+        ? state.takenBaseSurveyInfo.logos
+        : (state.dpBaseSurveyInfo ? state.dpBaseSurveyInfo.logos : [])
     }
   },
 

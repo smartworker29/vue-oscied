@@ -77,7 +77,6 @@
   "current_password": "Current",
   "new_password": "New password",
   "repeat_password": "Repeat Password",
-  "dashboard": "Dashboard",
   "account": "Account",
   "settings": "Settings",
   "logout": "Logout",
@@ -134,5 +133,17 @@
       "comments": "Comments",
       "on": "on"
     }
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "item_type": {
+      "eq": "E.Q.",
+      "values": "Values",
+      "behaviours": "Behaviours",
+      "dp": "Discovery Process",
+      "icoach": "iCoach"
+    },
+    "started_on": "Started on",
+    "completed_on": "Completed on"
   }
 }
