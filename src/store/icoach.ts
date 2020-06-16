@@ -3,6 +3,7 @@ import { RootState } from '@/store'
 import {
   IcoachCategorySkill,
   IcoachGeneralInfo,
+  IcoachLogo,
   IcoachSkill,
   IcoachSkillProgressData
 } from '@/interfaces/IcoachInterfaces'
@@ -36,6 +37,9 @@ const icoach: Module<IcoachState, RootState> = {
     },
     getIcoachSkillMenu (state: IcoachState) : IcoachCategorySkill[] | [] {
       return state.icoachSkillMenuInfo
+    },
+    getIcoachLogos (state: IcoachState) : IcoachLogo[] {
+      return state.icoachGeneralInfo ? state.icoachGeneralInfo.icoachCourse.logos : []
     }
   },
 

@@ -1,15 +1,7 @@
 <template>
   <div class="navbar">
     <div class="wrap">
-      <!-- <div class="hamburger-menu-wrapper">
-        <div class="hamburger-menu">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-      </div> -->
-      <SurveyLogos v-if="currentSurveyInfo" :items="currentSurveyInfo.logos || currentSurveyInfo.survey.logos" />
-      <img v-else class="navbar-logo" :src="require('@/assets/logo-ccr-black.svg')" />
+      <MainLogos />
     </div>
     <div class="wrap">
       <template v-if="isAuthenticated">
@@ -68,14 +60,13 @@ import { Vue, Component } from 'vue-property-decorator'
 import { Getter } from 'vuex-class'
 import UserService from '@/services/UserService'
 import { User } from '@/interfaces/UserInterfaces'
-import { SurveyInfo } from '@/interfaces/SurveyInterfaces'
-import SurveyLogos from '@/components/survey/SurveyLogos.vue'
+import MainLogos from '@/components/common/layout/MainLogos.vue'
 import LangSwitcher from '@/components/common/layout/LangSwitcher.vue'
 
 @Component({
   name: 'UserHeader',
   components: {
-    SurveyLogos,
+    MainLogos,
     LangSwitcher
   }
 })
@@ -85,9 +76,6 @@ export default class UserHeader extends Vue {
 
   @Getter('user/currentUser')
   user!: User
-
-  @Getter('survey/getDisplayedBaseSurveyInfo')
-  currentSurveyInfo!: SurveyInfo
 
   isActiveAccountMenu: boolean = false
 
