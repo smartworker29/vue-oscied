@@ -332,12 +332,12 @@ export default class WelcomePage extends Vue {
   .survey-content {
     color: #071012;
     overflow: hidden;
-    padding: 3.1% 39.5% 60px 5.5%;
-    @media only screen and (max-width: 1024px) {
-      padding: 4.1% 41.5% 60px 3.5%;
-    }
+    padding: 3.1% 5.5% 60px 5.5%;
+    // @media only screen and (max-width: 1024px) {
+    //   padding: 4.1% 41.5% 60px 3.5%;
+    // }
     @media only screen and (max-width: 768px) {
-      padding: 12px 12px 1px 10px;
+      // padding: 12px 12px 1px 10px;
       .btn {
         width: 100%;
       }
