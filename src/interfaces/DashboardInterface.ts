@@ -15,7 +15,7 @@ export interface DashboardSurveyItem extends DashboardBaseItem {
   }
 }
 
-export interface DashboardIcoachItem  extends DashboardBaseItem {
+export interface DashboardIcoachItem extends DashboardBaseItem {
   id: number
   icoachCourse: {
     id: number
