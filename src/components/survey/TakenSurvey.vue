@@ -8,11 +8,11 @@
         </span>
          <Progress :percentage="true" />
       </h1>
-      <p>
+      <!-- <p>
         {{ currentSectionData && currentSectionData.instructions
         ? currentSectionData.instructions : $t('sorting_g.description') }}
          <span class="survey-more">{{ $t('more')}} ></span>
-      </p>
+      </p> -->
     </div>
     <div class="survey-content">
       <router-view v-if="loadSections"
