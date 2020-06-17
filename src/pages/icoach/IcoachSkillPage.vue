@@ -1,52 +1,60 @@
 <template>
   <div class="icoach-skill-page">
-    <div class="icoach-skill-page__header">
-      <div class="breadcrumbs hide-mobile">
-        <router-link :to="{ name: 'icoach.welcome', params: { accessCode: icoachUserData.icoachAccessCode } }" class="breadcrumbs__item">
-          <span>{{ icoachUserData.icoachCourseTitle }}</span>
-        </router-link>
-        <img src="@/assets/icons/arrow-down-xs.svg" class="breadcrumbs__arrow-right">
-        <router-link :to="{ name: 'icoach.dashboard', params: { icoachUserId: icoachUserId } }" class="breadcrumbs__item">
-          <span>{{ $t(`icoach.categories.${icoachUserData.icoachSkillCategoryId}`) }}</span>
-        </router-link>
-        <img src="@/assets/icons/arrow-down-xs.svg" class="breadcrumbs__arrow-right">
-        <span class="breadcrumbs__item breadcrumbs__item--last">{{ icoachSkill ? icoachSkill.name : '' }}</span>
-      </div>
-      <div class="breadcrumbs show-mobile">
-        <router-link :to="{ name: 'icoach.dashboard', params: { icoachUserId: icoachUserId } }" class="breadcrumbs__item">
-          <img src="@/assets/icons/icon-arrow-down-blue.svg" class="breadcrumbs__arrow-left">
-          <span>{{ $t(`icoach.categories.${icoachUserData.icoachSkillCategoryId}`) }}</span>
-        </router-link>
-      </div>
+    <div class="icoach-header" v-if="error">
+      <h1 class="icoach-title">
+        <span>{{ icoachTitle }}</span>
+      </h1>
+      <h2>{{ error }}</h2>
     </div>
+    <template v-else>
+      <div class="icoach-skill-page__header">
+        <div class="breadcrumbs hide-mobile">
+          <router-link :to="{ name: 'icoach.welcome', params: { accessCode: icoachUserData.icoachAccessCode } }" class="breadcrumbs__item">
+            <span>{{ icoachUserData.icoachCourseTitle }}</span>
+          </router-link>
+          <img src="@/assets/icons/arrow-down-xs.svg" class="breadcrumbs__arrow-right">
+          <router-link :to="{ name: 'icoach.dashboard', params: { icoachUserId: icoachUserId } }" class="breadcrumbs__item">
+            <span>{{ $t(`icoach.categories.${icoachUserData.icoachSkillCategoryId}`) }}</span>
+          </router-link>
+          <img src="@/assets/icons/arrow-down-xs.svg" class="breadcrumbs__arrow-right">
+          <span class="breadcrumbs__item breadcrumbs__item--last">{{ icoachSkill ? icoachSkill.name : '' }}</span>
+        </div>
+        <div class="breadcrumbs show-mobile">
+          <router-link :to="{ name: 'icoach.dashboard', params: { icoachUserId: icoachUserId } }" class="breadcrumbs__item">
+            <img src="@/assets/icons/icon-arrow-down-blue.svg" class="breadcrumbs__arrow-left">
+            <span>{{ $t(`icoach.categories.${icoachUserData.icoachSkillCategoryId}`) }}</span>
+          </router-link>
+        </div>
+      </div>
 
-    <div v-if="displaySkill" class="icoach-skill-page__content">
-      <icoach-skill-list
-        :icoach-user-data="icoachUserData"
-        :step-id="icoachSkillStep"
-        @change-step="pushToAnotherStep"
-      />
-      <icoach-skill-section
-        :icoach-skill="icoachSkill"
-        :icoach-user-data="icoachUserData"
-        :step-id="icoachSkillStep"
-        @change-step="pushToAnotherStep"
-      />
-    </div>
-
+      <div v-if="displaySkill" class="icoach-skill-page__content">
+        <icoach-skill-list
+          :icoach-user-data="icoachUserData"
+          :step-id="icoachSkillStep"
+          @change-step="pushToAnotherStep"
+        />
+        <icoach-skill-section
+          :icoach-skill="icoachSkill"
+          :icoach-user-data="icoachUserData"
+          :step-id="icoachSkillStep"
+          @change-step="pushToAnotherStep"
+        />
+      </div>
+    </template>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
+import { Getter } from 'vuex-class'
 import IcoachLocalStorageHelper from '@/utils/IcoachLocalStorageHelper'
-import { IcoachData } from '@/interfaces/LocalStorageInterfaces'
-import { IcoachCategorySkill, IcoachSkill } from '@/interfaces/IcoachInterfaces'
+import { IcoachData, IcoachGeneralInfo, IcoachCategorySkill, IcoachSkill, MainLogosTypes } from '@/interfaces'
 import IcoachService from '@/services/IcoachService'
 import IcoachSkillSection from '@/components/icoach/IcoachSkillSection.vue'
 import IcoachSkillList from '@/components/icoach/IcoachSkillList.vue'
 import Breadcrumb from '@/components/common/breadcrumbs/Breadcrumb.vue'
 import { BreadcrumbElement } from '@/interfaces/BreadcrumbsInterfaces'
+import IcoachHelper from '@/utils/IcoachHelper'
 
 @Component({
   name: 'IcoachSkillPage',
@@ -60,6 +68,9 @@ export default class IcoachSkillPage extends Vue {
   @Prop({ required: true })
   stepId!: number
 
+  @Getter('icoach/getIcoachInfo')
+  icoachInfo!: IcoachGeneralInfo | null
+
   @Watch('skillId')
   onIcoachUserIdChanged () {
     this.loadData()
@@ -70,20 +81,46 @@ export default class IcoachSkillPage extends Vue {
   displaySkill: boolean = false
   icoachSkillStep: number = 0
   icoachSkillCategoryInfo: IcoachCategorySkill | null = null
+  error: string | null = null
+  icoachTitle: string = ''
 
   async created () {
-    this.loadData()
-  }
-
-  async loadData (): Promise<void> {
-    if (!IcoachLocalStorageHelper.hasIcoachUser(this.icoachUserId)) {
+    if (!IcoachLocalStorageHelper.hasIcoachUser(this.icoachUserId) ||
+      !(this.icoachUserData = IcoachLocalStorageHelper.getIcoachUser(this.icoachUserId))
+    ) {
       this.$router.push({ name: 'notFound' })
 
       return
     }
 
-    this.icoachUserData = IcoachLocalStorageHelper.getIcoachUser(this.icoachUserId)
+    this.icoachTitle = this.icoachUserData.icoachCourseTitle
 
+    if (this.icoachInfo === null && this.icoachUserData.icoachAccessCode) {
+      const response = await IcoachService.getIcoachCourseInfo(this.icoachUserData.icoachAccessCode)
+
+      this.$store.commit('mainLogo/setLogos', response.logos)
+      this.$store.commit('mainLogo/setType', MainLogosTypes.ICOACH_LOGOS)
+      this.$store.commit('icoach/setIcoachInfo', {
+        'userId': this.icoachUserId,
+        'icoachCourse': response
+      })
+    }
+
+    if (this.icoachInfo === null) {
+      return
+    }
+
+    try {
+      IcoachHelper.checkIcoachCourse(this.icoachInfo.icoachCourse)
+    } catch (error) {
+      this.error = error.message
+      return
+    }
+
+    this.loadData()
+  }
+
+  async loadData (): Promise<void> {
     await this.uploadIcoachSkillInfo()
 
     this.icoachSkillStep = this.stepId
