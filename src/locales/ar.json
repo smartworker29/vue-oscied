@@ -144,5 +144,9 @@
     },
     "started_on": "Started on",
     "completed_on": "Completed on"
-  }
+  },
+  "survey_is_not_active": "This Survey is not yet active.",
+  "survey_is_expired": "This Survey has now expired.",
+  "icoach_is_not_active": "This Icoach is not yet active.",
+  "icoach_is_expired": "This Icoach has now expired."
 }
