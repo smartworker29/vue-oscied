@@ -207,6 +207,10 @@ export default class DpChildSurveyWelcomePage extends Vue {
     justify-content: space-between;
     @media only screen and (max-width: 768px) {
       margin-bottom: 11px;
+      flex-wrap: wrap;
+      span: {
+        width: 100%;
+      }
     }
     .progress-wrapper {
       display: flex;
@@ -232,12 +236,9 @@ export default class DpChildSurveyWelcomePage extends Vue {
   .survey-content {
     color: #071012;
     overflow: hidden;
-    padding: 3.1% 39.5% 60px 5.5%;
-    @media only screen and (max-width: 1024px) {
-      padding: 4.1% 41.5% 60px 3.5%;
-    }
+    padding: 3.1% 5.5% 60px 5.5%;
     @media only screen and (max-width: 768px) {
-      padding: 12px 12px 1px 10px;
+      // padding: 12px 12px 1px 10px;
       .btn {
         width: 100%;
       }

@@ -5,7 +5,7 @@
     </div>
     <div class="wrap">
       <template v-if="isAuthenticated">
-        <div class="account-drop-down" :class="{ 'active': isActiveAccountMenu }">
+        <div id="account-drop-down" class="account-drop-down" :class="{ 'active': isActiveAccountMenu }">
           <div
             class="account-drop-down__select"
             @click="isActiveAccountMenu = !isActiveAccountMenu">
@@ -78,6 +78,17 @@ export default class UserHeader extends Vue {
   user!: User
 
   isActiveAccountMenu: boolean = false
+
+  mounted () : void {
+    document.addEventListener('click', (e) => {
+      const element = document.getElementById('account-drop-down')
+      if (element) {
+        if (!element.contains(<Node>(event!.target))) {
+          this.isActiveAccountMenu = false
+        }
+      }
+    })
+  }
 
   logout () : void {
     this.$auth.logout().then(async () : Promise<void> => {

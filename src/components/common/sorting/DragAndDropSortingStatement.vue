@@ -1,8 +1,8 @@
 <template>
   <div class="drag-and-drop-statement-sorting row">
-    <div class="drag-and-drop-info">
+    <!-- <div class="drag-and-drop-info">
       <p><fa class="icon" icon="info-circle"/> {{ $t('sorting_g.drag.tip') }}</p>
-    </div>
+    </div> -->
     <div class="drag-and-drop-content">
       <div class="drag-and-drop">
         <draggable class="dd-sorting-list"
@@ -20,7 +20,7 @@
         </draggable>
       </div>
     </div>
-    <button class="btn btn-primary btn-primary-active" @click="updateOrder">{{ $t('button_g.confirm_order') }}</button>
+    <button class="btn btn-primary btn-primary-active confirm-survey" @click="updateOrder">{{ $t('button_g.confirm_order') }}</button>
     <modal :classes="['ccr-modal']" name="confirm-modal" :height="'auto'">
       <ConfirmModal :surveyProduct="surveyProduct" @cancel="handleCancelModal" @confirm="handleConfirmModal" />
     </modal>
@@ -78,5 +78,9 @@ export default class DragAndDropSortingStatement extends Vue {
 
   .drag-and-drop {
     flex: 1;
+  }
+
+  .confirm-survey {
+    float: right
   }
 </style>

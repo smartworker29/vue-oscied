@@ -1,9 +1,9 @@
 <template>
   <div class="tap-statement-sorting drag-and-drop-statement-sorting">
     <div class="drag-and-drop-content">
-       <div class="drag-and-drop-info">
+       <!-- <div class="drag-and-drop-info">
         <p><fa class="icon" icon="info-circle"/> {{ $t('sorting_g.drag.tip') }}</p>
-      </div>
+      </div> -->
       <div class="tap-sorting-list ordered">
         <TapSortingStatementItem v-for="(item, index) in resultList"
                                  :itemOptions="{
