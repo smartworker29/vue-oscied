@@ -5,3 +5,8 @@ export interface File {
 }
 
 export interface Image extends File {}
+
+export enum MainLogosTypes {
+  ICOACH_LOGOS = 'icoach',
+  SURVEY_LOGOS = 'survey'
+}

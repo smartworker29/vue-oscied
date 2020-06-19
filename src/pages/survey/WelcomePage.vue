@@ -55,7 +55,8 @@ import SignInForm from '@/components/signIn/SignInForm.vue'
 import SignUpForm from '@/components/signUp/SignUpForm.vue'
 import LangSwitcher from '@/components/common/layout/LangSwitcher.vue'
 import SurveyService from '@/services/SurveyService'
-import { ResponseProductSurveyInfo, SurveyInfo, SurveyUserInfo } from '@/interfaces/SurveyInterfaces'
+import { SurveyInfo, SurveyUserInfo } from '@/interfaces/SurveyInterfaces'
+import { MainLogosTypes } from '@/interfaces/GeneralInterfaces'
 import SurveyLocalStorageHelper from '@/utils/SurveyLocalStorageHelper'
 import SurveyHelper from '@/utils/SurveyHelper'
 import { EventBus } from '@/main'
@@ -92,7 +93,7 @@ export default class WelcomePage extends Vue {
       await this.beginSurvey()
     })
     try {
-      const response: ResponseProductSurveyInfo = await SurveyService.getProductSurveyInfo(
+      const response = await SurveyService.getProductSurveyInfo(
         this.surveyProduct,
         this.accessCode
       )
@@ -102,6 +103,10 @@ export default class WelcomePage extends Vue {
       this.surveyInfo = response.survey
       this.productSurveyId = response.surveyProductId
       this.isUncompletedSurvey = SurveyLocalStorageHelper.hasBegunSurvey(this.surveyProduct, this.productSurveyId)
+
+      if (!this.isAuthenticated) {
+        EventBus.$emit('languageChanged', this.surveyInfo.defaultLanguage)
+      }
 
       if (this.surveyUserInfo && SurveyLocalStorageHelper.hasSurveyUser(this.surveyProduct, this.surveyUserInfo.surveyUserId)) {
         this.surveyData = SurveyLocalStorageHelper.getSurveyUser(this.surveyProduct, this.surveyUserInfo.surveyUserId)
@@ -115,7 +120,8 @@ export default class WelcomePage extends Vue {
         )
 
         if (completedSurveyUserInfo && completedSurveyUserInfo.isCompleted) {
-          this.$router.push({ name: 'survey.complete', params: { title: `You've already passed this survey` } })
+          this.$router.push({ name: 'survey.complete', params: { title: this.surveyInfo.title, reason: 'survey_has_already_passed' } })
+          return
         }
       }
 
@@ -124,6 +130,9 @@ export default class WelcomePage extends Vue {
         productSurveyType: this.surveyProduct,
         surveyInfo: this.surveyInfo
       })
+
+      this.$store.commit('mainLogo/setLogos', response.survey.logos)
+      this.$store.commit('mainLogo/setType', MainLogosTypes.SURVEY_LOGOS)
     } catch (error) {
       // TODO::add handler to process for errors(go to 404)
       if (error instanceof TypeError) {
@@ -225,6 +234,9 @@ export default class WelcomePage extends Vue {
       surveyInfo: nextSurveyProductInfo
     })
 
+    this.$store.commit('mainLogo/setLogos', nextSurveyProductInfo.logos)
+    this.$store.commit('mainLogo/setType', MainLogosTypes.SURVEY_LOGOS)
+
     this.$store.commit('survey/setTakenSurveyUserId', {
       productSurveyType: progress.nextSurveyPart.product,
       surveyUserId: progress.nextSurveyPart.surveyUserId
@@ -320,12 +332,12 @@ export default class WelcomePage extends Vue {
   .survey-content {
     color: #071012;
     overflow: hidden;
-    padding: 3.1% 39.5% 60px 5.5%;
-    @media only screen and (max-width: 1024px) {
-      padding: 4.1% 41.5% 60px 3.5%;
-    }
+    padding: 3.1% 5.5% 60px 5.5%;
+    // @media only screen and (max-width: 1024px) {
+    //   padding: 4.1% 41.5% 60px 3.5%;
+    // }
     @media only screen and (max-width: 768px) {
-      padding: 12px 12px 1px 10px;
+      // padding: 12px 12px 1px 10px;
       .btn {
         width: 100%;
       }

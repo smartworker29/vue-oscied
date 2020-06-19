@@ -1,32 +1,24 @@
 <template>
   <div class="navbar">
     <div class="wrap">
-      <!-- <div class="hamburger-menu-wrapper">
-        <div class="hamburger-menu">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-      </div> -->
-      <SurveyLogos v-if="currentSurveyInfo" :items="currentSurveyInfo.logos || currentSurveyInfo.survey.logos" />
-      <img v-else class="navbar-logo" :src="require('@/assets/logo-ccr-black.svg')" />
+      <MainLogos />
     </div>
     <div class="wrap">
       <template v-if="isAuthenticated">
-        <div class="account-drop-down" :class="{ 'active': isActiveAccountMenu }">
+        <div id="account-drop-down" class="account-drop-down" :class="{ 'active': isActiveAccountMenu }">
           <div
             class="account-drop-down__select"
             @click="isActiveAccountMenu = !isActiveAccountMenu">
-            <img class="account-drop-down_user-image" :src="require('@/assets/user.png')">
+            <img class="account-drop-down_user-image" :src="user.image.fileURL || require('@/assets/user.png')">
             <span class="account-drop-down_user-name">{{ userName }}</span>
             <img v-if="!isActiveAccountMenu" :src="require('@/assets/icons/icon-arrow-down-xs-blue.svg')">
             <img v-else :src="require('@/assets/icons/icon-arrow-down-xs-white.svg')">
           </div>
           <div class="account-drop-down__content">
             <ul class="account-drop-down__menu-list">
-              <li>
+              <li @click="$router.push({ name: 'home' }); isActiveAccountMenu = false">
                 <img :src="require('@/assets/icons/icon-dashboard-white.svg')">
-                <span>{{ $t('dashboard') }}</span>
+                <span>{{ $t('dashboard.title') }}</span>
               </li>
               <li @click="$router.push({ name: 'account' }); isActiveAccountMenu = false">
                 <img :src="require('@/assets/icons/account.svg')">
@@ -68,14 +60,13 @@ import { Vue, Component } from 'vue-property-decorator'
 import { Getter } from 'vuex-class'
 import UserService from '@/services/UserService'
 import { User } from '@/interfaces/UserInterfaces'
-import { SurveyInfo } from '@/interfaces/SurveyInterfaces'
-import SurveyLogos from '@/components/survey/SurveyLogos.vue'
+import MainLogos from '@/components/common/layout/MainLogos.vue'
 import LangSwitcher from '@/components/common/layout/LangSwitcher.vue'
 
 @Component({
   name: 'UserHeader',
   components: {
-    SurveyLogos,
+    MainLogos,
     LangSwitcher
   }
 })
@@ -86,10 +77,18 @@ export default class UserHeader extends Vue {
   @Getter('user/currentUser')
   user!: User
 
-  @Getter('survey/getDisplayedBaseSurveyInfo')
-  currentSurveyInfo!: SurveyInfo
-
   isActiveAccountMenu: boolean = false
+
+  mounted () : void {
+    document.addEventListener('click', (e) => {
+      const element = document.getElementById('account-drop-down')
+      if (element) {
+        if (!element.contains(<Node>(event!.target))) {
+          this.isActiveAccountMenu = false
+        }
+      }
+    })
+  }
 
   logout () : void {
     this.$auth.logout().then(async () : Promise<void> => {

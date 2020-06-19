@@ -1,3 +1,6 @@
+import { Image } from '@/interfaces/GeneralInterfaces'
+import { Vue } from 'vue/types/vue'
+
 interface FormGender {
   label: string,
   value: string
@@ -10,7 +13,8 @@ export interface User {
   email: string
   gender: string
   phone?: string
-  locale?: string
+  locale?: string,
+  image: Image
 }
 
 export interface UpdateUserData {
@@ -72,4 +76,13 @@ export interface ResetPasswordData {
 export interface RequestResetPasswordData {
   username: string,
   origin: string
+}
+
+export enum ImageActions {
+  ADD = 'add',
+  CHANGE = 'change'
+}
+
+export type Cropper = Vue & {
+  setStep: (step: number) => void;
 }

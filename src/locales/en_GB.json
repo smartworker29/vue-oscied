@@ -26,6 +26,7 @@
     "heading1": "Reset your password",
     "heading2": "Step 1",
     "instructions": "Enter the email address you used when you set up your account. We will then email you a link to a secure page where you can create a new password.",
+    "message": "We have sent you an email to '{email}'. Please check your mailbox. If you don't get an email please check your spam mail folder and settings.",
     "cancel": "Cancel",
     "confirm": "Confirm"
   },
@@ -34,8 +35,11 @@
     "heading2": "Step 2",
     "instructions": "Create your new CCR3 password. You will be asked for this password the next time you book cheap flights or log into your account.",
     "cancel": "Cancel",
-    "confirm": "Confirm"
+    "confirm": "Confirm",
+    "success_message": "Your password has been successfully changed."
   },
+  "request_reset_password_title": "Enter your email address below and we will get in touch with instructions on how to reset your password",
+  "reset_password_success": "Your password was successfully updated!",
   "button_g": {
     "confirm_order": "Confirm",
     "register": "Register",
@@ -73,7 +77,6 @@
   "current_password": "Current",
   "new_password": "New password",
   "repeat_password": "Repeat Password",
-  "dashboard": "Dashboard",
   "account": "Account",
   "settings": "Settings",
   "logout": "Logout",
@@ -86,8 +89,7 @@
   "password_successfully_changed": "Your new password has successfully been changed",
   "profile_successfully_changed": "Your changes have been saved.",
   "please_register": "If you are already registered, please {signIn}. Otherwise please use our quick registration form.",
-  "welcome_to_survey": "Welcome to {surveyName}",
-  "welcome_to_survey": "Welcome to {surveyName}",
+  "welcome_to_survey": "{surveyName}",
   "not_found_message": "Sorry, we couldn't find what you were looking for.",
   "select": "Select",
   "ready_to_start_dp_survey_part": "You are now ready to start part {nextPartNumber} of this 3 part questionnaire",
@@ -95,7 +97,8 @@
   "copy_right": "{years} &copy; CCR3i All Rights Reserved.",
   "register": "Register",
   "survey_completed_heading": "Thank you, we have received your questionnaire.",
-  "welcome_to_icoach": "Welcome to {icoachName}",
+  "survey_has_already_passed": "You have already completed this questionnaire.",
+  "welcome_to_icoach": "{icoachName}",
   "eq": {
     "title": "E.Q. - Emotional Intelligence",
     "confirmation_window": "Please Confirm Your Choices!",
@@ -122,11 +125,25 @@
     "next": "Next",
     "completed": "Skills completed",
     "you_have_answered_already": "You've already answered to the questions",
+    "required_field": "This field is required",
+    "submit_test": "Submit test",
     "comments": {
       "leave_a_comment": "Leave a comment",
       "leave_your_comment": "Leave your comment",
       "comments": "Comments",
       "on": "on"
     }
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "item_type": {
+      "eq": "E.Q.",
+      "values": "Values",
+      "behaviours": "Behaviours",
+      "dp": "Discovery Process",
+      "icoach": "iCoach"
+    },
+    "started_on": "Started on",
+    "completed_on": "Completed on"
   }
 }

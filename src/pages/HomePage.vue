@@ -1,5 +1,6 @@
 <template>
-  <div class="auth-container-wrapper">
+  <Dashboard  v-if="isAuthenticated"/>
+  <div class="auth-container-wrapper" v-else>
     <div class="auth-container">
       <!-- <div class="auth-header">
         <img class="logo" :src="require('@/assets/logo-ccr.svg')" />
@@ -8,10 +9,11 @@
           </div>
       </div> -->
       <div class="auth-content">
+        <p class="message" v-if="message">{{ message }}</p>
         <div class="welcome-info">
           <span class="welcome-sub-title">{{ $t('welcome_to_survey', { surveyName: 'CCR3 Onesource' }) }}</span>
         </div>
-        <div class="auth-forms" v-if="!isAuthenticated">
+        <div class="auth-forms">
           <div class="form-wrapper">
             <div class="form-switcher">
               <button @click="displayedForm = 'signUp'" :class="{ 'active': displayedForm === 'signUp' }">{{ $t('register') }}</button>
@@ -33,10 +35,11 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-property-decorator'
 import { Getter } from 'vuex-class'
 import SignInForm from '@/components/signIn/SignInForm.vue'
 import SignUpForm from '@/components/signUp/SignUpForm.vue'
+import Dashboard from '@/components/dashboard/Dashboard.vue'
 import LangSwitcher from '@/components/common/layout/LangSwitcher.vue'
 
 @Component({
@@ -44,13 +47,17 @@ import LangSwitcher from '@/components/common/layout/LangSwitcher.vue'
   components: {
     SignInForm,
     SignUpForm,
-    LangSwitcher
+    LangSwitcher,
+    Dashboard
   }
 })
 export default class HomePage extends Vue {
   @Getter('user/isAuthenticated')
   isAuthenticated!: boolean
   displayedForm: string = 'signUp'
+
+  @Prop({ default: '' })
+  message?: string
 
   changeForm (formName: string) {
     this.displayedForm = formName
@@ -104,8 +111,8 @@ export default class HomePage extends Vue {
   .auth-content {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
     @media only screen and (max-width: 600px) {
-      flex-wrap: wrap;
       .welcome-info {
         max-width: 100%;
       }
@@ -168,6 +175,15 @@ export default class HomePage extends Vue {
     height: 54px;
     object-fit: contain;
     background-color: #ffffff;
+  }
+
+  .message {
+    width: 100%;
+    background: #77bb41;
+    margin: -15px 0 10px;
+    text-align: center;
+    padding: 10px;
+    font-size: 20px;
   }
 
 </style>

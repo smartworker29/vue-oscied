@@ -2,6 +2,7 @@ import { LocaleData } from '@/interfaces/UserInterfaces'
 
 class LocaleHelper {
   readonly localeKey = 'user_locale'
+  readonly defaultLocaleKey = 'default_locale'
   readonly defaultLocale = 'en'
   availableLocalesData: LocaleData[] = []
   readonly availableVeeValidateLocales: string[] = [
@@ -53,6 +54,17 @@ class LocaleHelper {
     return this.availableVeeValidateLocales.includes(partOfLocale)
       ? partOfLocale
       : this.availableVeeValidateLocales.find(locale => locale.includes(partOfLocale)) || this.defaultLocale
+  }
+
+  getDefaultLocale () : string {
+    return localStorage[this.defaultLocaleKey]
+  }
+
+  setDefaultLocale (locale?: string | null) : void {
+    if (!locale) {
+      return
+    }
+    localStorage[this.defaultLocaleKey] = locale
   }
 }
 

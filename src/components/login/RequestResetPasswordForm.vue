@@ -44,7 +44,7 @@ export default class RequestResetPasswordForm extends Vue {
       const passwordResponse = await UserService.requestResetPassword({ username: this.email, origin: this.$router.resolve('reset-password').href })
       this.$validator.reset()
       this.error = ''
-      this.$router.back()
+      this.$router.push({ name: 'home', params: { message: this.$tc('password_request.message', 1, { email: this.email }) } })
     } catch (error) {
       const response: AxiosResponse = error.response
       if (response) {
