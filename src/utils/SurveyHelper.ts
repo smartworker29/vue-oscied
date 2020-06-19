@@ -4,6 +4,7 @@ import store from '@/store'
 import SurveyService from '@/services/SurveyService'
 import { SurveyData } from '@/interfaces/LocalStorageInterfaces'
 import dayjs from 'dayjs'
+import i18n from '@/i18n'
 
 class SurveyHelper {
   public readonly DP = 'discovery-process'
@@ -110,19 +111,19 @@ class SurveyHelper {
   checkSurveyInfo (survey: SurveyInfo) : void {
     const now = dayjs().format('YYYY-MM-DD')
 
-    if (!survey.validFrom || !survey.validTo) {
-      return
+    if (survey.validFrom) {
+      const from = dayjs(survey.validFrom).format('YYYY-MM-DD')
+      if (now < from) {
+        throw new TypeError(i18n.t('survey_is_not_active').toString())
+      }
     }
 
-    const from = dayjs(survey.validFrom).format('YYYY-MM-DD')
-    const to = dayjs(survey.validTo).format('YYYY-MM-DD')
+    if (survey.validTo) {
+      const to = dayjs(survey.validTo).format('YYYY-MM-DD')
 
-    if (now < from) {
-      throw new TypeError('This Survey is not yet active.')
-    }
-
-    if (now > to) {
-      throw new TypeError('This Survey has now expired.')
+      if (now > to) {
+        throw new TypeError(i18n.t('survey_is_expired').toString())
+      }
     }
   }
 }

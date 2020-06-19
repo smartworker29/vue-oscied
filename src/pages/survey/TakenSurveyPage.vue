@@ -86,6 +86,9 @@ export default class TakenSurveyPage extends Vue {
       surveyUser.surveyAccessCode
     )
 
+    this.$store.commit('mainLogo/setLogos', response.survey.logos)
+    this.$store.commit('mainLogo/setType', MainLogosTypes.SURVEY_LOGOS)
+
     SurveyHelper.checkSurveyInfo(response.survey)
 
     const surveyUserInfo = await SurveyService.getSurveyUser(
@@ -141,6 +144,9 @@ export default class TakenSurveyPage extends Vue {
       progress.nextSurveyPart.id
     )
 
+    this.$store.commit('mainLogo/setLogos', nextSurveyProductInfo.logos)
+    this.$store.commit('mainLogo/setType', MainLogosTypes.SURVEY_LOGOS)
+
     SurveyHelper.checkSurveyInfo(nextSurveyProductInfo)
 
     this.$store.commit('survey/setTakenSurveyData', {
@@ -148,9 +154,6 @@ export default class TakenSurveyPage extends Vue {
       productSurveyType: 'discovery-process',
       surveyInfo: response.survey
     })
-
-    this.$store.commit('mainLogo/setLogos', nextSurveyProductInfo.logos)
-    this.$store.commit('mainLogo/setType', MainLogosTypes.SURVEY_LOGOS)
 
     this.$store.commit('survey/setTakenSurveyUserId', {
       productSurveyType: 'discovery-process',
