@@ -26,7 +26,7 @@
     "heading1": "Reset your password",
     "heading2": "Step 1",
     "instructions": "Enter the email address you used when you set up your account. We will then email you a link to a secure page where you can create a new password.",
-    "message": "We have sent you an email to '{email}'. Please check your mailbox. If you don't get an email please check your spam mail folder and settings.",
+    "message": "We have sent you an email to {email}. Please check your mailbox. If you don't get an email please check your spam mail folder and settings.",
     "cancel": "Cancel",
     "confirm": "Confirm"
   },

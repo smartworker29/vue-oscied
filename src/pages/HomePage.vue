@@ -9,7 +9,11 @@
           </div>
       </div> -->
       <div class="auth-content">
-        <p class="message" v-if="message">{{ message }}</p>
+
+        <div class="message" v-if="message">
+          <div class="alert">{{ message }}</div>
+        </div>
+
         <div class="welcome-info">
           <span class="welcome-sub-title">{{ $t('welcome_to_survey', { surveyName: 'CCR3 Onesource' }) }}</span>
         </div>
@@ -179,11 +183,17 @@ export default class HomePage extends Vue {
 
   .message {
     width: 100%;
-    background: #77bb41;
-    margin: -15px 0 10px;
-    text-align: center;
-    padding: 10px;
-    font-size: 20px;
-  }
 
+    .alert {
+      background: #fff url('../assets/icons/check-thick.svg') no-repeat 20px 50%;
+      border: 2px solid #D6EFFF;
+      color: #000000;
+      border-radius: 15px;
+      width: 100%;
+      margin: -15px 0 10px;
+      text-align: left;
+      padding: 10px 20px 10px 60px;
+      font-size: 20px;
+    }
+  }
 </style>
