@@ -123,7 +123,8 @@
     "back": "🇦🇪 Back",
     "next": "🇦🇪 Next",
     "completed": "🇦🇪 Skills completed",
-    "you_have_answered_already": "🇦🇪 You've already answered to the questions",
+    "your_knowledge_score": "Your Test Knowledge Score is: {score}%",
+    "want_to_retake_knowledge_test": "Want to retake the knowledge test?",
     "required_field": "🇦🇪This field is required",
     "submit_test": "🇦🇪 Submit test",
     "comments": {
@@ -131,7 +132,8 @@
       "leave_your_comment": "🇦🇪 Leave your comment",
       "comments": "🇦🇪 Comments",
       "on": "🇦🇪 on"
-    }
+    },
+    "try_again": "Try Again"
   },
   "dashboard": {
     "title": "Dashboard",
@@ -144,5 +146,9 @@
     },
     "started_on": "Started on",
     "completed_on": "Completed on"
-  }
+  },
+  "survey_is_not_active": "This Survey is not yet active.",
+  "survey_is_expired": "This Survey has now expired.",
+  "icoach_is_not_active": "This Icoach is not yet active.",
+  "icoach_is_expired": "This Icoach has now expired."
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="drag-and-drop-statement-sorting row">
+  <div class="drag-and-drop-statement-sorting row" :class="surveyProduct">
     <!-- <div class="drag-and-drop-info">
       <p><fa class="icon" icon="info-circle"/> {{ $t('sorting_g.drag.tip') }}</p>
     </div> -->

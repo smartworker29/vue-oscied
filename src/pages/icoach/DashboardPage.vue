@@ -5,64 +5,71 @@
         <span>{{ icoachTitle }}</span>
       </h1>
     </div>
-    <div class="icoach-not-found" v-if="!icoachDashboardInfo || !Object.keys(icoachDashboardInfo).length">
-      {{ $t('icoach.no_skills') }}
-    </div>
-    <div class="icoach-wrapper flex" v-else>
-      <div class="icoach-categories">
-        <ul class="icoach-category-list">
-          <li
-            v-for="(category, index) in icoachDashboardInfo" :key="index"
-            @click="changeIndex(parseInt(index))"
-            :class="{ 'active': activeIndex === parseInt(index) }">
-            <p>
-              <span>{{ $t(`icoach.categories.${index}`) }}</span>
-            </p>
-            <span class="icoach-category-item-progress"> {{ completedSkills(category) }}/{{ category.length }} {{ $t('icoach.completed')}}</span>
-            <img :src="require('@/assets/icons/arrow-down-xs.svg')">
-          </li>
-        </ul>
+    <h2 v-if="error">{{ error }}</h2>
+    <template v-else>
+      <div class="icoach-not-found" v-if="!icoachDashboardInfo || !Object.keys(icoachDashboardInfo).length">
+        {{ $t('icoach.no_skills') }}
       </div>
-      <div class="icoach-content">
-        <h2 class="icoach-content-title">
-          {{ $t(`icoach.categories.${activeIndex}`) }}
-        </h2>
-        <p class="icoach-content-subtitle">
-          Develop the skills and competencies that are linked to your emotional intelligence.
-        </p>
-        <div class="icoach-skills">
-          <router-link
-            v-for="(skill, index) in icoachDashboardInfo[activeIndex]" :key="index"
-            @click.native="openSkill"
-            class="icoach-skill"
-            :to="{ name: 'icoach.skill', params: { icoachUserId: parseInt(icoachUserId), skillId: parseInt(skill.id), stepId: 1 } }"
-          >
-            <span class="icoach-skill-name">{{ skill.name }}</span>
-            <Progress
-              :show-title="false"
-              :show-percent-inside="false"
-              :processed-props-items-count="skill.completed"
-              :total-props-progress-items-count="skill.total"
-              percentage="true"
-            />
-          </router-link>
+      <div class="icoach-wrapper flex" v-else>
+        <div class="icoach-categories">
+          <ul class="icoach-category-list">
+            <li
+              v-for="(category, index) in icoachDashboardInfo" :key="index"
+              @click="changeIndex(parseInt(index))"
+              :class="{ 'active': activeIndex === parseInt(index) }">
+              <p>
+                <span>{{ $t(`icoach.categories.${index}`) }}</span>
+              </p>
+              <span class="icoach-category-item-progress"> {{ completedSkills(category) }}/{{ category.length }} {{ $t('icoach.completed')}}</span>
+              <img :src="require('@/assets/icons/arrow-down-xs.svg')">
+            </li>
+          </ul>
+        </div>
+        <div class="icoach-content">
+          <h2 class="icoach-content-title">
+            {{ $t(`icoach.categories.${activeIndex}`) }}
+          </h2>
+          <p class="icoach-content-subtitle">
+            Develop the skills and competencies that are linked to your emotional intelligence.
+          </p>
+          <div class="icoach-skills">
+            <router-link
+              v-for="(skill, index) in icoachDashboardInfo[activeIndex]" :key="index"
+              @click.native="openSkill"
+              class="icoach-skill"
+              :to="{ name: 'icoach.skill', params: { icoachUserId: parseInt(icoachUserId), skillId: parseInt(skill.id), stepId: 1 } }"
+            >
+              <span class="icoach-skill-name">{{ skill.name }}</span>
+              <Progress
+                :show-title="false"
+                :show-percent-inside="false"
+                :processed-props-items-count="skill.completed"
+                :total-props-progress-items-count="skill.total"
+                percentage="true"
+              />
+            </router-link>
+          </div>
         </div>
       </div>
-    </div>
+    </template>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Getter } from 'vuex-class'
 import {
   IcoachCategories,
   IcoachCategoriesEnum,
   IcoachCategorySkill,
-  IcoachDashboardInfo
-} from '@/interfaces/IcoachInterfaces'
+  IcoachDashboardInfo,
+  IcoachGeneralInfo,
+  MainLogosTypes
+} from '@/interfaces'
 import IcoachService from '@/services/IcoachService'
 import IcoachLocalStorageHelper from '@/utils/IcoachLocalStorageHelper'
 import Progress from '@/components/common/progressBar/Progress.vue'
+import IcoachHelper from '@/utils/IcoachHelper'
 
 @Component({
   name: 'DashboardPage',
@@ -74,9 +81,13 @@ export default class DashboardPage extends Vue {
   @Prop({})
   icoachUserId!: number
 
+  @Getter('icoach/getIcoachInfo')
+  icoachInfo!: IcoachGeneralInfo | null
+
   icoachDashboardInfo: IcoachDashboardInfo | null = null
   activeIndex: IcoachCategories = IcoachCategoriesEnum.SOFT_SKILLS
   icoachTitle: string = ''
+  error: string | null = null
 
   async created () {
     if (!IcoachLocalStorageHelper.hasIcoachUser(this.icoachUserId)) {
@@ -86,20 +97,43 @@ export default class DashboardPage extends Vue {
     }
 
     try {
-      this.uploadIcoachInfo()
+      await this.uploadIcoachInfo()
     } catch (error) {
-      this.$router.push({ name: 'notFound' })
+      if (error instanceof TypeError) {
+        this.error = error.message
+      } else {
+        this.$router.push({ name: 'notFound' })
+      }
     }
   }
 
   async uploadIcoachInfo () {
     const icoachUser = IcoachLocalStorageHelper.getIcoachUser(this.icoachUserId)
+
     if (icoachUser === null || icoachUser.icoachAccessCode === null) {
       throw new Error()
     }
 
+    if (this.icoachInfo === null) {
+      const response = await IcoachService.getIcoachCourseInfo(icoachUser.icoachAccessCode)
+
+      this.$store.commit('mainLogo/setLogos', response.logos)
+      this.$store.commit('mainLogo/setType', MainLogosTypes.ICOACH_LOGOS)
+      this.$store.commit('icoach/setIcoachInfo', {
+        'userId': this.icoachUserId,
+        'icoachCourse': response
+      })
+    }
+
     this.icoachTitle = icoachUser.icoachCourseTitle
     this.activeIndex = icoachUser.icoachSkillCategoryId
+
+    if (this.icoachInfo !== null) {
+      IcoachHelper.checkIcoachCourse(this.icoachInfo.icoachCourse)
+    } else {
+      throw Error()
+    }
+
     this.icoachDashboardInfo = await IcoachService.getIcoachDashboardInfo(icoachUser.icoachCourseId, icoachUser.icoachUserId)
   }
 

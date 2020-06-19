@@ -30,7 +30,7 @@
     border: 2px solid #D6EFFF;
     border-radius: 15px;
     color: #000000;
-    padding: 8px 20px 9px 24px;
+    padding: 9px 20px 9px 24px;
     margin-bottom: 7px;
 
     &.chosen-item {
@@ -67,6 +67,15 @@
 
     .item-phrase {
       color: #3d5a80;
+    }
+  }
+}
+
+.drag-and-drop-statement-sorting.eq {
+  .dd-sorting-list {
+    .dd-sorting-item {
+      padding: 2px 20px 2px 10px;
+      font-size: 14px;
     }
   }
 }

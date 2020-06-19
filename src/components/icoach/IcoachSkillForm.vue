@@ -1,7 +1,15 @@
 <template>
   <div>
-    <div v-if="totalScore">
-      <p>{{ $t('icoach.you_have_answered_already') }}</p>
+    <div v-if="totalScore" class="icoach-skill-form-result">
+      <div class="icoach-preview-score">
+        <div class="icoach-preview-score__message">
+          <p>{{ $t('icoach.your_knowledge_score', { score: formattedScore }) }}</p>
+          <p>{{ $t('icoach.want_to_retake_knowledge_test') }}</p>
+        </div>
+        <div class="icoach-preview-score__try-again">
+          <button class="btn btn-primary" @click="retakeSkill">{{ $t('icoach.try_again')}}</button>
+        </div>
+      </div>
       <div class="icoach-skill-buttons">
         <button class="btn btn-primary" @click="changeStep('prev')">{{ $t('icoach.back')}}</button>
         <button class="btn btn-primary btn-primary-active" @click="changeStep('next')">{{ $t('icoach.next')}}</button>
@@ -39,7 +47,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Emit, Prop, Vue, Watch } from 'vue-property-decorator'
+import { Component, Emit, Prop, Vue } from 'vue-property-decorator'
 import { IcoachSkill, IcoachSkillDirections, IcoachSkillQuestion } from '@/interfaces/IcoachInterfaces'
 import { IcoachData } from '@/interfaces/LocalStorageInterfaces'
 import IcoachService from '@/services/IcoachService'
@@ -108,14 +116,45 @@ export default class IcoachSkillForm extends Vue {
     return direction
   }
 
-  private resetForm () {
+  resetForm () {
     this.$validator.reset()
     this.resultList = {}
+  }
+
+  retakeSkill () {
+    this.totalScore = null
+  }
+
+  get formattedScore () {
+    return Number(this.totalScore).toString()
   }
 }
 </script>
 
 <style lang="scss" scoped>
+  .icoach-skill-form-result {
+    display: flex;
+
+    .icoach-preview-score {
+      flex: 3;
+      display: flex;
+
+      &__message {
+        flex: 2;
+        padding-top: 14px;
+      }
+
+      &__try-again {
+        flex: 1;
+        padding-top: 24px;
+      }
+    }
+
+    .icoach-skill-buttons {
+      flex: 2;
+    }
+  }
+
   .icoach-skill-form {
     padding-top: 20px;
     width: 100%;

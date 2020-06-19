@@ -4,7 +4,7 @@ import Vuex from 'vuex'
 import user, { UserState } from '@/store/user'
 import survey, { SurveyState } from '@/store/survey'
 import icoach, { IcoachState } from '@/store/icoach'
-import mainLogo , { MainLogoState } from '@/store/main-logo'
+import mainLogo, { MainLogoState } from '@/store/main-logo'
 
 Vue.use(Vuex)
 

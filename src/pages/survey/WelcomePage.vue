@@ -5,11 +5,11 @@
     </div>
     <div class="survey-content" v-if="surveyInfo">
       <p v-html="surveyInfo.welcomeMessage || ''"></p>
-      <button class="btn btn-primary btn-primary-active" @click="beginSurvey">
+      <button class="btn btn-primary btn-primary-active" @click="beginSurvey" v-if="!error">
         {{ isUncompletedSurvey ? $t('button_g.continue_survey') : $t('button_g.start_survey') }}
       </button>
+      <h2 v-else>{{ error }}</h2>
     </div>
-    <p v-else-if="error">{{ error }}</p>
   </div>
   <div v-else class="auth-container-wrapper">
     <div class="auth-container">
@@ -22,6 +22,7 @@
       <div class="auth-content">
         <div class="welcome-info">
           <h2 class="welcome-title">{{ $t('welcome_to_survey', { surveyName: (surveyInfo) ? surveyInfo.title : '' }) }}</h2>
+          <h2 v-if="error">{{ error }}</h2>
           <p class="sign-in-suggestion"
              v-html="$t('please_register', { signIn: `<a id='${signInLinkId}'>${$t('sign_in').toLowerCase()}</a>` })"
           ></p>
@@ -89,24 +90,24 @@ export default class WelcomePage extends Vue {
   error: string = ''
 
   async created () {
-    EventBus.$on('authorizedComplete', async () => {
-      await this.beginSurvey()
-    })
     try {
       const response = await SurveyService.getProductSurveyInfo(
         this.surveyProduct,
         this.accessCode
       )
 
-      SurveyHelper.checkSurveyInfo(response.survey)
-
       this.surveyInfo = response.survey
       this.productSurveyId = response.surveyProductId
       this.isUncompletedSurvey = SurveyLocalStorageHelper.hasBegunSurvey(this.surveyProduct, this.productSurveyId)
 
+      this.$store.commit('mainLogo/setLogos', response.survey.logos)
+      this.$store.commit('mainLogo/setType', MainLogosTypes.SURVEY_LOGOS)
+
       if (!this.isAuthenticated) {
         EventBus.$emit('languageChanged', this.surveyInfo.defaultLanguage)
       }
+
+      SurveyHelper.checkSurveyInfo(response.survey)
 
       if (this.surveyUserInfo && SurveyLocalStorageHelper.hasSurveyUser(this.surveyProduct, this.surveyUserInfo.surveyUserId)) {
         this.surveyData = SurveyLocalStorageHelper.getSurveyUser(this.surveyProduct, this.surveyUserInfo.surveyUserId)
@@ -125,14 +126,15 @@ export default class WelcomePage extends Vue {
         }
       }
 
+      EventBus.$on('authorizedComplete', async () => {
+        await this.beginSurvey()
+      })
+
       this.$store.commit('survey/setTakenSurveyData', {
         productSurveyId: this.productSurveyId,
         productSurveyType: this.surveyProduct,
         surveyInfo: this.surveyInfo
       })
-
-      this.$store.commit('mainLogo/setLogos', response.survey.logos)
-      this.$store.commit('mainLogo/setType', MainLogosTypes.SURVEY_LOGOS)
     } catch (error) {
       // TODO::add handler to process for errors(go to 404)
       if (error instanceof TypeError) {
@@ -153,6 +155,17 @@ export default class WelcomePage extends Vue {
   }
 
   async beginSurvey () {
+    if (!this.surveyInfo) {
+      return
+    }
+
+    try {
+      SurveyHelper.checkSurveyInfo(this.surveyInfo)
+    } catch (error) {
+      this.error = error.message
+      return
+    }
+
     this.surveyUserInfo = await SurveyService.getSurveyUser(
       this.surveyProduct,
       this.productSurveyId,

@@ -6,11 +6,11 @@
     <div class="icoach-wrapper">
       <div class="icoach-welcome" v-if="icoachCourse">
         <p v-html="icoachCourse.welcomeMessage || ''"></p>
-        <button class="start-icoach-btn btn btn-success btn-primary-active" @click="beginIcoach">
+        <button class="start-icoach-btn btn btn-success btn-primary-active" @click="beginIcoach" v-if="!error">
           {{ $t('button_g.start_icoach') }}
         </button>
+        <h2 v-else>{{ error }}</h2>
       </div>
-      <p v-else-if="error">{{ error }}</p>
     </div>
   </div>
   <div v-else class="auth-container-wrapper">
@@ -18,6 +18,7 @@
       <div class="auth-content">
         <div class="welcome-info">
           <h2 class="welcome-title">{{ $t('welcome_to_icoach', { icoachName: (icoachCourse) ? icoachCourse.title : '' }) }}</h2>
+          <h2 v-if="error">{{ error }}</h2>
           <p class="sign-in-suggestion"
              v-html="$t('please_register', { signIn: `<a id='${signInLinkId}'>${$t('sign_in').toLowerCase()}</a>` })"
           ></p>
@@ -50,8 +51,7 @@ import { Getter } from 'vuex-class'
 import SignInForm from '@/components/signIn/SignInForm.vue'
 import SignUpForm from '@/components/signUp/SignUpForm.vue'
 import { EventBus } from '@/main'
-import { IcoachCategoriesEnum, IcoachCourse, IcoachUserInfo } from '@/interfaces/IcoachInterfaces'
-import { MainLogosTypes } from '@/interfaces/GeneralInterfaces'
+import { IcoachCategoriesEnum, IcoachCourse, IcoachUserInfo, MainLogosTypes } from '@/interfaces'
 import IcoachService from '@/services/IcoachService'
 import IcoachLocalStorageHelper from '@/utils/IcoachLocalStorageHelper'
 import IcoachHelper from '@/utils/IcoachHelper'
@@ -77,21 +77,22 @@ export default class WelcomePage extends Vue {
   error: string = ''
 
   async created () {
-    EventBus.$on('authorizedComplete', async () => {
-      await this.beginIcoach()
-    })
-
     try {
       const response = await IcoachService.getIcoachCourseInfo(this.accessCode)
-      IcoachHelper.checkIcoachCourse(response)
       this.icoachCourse = response
+
+      this.$store.commit('mainLogo/setLogos', response.logos)
+      this.$store.commit('mainLogo/setType', MainLogosTypes.ICOACH_LOGOS)
+
+      IcoachHelper.checkIcoachCourse(response)
 
       if (!this.isAuthenticated) {
         EventBus.$emit('languageChanged', this.icoachCourse.defaultLanguage)
       }
 
-      this.$store.commit('mainLogo/setLogos', response.logos)
-      this.$store.commit('mainLogo/setType', MainLogosTypes.ICOACH_LOGOS)
+      EventBus.$on('authorizedComplete', async () => {
+        await this.beginIcoach()
+      })
     } catch (error) {
       if (error instanceof TypeError) {
         this.error = error.message
@@ -107,6 +108,17 @@ export default class WelcomePage extends Vue {
   }
 
   async beginIcoach () {
+    if (!this.icoachCourse) {
+      return
+    }
+
+    try {
+      IcoachHelper.checkIcoachCourse(this.icoachCourse)
+    } catch (error) {
+      this.error = error.message
+      return
+    }
+
     this.icoachUserInfo = await IcoachService.getIcoachUser(
       this.icoachCourse!.id,
       this.accessCode
