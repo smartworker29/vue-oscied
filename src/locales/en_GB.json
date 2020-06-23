@@ -20,8 +20,8 @@
   "more": "More",
   "world_view" : "World View",
   "rights_reserved": "All Rights Reserved",
-  "private_policy": "Privacy Policy",
-  "data_policy": "Data Policy",
+  "privacy_policy": "Privacy Policy",
+  "terms_conditions": "Terms & Conditions",
   "password_request": {
     "heading1": "Reset your password",
     "heading2": "Step 1",
