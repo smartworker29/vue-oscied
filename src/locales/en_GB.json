@@ -55,8 +55,8 @@
     "change_photo": "Change Picture",
     "delete_photo": "Delete Picture",
     "add_photo": "Add Picture",
-    "start_survey": "Start Survey",
-    "continue_survey": "Continue Survey",
+    "start_survey": "Start",
+    "continue_survey": "Continue",
     "start_icoach": "Start"
   },
   "email_address": "Email Address",
@@ -148,8 +148,8 @@
     "started_on": "Started on",
     "completed_on": "Completed on"
   },
-  "survey_is_not_active": "This Survey is not yet active.",
-  "survey_is_expired": "This Survey has now expired.",
-  "icoach_is_not_active": "This Icoach is not yet active.",
-  "icoach_is_expired": "This Icoach has now expired."
+  "survey_is_not_active": "This Questionnaire is not yet active.",
+  "survey_is_expired": "This Questionnaire has now expired.",
+  "icoach_is_not_active": "This iCoach is not yet active.",
+  "icoach_is_expired": "This iCoach has now expired."
 }
