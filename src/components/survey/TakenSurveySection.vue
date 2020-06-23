@@ -7,8 +7,7 @@
         </p>
       </div>
       <section class="survey-actions" v-if="statements">
-        <DragAndDropSortingStatement v-if="isWideScreen" :options="sortingOptions" :surveyProduct="surveyProduct" @updateOrder="completeSection"/>
-        <TapSortingStatement v-else :options="sortingOptions" @updateOrder="completeSection"/>
+        <DragAndDropSortingStatement :options="sortingOptions" :surveyProduct="surveyProduct" @updateOrder="completeSection"/>
       </section>
     </div>
   </div>
