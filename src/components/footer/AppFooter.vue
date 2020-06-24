@@ -2,9 +2,9 @@
   <footer class="footer">
     <span v-html="$t('copy_right', { years: '2020'})"></span>
     <ul>
-      <li><a href="https://onesource-admin.ccr3.com/terms-and-conditions" target="_blank">{{ $t('terms_conditions') }}</a></li>
+      <li><a href="https://dashboard.ccr3.com/terms-and-conditions" target="_blank">{{ $t('terms_conditions') }}</a></li>
       <li>|</li>
-      <li><a href="https://onesource-admin.ccr3.com/privacy-policy" target="_blank">{{ $t('privacy_policy') }}</a></li>
+      <li><a href="https://dashboard.ccr3.com/privacy-policy" target="_blank">{{ $t('privacy_policy') }}</a></li>
     </ul>
   </footer>
 </template>
