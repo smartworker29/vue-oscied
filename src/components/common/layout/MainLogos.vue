@@ -4,7 +4,7 @@
       <img :src="logo.fileURL">
     </div>
   </div>
-  <img v-else class="navbar-logo" :src="require('@/assets/logo-ccr-black.svg')" />
+  <img v-else class="navbar-logo" :src="require('@/assets/logo-ccr3-blue.svg')" />
 </template>
 
 <script lang="ts">
