@@ -3,7 +3,7 @@
   <div class="auth-container-wrapper" v-else>
     <div class="auth-container">
       <!-- <div class="auth-header">
-        <img class="logo" :src="require('@/assets/logo-ccr.svg')" />
+        <img class="logo" :src="require('@/assets/logo-ccr3-white.svg')" />
         <div class="language">
             <LangSwitcher/>
           </div>
