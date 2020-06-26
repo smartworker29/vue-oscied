@@ -33,6 +33,7 @@ jobs:
                         yarn build
                     environment:
                         VUE_APP_API_ENDPOINT_URL: https://dashboard.ccr3.com/api
+                        VUE_APP_TOKEN: $VUE_APP_TOKEN
             -   save_cache:
                     name: Save Yarn Package Cache
                     key: yarn-packages-{{ checksum "yarn.lock" }}
@@ -73,6 +74,7 @@ jobs:
                         yarn build
                     environment:
                         VUE_APP_API_ENDPOINT_URL: https://dashboard-dev.ccr3.com/api
+                        VUE_APP_TOKEN: $VUE_APP_TOKEN_DEV
             -   save_cache:
                     name: Save Yarn Package Cache
                     key: yarn-packages-{{ checksum "yarn.lock" }}
