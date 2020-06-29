@@ -68,7 +68,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Watch } from 'vue-property-decorator'
 import UserService from '@/services/UserService'
 import { RegistrationFormData } from '@/interfaces/UserInterfaces'
 import LocaleHelper from '@/utils/LocaleHelper'
@@ -105,7 +105,7 @@ export default class SignUpForm extends Vue {
     this.genderRequiredError = !this.registrationData.gender || !this.registrationData.gender.value
     this.error = ''
 
-    if (!await this.$validator.validateAll() || !this.emailIsFree) {
+    if (!await this.$validator.validateAll() || !this.emailIsFree || this.genderRequiredError) {
       this.$el.querySelector('.error')!.scrollIntoView(false)
       return
     }
@@ -127,6 +127,11 @@ export default class SignUpForm extends Vue {
         this.error = error.message
       }
     }
+  }
+
+  @Watch('registrationData.gender')
+  emailChanged () {
+    this.genderRequiredError = !this.registrationData.gender || !this.registrationData.gender.value
   }
 
   handleRegistrationErrors (data: object) {
