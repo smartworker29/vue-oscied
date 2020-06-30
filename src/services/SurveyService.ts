@@ -44,7 +44,13 @@ class SurveyService extends BaseApiService {
       'post',
       `/${surveyProductType}/survey/user/get/`,
       { 'surveyId': surveyProductId, 'accessCode': surveyAccessCode }
-    )
+    ).catch((error: any) => {
+      if (error.response.status === 404) {
+        return null
+      }
+
+      throw error
+    })
   }
 
   getCompletedSurveyUser (surveyProductType: string, surveyProductId: number, surveyAccessCode: string) : SurveyUserInfo | null {
@@ -54,7 +60,13 @@ class SurveyService extends BaseApiService {
       'post',
       `/${surveyProductType}/survey/completed/user/get/`,
       { 'surveyId': surveyProductId, 'accessCode': surveyAccessCode }
-    )
+    ).catch((error: any) => {
+      if (error.response.status === 404) {
+        return null
+      }
+
+      throw error
+    })
   }
 
   createSurveyUser (surveyProductType: string, surveyProductId: number, surveyAccessCode: string) : SurveyUserInfo {
