@@ -67,6 +67,7 @@
   "gender": "جنس",
   "male": "الذكر",
   "female": "أنثى",
+  "not_to_say": "Arabic: Prefer not to say",
   "phone_number": "رقم الهاتف",
   "email_already_user": "عنوان البريد الإلكتروني مستخدم بالفعل",
   "gender_is_required": "الجنس مطلوب",

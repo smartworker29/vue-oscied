@@ -68,6 +68,7 @@
   "gender": "Deutsch: Gender",
   "male": "Deutsch: Male",
   "female": "Deutsch: Female",
+  "not_to_say": "Deutsch: Prefer not to say",
   "phone_number": "Deutsch: Phone Number",
   "email_already_user": "Deutsch: Email Address is already used",
   "gender_is_required": "Deutsch: Gender field is required",
