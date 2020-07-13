@@ -69,6 +69,7 @@
   "male": "Male",
   "female": "Female",
   "phone_number": "Phone Number",
+  "facebook_login": "Login with facebook",
   "email_already_user": "Email Address is already used",
   "gender_is_required": "Gender field is required",
   "forgot_password": "Forgotten your details?",
