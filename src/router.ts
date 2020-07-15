@@ -88,13 +88,13 @@ const router = new Router({
       component: CompleteSurveyMessagePage
     },
     {
-      path: '/:surveyProduct(eq|values|behaviours|discovery-process)/:accessCode([a-zA-Z0-9]{50})',
+      path: '/:surveyProduct(eq|values|behaviours|discovery-process|ipulse)/:accessCode([a-zA-Z0-9]{50})',
       name: 'survey.welcome',
       component: WelcomePage,
       props: true
     },
     {
-      path: '/:surveyProduct(eq|values|behaviours)/:surveyUserId(\\d+)/part',
+      path: '/:surveyProduct(eq|values|behaviours|ipulse)/:surveyUserId(\\d+)/part',
       component: TakenSurveyPage,
       props: true,
       children: [
@@ -107,13 +107,13 @@ const router = new Router({
       ]
     },
     {
-      path: '/discovery-process/:surveyProduct(eq|values|behaviours)/:surveyUserId(\\d+)',
+      path: '/discovery-process/:surveyProduct(eq|values|behaviours|ipulse)/:surveyUserId(\\d+)',
       component: DpChildSurveyWelcomePage,
       props: true,
       name: 'survey.welcome.dp.survey_product'
     },
     {
-      path: '/discovery-process/:surveyProduct(eq|values|behaviours)/:surveyUserId(\\d+)/part',
+      path: '/discovery-process/:surveyProduct(eq|values|behaviours|ipulse)/:surveyUserId(\\d+)/part',
       component: TakenSurveyPage,
       props: true,
       children: [
@@ -126,7 +126,7 @@ const router = new Router({
       ]
     },
     {
-      path: '/discovery-process/:surveyProduct(eq|values|behaviours)/:surveyUserId(\\d+)/completed',
+      path: '/discovery-process/:surveyProduct(eq|values|behaviours|ipulse)/:surveyUserId(\\d+)/completed',
       component: DpChildSurveyCompletedPage,
       props: true,
       name: 'survey.dp.completed.part'
