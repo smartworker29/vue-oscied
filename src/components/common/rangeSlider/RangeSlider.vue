@@ -1,12 +1,12 @@
 <template>
   <div class="range-container">
     <div class="range">
-      <input v-model.number="inputRange" class="range-input" type="range" min="1" :max="rangeAmount" steps="1" @change="changeValue" ref="rangeSlider"/>
+      <input v-model.number="inputRange" class="range-input" type="range" min="1" :max="-1" @input="changeValue" ref="rangeSlider"/>
     </div>
   </div>
 </template>
 <script lang="ts">
-import { Component, Prop, Ref, Vue } from 'vue-property-decorator'
+import { Component, Emit, Prop, Ref, Vue } from 'vue-property-decorator'
 
 @Component({ name: 'RangeSlider' })
 export default class RangeSlider extends Vue {
@@ -26,10 +26,20 @@ export default class RangeSlider extends Vue {
     return rangeLimit || this.defaultAmount
   }
 
-  changeValue (event: Event) {
-    const slider = this.rangeSlider
-    let percentage: number = (parseInt(slider.value) - parseInt(slider.min)) / (parseInt(slider.max) - parseInt(slider.min)) * 100
-    slider.style.background = 'linear-gradient(to right, #0085cd 0%, #0085cd ' + percentage + '%, #bdddff ' + percentage + '%, #bdddff 100%)'
+  mounted () {
+    this.rangeSlider.max = String(this.rangeAmount)
+  }
+
+  @Emit()
+  changeValue (event: InputEvent) {
+    const { value, min, max } = this.rangeSlider
+    const dark = '#0085cd'
+    const light = '#bdddff'
+    const percentage: number = (Number(value) - Number(min)) / (Number(max) - Number(min)) * 100
+    this.rangeSlider.style.background = `linear-gradient(to right, ${dark} 0%, ${dark} ${percentage}%, ${light} ${percentage}%, ${light} 100%)`
+    const input = event.target as HTMLInputElement
+
+    return input.value
   }
 }
 </script>
