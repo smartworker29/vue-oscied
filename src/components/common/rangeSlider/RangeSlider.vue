@@ -36,7 +36,8 @@ export default class RangeSlider extends Vue {
     const dark = '#0085cd'
     const light = '#bdddff'
     const percentage: number = (Number(value) - Number(min)) / (Number(max) - Number(min)) * 100
-    this.rangeSlider.style.background = `linear-gradient(to right, ${dark} 0%, ${dark} ${percentage}%, ${light} ${percentage}%, ${light} 100%)`
+    const direction = this.$i18n.locale === 'ar' ? 'left' : 'right'
+    this.rangeSlider.style.background = `linear-gradient(to ${direction}, ${dark} 0%, ${dark} ${percentage}%, ${light} ${percentage}%, ${light} 100%)`
     const input = event.target as HTMLInputElement
 
     return input.value
