@@ -18,6 +18,7 @@ import CompleteSurveyMessagePage from '@/pages/survey/CompleteSurveyMessagePage.
 import DpChildSurveyWelcomePage from '@/pages/survey/DpChildSurveyWelcomePage.vue'
 import DpChildSurveyCompletedPage from '@/pages/survey/DpChildSurveyCompletedPage.vue'
 import ResetPasswordPage from '@/pages/ResetPasswordPage.vue'
+import TakenIpulseSection from '@/components/survey/TakenIpulseSection.vue'
 
 Vue.use(Router)
 
@@ -94,6 +95,19 @@ const router = new Router({
       props: true
     },
     {
+      path: '/:surveyProduct(ipulse)/:surveyUserId(\\d+)/part',
+      component: TakenSurveyPage,
+      props: true,
+      children: [
+        {
+          path: ':sectionNumber(\\d+)',
+          name: 'survey.page.part',
+          component: TakenIpulseSection,
+          props: true
+        }
+      ]
+    },
+    {
       path: '/:surveyProduct(eq|values|behaviours|ipulse)/:surveyUserId(\\d+)/part',
       component: TakenSurveyPage,
       props: true,
@@ -107,13 +121,13 @@ const router = new Router({
       ]
     },
     {
-      path: '/discovery-process/:surveyProduct(eq|values|behaviours|ipulse)/:surveyUserId(\\d+)',
+      path: '/discovery-process/:surveyProduct(eq|values|behaviours)/:surveyUserId(\\d+)',
       component: DpChildSurveyWelcomePage,
       props: true,
       name: 'survey.welcome.dp.survey_product'
     },
     {
-      path: '/discovery-process/:surveyProduct(eq|values|behaviours|ipulse)/:surveyUserId(\\d+)/part',
+      path: '/discovery-process/:surveyProduct(eq|values|behaviours)/:surveyUserId(\\d+)/part',
       component: TakenSurveyPage,
       props: true,
       children: [
@@ -126,7 +140,7 @@ const router = new Router({
       ]
     },
     {
-      path: '/discovery-process/:surveyProduct(eq|values|behaviours|ipulse)/:surveyUserId(\\d+)/completed',
+      path: '/discovery-process/:surveyProduct(eq|values|behaviours)/:surveyUserId(\\d+)/completed',
       component: DpChildSurveyCompletedPage,
       props: true,
       name: 'survey.dp.completed.part'
