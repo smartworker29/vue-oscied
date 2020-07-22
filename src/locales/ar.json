@@ -67,6 +67,7 @@
   "gender": "جنس",
   "male": "الذكر",
   "female": "أنثى",
+  "not_to_say": "🇦🇪 Prefer not to say",
   "phone_number": "رقم الهاتف",
   "email_already_user": "عنوان البريد الإلكتروني مستخدم بالفعل",
   "gender_is_required": "الجنس مطلوب",
@@ -96,7 +97,7 @@
   "copy_right": "🇦🇪 {years} &copy; CCR3i All Rights Reserved.",
   "survey_completed_heading": "🇦🇪 You completed the survey!",
   "please_register": "🇦🇪 If you are already registered, please {signIn}. Otherwise please use our quick registration form.",
-  "survey_has_already_passed": "Arabic: You've already passed this survey",
+  "survey_has_already_passed": "🇦🇪 You've already passed this survey",
   "welcome_to_icoach": "🇦🇪 Welcome to {icoachName}",
   "eq": {
     "title": "🇦🇪 E.Q. - Emotional Intelligence",
@@ -123,8 +124,8 @@
     "back": "🇦🇪 Back",
     "next": "🇦🇪 Next",
     "completed": "🇦🇪 Skills completed",
-    "your_knowledge_score": "Your Test Knowledge Score is: {score}%",
-    "want_to_retake_knowledge_test": "Want to retake the knowledge test?",
+    "your_knowledge_score": "🇦🇪 Your Test Knowledge Score is: {score}%",
+    "want_to_retake_knowledge_test": "🇦🇪 Want to retake the knowledge test?",
     "required_field": "🇦🇪This field is required",
     "submit_test": "🇦🇪 Submit test",
     "comments": {
@@ -133,22 +134,22 @@
       "comments": "🇦🇪 Comments",
       "on": "🇦🇪 on"
     },
-    "try_again": "Try Again"
+    "try_again": "🇦🇪 Try Again"
   },
   "dashboard": {
-    "title": "Dashboard",
+    "title": "🇦🇪 Dashboard",
     "item_type": {
-      "eq": "E.Q.",
-      "values": "Values",
-      "behaviours": "Behaviours",
-      "dp": "Discovery Process",
-      "icoach": "iCoach"
+      "eq": "🇦🇪 E.Q.",
+      "values": "🇦🇪 Values",
+      "behaviours": "🇦🇪 Behaviours",
+      "dp": "🇦🇪 Discovery Process",
+      "icoach": "🇦🇪 iCoach"
     },
-    "started_on": "Started on",
-    "completed_on": "Completed on"
+    "started_on": "🇦🇪 Started on",
+    "completed_on": "🇦🇪 Completed on"
   },
-  "survey_is_not_active": "This Survey is not yet active.",
-  "survey_is_expired": "This Survey has now expired.",
-  "icoach_is_not_active": "This Icoach is not yet active.",
-  "icoach_is_expired": "This Icoach has now expired."
+  "survey_is_not_active": "🇦🇪 This Survey is not yet active.",
+  "survey_is_expired": "🇦🇪 This Survey has now expired.",
+  "icoach_is_not_active": "🇦🇪 This Icoach is not yet active.",
+  "icoach_is_expired": "🇦🇪 This Icoach has now expired."
 }

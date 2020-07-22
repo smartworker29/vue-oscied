@@ -68,6 +68,7 @@
   "gender": "Gender",
   "male": "Male",
   "female": "Female",
+  "not_to_say": "Prefer not to say",
   "phone_number": "Phone Number",
   "email_already_user": "Email Address is already used",
   "gender_is_required": "Gender field is required",
