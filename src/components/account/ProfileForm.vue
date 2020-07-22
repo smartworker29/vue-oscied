@@ -114,7 +114,7 @@ export default class ProfileForm extends Vue {
 
   async created () : Promise<void> {
     this.user = await UserService.getUser()
-    this.genderOptions = [{ label: this.$t('male'), value: 'm' }, { label: this.$t('female'), value: 'f' }]
+    this.genderOptions = [{ label: this.$t('male'), value: 'm' }, { label: this.$t('female'), value: 'f' }, { label: this.$t('not_to_say'), value: 'n' }]
 
     this.mapProfileForm()
 
