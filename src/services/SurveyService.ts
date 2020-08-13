@@ -1,10 +1,10 @@
 import { BaseApiService } from '@/services/BaseApiService'
 import {
-  DpProgress,
+  DpProgress, IpulseSortingStatement, IpulseStatement,
   ResponseProductSurveyInfo,
   Section,
   Statement,
-  SurveyInfo,
+  SurveyInfo, SurveyProductTypes,
   SurveyUserInfo
 } from '@/interfaces/SurveyInterfaces'
 
@@ -37,6 +37,10 @@ class SurveyService extends BaseApiService {
     return this.callMethod('get', `/${surveyProductType}/section/id/${surveyProductId}/statements/`)
   }
 
+  getIpulseSectionStatements (surveyProductId: number) : IpulseStatement[] {
+    return this.callMethod('get', `/${SurveyProductTypes.IPULSE}/section/id/${surveyProductId}/statements/`)
+  }
+
   getSurveyUser (surveyProductType: string, surveyProductId: number, surveyAccessCode: string) : SurveyUserInfo | null {
     surveyProductType = this.validateSurveyProductType(surveyProductType)
 
@@ -44,7 +48,13 @@ class SurveyService extends BaseApiService {
       'post',
       `/${surveyProductType}/survey/user/get/`,
       { 'surveyId': surveyProductId, 'accessCode': surveyAccessCode }
-    )
+    ).catch((error: any) => {
+      if (error.response.status === 404) {
+        return null
+      }
+
+      throw error
+    })
   }
 
   getCompletedSurveyUser (surveyProductType: string, surveyProductId: number, surveyAccessCode: string) : SurveyUserInfo | null {
@@ -54,7 +64,13 @@ class SurveyService extends BaseApiService {
       'post',
       `/${surveyProductType}/survey/completed/user/get/`,
       { 'surveyId': surveyProductId, 'accessCode': surveyAccessCode }
-    )
+    ).catch((error: any) => {
+      if (error.response.status === 404) {
+        return null
+      }
+
+      throw error
+    })
   }
 
   createSurveyUser (surveyProductType: string, surveyProductId: number, surveyAccessCode: string) : SurveyUserInfo {
@@ -97,6 +113,23 @@ class SurveyService extends BaseApiService {
         (statement: Statement) : any => { return { statementId: statement.id } }
       ) },
       'nextSection'
+    )
+  }
+
+  saveIpulseStatements (surveyProductUserId: number, statements: IpulseSortingStatement[]) {
+    return this.callMethod(
+      'patch',
+      `/${SurveyProductTypes.IPULSE}/survey/user/${surveyProductUserId}/submit/`,
+      { statements },
+      'nextSection'
+    )
+  }
+
+  saveIpulseComment (surveyProductUserId: number, comment: string) {
+    return this.callMethod(
+      'patch',
+      `/${SurveyProductTypes.IPULSE}/survey/user/${surveyProductUserId}/comment/`,
+      { comment }
     )
   }
 }

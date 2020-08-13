@@ -14,6 +14,7 @@ export interface SurveyState {
 
   isTakenSurveyInitiated: boolean
   isDpTakenSurvey: boolean
+  isIpulseTakenSurvey: boolean
 
   takenBaseSurveyInfo: SurveyInfo | null
   takenSurveyId: number | null
@@ -36,6 +37,7 @@ const survey: Module<SurveyState, RootState> = {
 
     isTakenSurveyInitiated: false,
     isDpTakenSurvey: false,
+    isIpulseTakenSurvey: false,
 
     takenBaseSurveyInfo: null,
     takenSurveyId: null,
@@ -84,6 +86,9 @@ const survey: Module<SurveyState, RootState> = {
     isDpTakenSurvey (state: SurveyState) : boolean {
       return state.isDpTakenSurvey
     },
+    isIpulseTakenSurvey (state: SurveyState) : boolean {
+      return state.isIpulseTakenSurvey
+    },
     getNextSurveySectionNumber (state: SurveyState) : number | null {
       return state.takenSurveySection && state.takenSurveySection.position != null
         ? state.takenSurveySection.position + 1
@@ -110,6 +115,10 @@ const survey: Module<SurveyState, RootState> = {
         state.isDpTakenSurvey = true
         state.dpSurveyId = surveyData.productSurveyId
         state.dpBaseSurveyInfo = state.takenBaseSurveyInfo
+      }
+
+      if (surveyData.productSurveyType === 'ipulse') {
+        state.isIpulseTakenSurvey = true
       }
 
       state.isTakenSurveyInitiated = true

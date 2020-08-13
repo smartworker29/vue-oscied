@@ -30,7 +30,6 @@
           <input type="checkbox">
           <label>{{ $t('remember_me') }}</label>
         </div>
-        <span class="switch-form" @click="socialLogin">{{ $t('facebook_login') }}</span>
         <button type="submit" class="btn btn-success col-12">{{ $t('button_g.sign_in') }}</button>
       </div>
     </div>
@@ -89,10 +88,6 @@ export default class SignInForm extends Vue {
 
   resetPassword () {
     this.$router.push({ name: 'requestResetPassword' })
-  }
-
-  async socialLogin () {
-    window.location.href = `${process.env.VUE_APP_API_ENDPOINT_URL}/public/social/facebook?redirect_url=${window.location.origin}${this.$router.resolve({ name: 'socialLogin' }).href}`
   }
 }
 </script>
