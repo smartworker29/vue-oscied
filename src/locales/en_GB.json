@@ -57,7 +57,8 @@
     "add_photo": "Add Picture",
     "start_survey": "Start",
     "continue_survey": "Continue",
-    "start_icoach": "Start"
+    "start_icoach": "Start",
+    "back": "Back"
   },
   "email_address": "Email Address",
   "remember_me": "Remember Me",
@@ -115,6 +116,10 @@
     "confirmation_window": "Please Confirm Your Choices!",
     "confirm_to_next_section": "Please drag & drop all the answers."
   },
+  "ipulse": {
+    "title": "Ipulse",
+    "comment_description": "Thank you for completing the questionnaire. If you want, you can add an optional comment about what you feel would help in making things better. This\n          can be to stop something, start something or do something in a different way. Your comments are confidential and all comments will be considered"
+  },
   "icoach": {
     "categories": {
       "1": "Soft Skills",
@@ -144,6 +149,7 @@
       "values": "Values",
       "behaviours": "Behaviours",
       "dp": "Discovery Process",
+      "ipulse": "iPulse",
       "icoach": "iCoach"
     },
     "started_on": "Started on",

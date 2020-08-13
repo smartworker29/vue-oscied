@@ -29,5 +29,6 @@ export interface DashboardResponse {
   values: DashboardSurveyItem[]
   behaviours: DashboardSurveyItem[]
   dp: DashboardSurveyItem[]
+  ipulse: DashboardSurveyItem[]
   icoach: DashboardIcoachItem[]
 }

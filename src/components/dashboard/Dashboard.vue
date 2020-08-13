@@ -64,6 +64,9 @@ export default class Dashboard extends Vue {
     surveyKey = 'dp'
     response.dp.forEach(mapDashboardSurveyItem)
 
+    surveyKey = 'ipulse'
+    response.ipulse.forEach(mapDashboardSurveyItem)
+
     response.icoach.forEach((icoach: DashboardIcoachItem) => {
       this.dashboardItems.push({
         title: icoach.icoachCourse.title,

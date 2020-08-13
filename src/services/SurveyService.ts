@@ -1,10 +1,10 @@
 import { BaseApiService } from '@/services/BaseApiService'
 import {
-  DpProgress,
+  DpProgress, IpulseSortingStatement, IpulseStatement,
   ResponseProductSurveyInfo,
   Section,
   Statement,
-  SurveyInfo,
+  SurveyInfo, SurveyProductTypes,
   SurveyUserInfo
 } from '@/interfaces/SurveyInterfaces'
 
@@ -35,6 +35,10 @@ class SurveyService extends BaseApiService {
 
   getSectionStatements (surveyProductType: string, surveyProductId: number) : Statement[] {
     return this.callMethod('get', `/${surveyProductType}/section/id/${surveyProductId}/statements/`)
+  }
+
+  getIpulseSectionStatements (surveyProductId: number) : IpulseStatement[] {
+    return this.callMethod('get', `/${SurveyProductTypes.IPULSE}/section/id/${surveyProductId}/statements/`)
   }
 
   getSurveyUser (surveyProductType: string, surveyProductId: number, surveyAccessCode: string) : SurveyUserInfo | null {
@@ -109,6 +113,23 @@ class SurveyService extends BaseApiService {
         (statement: Statement) : any => { return { statementId: statement.id } }
       ) },
       'nextSection'
+    )
+  }
+
+  saveIpulseStatements (surveyProductUserId: number, statements: IpulseSortingStatement[]) {
+    return this.callMethod(
+      'patch',
+      `/${SurveyProductTypes.IPULSE}/survey/user/${surveyProductUserId}/submit/`,
+      { statements },
+      'nextSection'
+    )
+  }
+
+  saveIpulseComment (surveyProductUserId: number, comment: string) {
+    return this.callMethod(
+      'patch',
+      `/${SurveyProductTypes.IPULSE}/survey/user/${surveyProductUserId}/comment/`,
+      { comment }
     )
   }
 }
