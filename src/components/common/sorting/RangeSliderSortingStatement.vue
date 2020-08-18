@@ -4,32 +4,39 @@
       <div class="ipulse-slider-header-item">
         <span v-for="(option, key) in options" :key="key">{{ option }}</span>
       </div>
-      <div class="ipulse-slider-header-item">
-        <span v-for="index in 10" :key="index">{{ index }}</span>
-      </div>
     </div>
     <div v-for="(statement, key) in statements" :key="key">
       <div class="ipulse-slider-wrapper">
         <span class="ipulse-slider-title">{{ statement.title }}</span>
         <span class="ipulse-slider-range">
-          <range-slider @change-value="updateValues($event, statement.id)"/>
+          <range-slider @change-value="updateValues($event, statement.id)" />
         </span>
       </div>
     </div>
 
     <button class="btn btn-primary btn-primary-active confirm-survey" @click="updateOrder">{{ $t('button_g.confirm_order') }}</button>
+    <modal :classes="['ccr-modal']" name="confirm-statements-modal" :height="'auto'">
+      <SimpleConfirmModal
+        :title="$t('confirmation_message')"
+        :message="$t('no_ranked_statement')"
+        @cancel="hideConfirmModal"
+        @confirm="confirmModal"
+      />
+    </modal>
   </section>
 </template>
 
 <script lang="ts">
-import { Component, Emit, Prop, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-property-decorator'
 import RangeSlider from '@/components/common/rangeSlider/RangeSlider.vue'
 import { IpulseSortingStatement, IpulseStatement } from '@/interfaces'
+import SimpleConfirmModal from '@/components/modals/SimpleConfirmModal.vue'
 
 @Component({
   name: 'RangeSliderSortingStatement',
   components: {
-    RangeSlider
+    RangeSlider,
+    SimpleConfirmModal
   }
 })
 
@@ -64,9 +71,33 @@ export default class RangeSliderSortingStatement extends Vue {
     }
   }
 
-  @Emit()
-  updateOrder () {
-    return this.values
+  updateOrder (): void {
+    const unScoredStatement: IpulseSortingStatement | undefined = this.values.find(
+      (statement: IpulseSortingStatement): boolean => {
+        return statement.score === 1
+      }
+    )
+
+    if (unScoredStatement) {
+      this.$modal.show('confirm-statements-modal')
+
+      return
+    }
+
+    this.confirmUpdateOrder()
+  }
+
+  confirmModal (): void {
+    this.hideConfirmModal()
+    this.confirmUpdateOrder()
+  }
+
+  confirmUpdateOrder (): void {
+    this.$emit('update-order', this.values)
+  }
+
+  hideConfirmModal (): void {
+    this.$modal.hide('confirm-statements-modal')
   }
 }
 </script>
@@ -90,6 +121,7 @@ export default class RangeSliderSortingStatement extends Vue {
     margin-bottom: 15px;
   }
   .ipulse-slider-title {
+    padding-top: 20px;
     width: 48%;
   }
   .ipulse-slider-range {

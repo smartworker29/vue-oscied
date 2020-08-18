@@ -57,7 +57,8 @@
     "start_survey": "🇩🇪 Start",
     "continue_survey": "🇩🇪 Continue",
     "start_icoach": "🇩🇪 Start icoach",
-    "back": "🇩🇪 Back"
+    "back": "🇩🇪 Back",
+    "ok": "🇩🇪 OK"
   },
   "email_address": "🇩🇪 Email Address",
   "remember_me": "🇩🇪 Remember Me",
@@ -157,5 +158,7 @@
   "survey_is_not_active": "🇩🇪 This Survey is not yet active.",
   "survey_is_expired": "🇩🇪 This Survey has now expired.",
   "icoach_is_not_active": "🇩🇪 This Icoach is not yet active.",
-  "icoach_is_expired": "🇩🇪 This Icoach has now expired."
+  "icoach_is_expired": "🇩🇪 This Icoach has now expired.",
+  "no_ranked_statement": "🇩🇪 You evaluated statements with 1. Would you like to proceed?",
+  "confirmation_message": "🇩🇪 Confirmation message"
 }
