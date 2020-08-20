@@ -18,6 +18,8 @@ import CompleteSurveyMessagePage from '@/pages/survey/CompleteSurveyMessagePage.
 import DpChildSurveyWelcomePage from '@/pages/survey/DpChildSurveyWelcomePage.vue'
 import DpChildSurveyCompletedPage from '@/pages/survey/DpChildSurveyCompletedPage.vue'
 import ResetPasswordPage from '@/pages/ResetPasswordPage.vue'
+import TakenIpulseSection from '@/components/survey/TakenIpulseSection.vue'
+import TakenIpulseCommentSection from '@/components/survey/TakenIpulseCommentSection.vue'
 
 Vue.use(Router)
 
@@ -88,16 +90,28 @@ const router = new Router({
       component: CompleteSurveyMessagePage
     },
     {
-      path: '/:surveyProduct(eq|values|behaviours|discovery-process)/:accessCode([a-zA-Z0-9]{50})',
+      path: '/:surveyProduct(eq|values|behaviours|discovery-process|ipulse)/:accessCode([a-zA-Z0-9]{50})',
       name: 'survey.welcome',
       component: WelcomePage,
       props: true
     },
     {
-      path: '/:surveyProduct(eq|values|behaviours)/:surveyUserId(\\d+)/part',
+      path: '/:surveyProduct(eq|values|behaviours|ipulse)/:surveyUserId(\\d+)/part',
       component: TakenSurveyPage,
       props: true,
       children: [
+        {
+          path: 'section/:sectionNumber(\\d+)',
+          name: 'survey.ipulse.page.part',
+          component: TakenIpulseSection,
+          props: true
+        },
+        {
+          path: 'comment',
+          name: 'survey.ipulse.comment.part',
+          component: TakenIpulseCommentSection,
+          props: true
+        },
         {
           path: ':sectionNumber(\\d+)',
           name: 'survey.page.part',
