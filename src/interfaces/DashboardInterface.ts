@@ -1,6 +1,8 @@
 export interface DashboardBaseItem {
   timeCreated: string
   timeCompleted: string | null
+  amountCountProgress: number
+  completedCountProgress: number
 }
 
 export interface DashboardSurveyItem extends DashboardBaseItem {
