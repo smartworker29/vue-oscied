@@ -1,46 +1,74 @@
 <template>
-  <div class="range-container">
+  <div class="range-container" v-if="rangeLimit > 0">
+    <div class="range-numbers" v-if="withNumber">
+      <span v-for="index in rangeLimit"
+            :key="index"
+            :class="{ 'selected-number': inputRange === index }"
+            @click="changeValueByNumber(index)"
+      >
+        {{ index }}
+      </span>
+    </div>
     <div class="range">
-      <input v-model.number="inputRange" class="range-input" type="range" min="1" :max="-1" @input="changeValue" ref="rangeSlider"/>
+      <input v-model.number="inputRange"
+             class="range-input"
+             type="range"
+             min="1"
+             max="-1"
+             ref="rangeSlider"
+             @input="changedValue"
+      />
     </div>
   </div>
 </template>
 <script lang="ts">
-import { Component, Emit, Prop, Ref, Vue } from 'vue-property-decorator'
+import { Component, Prop, Ref, Vue } from 'vue-property-decorator'
 
 @Component({ name: 'RangeSlider' })
 export default class RangeSlider extends Vue {
-  @Prop({ default: null })
-  rangeLimit: number|null = null
+  @Prop({
+    required: false,
+    default: 10
+  })
+  rangeLimit!: number
 
-  defaultAmount: number = 10
+  @Prop({
+    required: false,
+    default: true
+  })
+  withNumber!: boolean
 
-  inputRange: number|null = null
+  inputRange = 1
 
   @Ref()
   rangeSlider!: HTMLInputElement
 
-  get rangeAmount (): number {
-    const rangeLimit = this.rangeLimit
-
-    return rangeLimit || this.defaultAmount
-  }
-
   mounted () {
-    this.rangeSlider.max = String(this.rangeAmount)
+    this.rangeSlider.max = String(this.rangeLimit)
   }
 
-  @Emit()
-  changeValue (event: InputEvent) {
+  changeValueByNumber (selectedValue: number): void {
+    this.rangeSlider.value = String(selectedValue)
+    this.recalculateRangeStyles()
+    this.inputRange = selectedValue
+
+    this.$emit('change-value', this.inputRange)
+  }
+
+  changedValue (event: InputEvent) {
+    this.recalculateRangeStyles()
+    const input = event.target as HTMLInputElement
+
+    this.$emit('change-value', input.value)
+  }
+
+  recalculateRangeStyles (): void {
     const { value, min, max } = this.rangeSlider
     const dark = '#0085cd'
     const light = '#bdddff'
     const percentage: number = (Number(value) - Number(min)) / (Number(max) - Number(min)) * 100
     const direction = this.$i18n.locale === 'ar' ? 'left' : 'right'
     this.rangeSlider.style.background = `linear-gradient(to ${direction}, ${dark} 0%, ${dark} ${percentage}%, ${light} ${percentage}%, ${light} 100%)`
-    const input = event.target as HTMLInputElement
-
-    return input.value
   }
 }
 </script>
@@ -63,6 +91,21 @@ export default class RangeSlider extends Vue {
   }
 
   .range-container {
+    .range-numbers {
+      display: flex;
+      justify-content: space-between;
+
+      span {
+        cursor: pointer;
+        text-align: center;
+        width: 22px;
+
+        &.selected-number {
+          font-weight: bold;
+        }
+      }
+    }
+
     .range-input {
       width: 100%;
       height: 5px;
