@@ -7,7 +7,8 @@ import {
   UpdatePasswordData,
   UpdateUserData,
   ResetPasswordData,
-  RequestResetPasswordData
+  RequestResetPasswordData,
+  RegistrationTsSurveyData
 } from '@/interfaces/UserInterfaces'
 
 class UserService extends BaseApiService {
@@ -38,6 +39,10 @@ class UserService extends BaseApiService {
 
   registration (regData: RegistrationData) : object {
     return this.callMethod('post', '/public/registration', { registrationForm: regData })
+  }
+
+  tsSurveyRegistration (regData: RegistrationTsSurveyData) : object {
+    return this.callMethod('post', '/public/ts/registration', { registrationForm: regData })
   }
 
   signIn (signInData: SignInData) : string {

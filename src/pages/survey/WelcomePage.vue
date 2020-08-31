@@ -39,7 +39,7 @@
                 <SignInForm @changeForm="changeForm"/>
               </div>
               <div v-else-if="displayedForm === 'signUp'" class="sign-form">
-                <SignUpForm @changeForm="changeForm"/>
+                <SignUpForm @changeForm="changeForm" :survey-product="surveyProduct" :access-code="accessCode"/>
               </div>
             </div>
           </div>
@@ -166,6 +166,11 @@ export default class WelcomePage extends Vue {
       return
     }
 
+    if (this.surveyProduct === SurveyHelper.TS) {
+      await this.beginTsSurvey()
+      return
+    }
+
     this.surveyUserInfo = await SurveyService.getSurveyUser(
       this.surveyProduct,
       this.productSurveyId,
@@ -267,6 +272,15 @@ export default class WelcomePage extends Vue {
         surveyProduct: progress.nextSurveyPart.product,
         surveyUserId: progress.nextSurveyPart.surveyUserId.toString()
       }
+    })
+  }
+
+  async beginTsSurvey () : Promise<void> {
+    this.$store.commit('mainLogo/setType', MainLogosTypes.SURVEY_LOGOS)
+
+    this.$router.push({
+      name: 'survey.welcome.ts.survey_product',
+      params: { surveyUserId: this.productSurveyId.toString() }
     })
   }
 }

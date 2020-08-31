@@ -18,6 +18,7 @@ import CompleteSurveyMessagePage from '@/pages/survey/CompleteSurveyMessagePage.
 import DpChildSurveyWelcomePage from '@/pages/survey/DpChildSurveyWelcomePage.vue'
 import DpChildSurveyCompletedPage from '@/pages/survey/DpChildSurveyCompletedPage.vue'
 import ResetPasswordPage from '@/pages/ResetPasswordPage.vue'
+import TsSurveyWelcomePage from '@/pages/survey/TsSurveyWelcomePage.vue'
 
 Vue.use(Router)
 
@@ -88,7 +89,7 @@ const router = new Router({
       component: CompleteSurveyMessagePage
     },
     {
-      path: '/:surveyProduct(eq|values|behaviours|discovery-process)/:accessCode([a-zA-Z0-9]{50})',
+      path: '/:surveyProduct(eq|values|behaviours|discovery-process|360)/:accessCode([a-zA-Z0-9]{50})',
       name: 'survey.welcome',
       component: WelcomePage,
       props: true
@@ -105,6 +106,12 @@ const router = new Router({
           props: true
         }
       ]
+    },
+    {
+      path: '/360/:surveyUserId(\\d+)',
+      component: TsSurveyWelcomePage,
+      props: true,
+      name: 'survey.welcome.ts.survey_product'
     },
     {
       path: '/discovery-process/:surveyProduct(eq|values|behaviours)/:surveyUserId(\\d+)',

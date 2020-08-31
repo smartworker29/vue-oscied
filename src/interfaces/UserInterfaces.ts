@@ -43,6 +43,9 @@ export interface RegistrationData {
   phone?: string
   locale?: string | null
 }
+export interface RegistrationTsSurveyData extends RegistrationData {
+  accessCode: string
+}
 
 export interface RegistrationFormData {
   email: string
