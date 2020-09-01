@@ -36,7 +36,7 @@
             </div>
             <div class="form-content">
               <div v-if="displayedForm === 'signIn'" class="sign-form">
-                <SignInForm @changeForm="changeForm"/>
+                <SignInForm @changeForm="changeForm" :survey-product="surveyProduct" :access-code="accessCode"/>
               </div>
               <div v-else-if="displayedForm === 'signUp'" class="sign-form">
                 <SignUpForm @changeForm="changeForm" :survey-product="surveyProduct" :access-code="accessCode"/>

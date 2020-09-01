@@ -59,6 +59,7 @@ export interface RegistrationFormData {
 export interface SignInData {
   email: string
   password: string
+  accessCode?: string | null
 }
 
 export interface LocaleData {
