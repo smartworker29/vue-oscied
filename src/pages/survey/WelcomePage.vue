@@ -280,7 +280,7 @@ export default class WelcomePage extends Vue {
 
     this.$router.push({
       name: 'survey.welcome.ts.survey_product',
-      params: { surveyUserId: this.productSurveyId.toString() }
+      params: { surveyId: this.productSurveyId.toString() }
     })
   }
 }

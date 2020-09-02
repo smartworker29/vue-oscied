@@ -18,7 +18,8 @@ import CompleteSurveyMessagePage from '@/pages/survey/CompleteSurveyMessagePage.
 import DpChildSurveyWelcomePage from '@/pages/survey/DpChildSurveyWelcomePage.vue'
 import DpChildSurveyCompletedPage from '@/pages/survey/DpChildSurveyCompletedPage.vue'
 import ResetPasswordPage from '@/pages/ResetPasswordPage.vue'
-import TsSurveyWelcomePage from '@/pages/survey/TsSurveyWelcomePage.vue'
+import TsSurveyWelcomePage from '@/pages/360/TsSurveyWelcomePage.vue'
+import ManagerDashboardPage from '@/pages/360/ManagerDashboardPage.vue'
 
 Vue.use(Router)
 
@@ -108,10 +109,16 @@ const router = new Router({
       ]
     },
     {
-      path: '/360/:surveyUserId(\\d+)',
+      path: '/360/:surveyId(\\d+)',
       component: TsSurveyWelcomePage,
       props: true,
       name: 'survey.welcome.ts.survey_product'
+    },
+    {
+      path: '/360/dashboard',
+      component: ManagerDashboardPage,
+      props: true,
+      name: 'survey.ts.dashboard'
     },
     {
       path: '/discovery-process/:surveyProduct(eq|values|behaviours)/:surveyUserId(\\d+)',

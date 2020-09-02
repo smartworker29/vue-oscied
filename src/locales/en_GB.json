@@ -57,7 +57,8 @@
     "add_photo": "Add Picture",
     "start_survey": "Start",
     "continue_survey": "Continue",
-    "start_icoach": "Start"
+    "start_icoach": "Start",
+    "add_new_rating_team": "Create a new Rating Team"
   },
   "email_address": "Email Address",
   "remember_me": "Remember Me",

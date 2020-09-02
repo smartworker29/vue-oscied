@@ -56,7 +56,8 @@
     "add_photo": "🇩🇪 Add Picture",
     "start_survey": "🇩🇪 Start",
     "continue_survey": "🇩🇪 Continue",
-    "start_icoach": "🇩🇪 Start icoach"
+    "start_icoach": "🇩🇪 Start icoach",
+    "add_new_rating_team": "🇩🇪 Create a new Rating Team"
   },
   "survey_completed_heading": "🇩🇪 You completed the survey!",
   "email_address": "Deutsch: Email Address",
