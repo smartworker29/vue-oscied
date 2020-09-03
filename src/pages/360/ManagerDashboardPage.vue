@@ -10,9 +10,8 @@
 
       <div v-if="rateeList" class="ts-survey-wrapper">
         <div v-for="(ratee, id) in rateeList" :key="id" class="ts-survey-item">
-          <img :src="ratee.image.fileURL || require('@/assets/user.png')">
+          <img class="account-image" :src="ratee.image.fileURL || require('@/assets/user.png')">
           <div>{{ ratee.fullName }}</div>
-          <div>{{ ratee.email }}</div>
           <div v-if="ratee.isLive">
             <button class="btn btn-primary btn-primary-active" @click="review">
               {{ $t('button_g.review') }}
