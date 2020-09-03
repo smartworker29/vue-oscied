@@ -6,6 +6,17 @@ export interface Statement {
   sectionId: number
 }
 
+export interface IpulseStatement {
+  id: number
+  position: string
+  title: string
+}
+
+export interface IpulseSortingStatement {
+  statementId: number,
+  score: number
+}
+
 export interface Section {
   id: number
   title: string
@@ -58,4 +69,12 @@ export interface NextDpSurveyPart {
 export interface DpProgress {
   nextSurveyPart: NextDpSurveyPart | null
   isCompleted: boolean
+}
+
+export enum SurveyProductTypes {
+  EQ = 'eq',
+  VALUES = 'values',
+  BEHAVIOURS = 'behaviours',
+  DP = 'discovery-process',
+  IPULSE = 'ipulse'
 }

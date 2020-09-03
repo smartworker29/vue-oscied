@@ -56,7 +56,7 @@ import SignInForm from '@/components/signIn/SignInForm.vue'
 import SignUpForm from '@/components/signUp/SignUpForm.vue'
 import LangSwitcher from '@/components/common/layout/LangSwitcher.vue'
 import SurveyService from '@/services/SurveyService'
-import { SurveyInfo, SurveyUserInfo } from '@/interfaces/SurveyInterfaces'
+import { SurveyInfo, SurveyProductTypes, SurveyUserInfo } from '@/interfaces/SurveyInterfaces'
 import { MainLogosTypes } from '@/interfaces/GeneralInterfaces'
 import SurveyLocalStorageHelper from '@/utils/SurveyLocalStorageHelper'
 import SurveyHelper from '@/utils/SurveyHelper'
@@ -219,8 +219,10 @@ export default class WelcomePage extends Vue {
       return
     }
 
+    const routerName = this.surveyProduct === SurveyProductTypes.IPULSE ? 'survey.ipulse.page.part' : 'survey.page.part'
+
     this.$router.push({
-      name: 'survey.page.part',
+      name: routerName,
       params: {
         surveyProduct: this.surveyProduct,
         surveyUserId: this.surveyUserInfo.surveyUserId.toString(),

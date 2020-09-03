@@ -2,10 +2,7 @@
   <div class="survey">
     <div class="survey-header">
       <h1 class="survey-title">
-        <span>
-          {{ currentSectionData && currentSectionData.title
-          ? currentSectionData.title : $t('world_view') }}
-        </span>
+        <span>{{ title }}</span>
          <Progress :percentage="true" />
       </h1>
       <!-- <p>
@@ -17,6 +14,8 @@
     <div class="survey-content">
       <router-view v-if="loadSections"
                    @completeSection="handleCompleteSection"
+                   @completeIpulseSection="handleCompleteIpulseSection"
+                   @completeIpulseCommentSection="handleCompleteIpulseCommentSection"
                    @pushToAnotherSection="pushToAnotherSection"
                    :key="sectionKey"/>
     </div>
@@ -26,7 +25,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import { Getter } from 'vuex-class'
-import { Section, Statement } from '@/interfaces/SurveyInterfaces'
+import { IpulseSortingStatement, Section, Statement, SurveyProductTypes } from '@/interfaces/SurveyInterfaces'
 import SurveyService from '@/services/SurveyService'
 import SurveyHelper from '@/utils/SurveyHelper'
 import SurveyLocalStorageHelper from '@/utils/SurveyLocalStorageHelper'
@@ -49,6 +48,8 @@ export default class TakenSurvey extends Vue {
 
   @Getter('survey/isDpTakenSurvey')
   isDpTakenSurvey!: boolean
+  @Getter('survey/isIpulseTakenSurvey')
+  isIpulseTakenSurvey!: boolean
   @Getter('survey/getDpSurveyUserId')
   dpSurveyUserId!: number
 
@@ -65,7 +66,10 @@ export default class TakenSurvey extends Vue {
   async created () {
     const nextSectionId = await this.getNextSection()
     if (nextSectionId && nextSectionId > 1) {
-      this.$store.commit('survey/setCurrentSurveyProgress', nextSectionId - 1)
+      const nextSection = (this.surveyProduct === SurveyProductTypes.IPULSE && this.currentSectionData && this.currentSectionData.position)
+        ? this.currentSectionData.position + 1
+        : nextSectionId - 1
+      this.$store.commit('survey/setCurrentSurveyProgress', nextSection)
     }
 
     if (!nextSectionId) {
@@ -78,6 +82,16 @@ export default class TakenSurvey extends Vue {
 
     this.surveyData = SurveyLocalStorageHelper.getSurveyUser(this.surveyProduct, this.surveyUserId)
     this.loadSections = true
+  }
+
+  get title (): string {
+    const isIpulseComment: boolean = this.surveyProduct === SurveyProductTypes.IPULSE && this.$route.name === 'survey.ipulse.comment.part'
+
+    return isIpulseComment && this.surveyData
+      ? this.surveyData.surveyProductTitle
+      : this.currentSectionData && this.currentSectionData.title
+        ? this.currentSectionData.title
+        : this.$tc('world_view')
   }
 
   async uploadSurveySections () : Promise<void> {
@@ -128,11 +142,15 @@ export default class TakenSurvey extends Vue {
       await this.handleNullableSectionForDp()
       return
     }
+    if (this.isIpulseTakenSurvey) {
+      await this.handleNullableSectionForIpulse()
+      return
+    }
     this.$router.push({ name: 'notFound' })
   }
 
   async handleNullableSectionForDp () : Promise<void> {
-    if (this.surveyProduct === 'behaviours') {
+    if (this.surveyProduct === SurveyProductTypes.BEHAVIOURS) {
       const title = this.surveyData ? this.surveyData.surveyProductTitle : ''
       SurveyLocalStorageHelper.removeSurveyUser(SurveyHelper.DP, this.dpSurveyUserId)
       this.$store.commit('survey/clearDpSurveyData')
@@ -149,8 +167,19 @@ export default class TakenSurvey extends Vue {
     })
   }
 
+  async handleNullableSectionForIpulse () : Promise<void> {
+    this.loadSections = true
+    this.$router.push({
+      name: 'survey.ipulse.comment.part',
+      params: {
+        surveyProduct: this.surveyProduct,
+        surveyUserId: this.surveyUserId.toString()
+      }
+    })
+  }
+
   pushToAnotherSection (sectionNumber: number) : void {
-    const routeName = this.isDpTakenSurvey ? 'survey.dp.page.part' : 'survey.page.part'
+    const routeName = this.isDpTakenSurvey ? 'survey.dp.page.part' : this.surveyProduct === SurveyProductTypes.IPULSE ? 'survey.ipulse.page.part' : 'survey.page.part'
     this.sectionKey++
     this.$router.push({
       name: routeName,
@@ -160,6 +189,39 @@ export default class TakenSurvey extends Vue {
         sectionNumber: sectionNumber.toString()
       }
     })
+  }
+
+  async handleCompleteIpulseCommentSection (comment: string) {
+    await SurveyService.saveIpulseComment(
+      this.surveyUserId,
+      comment
+    )
+
+    await this.handleCompleteSurvey()
+  }
+
+  async handleCompleteIpulseSection (statements: IpulseSortingStatement[]) : Promise<void> {
+    const nextSectionId = await SurveyService.saveIpulseStatements(
+      this.surveyUserId,
+      statements
+    )
+
+    this.$store.commit('survey/addOneCompletedSection')
+
+    if (!nextSectionId) {
+      this.handleIpulseCommentSection()
+      return
+    }
+
+    this.$store.commit('survey/setNextSurveySectionId', nextSectionId)
+    const nextSectionNumber: number | null = this.$store.getters['survey/getNextSurveySectionNumber']
+
+    if (!nextSectionNumber) {
+      this.handleNullableNextSection()
+      return
+    }
+
+    this.pushToAnotherSection(nextSectionNumber)
   }
 
   async handleCompleteSection (statements: Statement[]) : Promise<void> {
@@ -196,6 +258,16 @@ export default class TakenSurvey extends Vue {
     }
 
     this.$router.push({ name: 'survey.complete', params: { title } })
+  }
+
+  private handleIpulseCommentSection () {
+    this.$router.push({
+      name: 'survey.ipulse.comment.part',
+      params: {
+        surveyProduct: this.surveyProduct,
+        surveyUserId: this.surveyUserId.toString()
+      }
+    })
   }
 }
 </script>

@@ -22,7 +22,7 @@
     </div>
     <button class="btn btn-primary btn-primary-active confirm-survey" @click="updateOrder">{{ $t('button_g.confirm_order') }}</button>
     <modal :classes="['ccr-modal']" name="confirm-modal" :height="'auto'">
-      <ConfirmModal :surveyProduct="surveyProduct" @cancel="handleCancelModal" @confirm="handleConfirmModal" />
+      <SurveyConfirmModal :surveyProduct="surveyProduct" @cancel="handleCancelModal" @confirm="handleConfirmModal" />
     </modal>
   </div>
 </template>
@@ -31,11 +31,11 @@
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import draggable from 'vuedraggable'
 import { StatementSortingOptions } from '@/interfaces/SortingInterfaces'
-import ConfirmModal from '@/components/modals/ConfirmModal.vue'
+import SurveyConfirmModal from '@/components/modals/SurveyConfirmModal.vue'
 
 @Component({
   name: 'DragAndDropSortingStatement',
-  components: { draggable, ConfirmModal }
+  components: { draggable, SurveyConfirmModal }
 })
 export default class DragAndDropSortingStatement extends Vue {
   @Prop({})
