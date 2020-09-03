@@ -22,7 +22,7 @@ import TsService from '@/services/TsService'
 })
 export default class TsSurveyWelcomePage extends Vue {
   @Prop()
-  surveyId !: number
+  tsSurveyId !: number
 
   @Getter('user/isAuthenticated')
   isAuthenticated!: boolean
@@ -40,9 +40,9 @@ export default class TsSurveyWelcomePage extends Vue {
   }
 
   async beginTsSurvey () {
-    const survey = await TsService.getUser(this.surveyId, this.user.id)
+    const tsUser = await TsService.getUser(this.tsSurveyId, this.user.id)
 
-    this.$store.commit('ts/setTsUser', survey)
+    this.$store.commit('ts/setTsUser', tsUser)
     this.$router.push({
       name: 'survey.ts.dashboard'
     })

@@ -60,7 +60,10 @@
     "start_icoach": "Start",
     "back": "Back",
     "ok": "OK",
-    "add_new_rating_team": "Create a new Rating Team"
+    "add_new_rating_team": "Create a new Rating Team",
+    "setup": "Setup",
+    "review": "Review",
+    "results": "Results"
   },
   "email_address": "Email Address",
   "remember_me": "Remember Me",

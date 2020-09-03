@@ -109,6 +109,11 @@ export default class WelcomePage extends Vue {
 
       SurveyHelper.checkSurveyInfo(response.survey)
 
+      if (this.surveyProduct === SurveyHelper.TS) {
+        await this.checkTsSurvey()
+        return
+      }
+
       if (this.surveyUserInfo && SurveyLocalStorageHelper.hasSurveyUser(this.surveyProduct, this.surveyUserInfo.surveyUserId)) {
         this.surveyData = SurveyLocalStorageHelper.getSurveyUser(this.surveyProduct, this.surveyUserInfo.surveyUserId)
       }
@@ -277,12 +282,20 @@ export default class WelcomePage extends Vue {
     })
   }
 
-  async beginTsSurvey () : Promise<void> {
+  beginTsSurvey () : Promise<void> {
     this.$store.commit('mainLogo/setType', MainLogosTypes.SURVEY_LOGOS)
 
     this.$router.push({
       name: 'survey.welcome.ts.survey_product',
-      params: { surveyId: this.productSurveyId.toString() }
+      params: { tsSurveyId: this.productSurveyId.toString() }
+    })
+  }
+
+  checkTsSurvey () : Promise<void> {
+    this.$store.commit('survey/setTakenSurveyData', {
+      productSurveyId: this.productSurveyId,
+      productSurveyType: this.surveyProduct,
+      surveyInfo: this.surveyInfo
     })
   }
 }

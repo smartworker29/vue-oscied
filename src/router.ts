@@ -123,13 +123,13 @@ const router = new Router({
       ]
     },
     {
-      path: '/360/:surveyId(\\d+)',
+      path: '/360/:tsSurveyId(\\d+)',
       component: TsSurveyWelcomePage,
       props: true,
       name: 'survey.welcome.ts.survey_product'
     },
     {
-      path: '/360/dashboard',
+      path: '/360/:tsSurveyId(\\d+)/dashboard',
       component: ManagerDashboardPage,
       props: true,
       name: 'survey.ts.dashboard'
