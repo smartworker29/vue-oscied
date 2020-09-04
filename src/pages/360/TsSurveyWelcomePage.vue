@@ -40,7 +40,7 @@ export default class TsSurveyWelcomePage extends Vue {
   }
 
   async beginTsSurvey () {
-    const tsUser = await TsService.getUser(this.tsSurveyId, this.user.id)
+    const tsUser = await TsService.getUserInfo(this.tsSurveyId, this.user.id)
 
     this.$store.commit('ts/setTsUser', tsUser)
     this.$router.push({

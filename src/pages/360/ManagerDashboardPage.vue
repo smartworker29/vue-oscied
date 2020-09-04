@@ -10,7 +10,7 @@
 
       <div v-if="rateeList" class="ts-survey-wrapper">
         <div v-for="(ratee, id) in rateeList" :key="id" class="ts-survey-item">
-          <img class="account-image" :src="ratee.image.fileURL || require('@/assets/user.png')">
+          <img class="account-image" :src="ratee.image && ratee.image.fileURL || require('@/assets/user.png')">
           <div>{{ ratee.fullName }}</div>
           <div v-if="ratee.isLive">
             <button class="btn btn-primary btn-primary-active" @click="review">
@@ -25,19 +25,30 @@
           </button>
         </div>
       </div>
+
+      <modal :classes="['ccr-modal']" name="new-ratee-modal" :height="'auto'">
+        <TsAddRateeModal
+          @cancel="handleCancelModal"
+          @confirm="handleConfirmModal"
+          @changed="handleChangedModal"
+          :modalError="modalError"
+        />
+      </modal>
     </div>
   </div>
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
-import { SurveyInfo, TsRateeUser, TsUserDto } from '@/interfaces'
+import { SurveyInfo, TsNewRateeForm, TsRateeUser, TsUserDto, User } from '@/interfaces'
 import { Getter } from 'vuex-class'
 import TsService from '@/services/TsService'
 import SurveyService from '@/services/SurveyService'
 import SurveyHelper from '@/utils/SurveyHelper'
+import TsAddRateeModal from '@/components/modals/TsAddRateeModal.vue'
 
 @Component({
-  name: 'ManagerDashboardPage'
+  name: 'ManagerDashboardPage',
+  components: { TsAddRateeModal }
 })
 export default class ManagerDashboardPage extends Vue {
   @Prop()
@@ -52,13 +63,43 @@ export default class ManagerDashboardPage extends Vue {
   @Getter('ts/getUser')
   tsUser!: TsUserDto
 
-  rateeList: TsRateeUser[] = []
+  @Getter('user/currentUser')
+  user!: User
 
-  addNewRatee () {}
+  rateeList: TsRateeUser[] = []
+  modalError: string = ''
+
+  addNewRatee () {
+    this.$modal.show('new-ratee-modal')
+  }
+
+  handleCancelModal () {
+    this.$modal.hide('new-ratee-modal')
+  }
+
+  async handleConfirmModal (ratee: TsNewRateeForm) {
+    try {
+      await TsService.addRatee(this.tsSurveyId, this.tsUser.user.id, ratee)
+      this.$modal.hide('new-ratee-modal')
+    } catch (error) {
+      if ('response' in error && error.response.status === 404) {
+        const { detail } = error.response.data
+        this.modalError = detail
+      } else {
+        throw error
+      }
+    }
+
+    this.rateeList = await TsService.getRateeList(this.tsSurveyId)
+  }
+
+  handleChangedModal () {
+    this.modalError = ''
+  }
 
   async created () {
     if (!this.isAuthenticated) {
-      this.$router.push({ name: 'notFound' })
+      await this.$router.push({ name: 'notFound' })
     }
 
     if (!this.surveyInfo) {
@@ -72,6 +113,12 @@ export default class ManagerDashboardPage extends Vue {
         productSurveyType: SurveyHelper.TS,
         surveyInfo: something
       })
+    }
+
+    if (!this.tsUser) {
+      const tsUser = await TsService.getUserInfo(this.tsSurveyId, this.user.id)
+
+      this.$store.commit('ts/setTsUser', tsUser)
     }
 
     this.rateeList = await TsService.getRateeList(this.tsSurveyId)

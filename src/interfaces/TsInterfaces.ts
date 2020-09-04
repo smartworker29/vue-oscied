@@ -6,15 +6,15 @@ export enum TsUserRole {
   ratee
 }
 
-export interface TsUserUser {
+export interface TsAbstractUser {
   id: number
-  firstName: string
-  lastName: string
+  fullName: string
   email: string
-  gender?: string | null
-  phone?: string
-  locale?: string
 }
+
+export interface TsManager extends TsAbstractUser {}
+export interface TsRatee extends TsAbstractUser {}
+export interface TsRater extends TsAbstractUser {}
 
 export interface TsSurveyDto {
 }
@@ -22,11 +22,17 @@ export interface TsSurveyDto {
 export interface TsRateeUser {
   fullName: string
   email: string
-  image: Image
+  image: Image | null
   isLive: boolean
 }
 
+export interface TsNewRateeForm {
+  email: string,
+  firstName: string,
+  lastName: string
+}
+
 export interface TsUserDto {
-  role: TsUserRole,
-  user: TsUserUser
+  roles: TsUserRole[],
+  user: TsAbstractUser
 }

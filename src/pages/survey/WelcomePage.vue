@@ -282,17 +282,17 @@ export default class WelcomePage extends Vue {
     })
   }
 
-  beginTsSurvey () : Promise<void> {
+  async beginTsSurvey () : Promise<void> {
     this.$store.commit('mainLogo/setType', MainLogosTypes.SURVEY_LOGOS)
 
-    this.$router.push({
+    await this.$router.push({
       name: 'survey.welcome.ts.survey_product',
       params: { tsSurveyId: this.productSurveyId.toString() }
     })
   }
 
-  checkTsSurvey () : Promise<void> {
-    this.$store.commit('survey/setTakenSurveyData', {
+  async checkTsSurvey () : Promise<void> {
+    await this.$store.commit('survey/setTakenSurveyData', {
       productSurveyId: this.productSurveyId,
       productSurveyType: this.surveyProduct,
       surveyInfo: this.surveyInfo

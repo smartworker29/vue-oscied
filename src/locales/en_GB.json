@@ -147,6 +147,11 @@
     },
     "try_again": "Try Again"
   },
+  "ts": {
+    "modal": {
+      "add_new_ratee": "Create a new Rating Team"
+    }
+  },
   "dashboard": {
     "title": "Dashboard",
     "item_type": {
