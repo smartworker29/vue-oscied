@@ -20,17 +20,18 @@
               {{ $t('button_g.results') }}
             </button>
           </div>
-          <button class="btn btn-primary btn-primary-active" @click="setup" v-else>
+          <button class="btn btn-primary btn-primary-active" @click="setup(ratee.id)" v-else>
             {{ $t('button_g.setup') }}
           </button>
         </div>
       </div>
 
       <modal :classes="['ccr-modal']" name="new-ratee-modal" :height="'auto'">
-        <TsAddRateeModal
+        <TsAddUserModal
           @cancel="handleCancelModal"
           @confirm="handleConfirmModal"
           @changed="handleChangedModal"
+          :title="$t('ts.modal.add_new_ratee')"
           :modalError="modalError"
         />
       </modal>
@@ -39,16 +40,16 @@
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
-import { SurveyInfo, TsNewRateeForm, TsRateeUser, TsUserDto, User } from '@/interfaces'
+import { SurveyInfo, TsNewUserForm, TsRateeUser, TsUserDto, User } from '@/interfaces'
 import { Getter } from 'vuex-class'
 import TsService from '@/services/TsService'
 import SurveyService from '@/services/SurveyService'
 import SurveyHelper from '@/utils/SurveyHelper'
-import TsAddRateeModal from '@/components/modals/TsAddRateeModal.vue'
+import TsAddUserModal from '@/components/modals/TsAddUserModal.vue'
 
 @Component({
   name: 'ManagerDashboardPage',
-  components: { TsAddRateeModal }
+  components: { TsAddUserModal }
 })
 export default class ManagerDashboardPage extends Vue {
   @Prop()
@@ -77,9 +78,9 @@ export default class ManagerDashboardPage extends Vue {
     this.$modal.hide('new-ratee-modal')
   }
 
-  async handleConfirmModal (ratee: TsNewRateeForm) {
+  async handleConfirmModal (user: TsNewUserForm) {
     try {
-      await TsService.addRatee(this.tsSurveyId, this.tsUser.user.id, ratee)
+      await TsService.addRatee(this.tsSurveyId, this.tsUser.user.id, user)
       this.$modal.hide('new-ratee-modal')
     } catch (error) {
       if ('response' in error && error.response.status === 404) {
@@ -123,8 +124,6 @@ export default class ManagerDashboardPage extends Vue {
 
     this.rateeList = await TsService.getRateeList(this.tsSurveyId)
   }
-
-  setup () {}
 
   review () {}
 

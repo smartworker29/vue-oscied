@@ -1,6 +1,6 @@
 <template>
   <div class="ccr-confirm">
-    <h2 class="ccr-modal__title">{{ $t('ts.modal.add_new_ratee') }}</h2>
+    <h2 class="ccr-modal__title">{{ title }}</h2>
     <form class="form">
       <div class="form-group row">
         <p class="error" v-if="modalError">{{ modalError }}</p>
@@ -9,28 +9,19 @@
           class="form-control col-md-8"
           type="text"
           name="email"
-          v-model="ratee.email"
+          v-model="user.email"
           v-validate="'required|email'"
         >
         <p class="error" v-if="errors">{{ errors.first('email') }}</p>
-        <label class="col-md-4 col-form-label">{{ $t('first_name') }}</label>
+        <label class="col-md-4 col-form-label">{{ $t('full_name') }}</label>
         <input
           class="form-control col-md-8"
           type="text"
-          name="firstName"
-          v-model="ratee.firstName"
+          name="fullName"
+          v-model="user.fullName"
           v-validate="'required'"
         >
-        <p class="error" v-if="errors">{{ errors.first('firstName') }}</p>
-        <label class="col-md-4 col-form-label">{{ $t('last_name') }}</label>
-        <input
-          class="form-control col-md-8"
-          type="text"
-          name="lastName"
-          v-model="ratee.lastName"
-          v-validate="'required'"
-        >
-        <p class="error" v-if="errors">{{ errors.first('lastName') }}</p>
+        <p class="error" v-if="errors">{{ errors.first('fullName') }}</p>
       </div>
     </form>
     <div class="ccr-modal__actions ccr-modal__actions-right">
@@ -42,20 +33,22 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
-import { TsNewRateeForm } from '@/interfaces'
+import { TsNewUserForm } from '@/interfaces'
 
-@Component({ name: 'TsAddRateeModal' })
-export default class TsAddRateeModal extends Vue {
+@Component({ name: 'TsAddUserModal' })
+export default class TsAddUserModal extends Vue {
+  @Prop({ default: '' })
+  title: string
+
   @Prop({ default: '' })
   modalError: string
 
-  ratee: TsNewRateeForm = {
+  user: TsNewUserForm = {
     email: '',
-    firstName: '',
-    lastName: ''
+    fullName: ''
   }
 
-  @Watch('ratee.email')
+  @Watch('user.email')
   emailChanged () {
     this.$emit('changed')
   }
@@ -63,7 +56,7 @@ export default class TsAddRateeModal extends Vue {
   async submit () {
     await this.$validator.validateAll()
 
-    this.$emit('confirm', this.ratee)
+    this.$emit('confirm', this.user)
   }
 }
 </script>

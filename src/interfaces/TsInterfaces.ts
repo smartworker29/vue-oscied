@@ -26,10 +26,16 @@ export interface TsRateeUser {
   isLive: boolean
 }
 
-export interface TsNewRateeForm {
+export interface TsRaterUser {
+  id: number
+  fullName: string
+  email: string
+  image: Image | null
+}
+
+export interface TsNewUserForm {
   email: string,
-  firstName: string,
-  lastName: string
+  fullName: string
 }
 
 export interface TsUserDto {
