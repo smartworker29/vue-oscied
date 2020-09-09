@@ -117,7 +117,7 @@ export default class ManagerRateePage extends Vue {
 
   async checkRatee () {
     try {
-      this.ratee = await TsService.getRateeInfoById(this.tsManagerRateeId)
+      this.ratee = await TsService.getRateeInfoById(this.tsUser.user.id, this.tsManagerRateeId)
     } catch (error) {
       if ('response' in error && error.response.status === 404) {
         await this.$router.push({ name: 'notFound' })
