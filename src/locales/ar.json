@@ -60,6 +60,8 @@
     "back": "🇦🇪 Back",
     "ok": "🇦🇪 OK",
     "add_new_rating_team": "🇦🇪 Create a new Rating Team",
+    "add_new_user": "🇦🇪 Add a new User",
+    "remove": "🇦🇪 Remove",
     "setup": "🇦🇪 Setup",
     "review": "🇦🇪 Review",
     "results": "🇦🇪 Results"
@@ -148,8 +150,15 @@
     "try_again": "🇦🇪 Try Again"
   },
   "ts": {
+    "dashboard": {
+      "publish": "🇦🇪 Publish",
+      "unpublish": "🇦🇪 Unpublish"
+    },
     "modal": {
-      "add_new_ratee": "🇦🇪 Create a new Rating Team"
+      "remove_rater_title": "🇦🇪 Remove this user",
+      "remove_rater_message": "🇦🇪 Are you sure to remove this user?",
+      "add_new_ratee": "🇦🇪 Create a new Rating Team",
+      "add_new_rater": "🇦🇪 Add a new user to this team"
     }
   },
   "dashboard": {

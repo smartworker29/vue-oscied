@@ -22,6 +22,7 @@ import TakenIpulseSection from '@/components/survey/TakenIpulseSection.vue'
 import TakenIpulseCommentSection from '@/components/survey/TakenIpulseCommentSection.vue'
 import TsSurveyWelcomePage from '@/pages/360/TsSurveyWelcomePage.vue'
 import ManagerDashboardPage from '@/pages/360/ManagerDashboardPage.vue'
+import ManagerRateePage from '@/pages/360/ManagerRateePage.vue'
 
 Vue.use(Router)
 
@@ -133,6 +134,12 @@ const router = new Router({
       component: ManagerDashboardPage,
       props: true,
       name: 'survey.ts.dashboard'
+    },
+    {
+      path: '/360/:tsSurveyId(\\d+)/manager/:tsManagerRateeId(\\d+)',
+      component: ManagerRateePage,
+      props: true,
+      name: 'survey.ts.ratee'
     },
     {
       path: '/discovery-process/:surveyProduct(eq|values|behaviours)/:surveyUserId(\\d+)',

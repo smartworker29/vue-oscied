@@ -70,6 +70,33 @@ export default class ManagerDashboardPage extends Vue {
   rateeList: TsRateeUser[] = []
   modalError: string = ''
 
+  async created () {
+    if (!this.isAuthenticated) {
+      await this.$router.push({ name: 'notFound' })
+    }
+
+    if (!this.surveyInfo) {
+      const surveyInfo = await SurveyService.getSurveyInfoById(
+        SurveyHelper.TS,
+        this.tsSurveyId
+      )
+
+      this.$store.commit('survey/setTakenSurveyData', {
+        productSurveyId: this.tsSurveyId,
+        productSurveyType: SurveyHelper.TS,
+        surveyInfo: surveyInfo
+      })
+    }
+
+    if (!this.tsUser) {
+      const tsUser = await TsService.getUserInfo(this.tsSurveyId, this.user.id)
+
+      this.$store.commit('ts/setTsUser', tsUser)
+    }
+
+    this.rateeList = await TsService.getRateeList(this.tsSurveyId)
+  }
+
   addNewRatee () {
     this.$modal.show('new-ratee-modal')
   }
@@ -98,31 +125,14 @@ export default class ManagerDashboardPage extends Vue {
     this.modalError = ''
   }
 
-  async created () {
-    if (!this.isAuthenticated) {
-      await this.$router.push({ name: 'notFound' })
-    }
-
-    if (!this.surveyInfo) {
-      const something = await SurveyService.getSurveyInfoById(
-        SurveyHelper.TS,
-        this.tsSurveyId
-      )
-
-      this.$store.commit('survey/setTakenSurveyData', {
-        productSurveyId: this.tsSurveyId,
-        productSurveyType: SurveyHelper.TS,
-        surveyInfo: something
-      })
-    }
-
-    if (!this.tsUser) {
-      const tsUser = await TsService.getUserInfo(this.tsSurveyId, this.user.id)
-
-      this.$store.commit('ts/setTsUser', tsUser)
-    }
-
-    this.rateeList = await TsService.getRateeList(this.tsSurveyId)
+  setup (id: number) {
+    this.$router.push({
+      name: 'survey.ts.ratee',
+      params: {
+        tsSurveyId: this.tsSurveyId.toString(),
+        tsManagerRateeId: id.toString()
+      }
+    })
   }
 
   review () {}
@@ -134,6 +144,8 @@ export default class ManagerDashboardPage extends Vue {
 <style lang="scss">
   .ts-survey-wrapper {
     display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
   }
 
   .ts-survey-item {

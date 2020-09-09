@@ -20,6 +20,7 @@ export interface TsSurveyDto {
 }
 
 export interface TsRateeUser {
+  id: number
   fullName: string
   email: string
   image: Image | null

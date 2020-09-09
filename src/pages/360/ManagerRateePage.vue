@@ -1,0 +1,246 @@
+<template>
+  <div class="survey">
+    <div class="survey-header">
+      <h1 class="survey-title">{{ $t('welcome_to_survey', { surveyName: (surveyInfo) ? surveyInfo.title : '' }) }}</h1>
+    </div>
+    <div class="survey-content" v-if="ratee">
+      <button class="btn btn-primary btn-primary-active" @click="goToList">
+        back to the list
+      </button>
+      <h2>{{ ratee.fullName }}</h2>
+      <div class="ts-manager-ratee-wrapper">
+        <div class="ts-ratee-full-item-wrapper">
+          <div class="ts-ratee-full-item">
+            <img class="account-image" :alt="ratee.fullName" :src="ratee.image && ratee.image.fileURL || require('@/assets/user.png')">
+            <div>{{ ratee.fullName }}</div>
+            <div>{{ ratee.email }}</div>
+            <button class="btn btn-primary btn-primary-active" @click="unpublish" v-if="ratee.isLive">
+              {{ $t('ts.dashboard.unpublish') }}
+            </button>
+            <button class="btn btn-primary btn-primary-active" @click="publish" v-else>
+              {{ $t('ts.dashboard.publish') }}
+            </button>
+          </div>
+        </div>
+
+        <div class="ts-ratee-raters-list-wrapper">
+          <button class="btn btn-primary btn-primary-active" @click="addNewRater">
+            {{ $t('button_g.add_new_user') }}
+          </button>
+          <div v-if="raterList" class="ts-rater-wrapper">
+            <div v-for="(rater, id) in raterList" :key="id" class="ts-rater-item">
+              <img class="ts-rater-image" :alt="rater.fullName" :src="rater.image && rater.image.fileURL || require('@/assets/user.png')">
+              <div>{{ rater.fullName }}</div>
+              <button class="btn btn-primary btn-primary-active" @click="removeRater(rater)">
+                {{ $t('button_g.remove') }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <modal :classes="['ccr-modal']" name="new-rater-modal" :height="'auto'">
+        <TsAddUserModal
+          :title="$t('ts.modal.add_new_rater')"
+          :modalError="modalError"
+          @cancel="handleCancelModal"
+          @confirm="handleConfirmModal"
+          @changed="handleChangedModal"
+        />
+      </modal>
+
+      <modal :classes="['ccr-modal']" name="confirm-remove-rater-modal" :height="'auto'">
+        <SimpleConfirmModal
+          :title="$t('ts.modal.remove_rater_title')"
+          :message="$t('ts.modal.remove_rater_message')"
+          @cancel="hideConfirmRemoveRaterModal"
+          @confirm="confirmRemoveRaterModal"
+        />
+      </modal>
+
+    </div>
+  </div>
+</template>
+<script lang="ts">
+import { Component, Prop, Vue } from 'vue-property-decorator'
+import { SurveyInfo, TsNewUserForm, TsRateeUser, TsRaterUser, TsUserDto, User } from '@/interfaces'
+import { Getter } from 'vuex-class'
+import TsService from '@/services/TsService'
+import TsAddUserModal from '@/components/modals/TsAddUserModal.vue'
+import SimpleConfirmModal from '@/components/modals/SimpleConfirmModal.vue'
+
+@Component({
+  name: 'ManagerRateePage',
+  components: { TsAddUserModal, SimpleConfirmModal }
+})
+export default class ManagerRateePage extends Vue {
+  @Prop()
+  tsSurveyId !: number
+
+  @Prop()
+  tsManagerRateeId !: number
+
+  @Getter('user/isAuthenticated')
+  isAuthenticated!: boolean
+
+  @Getter('survey/getDisplayedBaseSurveyInfo')
+  surveyInfo!: SurveyInfo
+
+  @Getter('ts/getUser')
+  tsUser!: TsUserDto
+
+  @Getter('user/currentUser')
+  user!: User
+
+  ratee: TsRateeUser | null = null
+  raterList: TsRaterUser[] = []
+  modalError: string = ''
+  raterToRemove: TsRaterUser | null = null
+
+  async created () {
+    if (!this.isAuthenticated) {
+      await this.$router.push({ name: 'notFound' })
+    }
+
+    await this.checkUser()
+    await this.checkRatee()
+
+    this.raterList = await TsService.getRaterList(this.tsManagerRateeId)
+  }
+
+  async checkUser () {
+    if (!this.tsUser) {
+      const tsUser = await TsService.getUserInfo(this.tsSurveyId, this.user.id)
+
+      this.$store.commit('ts/setTsUser', tsUser)
+    }
+  }
+
+  async checkRatee () {
+    try {
+      this.ratee = await TsService.getRateeInfoById(this.tsManagerRateeId)
+    } catch (error) {
+      if ('response' in error && error.response.status === 404) {
+        await this.$router.push({ name: 'notFound' })
+      } else {
+        throw error
+      }
+    }
+  }
+
+  addNewRater () {
+    this.$modal.show('new-rater-modal')
+  }
+
+  handleCancelModal () {
+    this.$modal.hide('new-rater-modal')
+  }
+
+  async handleConfirmModal (rater: TsNewUserForm) {
+    try {
+      if (!this.ratee) {
+        return
+      }
+
+      await TsService.addRater(this.tsUser.user.id, this.ratee.id, rater)
+      this.$modal.hide('new-rater-modal')
+    } catch (error) {
+      if ('response' in error && error.response.status === 404) {
+        const { detail } = error.response.data
+        this.modalError = detail
+      } else {
+        throw error
+      }
+    }
+
+    this.raterList = await TsService.getRaterList(this.tsManagerRateeId)
+  }
+
+  handleChangedModal () {
+    this.modalError = ''
+  }
+
+  async removeRater (tsRater: TsRaterUser) {
+    this.raterToRemove = tsRater
+    this.$modal.show('confirm-remove-rater-modal')
+  }
+
+  goToList () {
+    return this.$router.push({
+      name: 'survey.ts.dashboard',
+      params: {
+        tsSurveyId: this.tsSurveyId.toString()
+      }
+    })
+  }
+
+  hideConfirmRemoveRaterModal () {
+    this.raterToRemove = null
+    this.$modal.hide('confirm-remove-rater-modal')
+  }
+
+  async confirmRemoveRaterModal () {
+    if (!this.ratee || !this.raterToRemove) {
+      return
+    }
+
+    try {
+      await TsService.removeRater(this.tsUser.user.id, this.ratee.id, this.raterToRemove.id)
+    } catch (error) {
+      if ('response' in error && error.response.status === 404) {
+        const { detail } = error.response.data
+        this.modalError = detail
+      } else {
+        throw error
+      }
+    }
+
+    this.$modal.hide('confirm-remove-rater-modal')
+
+    this.raterList = await TsService.getRaterList(this.tsManagerRateeId)
+  }
+
+  publish () {}
+
+  unpublish () {}
+}
+</script>
+
+<style lang="scss">
+  .ts-manager-ratee-wrapper {
+    display: flex;
+  }
+
+  .ts-ratee-full-item-wrapper {
+    max-width: 275px;
+    width: 100%;
+  }
+
+  .ts-rater-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+  }
+
+  .ts-ratee-full-item {
+    border: 1px solid #d8efff;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+
+  }
+
+  .ts-rater-item {
+    display: flex;
+    padding: 10px;
+    margin: 10px;
+  }
+
+  .ts-rater-image {
+    display: block;
+    margin: 0 auto 24px;
+    width: 32px;
+    height: 32px;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+</style>
