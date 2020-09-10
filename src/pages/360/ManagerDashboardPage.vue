@@ -40,7 +40,7 @@
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
-import { SurveyInfo, TsNewUserForm, TsRateeUser, TsUserDto, User } from '@/interfaces'
+import { SurveyInfo, TsNewUserForm, TsRateeUser, TsUserDto, TsUserRole, User } from '@/interfaces'
 import { Getter } from 'vuex-class'
 import TsService from '@/services/TsService'
 import SurveyService from '@/services/SurveyService'
@@ -75,6 +75,32 @@ export default class ManagerDashboardPage extends Vue {
       await this.$router.push({ name: 'notFound' })
     }
 
+    await this.checkUser()
+    await this.checkSurvey()
+
+    this.rateeList = await TsService.getRateeList(this.tsSurveyId)
+  }
+
+  async checkUser () {
+    if (!this.tsUser) {
+      try {
+        const tsUser: TsUserDto = await TsService.getUserInfo(this.tsSurveyId, this.user.id)
+        if (!tsUser.roles.includes(TsUserRole.MANAGER)) {
+          await this.$router.push({ name: 'notFound' })
+        }
+
+        this.$store.commit('ts/setTsUser', tsUser)
+      } catch (error) {
+        if ('response' in error && error.response.status === 404) {
+          await this.$router.push({ name: 'notFound' })
+        } else {
+          throw error
+        }
+      }
+    }
+  }
+
+  async checkSurvey () {
     if (!this.surveyInfo) {
       const surveyInfo = await SurveyService.getSurveyInfoById(
         SurveyHelper.TS,
@@ -87,22 +113,6 @@ export default class ManagerDashboardPage extends Vue {
         surveyInfo: surveyInfo
       })
     }
-
-    if (!this.tsUser) {
-      const tsUser = await TsService.getUserInfo(this.tsSurveyId, this.user.id)
-
-      this.$store.commit('ts/setTsUser', tsUser)
-    }
-
-    this.rateeList = await TsService.getRateeList(this.tsSurveyId)
-  }
-
-  addNewRatee () {
-    this.$modal.show('new-ratee-modal')
-  }
-
-  handleCancelModal () {
-    this.$modal.hide('new-ratee-modal')
   }
 
   async handleConfirmModal (user: TsNewUserForm) {
@@ -121,10 +131,6 @@ export default class ManagerDashboardPage extends Vue {
     this.rateeList = await TsService.getRateeList(this.tsSurveyId)
   }
 
-  handleChangedModal () {
-    this.modalError = ''
-  }
-
   setup (id: number) {
     this.$router.push({
       name: 'survey.ts.ratee',
@@ -133,6 +139,18 @@ export default class ManagerDashboardPage extends Vue {
         tsManagerRateeId: id.toString()
       }
     })
+  }
+
+  addNewRatee () {
+    this.$modal.show('new-ratee-modal')
+  }
+
+  handleCancelModal () {
+    this.$modal.hide('new-ratee-modal')
+  }
+
+  handleChangedModal () {
+    this.modalError = ''
   }
 
   review () {}
