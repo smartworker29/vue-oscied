@@ -1,9 +1,9 @@
 import { Image } from '@/interfaces/GeneralInterfaces'
 
 export enum TsUserRole {
-  manager,
-  rater,
-  ratee
+  MANAGER = 'manager',
+  RATER = 'rater',
+  RATEE = 'ratee'
 }
 
 export interface TsAbstractUser {
