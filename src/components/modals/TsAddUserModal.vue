@@ -38,10 +38,10 @@ import { TsNewUserForm } from '@/interfaces'
 @Component({ name: 'TsAddUserModal' })
 export default class TsAddUserModal extends Vue {
   @Prop({ default: '' })
-  title: string
+  title!: string
 
   @Prop({ default: '' })
-  modalError: string
+  modalError!: string
 
   user: TsNewUserForm = {
     email: '',

@@ -28,11 +28,11 @@
 
       <modal :classes="['ccr-modal']" name="new-ratee-modal" :height="'auto'">
         <TsAddUserModal
+          :title="$t('ts.modal.add_new_ratee')"
+          :modalError="modalError"
           @cancel="handleCancelModal"
           @confirm="handleConfirmModal"
           @changed="handleChangedModal"
-          :title="$t('ts.modal.add_new_ratee')"
-          :modalError="modalError"
         />
       </modal>
     </div>
@@ -120,8 +120,9 @@ export default class ManagerDashboardPage extends Vue {
       await TsService.addRatee(this.tsSurveyId, this.tsUser.user.id, user)
       this.$modal.hide('new-ratee-modal')
     } catch (error) {
-      if ('response' in error && error.response.status === 404) {
+      if ('response' in error && [400, 404].includes(error.response.status)) {
         const { detail } = error.response.data
+
         this.modalError = detail
       } else {
         throw error
@@ -146,6 +147,7 @@ export default class ManagerDashboardPage extends Vue {
   }
 
   handleCancelModal () {
+    this.modalError = ''
     this.$modal.hide('new-ratee-modal')
   }
 

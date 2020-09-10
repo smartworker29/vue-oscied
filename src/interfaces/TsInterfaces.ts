@@ -12,10 +12,6 @@ export interface TsAbstractUser {
   email: string
 }
 
-export interface TsManager extends TsAbstractUser {}
-export interface TsRatee extends TsAbstractUser {}
-export interface TsRater extends TsAbstractUser {}
-
 export interface TsSurveyDto {
 }
 

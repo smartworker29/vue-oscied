@@ -24,14 +24,14 @@
         </div>
 
         <div class="ts-ratee-raters-list-wrapper">
-          <button class="btn btn-primary btn-primary-active" @click="addNewRater">
+          <button class="btn btn-primary btn-primary-active" @click="addNewRater" v-if="!ratee.isLive">
             {{ $t('button_g.add_new_user') }}
           </button>
           <div v-if="raterList" class="ts-rater-wrapper">
             <div v-for="(rater, id) in raterList" :key="id" class="ts-rater-item">
               <img class="ts-rater-image" :alt="rater.fullName" :src="rater.image && rater.image.fileURL || require('@/assets/user.png')">
               <div>{{ rater.fullName }}</div>
-              <button class="btn btn-primary btn-primary-active" @click="removeRater(rater)">
+              <button class="btn btn-primary btn-primary-active" @click="removeRater(rater)" v-if="!ratee.isLive">
                 {{ $t('button_g.remove') }}
               </button>
             </div>
@@ -132,6 +132,7 @@ export default class ManagerRateePage extends Vue {
   }
 
   handleCancelModal () {
+    this.modalError = ''
     this.$modal.hide('new-rater-modal')
   }
 
@@ -144,7 +145,7 @@ export default class ManagerRateePage extends Vue {
       await TsService.addRater(this.tsUser.user.id, this.ratee.id, rater)
       this.$modal.hide('new-rater-modal')
     } catch (error) {
-      if ('response' in error && error.response.status === 404) {
+      if ('response' in error && [400, 404].includes(error.response.status)) {
         const { detail } = error.response.data
         this.modalError = detail
       } else {
@@ -186,12 +187,7 @@ export default class ManagerRateePage extends Vue {
     try {
       await TsService.removeRater(this.tsUser.user.id, this.ratee.id, this.raterToRemove.id)
     } catch (error) {
-      if ('response' in error && error.response.status === 404) {
-        const { detail } = error.response.data
-        this.modalError = detail
-      } else {
-        throw error
-      }
+      throw error
     }
 
     this.$modal.hide('confirm-remove-rater-modal')

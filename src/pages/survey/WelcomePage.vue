@@ -50,7 +50,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-property-decorator'
 import { Getter } from 'vuex-class'
 import SignInForm from '@/components/signIn/SignInForm.vue'
 import SignUpForm from '@/components/signUp/SignUpForm.vue'
@@ -62,6 +62,8 @@ import SurveyLocalStorageHelper from '@/utils/SurveyLocalStorageHelper'
 import SurveyHelper from '@/utils/SurveyHelper'
 import { EventBus } from '@/main'
 import { SurveyData } from '@/interfaces/LocalStorageInterfaces'
+import TsService from '@/services/TsService'
+import { TsUserRole, User } from '@/interfaces'
 
 @Component({
   name: 'WelcomePage',
@@ -74,6 +76,9 @@ import { SurveyData } from '@/interfaces/LocalStorageInterfaces'
 export default class WelcomePage extends Vue {
   @Getter('user/isAuthenticated')
   isAuthenticated!: boolean
+
+  @Getter('user/currentUser')
+  user!: User
 
   @Prop({})
   surveyProduct!: string
@@ -285,10 +290,17 @@ export default class WelcomePage extends Vue {
   async beginTsSurvey () : Promise<void> {
     this.$store.commit('mainLogo/setType', MainLogosTypes.SURVEY_LOGOS)
 
-    await this.$router.push({
-      name: 'survey.welcome.ts.survey_product',
-      params: { tsSurveyId: this.productSurveyId.toString() }
-    })
+    const tsUser = await TsService.getUserInfo(this.productSurveyId, this.user.id)
+    this.$store.commit('ts/setTsUser', tsUser)
+
+    if (tsUser.roles.includes(TsUserRole.MANAGER)) {
+      await this.$router.push({
+        name: 'survey.ts.dashboard',
+        params: {
+          tsSurveyId: this.productSurveyId.toString()
+        }
+      })
+    }
   }
 
   async checkTsSurvey () : Promise<void> {

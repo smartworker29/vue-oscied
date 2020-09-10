@@ -1,12 +1,12 @@
 import { BaseApiService } from '@/services/BaseApiService'
-import { TsNewUserForm, TsRatee, TsRateeUser, TsRaterUser, TsUserDto } from '@/interfaces'
+import { TsNewUserForm, TsRateeUser, TsRaterUser, TsUserDto } from '@/interfaces'
 
 class TsService extends BaseApiService {
   getUserInfo (tsSurveyId: number, tsCurrentUserId: number) : TsUserDto {
     return this.callMethod('get', `/user/${tsCurrentUserId}/ts/${tsSurveyId}/info/`)
   }
 
-  getRateeInfoById (tsCurrentUserId: number, tsRateeId: number) : TsRatee {
+  getRateeInfoById (tsCurrentUserId: number, tsRateeId: number) : TsRateeUser {
     return this.callMethod('get', `/ts/${tsCurrentUserId}/ratee/${tsRateeId}`)
   }
 
