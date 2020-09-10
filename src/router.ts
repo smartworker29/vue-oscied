@@ -130,7 +130,7 @@ const router = new Router({
       name: 'survey.welcome.ts.survey_product'
     },
     {
-      path: '/360/:tsSurveyId(\\d+)/dashboard',
+      path: '/360/:tsSurveyId(\\d+)/manager/dashboard',
       component: ManagerDashboardPage,
       props: true,
       name: 'survey.ts.dashboard'
