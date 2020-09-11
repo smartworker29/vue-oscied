@@ -295,7 +295,14 @@ export default class WelcomePage extends Vue {
 
     if (tsUser.roles.includes(TsUserRole.MANAGER)) {
       await this.$router.push({
-        name: 'survey.ts.dashboard',
+        name: 'survey.ts.manager.dashboard',
+        params: {
+          tsSurveyId: this.productSurveyId.toString()
+        }
+      })
+    } else if ([TsUserRole.RATEE, TsUserRole.RATER].some((role: TsUserRole) => tsUser.roles.includes(role))) {
+      await this.$router.push({
+        name: 'survey.ts.user.dashboard',
         params: {
           tsSurveyId: this.productSurveyId.toString()
         }

@@ -61,6 +61,7 @@
     "ok": "🇩🇪 OK",
     "add_new_rating_team": "🇩🇪 Create a new Rating Team",
     "add_new_user": "🇩🇪 Add a new User",
+    "add_new_skill": "🇩🇪 Add a new Skill",
     "remove": "🇩🇪 Remove",
     "setup": "🇩🇪 Setup",
     "review": "🇩🇪 Review",
@@ -157,8 +158,11 @@
     "modal": {
       "remove_rater_title": "🇩🇪 Remove this user",
       "remove_rater_message": "🇩🇪 Are you sure to remove this user?",
+      "remove_skill_title": "🇩🇪 Remove this skill",
+      "remove_skill_message": "🇩🇪 Are you sure to remove this skill?",
       "add_new_ratee": "🇩🇪 Create a new Rating Team",
-      "add_new_rater": "🇩🇪 Add a new user to this team"
+      "add_new_rater": "🇩🇪 Add a new user to this team",
+      "add_new_skill": "🇩🇪 Add a new Skill to this Team"
     }
   },
   "dashboard": {

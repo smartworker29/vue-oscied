@@ -22,6 +22,7 @@ import TakenIpulseSection from '@/components/survey/TakenIpulseSection.vue'
 import TakenIpulseCommentSection from '@/components/survey/TakenIpulseCommentSection.vue'
 import ManagerDashboardPage from '@/pages/360/ManagerDashboardPage.vue'
 import ManagerRateePage from '@/pages/360/ManagerRateePage.vue'
+import UserDashboardPage from '@/pages/360/UserDashboardPage.vue'
 
 Vue.use(Router)
 
@@ -126,7 +127,13 @@ const router = new Router({
       path: '/360/:tsSurveyId(\\d+)/manager/dashboard',
       component: ManagerDashboardPage,
       props: true,
-      name: 'survey.ts.dashboard'
+      name: 'survey.ts.manager.dashboard'
+    },
+    {
+      path: '/360/:tsSurveyId(\\d+)/user/dashboard',
+      component: UserDashboardPage,
+      props: true,
+      name: 'survey.ts.user.dashboard'
     },
     {
       path: '/360/:tsSurveyId(\\d+)/manager/:tsManagerRateeId(\\d+)',

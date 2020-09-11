@@ -5,8 +5,8 @@
     </div>
     <div class="survey-content" v-if="ratee">
       <button class="btn btn-primary btn-primary-active" @click="goToList">
-        back to the list
-      </button>
+        {{ $t('button_g.back') }}
+     </button>
       <h2>{{ ratee.fullName }}</h2>
       <div class="ts-manager-ratee-wrapper">
         <div class="ts-ratee-full-item-wrapper">
@@ -23,17 +23,38 @@
           </div>
         </div>
 
-        <div class="ts-ratee-raters-list-wrapper">
-          <button class="btn btn-primary btn-primary-active" @click="addNewRater" v-if="!ratee.isLive">
-            {{ $t('button_g.add_new_user') }}
-          </button>
-          <div v-if="raterList" class="ts-rater-wrapper">
-            <div v-for="(rater, id) in raterList" :key="id" class="ts-rater-item">
-              <img class="ts-rater-image" :alt="rater.fullName" :src="rater.image && rater.image.fileURL || require('@/assets/user.png')">
-              <div>{{ rater.fullName }}</div>
-              <button class="btn btn-primary btn-primary-active" @click="removeRater(rater)" v-if="!ratee.isLive">
-                {{ $t('button_g.remove') }}
-              </button>
+        <div class="ts-ratee-wrapper">
+          <div class="ts-ratee-raters-list-wrapper">
+            <button class="btn btn-primary btn-primary-active" @click="addNewRater" v-if="!ratee.isLive">
+              {{ $t('button_g.add_new_user') }}
+            </button>
+            <div v-if="raterList" class="ts-rater-wrapper">
+              <div v-for="(rater, id) in raterList" :key="id" class="ts-rater-item">
+                <img class="ts-rater-image" :alt="rater.fullName" :src="rater.image && rater.image.fileURL || require('@/assets/user.png')">
+                <div>{{ rater.fullName }}</div>
+                <button class="btn btn-primary btn-primary-active" @click="removeRater(rater)" v-if="!ratee.isLive">
+                  {{ $t('button_g.remove') }}
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="ts-ratee-skills-list-wrapper">
+            <button class="btn btn-primary btn-primary-active" @click="addNewSkill" v-if="!ratee.isLive">
+              {{ $t('button_g.add_new_skill') }}
+            </button>
+            <div v-if="groupedSkillList" class="ts-skill-wrapper">
+              <div v-for="(group, id) in groupedSkillList" :key="id" class="ts-skill-item">
+                <h4>
+                  {{ $t(`icoach.categories.${id}`) }}
+                </h4>
+                <div v-for="skill in group" :key="skill.id">
+                  <div>{{ skill.name }}</div>
+                  <button class="btn btn-primary btn-primary-active" @click="removeSkill(skill)" v-if="!ratee.isLive">
+                    {{ $t('button_g.remove') }}
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -47,6 +68,14 @@
           @changed="handleChangedModal"
         />
       </modal>
+      <modal :classes="['ccr-modal']" name="new-skill-modal" :height="'auto'">
+        <TsAddSkillModal
+          :modalError="modalError"
+          @cancel="handleCancelSkillModal"
+          @confirm="handleConfirmSkillModal"
+          @changed="handleChangedSkillModal"
+        />
+      </modal>
 
       <modal :classes="['ccr-modal']" name="confirm-remove-rater-modal" :height="'auto'">
         <SimpleConfirmModal
@@ -57,20 +86,39 @@
         />
       </modal>
 
+      <modal :classes="['ccr-modal']" name="confirm-remove-skill-modal" :height="'auto'">
+        <SimpleConfirmModal
+          :title="$t('ts.modal.remove_skill_title')"
+          :message="$t('ts.modal.remove_skill_message')"
+          @cancel="hideConfirmRemoveSkillModal"
+          @confirm="confirmRemoveSkillModal"
+        />
+      </modal>
+
     </div>
   </div>
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
-import { SurveyInfo, TsNewUserForm, TsRateeUser, TsRaterUser, TsUserDto, User } from '@/interfaces'
+import {
+  IcoachSkillForm,
+  IcoachSkillShortInfo,
+  SurveyInfo,
+  TsNewUserForm,
+  TsRateeUser,
+  TsRaterUser,
+  TsUserDto,
+  User
+} from '@/interfaces'
 import { Getter } from 'vuex-class'
 import TsService from '@/services/TsService'
 import TsAddUserModal from '@/components/modals/TsAddUserModal.vue'
+import TsAddSkillModal from '@/components/modals/TsAddSkillModal.vue'
 import SimpleConfirmModal from '@/components/modals/SimpleConfirmModal.vue'
 
 @Component({
   name: 'ManagerRateePage',
-  components: { TsAddUserModal, SimpleConfirmModal }
+  components: { TsAddUserModal, TsAddSkillModal, SimpleConfirmModal }
 })
 export default class ManagerRateePage extends Vue {
   @Prop()
@@ -93,8 +141,11 @@ export default class ManagerRateePage extends Vue {
 
   ratee: TsRateeUser | null = null
   raterList: TsRaterUser[] = []
+  skillList: IcoachSkillShortInfo[] = []
+  groupedSkillList: {} = {}
   modalError: string = ''
   raterToRemove: TsRaterUser | null = null
+  skillToRemove: IcoachSkillShortInfo | null = null
 
   async created () {
     if (!this.isAuthenticated) {
@@ -105,6 +156,8 @@ export default class ManagerRateePage extends Vue {
     await this.checkRatee()
 
     this.raterList = await TsService.getRaterList(this.tsManagerRateeId)
+    const skillList = await TsService.getSkillList(this.tsManagerRateeId)
+    this.groupedSkillList = this.groupSkills(skillList)
   }
 
   async checkUser () {
@@ -125,10 +178,6 @@ export default class ManagerRateePage extends Vue {
         throw error
       }
     }
-  }
-
-  addNewRater () {
-    this.$modal.show('new-rater-modal')
   }
 
   handleCancelModal () {
@@ -160,9 +209,18 @@ export default class ManagerRateePage extends Vue {
     this.modalError = ''
   }
 
+  addNewRater () {
+    this.$modal.show('new-rater-modal')
+  }
+
   async removeRater (tsRater: TsRaterUser) {
     this.raterToRemove = tsRater
     this.$modal.show('confirm-remove-rater-modal')
+  }
+
+  async removeSkill (skill: IcoachSkillShortInfo) {
+    this.skillToRemove = skill
+    this.$modal.show('confirm-remove-skill-modal')
   }
 
   goToList () {
@@ -177,6 +235,11 @@ export default class ManagerRateePage extends Vue {
   hideConfirmRemoveRaterModal () {
     this.raterToRemove = null
     this.$modal.hide('confirm-remove-rater-modal')
+  }
+
+  hideConfirmRemoveSkillModal () {
+    this.skillToRemove = null
+    this.$modal.hide('confirm-remove-skill-modal')
   }
 
   async confirmRemoveRaterModal () {
@@ -194,6 +257,62 @@ export default class ManagerRateePage extends Vue {
 
     this.raterList = await TsService.getRaterList(this.tsManagerRateeId)
   }
+
+  async confirmRemoveSkillModal () {
+    if (!this.ratee || !this.skillToRemove) {
+      return
+    }
+
+    try {
+      await TsService.removeSkill(this.tsUser.user.id, this.ratee.id, this.skillToRemove.id)
+    } catch (error) {
+      throw error
+    }
+
+    this.$modal.hide('confirm-remove-skill-modal')
+
+    const skillList = await TsService.getSkillList(this.tsManagerRateeId)
+
+    this.groupedSkillList = this.groupSkills(skillList)
+  }
+
+  async addNewSkill () {
+    this.$modal.show('new-skill-modal')
+  }
+
+  handleCancelSkillModal () {
+    this.modalError = ''
+    this.$modal.hide('new-skill-modal')
+  }
+
+  async handleConfirmSkillModal (skill: IcoachSkillForm) {
+    try {
+      if (!this.ratee) {
+        return
+      }
+
+      await TsService.addSkill(this.tsUser.user.id, this.ratee.id, skill)
+      this.$modal.hide('new-skill-modal')
+    } catch (error) {
+      if ('response' in error && [400, 404].includes(error.response.status)) {
+        const { detail } = error.response.data
+        this.modalError = detail
+      } else {
+        throw error
+      }
+    }
+
+    const skillList = await TsService.getSkillList(this.tsManagerRateeId)
+    this.groupedSkillList = this.groupSkills(skillList)
+  }
+
+  groupSkills (skills: IcoachSkillShortInfo[]) {
+    return skills.reduce((rv, x) => {
+      (rv[x['category']] = rv[x['category']] || []).push(x)
+      return rv
+    }, {})
+  };
+  handleChangedSkillModal () {}
 
   publish () {}
 
@@ -238,5 +357,10 @@ export default class ManagerRateePage extends Vue {
     height: 32px;
     object-fit: cover;
     border-radius: 50%;
+  }
+
+  .ts-ratee-wrapper {
+    display: flex;
+    flex-direction: column;
   }
 </style>

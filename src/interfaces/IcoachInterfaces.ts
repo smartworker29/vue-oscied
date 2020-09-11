@@ -15,46 +15,57 @@ export interface IcoachCourse {
 export interface IcoachSkill {
   id: number
   category: number
-  name: string,
+  name: string
   icoachSkillContents: IcoachSkillContent[]
 }
 
+export interface IcoachSkillForm {
+  category: number
+  skillId?: number
+}
+
+export interface IcoachSkillShortInfo {
+  id: number
+  category: number
+  name: string
+}
+
 export interface IcoachSkillContent {
-  id: number,
-  content: string,
-  icoachSkillArea: IcoachSkillArea,
+  id: number
+  content: string
+  icoachSkillArea: IcoachSkillArea
   isCompleted: boolean
 }
 
 export interface IcoachSkillArea {
-  title: string,
+  title: string
   isTest: boolean
 }
 
 export interface IcoachSkillComment {
-  comment: string,
+  comment: string
   date: string | null
   user: IcoachCommentUser
 }
 
 export interface IcoachSkillQuestion {
-  id: number,
-  name: string,
+  id: number
+  name: string
   icoachSkillQuestionOptions: IcoachSkillQuestionOption[]
 }
 
 export interface IcoachSkillQuestionOption {
-  id: number,
+  id: number
   name: string
 }
 
 export interface IcoachSkillScore {
-  id: number,
+  id: number
   score: number
 }
 
 interface IcoachCommentUser {
-  fullName: string,
+  fullName: string
   image: Image
 }
 
@@ -71,16 +82,16 @@ export interface IcoachGeneralInfo {
 }
 
 export interface IcoachSkillProgressData {
-  currentSkill: number,
+  currentSkill: number
   currentStep: number
 }
 
 export interface IcoachCategorySkill {
-  id: number,
-  category: number,
-  name: string,
-  completed: number,
-  total: number,
+  id: number
+  category: number
+  name: string
+  completed: number
+  total: number
   isCompleted: boolean
 }
 
