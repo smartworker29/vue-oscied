@@ -52,6 +52,14 @@ class TsService extends BaseApiService {
   removeSkill (tsCurrentUserId: number, tsRateeId: number, skillId: number): void {
     return this.callMethod('delete', `ts/${tsCurrentUserId}/${tsRateeId}/skill/${skillId}/delete`)
   }
+
+  uploadRatersRatee (tsSurveyId: number) : TsRateeUser[] {
+    return this.callMethod('get', `/ts/${tsSurveyId}/ratees/for-rater/`)
+  }
+
+  uploadUserRatee (tsSurveyId: number) : TsRateeUser[] {
+    return this.callMethod('get', `/ts/${tsSurveyId}/ratees/my/`)
+  }
 }
 
 export default new TsService()
