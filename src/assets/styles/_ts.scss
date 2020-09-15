@@ -1,0 +1,130 @@
+.ts-user-dashboard {
+
+  .survey-header {
+    display: flex;
+    justify-content: space-between;
+
+    .ratees-filter {
+      display: flex;
+      min-width: 35%;
+      padding: 21px 0px;
+
+      .sort-by {
+        display: flex;
+        width: 65%;
+
+        label {
+          width: 30%;
+        }
+      }
+
+      .show-completed {
+        text-align: right;
+        margin-left: 20px;
+        width: 35%;
+      }
+
+      label {
+        font-size: 20px;
+      }
+    }
+  }
+
+  .survey-content {
+    .all-ratees {
+      display: flex;
+
+      .ratees-block {
+
+        padding: 10px;
+
+        h2 {
+          margin-left: 10px;
+          font-weight: bold;
+          font-size: 20px;
+        }
+
+        .who-rating-header {
+          display: flex;
+          justify-content: space-between;
+
+          .layout-select {
+            font-size: 20px;
+          }
+        }
+
+        &.user-ratees {
+          flex: 1;
+
+          .ratee-items {
+            display: flex;
+            flex-wrap: wrap;
+
+            .ratee-card {
+              width: 100%;
+            }
+          }
+        }
+
+        &.raters-ratees {
+          flex: 3;
+
+          &.full {
+            flex: 1;
+            .ratee-card {
+              width: 23%;
+            }
+          }
+        }
+
+        .ratee-items {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: space-between;
+
+          .ratee-card {
+            border: 1px solid lightblue;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            margin: 10px;
+            width: 31%;
+
+            .ratee-image {
+              .account-image {
+                height: 120px;
+                width: 120px;
+              }
+            }
+
+            .ratee-name {
+              .name {
+                font-weight: bold;
+                font-size: 20px;
+              }
+            }
+
+            .actions {
+              button {
+                width: 100%;
+              }
+            }
+
+            .info {
+              .last-reviewed {
+                color: darkgrey;
+              }
+
+              .review-before {
+                color: cornflowerblue;
+                background-color: aliceblue;
+                border-radius: 5px;
+                padding: 5px 0px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

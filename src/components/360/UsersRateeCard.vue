@@ -1,0 +1,29 @@
+<template>
+  <div class="ratee-card users-ratee-card">
+    <div class="ratee-image">
+      <img class="account-image" :src="userRatee.image && userRatee.image.fileURL || require('@/assets/user.png')">
+    </div>
+    <div class="ratee-name">
+      <div class="name">{{ userRatee.fullName }}</div>
+      <div class="email">{{ userRatee.email }}</div>
+    </div>
+    <div class="info"></div>
+    <div class="actions">
+      <button class="btn btn-primary btn-primary-active">
+        {{ $t('button_g.view_my_score') }}
+      </button>
+    </div>
+  </div>
+</template>
+<script lang="ts">
+import { Component, Vue, Prop } from 'vue-property-decorator'
+import { TsRateeUser } from '@/interfaces'
+
+@Component({
+  name: 'UserDashboardPage'
+})
+export default class UserDashboardPage extends Vue {
+  @Prop({ required: true })
+  userRatee!: TsRateeUser
+}
+</script>
