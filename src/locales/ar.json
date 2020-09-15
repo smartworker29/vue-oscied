@@ -65,7 +65,10 @@
     "remove": "🇦🇪 Remove",
     "setup": "🇦🇪 Setup",
     "review": "🇦🇪 Review",
-    "results": "🇦🇪 Results"
+    "review_now": "🇦🇪 Review now",
+    "results": "🇦🇪 Results",
+    "view_my_score": "🇦🇪 View my score",
+    "completed": "🇦🇪 Completed"
   },
   "email_address": "عنوان بريد الكتروني",
   "remember_me": "تذكرنى",
@@ -186,5 +189,16 @@
   "no_ranked_statement": "🇦🇪 You evaluated statements with 1. Would you like to proceed?",
   "confirmation_message": "🇦🇪 Confirmation message",
   "skill_category": "🇦🇪 Skills' category",
-  "skill": "🇦🇪 Skill"
+  "skill": "🇦🇪 Skill",
+  "review_before": "🇦🇪 You need to review {name} before {date}",
+  "last_reviewed": "🇦🇪 Last reviewed: {date}",
+  "who_i_rating": "🇦🇪 Who am I rating",
+  "my_rating": "🇦🇪 My rating",
+  "layout": "🇦🇪 Layout",
+  "show_completed": "🇦🇪 Show completed",
+  "sort": {
+    "by_title": "🇦🇪 Sort by",
+    "last_review_asc": "🇦🇪 Last reviewed (Asc)",
+    "last_review_desc": "🇦🇪 Last reviewed (Desc)"
+  }
 }
