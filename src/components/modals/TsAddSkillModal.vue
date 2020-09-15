@@ -5,76 +5,133 @@
     <form class="form">
       <div class="form-group row">
         <p class="error" v-if="modalError">{{ modalError }}</p>
-        <select :value="skillForm.category" @change="getSkillByCategory" class="form-control">
-          <option v-for="category in categories" :key="category" :value="category">
-            {{ $t(`icoach.categories.${category}`) }}
-          </option>
-        </select>
+        <div class="form-group row form-group-select col-md-6">
+          <multiselect
+            v-model="category"
+            name="category"
+            label="label"
+            track-by="value"
+            :placeholder="$t('skill_category')"
+            :allow-empty="false"
+            :searchable="false"
+            :show-labels="false"
+            :options="categories"
+            v-validate="'required'">
+          </multiselect>
+          <small class="error">{{ errors.first('category') }}</small>
+        </div>
 
-        <select :value="skillForm.skillId" v-if="skills.length" @change="updateSkill" class="form-control">
-          <option v-for="skill in skills" :key="skill.id" :value="skill.id">
-            {{  skill.name }}
-          </option>
-        </select>
+        <div class="form-group row form-group-select col-md-6">
+          <multiselect
+            v-if="category"
+            v-model="skill"
+            name="skill"
+            label="name"
+            track-by="id"
+            :placeholder="$t('skill')"
+            :searchable="false"
+            :show-labels="false"
+            :options="skills"
+            v-validate="'required'">
+          </multiselect>
+          <small class="error">{{ errors.first('skill') }}</small>
+        </div>
+
       </div>
     </form>
     <div class="ccr-modal__actions ccr-modal__actions-right">
-      <button class="btn btn-primary" @click="$emit('cancel')">{{ $t('button_g.cancel') }}</button>
-      <button class="btn btn-primary btn-primary-active" @click="submit" :disabled="isConfirmDisabled">{{ $t('button_g.confirm') }}</button>
+      <button class="btn btn-primary" @click="$emit('cancel')">
+        {{ $t('button_g.cancel') }}
+      </button>
+      <button class="btn btn-primary btn-primary-active" @click="submit">
+        {{ $t('button_g.confirm') }}
+      </button>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
-import { IcoachCategoriesEnum, IcoachSkillForm, IcoachSkillShortInfo } from '@/interfaces'
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
+import { IcoachCategories, IcoachSkillForm, IcoachSkillShortInfo } from '@/interfaces'
 import IcoachService from '@/services/IcoachService'
+
+interface CategoryOptionItem {
+  value: number
+  label: string
+}
 
 @Component({ name: 'TsAddSkillModal' })
 export default class TsAddSkillModal extends Vue {
   @Prop({ default: '' })
-  title!: string
-
-  @Prop({ default: '' })
   modalError!: string
 
-  isConfirmDisabled: boolean = true
+  @Prop()
+  groupedSkillList!: { [key: number]: IcoachSkillShortInfo[] }
+
   skillForm: IcoachSkillForm = { category: 0, skillId: 0 }
   skills: IcoachSkillShortInfo[] = []
+  category: { name: string, value: number } | null = null
+  skill: IcoachSkillShortInfo | null = null
 
   async submit () {
-    await this.$validator.validateAll()
+    if (!await this.$validator.validateAll()) {
+      return
+    }
 
     this.$emit('confirm', this.skillForm)
   }
 
-  get categories (): IcoachCategoriesEnum[] {
-    let skillCategories:IcoachCategoriesEnum[] = []
-
-    for (let value in IcoachCategoriesEnum) {
-      if (IcoachCategoriesEnum.hasOwnProperty(value) && typeof IcoachCategoriesEnum[value] === 'number') {
-        skillCategories.push(IcoachCategoriesEnum[value] as IcoachCategoriesEnum)
+  get categories (): CategoryOptionItem[] {
+    return [
+      {
+        value: IcoachCategories.SoftSkills,
+        label: this.$t(`icoach.categories.${IcoachCategories.SoftSkills}`).toString()
+      },
+      {
+        value: IcoachCategories.EssentialBusinessSkills,
+        label: this.$t(`icoach.categories.${IcoachCategories.EssentialBusinessSkills}`).toString()
+      },
+      {
+        value: IcoachCategories.OrganisationalSkills,
+        label: this.$t(`icoach.categories.${IcoachCategories.OrganisationalSkills}`).toString()
       }
-    }
-    return skillCategories
+    ]
   }
 
   get categoriesTitles () : string {
-    return this.categories.map(category => this.$t(`icoach.categories.${category}`)).join(' / ')
+    return this.categories.map((category: CategoryOptionItem) => category.label).join(' / ')
   }
 
-  async getSkillByCategory (event: Event) {
-    const categorySelect = event.target as HTMLSelectElement
-    const category = parseInt(categorySelect.value)
+  @Watch('category')
+  async categoryChanged () : Promise<void> {
+    if (!this.category) {
+      return
+    }
 
-    this.skillForm.category = category
-    this.skills = await IcoachService.getIcoachSkillListByCategory(category)
+    this.skillForm.category = this.category.value
+    await this.uploadCategorySkills(this.skillForm.category)
   }
 
-  updateSkill (event: Event) {
-    const skillSelect = event.target as HTMLSelectElement
-    this.skillForm.skillId = parseInt(skillSelect.value)
-    this.isConfirmDisabled = false
+  @Watch('skill')
+  updateSkill () : void {
+    if (this.skill) {
+      this.skillForm.skillId = this.skill.id
+    }
+  }
+
+  async uploadCategorySkills (categoryNumber: number | null) : Promise<void> {
+    if (!categoryNumber) {
+      this.skills = []
+
+      return
+    }
+
+    const skills = await IcoachService.getIcoachSkillListByCategory(categoryNumber)
+    const selectedCategorySkill = this.groupedSkillList[categoryNumber]
+
+    this.skills = !selectedCategorySkill
+      ? skills
+      : skills.filter(skill => selectedCategorySkill.findIndex(alreadySeleted => alreadySeleted.id === skill.id) === -1)
   }
 }
 </script>

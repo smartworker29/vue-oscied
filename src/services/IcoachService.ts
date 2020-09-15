@@ -35,7 +35,7 @@ class IcoachService extends BaseApiService {
   }
 
   getIcoachSkillListByCategory (categoryId: number) : IcoachSkillShortInfo[] {
-    return this.callMethod('get', `/icoach/skill/category/${categoryId}/skills/`)
+    return this.callMethod('get', `/icoach/skill/category/${categoryId}/skills`)
   }
 
   getIcoachSkillComments (skillId: number, stepId: number, userId: number): IcoachSkillComment[] {

@@ -101,7 +101,7 @@ export enum IcoachCategoriesEnum {
   ORGANISATIONAL_SKILLS
 }
 
-namespace IcoachCategories {
+export namespace IcoachCategories {
   export const SoftSkills = 1
   export const EssentialBusinessSkills = 2
   export const OrganisationalSkills = 3

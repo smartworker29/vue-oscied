@@ -71,6 +71,7 @@
       <modal :classes="['ccr-modal']" name="new-skill-modal" :height="'auto'">
         <TsAddSkillModal
           :modalError="modalError"
+          :groupedSkillList="groupedSkillList"
           @cancel="handleCancelSkillModal"
           @confirm="handleConfirmSkillModal"
           @changed="handleChangedSkillModal"
@@ -306,9 +307,9 @@ export default class ManagerRateePage extends Vue {
     this.groupedSkillList = this.groupSkills(skillList)
   }
 
-  groupSkills (skills: IcoachSkillShortInfo[]) {
-    return skills.reduce((rv, x) => {
-      (rv[x['category']] = rv[x['category']] || []).push(x)
+  groupSkills (skills: IcoachSkillShortInfo[]) : { [key: number]: IcoachSkillShortInfo[] } {
+    return skills.reduce((rv: any, skill: IcoachSkillShortInfo) => {
+      (rv[skill.category] = rv[skill.category] || []).push(skill)
       return rv
     }, {})
   };

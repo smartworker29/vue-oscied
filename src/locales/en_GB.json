@@ -185,5 +185,7 @@
   "icoach_is_not_active": "This iCoach is not yet active.",
   "icoach_is_expired": "This iCoach has now expired.",
   "no_ranked_statement": "You evaluated statements with 1. Would you like to proceed?",
-  "confirmation_message": "Confirmation message"
+  "confirmation_message": "Confirmation message",
+  "skill_category": "Skills' category",
+  "skill": "Skill"
 }
