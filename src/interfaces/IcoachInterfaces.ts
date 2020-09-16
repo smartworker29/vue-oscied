@@ -26,6 +26,7 @@ export interface IcoachSkillForm {
 
 export interface IcoachSkillShortInfo {
   id: number
+  skillId: number
   category: number
   name: string
 }

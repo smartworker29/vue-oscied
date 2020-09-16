@@ -226,7 +226,7 @@ export default class ManagerRateePage extends Vue {
 
   goToList () {
     return this.$router.push({
-      name: 'survey.ts.dashboard',
+      name: 'survey.ts.manager.dashboard',
       params: {
         tsSurveyId: this.tsSurveyId.toString()
       }
