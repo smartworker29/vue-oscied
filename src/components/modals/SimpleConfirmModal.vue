@@ -1,6 +1,7 @@
 <template>
   <div class="ccr-confirm">
     <h2 class="ccr-modal__title">{{ title }}</h2>
+    <p class="error" v-if="modalError">{{ modalError }}</p>
     <div>{{ message }}</div>
     <div class="ccr-modal__actions ccr-modal__actions-right">
       <button class="btn btn-primary" @click="$emit('cancel')">{{ $t('button_g.cancel') }}</button>
@@ -19,5 +20,8 @@ export default class SimpleConfirmModal extends Vue {
 
   @Prop({ required: true })
   message!: string
+
+  @Prop({ required: true })
+  modalError!: string
 }
 </script>

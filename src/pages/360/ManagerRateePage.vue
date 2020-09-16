@@ -81,6 +81,7 @@
       <modal :classes="['ccr-modal']" name="confirm-remove-rater-modal" :height="'auto'">
         <SimpleConfirmModal
           :title="$t('ts.modal.remove_rater_title')"
+          :modalError="modalError"
           :message="$t('ts.modal.remove_rater_message')"
           @cancel="hideConfirmRemoveRaterModal"
           @confirm="confirmRemoveRaterModal"
@@ -90,6 +91,7 @@
       <modal :classes="['ccr-modal']" name="confirm-remove-skill-modal" :height="'auto'">
         <SimpleConfirmModal
           :title="$t('ts.modal.remove_skill_title')"
+          :modalError="modalError"
           :message="$t('ts.modal.remove_skill_message')"
           @cancel="hideConfirmRemoveSkillModal"
           @confirm="confirmRemoveSkillModal"
@@ -195,7 +197,7 @@ export default class ManagerRateePage extends Vue {
       await TsService.addRater(this.tsUser.user.id, this.ratee.id, rater)
       this.$modal.hide('new-rater-modal')
     } catch (error) {
-      if ('response' in error && [400, 404].includes(error.response.status)) {
+      if ('response' in error && [400, 403, 404].includes(error.response.status)) {
         const { detail } = error.response.data
         this.modalError = detail
       } else {
@@ -236,11 +238,13 @@ export default class ManagerRateePage extends Vue {
   hideConfirmRemoveRaterModal () {
     this.raterToRemove = null
     this.$modal.hide('confirm-remove-rater-modal')
+    this.modalError = ''
   }
 
   hideConfirmRemoveSkillModal () {
     this.skillToRemove = null
     this.$modal.hide('confirm-remove-skill-modal')
+    this.modalError = ''
   }
 
   async confirmRemoveRaterModal () {
@@ -251,7 +255,14 @@ export default class ManagerRateePage extends Vue {
     try {
       await TsService.removeRater(this.tsUser.user.id, this.ratee.id, this.raterToRemove.id)
     } catch (error) {
-      throw error
+      if ('response' in error && [400, 403, 404].includes(error.response.status)) {
+        const { detail } = error.response.data
+
+        this.modalError = detail
+        return
+      } else {
+        throw error
+      }
     }
 
     this.$modal.hide('confirm-remove-rater-modal')
@@ -267,7 +278,14 @@ export default class ManagerRateePage extends Vue {
     try {
       await TsService.removeSkill(this.tsUser.user.id, this.ratee.id, this.skillToRemove.id)
     } catch (error) {
-      throw error
+      if ('response' in error && [400, 403, 404].includes(error.response.status)) {
+        const { detail } = error.response.data
+
+        this.modalError = detail
+        return
+      } else {
+        throw error
+      }
     }
 
     this.$modal.hide('confirm-remove-skill-modal')
@@ -295,7 +313,7 @@ export default class ManagerRateePage extends Vue {
       await TsService.addSkill(this.tsUser.user.id, this.ratee.id, skill)
       this.$modal.hide('new-skill-modal')
     } catch (error) {
-      if ('response' in error && [400, 404].includes(error.response.status)) {
+      if ('response' in error && [400, 403, 404].includes(error.response.status)) {
         const { detail } = error.response.data
         this.modalError = detail
       } else {

@@ -119,8 +119,10 @@ export default class ManagerDashboardPage extends Vue {
     try {
       await TsService.addRatee(this.tsSurveyId, this.tsUser.user.id, user)
       this.$modal.hide('new-ratee-modal')
+
+      this.rateeList = await TsService.getRateeList(this.tsSurveyId)
     } catch (error) {
-      if ('response' in error && [400, 404].includes(error.response.status)) {
+      if ('response' in error && [400, 403, 404].includes(error.response.status)) {
         const { detail } = error.response.data
 
         this.modalError = detail
@@ -128,8 +130,6 @@ export default class ManagerDashboardPage extends Vue {
         throw error
       }
     }
-
-    this.rateeList = await TsService.getRateeList(this.tsSurveyId)
   }
 
   setup (id: number) {
