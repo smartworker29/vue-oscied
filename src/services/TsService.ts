@@ -52,7 +52,7 @@ class TsService extends BaseApiService {
   }
 
   addSkill (tsCurrentUserId: number, tsRateeId: number, skill: IcoachSkillForm): void {
-    return this.callMethod('post', `ts/${tsCurrentUserId}/${tsRateeId}/skills/add`, skill)
+    return this.callMethod('post', `ts/${tsCurrentUserId}/${tsRateeId}/skills/add/`, skill)
   }
 
   removeRater (tsCurrentUserId: number, tsRateeId: number, tsRater: number) : void {
