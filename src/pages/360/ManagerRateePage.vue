@@ -205,7 +205,8 @@ export default class ManagerRateePage extends Vue {
         return
       }
 
-      await TsService.addRater(this.tsUser.user.id, this.ratee.id, rater)
+      const newRater = await TsService.addRater(this.tsUser.user.id, this.ratee.id, rater)
+      this.raterList.push(newRater)
       this.$modal.hide('new-rater-modal')
     } catch (error) {
       if ('response' in error && [400, 403, 404].includes(error.response.status)) {
@@ -215,8 +216,6 @@ export default class ManagerRateePage extends Vue {
         throw error
       }
     }
-
-    this.raterList = await TsService.getRaterList(this.tsManagerRateeId)
   }
 
   handleChangedModal () {
