@@ -14,7 +14,7 @@ class TsService extends BaseApiService {
   }
 
   getRateeInfoById (tsCurrentUserId: number, tsRateeId: number) : TsRateeUser {
-    return this.callMethod('get', `/ts/${tsCurrentUserId}/ratee/${tsRateeId}`)
+    return this.callMethod('get', `/ts/${tsCurrentUserId}/ratees/${tsRateeId}/`)
   }
 
   getRateeList (tsSurveyId: number) : TsRateeUser[] {
@@ -44,7 +44,7 @@ class TsService extends BaseApiService {
   }
 
   addRatee (tsSurveyId: number, tsCurrentUserId: number, ratee: TsNewUserForm) : TsRateeUser {
-    return this.callMethod('post', `ts/${tsSurveyId}/${tsCurrentUserId}/ratees/add`, ratee)
+    return this.callMethod('post', `ts/${tsSurveyId}/${tsCurrentUserId}/ratees/add/`, ratee)
   }
 
   addRater (tsCurrentUserId: number, tsRateeId: number, rater: TsNewUserForm) : void {
