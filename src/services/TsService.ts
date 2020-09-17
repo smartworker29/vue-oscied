@@ -18,7 +18,7 @@ class TsService extends BaseApiService {
   }
 
   getRateeList (tsSurveyId: number) : TsRateeUser[] {
-    return this.callMethod('get', `/ts/${tsSurveyId}/ratees/`)
+    return this.callMethod('get', `/ts/${tsSurveyId}/ratees/for-manager/`)
   }
 
   getRaterList (tsRateeId: number) : TsRaterUser[] {

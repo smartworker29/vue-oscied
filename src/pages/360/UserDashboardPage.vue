@@ -81,7 +81,7 @@ export default class UserDashboardPage extends Vue {
   myRatees: TsRateeUser[] = []
   ratersRatees: TsRateeUser[] = []
   orderBy: { text: string, number: number } | null = null
-  isShowCompleted = true
+  isShowCompleted = false
 
   async created () : Promise<void> {
     await this.uploadRaterRatee()
