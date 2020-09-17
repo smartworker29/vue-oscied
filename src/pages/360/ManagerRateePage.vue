@@ -76,7 +76,6 @@
           :groupedSkillList="groupedSkillList"
           @cancel="handleCancelSkillModal"
           @confirm="handleConfirmSkillModal"
-          @changed="handleChangedSkillModal"
         />
       </modal>
 
@@ -317,24 +316,38 @@ export default class ManagerRateePage extends Vue {
   }
 
   async handleConfirmSkillModal (skill: IcoachSkillForm) {
+    let newRateeSkill: IcoachSkillShortInfo | null = null
+
     try {
       if (!this.ratee) {
         return
       }
 
-      await TsService.addSkill(this.tsUser.user.id, this.ratee.id, skill)
-      this.$modal.hide('new-skill-modal')
+      newRateeSkill = await TsService.addSkill(this.tsUser.user.id, this.ratee.id, skill)
     } catch (error) {
       if ('response' in error && [400, 403, 404].includes(error.response.status)) {
         const { detail } = error.response.data
         this.modalError = detail
+
+        return
       } else {
         throw error
       }
     }
 
-    const skillList = await TsService.getSkillList(this.tsManagerRateeId)
-    this.groupedSkillList = this.groupSkills(skillList)
+    this.$modal.hide('new-skill-modal')
+    this.modalError = ''
+
+    if (!newRateeSkill) {
+      return
+    }
+
+    const categoryList = this.groupedSkillList[newRateeSkill.category]
+      ? this.groupedSkillList[newRateeSkill.category]
+      : []
+    categoryList.push(newRateeSkill)
+
+    Vue.set(this.groupedSkillList, newRateeSkill.category, categoryList)
   }
 
   groupSkills (skills: IcoachSkillShortInfo[]) : { [key: number]: IcoachSkillShortInfo[] } {
@@ -343,7 +356,6 @@ export default class ManagerRateePage extends Vue {
       return rv
     }, {})
   };
-  handleChangedSkillModal () {}
 
   publish () : void {
     this.$modal.show('confirm-publish-modal')

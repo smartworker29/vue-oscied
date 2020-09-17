@@ -131,7 +131,7 @@ export default class TsAddSkillModal extends Vue {
 
     this.skills = !selectedCategorySkill
       ? skills
-      : skills.filter(skill => selectedCategorySkill.findIndex(alreadySeleted => alreadySeleted.id === skill.id) === -1)
+      : skills.filter(skill => selectedCategorySkill.findIndex(alreadySeleted => alreadySeleted.skillId === skill.id) === -1)
   }
 }
 </script>
