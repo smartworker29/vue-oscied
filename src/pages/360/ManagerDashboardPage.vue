@@ -117,10 +117,10 @@ export default class ManagerDashboardPage extends Vue {
 
   async handleConfirmModal (user: TsNewUserForm) {
     try {
-      await TsService.addRatee(this.tsSurveyId, this.tsUser.user.id, user)
+      const newRatee = await TsService.addRatee(this.tsSurveyId, this.tsUser.user.id, user)
       this.$modal.hide('new-ratee-modal')
 
-      this.rateeList = await TsService.getRateeList(this.tsSurveyId)
+      this.rateeList.push(newRatee)
     } catch (error) {
       if ('response' in error && [400, 403, 404].includes(error.response.status)) {
         const { detail } = error.response.data

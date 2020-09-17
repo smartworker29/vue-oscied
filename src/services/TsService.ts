@@ -43,7 +43,7 @@ class TsService extends BaseApiService {
     )
   }
 
-  addRatee (tsSurveyId: number, tsCurrentUserId: number, ratee: TsNewUserForm) : void {
+  addRatee (tsSurveyId: number, tsCurrentUserId: number, ratee: TsNewUserForm) : TsRateeUser {
     return this.callMethod('post', `ts/${tsSurveyId}/${tsCurrentUserId}/ratees/add`, ratee)
   }
 
