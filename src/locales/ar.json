@@ -165,7 +165,9 @@
       "remove_skill_message": "🇦🇪 Are you sure to remove this skill?",
       "add_new_ratee": "🇦🇪 Create a new Rating Team",
       "add_new_rater": "🇦🇪 Add a new user to this team",
-      "add_new_skill": "🇦🇪 Add a new Skill to this Team"
+      "add_new_skill": "🇦🇪 Add a new Skill to this Team",
+      "publish_ratee":  "🇦🇪 Publish ratee",
+      "publish_ratee_message": "🇦🇪 Are you sure to publish this user?"
     }
   },
   "dashboard": {

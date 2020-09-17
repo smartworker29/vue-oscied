@@ -14,10 +14,12 @@
             <img class="account-image" :alt="ratee.fullName" :src="ratee.image && ratee.image.fileURL || require('@/assets/user.png')">
             <div>{{ ratee.fullName }}</div>
             <div>{{ ratee.email }}</div>
-            <button class="btn btn-primary btn-primary-active" @click="unpublish" v-if="ratee.isLive">
-              {{ $t('ts.dashboard.unpublish') }}
-            </button>
-            <button class="btn btn-primary btn-primary-active" @click="publish" v-else>
+            <!--<button class="btn btn-primary btn-primary-active" @click="unpublish" v-if="ratee.isLive">-->
+              <!--{{ $t('ts.dashboard.unpublish') }}-->
+            <!--</button>-->
+            <button v-if="!ratee.isLive"
+                    class="btn btn-primary btn-primary-active"
+                    @click="publish">
               {{ $t('ts.dashboard.publish') }}
             </button>
           </div>
@@ -95,6 +97,16 @@
           :message="$t('ts.modal.remove_skill_message')"
           @cancel="hideConfirmRemoveSkillModal"
           @confirm="confirmRemoveSkillModal"
+        />
+      </modal>
+
+      <modal :classes="['ccr-modal']" name="confirm-publish-modal" :height="'auto'">
+        <SimpleConfirmModal
+          :title="$t('ts.modal.publish_ratee')"
+          :modalError="modalError"
+          :message="$t('ts.modal.publish_ratee_message')"
+          @cancel="hideConfirmPublishRatee"
+          @confirm="confirmRemovePublishRatee"
         />
       </modal>
 
@@ -333,7 +345,29 @@ export default class ManagerRateePage extends Vue {
   };
   handleChangedSkillModal () {}
 
-  publish () {}
+  publish () : void {
+    this.$modal.show('confirm-publish-modal')
+  }
+
+  hideConfirmPublishRatee () : void {
+    this.raterToRemove = null
+    this.$modal.hide('confirm-publish-modal')
+    this.modalError = ''
+  }
+
+  async confirmRemovePublishRatee () : Promise<void> {
+    try {
+      this.ratee = await TsService.publish(this.tsUser.user.id, this.tsManagerRateeId)
+      this.$modal.hide('confirm-publish-modal')
+    } catch (error) {
+      if ('response' in error && [400, 403, 404].includes(error.response.status)) {
+        const { detail } = error.response.data
+        this.modalError = detail
+      } else {
+        throw error
+      }
+    }
+  }
 
   unpublish () {}
 }

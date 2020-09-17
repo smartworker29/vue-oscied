@@ -29,8 +29,18 @@ class TsService extends BaseApiService {
     return this.callMethod('get', `/ts/${tsRateeId}/skills/`)
   }
 
-  publish (tsCurrentUserId: number, tsRateeId: number) {
-    return this.callMethod('post', `/ts/${tsCurrentUserId}/ratee/${tsRateeId}/publish/`)
+  publish (tsCurrentUserId: number, tsRateeId: number) : TsRateeUser {
+    return this.callMethod(
+      'put',
+      `/ts/${tsCurrentUserId}/ratees/${tsRateeId}/publish/`,
+      {},
+      null,
+      {
+        headers: {
+          'Content-Type': 'application/json;charset=UTF-8'
+        }
+      }
+    )
   }
 
   addRatee (tsSurveyId: number, tsCurrentUserId: number, ratee: TsNewUserForm) : void {
