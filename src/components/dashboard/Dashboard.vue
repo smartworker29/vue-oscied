@@ -52,12 +52,12 @@ export default class Dashboard extends Vue {
       })
     }
 
-    const mapDashboardTsItem = (tsUser: DashboardTsItem) => {
+    const mapDashboardTsItem = (tsSurvey: DashboardTsItem) => {
       this.dashboardItems.push({
-        title: tsUser.tsSurvey.survey.title,
+        title: tsSurvey.survey.title,
         type: '360',
-        accessCode: tsUser.tsSurvey.survey.accessCode,
-        item: tsUser
+        accessCode: tsSurvey.survey.accessCode,
+        item: tsSurvey
       })
     }
 
@@ -85,8 +85,7 @@ export default class Dashboard extends Vue {
       })
     })
 
-    response.tsManager.forEach(mapDashboardTsItem)
-    response.tsUser.forEach(mapDashboardTsItem)
+    response.tsSurvey.forEach(mapDashboardTsItem)
   }
 
   openItem (accessCode: string, surveyProductOrICoachType: string): void {

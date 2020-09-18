@@ -25,13 +25,11 @@ export interface DashboardIcoachItem extends DashboardBaseItem {
 }
 
 export interface DashboardTsItem extends DashboardBaseItem {
-  tsSurvey: {
+  id: number
+  survey: {
     id: number
-    survey: {
-      id: number
-      title: string
-      accessCode: string
-    }
+    title: string
+    accessCode: string
   }
 }
 
@@ -42,6 +40,5 @@ export interface DashboardResponse {
   dp: DashboardSurveyItem[]
   ipulse: DashboardSurveyItem[]
   icoach: DashboardIcoachItem[]
-  tsManager: DashboardTsItem[]
-  tsUser: DashboardTsItem[]
+  tsSurvey: DashboardTsItem[]
 }

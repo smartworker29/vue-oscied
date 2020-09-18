@@ -155,8 +155,7 @@ export default class ManagerRateePage extends Vue {
 
   ratee: TsRateeUser | null = null
   raterList: TsRaterUser[] = []
-  skillList: IcoachSkillShortInfo[] = []
-  groupedSkillList: {} = {}
+  groupedSkillList: { [key: number]: IcoachSkillShortInfo[] } = {}
   modalError: string = ''
   raterToRemove: TsRaterUser | null = null
   skillToRemove: IcoachSkillShortInfo | null = null
