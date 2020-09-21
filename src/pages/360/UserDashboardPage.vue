@@ -72,6 +72,9 @@ export default class UserDashboardPage extends Vue {
   @Prop({ required: true })
   tsSurveyId!: number
 
+  @Getter('user/isAuthenticated')
+  isAuthenticated!: boolean
+
   @Getter('survey/getDisplayedBaseSurveyInfo')
   surveyInfo!: SurveyInfo
 
@@ -84,6 +87,10 @@ export default class UserDashboardPage extends Vue {
   isShowCompleted = false
 
   async created () : Promise<void> {
+    if (!this.isAuthenticated) {
+      await this.$router.push({ name: 'notFound' })
+    }
+
     await this.uploadRaterRatee()
     this.myRatees = await TsService.uploadUserRatee(this.tsSurveyId)
   }
