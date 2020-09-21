@@ -25,9 +25,9 @@ import { Component, Vue, Prop } from 'vue-property-decorator'
 import { TsRateeUser } from '@/interfaces'
 
 @Component({
-  name: 'UserDashboardPage'
+  name: 'RaterRateeCard'
 })
-export default class UserDashboardPage extends Vue {
+export default class RaterRateeCard extends Vue {
   @Prop({ required: true })
   raterRatee!: TsRateeUser
 
