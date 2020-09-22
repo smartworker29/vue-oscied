@@ -146,8 +146,8 @@ const router = new Router({
           component: ManagerRateePage,
           props: true,
           name: 'survey.ts.ratee'
-        },
-      ],
+        }
+      ]
     },
     {
       path: '/discovery-process/:surveyProduct(eq|values|behaviours)/:surveyUserId(\\d+)',
