@@ -39,7 +39,9 @@ export default class RaterRateeCard extends Vue {
   }
 
   get formattedExpiryDate (): string {
-    return dayjs(this.raterRatee.expiryTime.toString()).format('DD/MM/YYYY')
+    if (this.raterRatee.isLive && this.raterRatee.expiryTime) {
+      return dayjs(this.raterRatee.expiryTime.toString()).format('DD/MM/YYYY')
+    }
   }
 }
 </script>
