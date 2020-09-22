@@ -21,6 +21,7 @@ export interface TsRateeUser {
   email: string
   image: Image | null
   isLive: boolean
+  expiryTime: Date | null
 }
 
 export interface TsRaterUser {

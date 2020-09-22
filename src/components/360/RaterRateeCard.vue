@@ -8,7 +8,7 @@
     </div>
     <div class="info">
       <p class="last-reviewed">{{ $t('last_reviewed', { date: '22/06/2020' }) }}</p>
-      <p class="review-before">{{ $t('review_before', { name: rateeName, date: '15/01/2020'}) }}</p>
+      <p class="review-before">{{ $t('review_before', { name: rateeName, date: formattedExpiryDate }) }}</p>
     </div>
     <div class="actions">
       <button class="btn btn-primary btn-primary-active" v-if="false">
@@ -23,6 +23,7 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import { TsRateeUser } from '@/interfaces'
+import dayjs from 'dayjs'
 
 @Component({
   name: 'RaterRateeCard'
@@ -35,6 +36,10 @@ export default class RaterRateeCard extends Vue {
     const namesParts = this.raterRatee.fullName.trim().split(' ')
 
     return namesParts.length > 1 ? namesParts[0] : this.raterRatee.fullName
+  }
+
+  get formattedExpiryDate (): string {
+    return dayjs(this.raterRatee.expiryTime.toString()).format('DD/MM/YYYY')
   }
 }
 </script>
