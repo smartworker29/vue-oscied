@@ -134,7 +134,7 @@ export default class ManagerDashboardPage extends Vue {
 
   setup (id: number) {
     this.$router.push({
-      name: 'survey.ts.ratee',
+      name: 'survey.ts.manager.ratee',
       params: {
         tsSurveyId: this.tsSurveyId.toString(),
         tsManagerRateeId: id.toString()

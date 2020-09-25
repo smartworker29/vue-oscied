@@ -24,6 +24,7 @@ import ManagerDashboardPage from '@/pages/360/ManagerDashboardPage.vue'
 import MainTsPageTemplate from '@/pages/360/MainTsPageTemplate.vue'
 import ManagerRateePage from '@/pages/360/ManagerRateePage.vue'
 import UserDashboardPage from '@/pages/360/UserDashboardPage.vue'
+import RaterRateePage from '@/pages/360/RaterRateePage.vue'
 
 Vue.use(Router)
 
@@ -145,7 +146,13 @@ const router = new Router({
           path: 'manager/:tsManagerRateeId(\\d+)',
           component: ManagerRateePage,
           props: true,
-          name: 'survey.ts.ratee'
+          name: 'survey.ts.manager.ratee'
+        },
+        {
+          path: 'user/:tsRaterRateeId(\\d+)',
+          component: RaterRateePage,
+          props: true,
+          name: 'survey.ts.user.ratee'
         }
       ]
     },

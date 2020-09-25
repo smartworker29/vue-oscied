@@ -29,6 +29,10 @@ class TsService extends BaseApiService {
     return this.callMethod('get', `/ts/${tsRateeId}/skills/`)
   }
 
+  getSkillListForUser (tsRateeId: number) : IcoachSkillShortInfo[] {
+    return this.callMethod('get', `/ts/${tsRateeId}/skills/for-rater`)
+  }
+
   publish (tsCurrentUserId: number, tsRateeId: number) : TsRateeUser {
     return this.callMethod(
       'put',

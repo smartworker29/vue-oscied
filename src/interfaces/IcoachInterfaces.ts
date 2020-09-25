@@ -29,6 +29,7 @@ export interface IcoachSkillShortInfo {
   skillId: number
   category: number
   name: string
+  status: boolean
 }
 
 export interface IcoachSkillContent {

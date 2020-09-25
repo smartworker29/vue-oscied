@@ -46,6 +46,7 @@
           <div class="ratee-items">
             <rater-ratee-card v-for="ratee in filteredRaterRatees"
                               :key="ratee.id"
+                              :tsSurveyId="tsSurveyId"
                               :raterRatee="ratee"/>
           </div>
         </div>

@@ -14,14 +14,14 @@
       <button class="btn btn-primary btn-primary-active" v-if="false">
         {{ $t('button_g.completed') }}
       </button>
-      <button class="btn btn-primary btn-primary-active">
+      <button class="btn btn-primary btn-primary-active" @click="reviewRatee">
         {{ $t('button_g.review_now') }}
       </button>
     </div>
   </div>
 </template>
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-property-decorator'
 import { TsRateeUser } from '@/interfaces'
 import dayjs from 'dayjs'
 
@@ -31,6 +31,9 @@ import dayjs from 'dayjs'
 export default class RaterRateeCard extends Vue {
   @Prop({ required: true })
   raterRatee!: TsRateeUser
+
+  @Prop({ required: true })
+  tsSurveyId!: number
 
   get rateeName (): string {
     const namesParts = this.raterRatee.fullName.trim().split(' ')
@@ -42,6 +45,16 @@ export default class RaterRateeCard extends Vue {
     if (this.raterRatee.isLive && this.raterRatee.expiryTime) {
       return dayjs(this.raterRatee.expiryTime.toString()).format('DD/MM/YYYY')
     }
+  }
+
+  reviewRatee (): void {
+    this.$router.push({
+      name: 'survey.ts.user.ratee',
+      params: {
+        tsSurveyId: this.tsSurveyId.toString(),
+        tsRaterRateeId: this.raterRatee.id.toString()
+      }
+    })
   }
 }
 </script>
