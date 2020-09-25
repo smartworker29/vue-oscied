@@ -209,7 +209,11 @@ const availableSurveyLogosPages = [
   'survey.page.part',
   'survey.welcome.dp.survey_product',
   'survey.dp.page.part',
-  'survey.dp.completed.part'
+  'survey.dp.completed.part',
+  'survey.ts.manager.dashboard',
+  'survey.ts.user.dashboard',
+  'survey.ts.manager.ratee',
+  'survey.ts.user.ratee'
 ]
 
 const handleMainLogoCapability = (to: Route) => {
