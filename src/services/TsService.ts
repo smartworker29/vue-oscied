@@ -74,6 +74,10 @@ class TsService extends BaseApiService {
   uploadUserRatee (tsSurveyId: number) : TsRateeUser[] {
     return this.callMethod('get', `/ts/${tsSurveyId}/ratees/my/`)
   }
+
+  getSkillInfo (tsRateeId: number, skillId: number) : IcoachSkillShortInfo {
+    return this.callMethod('get', `ts/${tsRateeId}/skills/${skillId}`)
+  }
 }
 
 export default new TsService()

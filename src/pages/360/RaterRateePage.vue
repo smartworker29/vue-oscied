@@ -9,7 +9,7 @@
       </button>
 
       <div class="rater-ratee-wrapper">
-        <div class="ratees-block rater-ratee-info" v-if="ratee">
+        <div class="ratees-block rater-ratee-info">
           <h2>{{ $t('who_i_rating') }}</h2>
           <rater-ratee-card :ts-survey-id="tsSurveyId" :raterRatee="ratee" />
         </div>
@@ -23,6 +23,7 @@
                 v-for="skill in group"
                 :key="skill.id"
                 :skill="skill"
+                @rate="rateSkill"
               />
             </div>
           </div>
@@ -36,9 +37,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 import {
   IcoachSkillShortInfo,
   SurveyInfo,
-  TsRateeUser,
-  TsUserDto,
-  User
+  TsRateeUser
 } from '@/interfaces'
 import { Getter } from 'vuex-class'
 import RaterRateeCard from '@/components/360/RaterRateeCard.vue'
@@ -64,12 +63,6 @@ export default class RaterRateePage extends Vue {
 
   @Getter('survey/getDisplayedBaseSurveyInfo')
   surveyInfo!: SurveyInfo
-
-  @Getter('ts/getUser')
-  tsUser!: TsUserDto
-
-  @Getter('user/currentUser')
-  user!: User
 
   ratee: TsRateeUser | null = null
   skillList: IcoachSkillShortInfo[] | null = null
@@ -107,6 +100,17 @@ export default class RaterRateePage extends Vue {
       name: 'survey.ts.user.dashboard',
       params: {
         tsSurveyId: this.tsSurveyId.toString()
+      }
+    })
+  }
+
+  rateSkill (skill: IcoachSkillShortInfo) {
+    this.$router.push({
+      name: 'survey.ts.user.ratee.skill',
+      params: {
+        tsSurveyId: this.tsSurveyId.toString(),
+        tsRaterRateeId: this.tsRaterRateeId.toString(),
+        skillId: skill.id.toString()
       }
     })
   }

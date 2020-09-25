@@ -25,6 +25,7 @@ import MainTsPageTemplate from '@/pages/360/MainTsPageTemplate.vue'
 import ManagerRateePage from '@/pages/360/ManagerRateePage.vue'
 import UserDashboardPage from '@/pages/360/UserDashboardPage.vue'
 import RaterRateePage from '@/pages/360/RaterRateePage.vue'
+import RaterRateeSkillPage from '@/pages/360/RaterRateeSkillPage.vue'
 
 Vue.use(Router)
 
@@ -153,6 +154,12 @@ const router = new Router({
           component: RaterRateePage,
           props: true,
           name: 'survey.ts.user.ratee'
+        },
+        {
+          path: 'user/:tsRaterRateeId(\\d+)/skill/:skillId(\\d+)',
+          component: RaterRateeSkillPage,
+          props: true,
+          name: 'survey.ts.user.ratee.skill'
         }
       ]
     },
