@@ -117,7 +117,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 import {
   IcoachSkillForm,
   IcoachSkillShortInfo,
-  SurveyInfo,
+  SurveyInfo, TsAbstractUser,
   TsNewUserForm,
   TsRateeUser,
   TsRaterUser,
@@ -147,8 +147,11 @@ export default class ManagerRateePage extends Vue {
   @Getter('survey/getDisplayedBaseSurveyInfo')
   surveyInfo!: SurveyInfo
 
-  @Getter('ts/getUser')
+  @Getter('ts/getUsers')
   tsUser!: TsUserDto
+
+  @Getter('ts/getManager')
+  tsManager!: TsAbstractUser
 
   @Getter('user/currentUser')
   user!: User
@@ -165,20 +168,11 @@ export default class ManagerRateePage extends Vue {
       await this.$router.push({ name: 'notFound' })
     }
 
-    await this.checkUser()
     await this.checkRatee()
 
     this.raterList = await TsService.getRaterList(this.tsManagerRateeId)
     const skillList = await TsService.getSkillList(this.tsManagerRateeId)
     this.groupedSkillList = this.groupSkills(skillList)
-  }
-
-  async checkUser () {
-    if (!this.tsUser) {
-      const tsUser = await TsService.getUserInfo(this.tsSurveyId, this.user.id)
-
-      this.$store.commit('ts/setTsUser', tsUser)
-    }
   }
 
   async checkRatee () {
@@ -204,7 +198,7 @@ export default class ManagerRateePage extends Vue {
         return
       }
 
-      const newRater = await TsService.addRater(this.tsUser.user.id, this.ratee.id, rater)
+      const newRater = await TsService.addRater(this.tsManager.id, this.ratee.id, rater)
       this.raterList.push(newRater)
       this.$modal.hide('new-rater-modal')
     } catch (error) {
@@ -262,7 +256,7 @@ export default class ManagerRateePage extends Vue {
     }
 
     try {
-      await TsService.removeRater(this.tsUser.user.id, this.ratee.id, this.raterToRemove.id)
+      await TsService.removeRater(this.tsManager.id, this.ratee.id, this.raterToRemove.id)
     } catch (error) {
       if ('response' in error && [400, 403, 404].includes(error.response.status)) {
         const { detail } = error.response.data
@@ -285,7 +279,7 @@ export default class ManagerRateePage extends Vue {
     }
 
     try {
-      await TsService.removeSkill(this.tsUser.user.id, this.ratee.id, this.skillToRemove.id)
+      await TsService.removeSkill(this.tsManager.id, this.ratee.id, this.skillToRemove.id)
     } catch (error) {
       if ('response' in error && [400, 403, 404].includes(error.response.status)) {
         const { detail } = error.response.data
@@ -321,7 +315,7 @@ export default class ManagerRateePage extends Vue {
         return
       }
 
-      newRateeSkill = await TsService.addSkill(this.tsUser.user.id, this.ratee.id, skill)
+      newRateeSkill = await TsService.addSkill(this.tsManager.id, this.ratee.id, skill)
     } catch (error) {
       if ('response' in error && [400, 403, 404].includes(error.response.status)) {
         const { detail } = error.response.data
@@ -367,7 +361,7 @@ export default class ManagerRateePage extends Vue {
 
   async confirmRemovePublishRatee () : Promise<void> {
     try {
-      this.ratee = await TsService.publish(this.tsUser.user.id, this.tsManagerRateeId)
+      this.ratee = await TsService.publish(this.tsManager.id, this.tsManagerRateeId)
       this.$modal.hide('confirm-publish-modal')
     } catch (error) {
       if ('response' in error && [400, 403, 404].includes(error.response.status)) {
@@ -378,8 +372,6 @@ export default class ManagerRateePage extends Vue {
       }
     }
   }
-
-  unpublish () {}
 }
 </script>
 

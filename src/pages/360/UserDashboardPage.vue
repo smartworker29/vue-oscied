@@ -79,7 +79,7 @@ export default class UserDashboardPage extends Vue {
   @Getter('survey/getDisplayedBaseSurveyInfo')
   surveyInfo!: SurveyInfo
 
-  @Getter('ts/getUser')
+  @Getter('ts/getUsers')
   tsUserInfo!: TsUserDto
 
   myRatees: TsRateeUser[] = []

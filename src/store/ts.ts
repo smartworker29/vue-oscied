@@ -1,10 +1,11 @@
 import { Module } from 'vuex'
 import { RootState } from '@/store'
-import { TsSurveyDto, TsUserDto } from '@/interfaces'
+import { TsAbstractUser, TsSurveyDto, TsUserDto } from '@/interfaces'
 
 export interface TsState {
   survey: TsSurveyDto | null,
-  user: TsUserDto | null
+  users: TsUserDto | null
+  manager: TsAbstractUser | null
 }
 
 const ts: Module<TsState, RootState> = {
@@ -12,15 +13,19 @@ const ts: Module<TsState, RootState> = {
 
   state: {
     survey: null,
-    user: null
+    users: null,
+    manager: null
   },
 
   getters: {
     getSurvey (state: TsState) {
       return state.survey
     },
-    getUser (state: TsState) {
-      return state.user
+    getUsers (state: TsState) {
+      return state.users
+    },
+    getManager (state: TsState) {
+      return state.manager
     }
   },
 
@@ -28,8 +33,11 @@ const ts: Module<TsState, RootState> = {
     setSurvey (state: TsState, tsSurveyInfo: TsSurveyDto) : void {
       state.survey = tsSurveyInfo
     },
-    setTsUser (state: TsState, tsUser: TsUserDto) : void {
-      state.user = tsUser
+    setUsers (state: TsState, tsUser: TsUserDto) : void {
+      state.users = tsUser
+    },
+    setManager (state: TsState, tsManager: TsAbstractUser) : void {
+      state.manager = tsManager
     }
   }
 }

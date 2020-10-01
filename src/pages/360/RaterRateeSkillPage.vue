@@ -32,14 +32,14 @@
           <div v-else>
             {{ $t('ts.choose_the_rating', { fullName: ratee.fullName, skill: skillInfo.name }) }}
             <form class="form skill-rate-form skill-comment" @submit.prevent="rate" novalidate>
-              <range-slider @change-value="updateValues($event)"/>
+              <range-slider @change-value="updateValues($event)" />
               <label for="comment" class="skill-comment__label">{{ $t('ts.leave_a_comment') }}</label>
               <div class="skill-comment__wrapper">
                 <textarea
+                  v-model="ratingForm.comment"
                   v-validate="'required'"
                   id="comment"
                   name="comment"
-                  v-model="ratingForm.comment"
                   class="skill-comment__input"
                 />
                 <button type="submit" class="btn btn-primary-active skill-comment__submit">{{ $t('button_g.submit') }}</button>
@@ -91,7 +91,7 @@ export default class RaterRateeSkillPage extends Vue {
   @Getter('user/currentUser')
   user!: User
 
-  @Getter('ts/getUser')
+  @Getter('ts/getUsers')
   tsUserInfo!: TsUserDto
 
   @Getter('user/isAuthenticated')

@@ -40,7 +40,7 @@
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
-import { SurveyInfo, TsNewUserForm, TsRateeUser, TsUserDto, TsUserRole, User } from '@/interfaces'
+import { SurveyInfo, TsAbstractUser, TsNewUserForm, TsRateeUser, TsUserDto, TsUserRole, User } from '@/interfaces'
 import { Getter } from 'vuex-class'
 import TsService from '@/services/TsService'
 import SurveyService from '@/services/SurveyService'
@@ -61,8 +61,11 @@ export default class ManagerDashboardPage extends Vue {
   @Getter('survey/getDisplayedBaseSurveyInfo')
   surveyInfo!: SurveyInfo
 
-  @Getter('ts/getUser')
+  @Getter('ts/getUsers')
   tsUser!: TsUserDto
+
+  @Getter('ts/getManager')
+  tsManager!: TsAbstractUser
 
   @Getter('user/currentUser')
   user!: User
@@ -88,8 +91,6 @@ export default class ManagerDashboardPage extends Vue {
         if (!tsUser.roles.includes(TsUserRole.MANAGER)) {
           await this.$router.push({ name: 'notFound' })
         }
-
-        this.$store.commit('ts/setTsUser', tsUser)
       } catch (error) {
         if ('response' in error && error.response.status === 404) {
           await this.$router.push({ name: 'notFound' })
@@ -117,7 +118,7 @@ export default class ManagerDashboardPage extends Vue {
 
   async handleConfirmModal (user: TsNewUserForm) {
     try {
-      const newRatee = await TsService.addRatee(this.tsSurveyId, this.tsUser.user.id, user)
+      const newRatee = await TsService.addRatee(this.tsSurveyId, this.tsManager.id, user)
       this.$modal.hide('new-ratee-modal')
 
       this.rateeList.push(newRatee)

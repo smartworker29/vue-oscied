@@ -291,7 +291,7 @@ export default class WelcomePage extends Vue {
     this.$store.commit('mainLogo/setType', MainLogosTypes.SURVEY_LOGOS)
 
     const tsUser = await TsService.getUserInfo(this.productSurveyId, this.user.id)
-    this.$store.commit('ts/setTsUser', tsUser)
+    this.$store.commit('ts/setUsers', tsUser)
 
     if (tsUser.roles.includes(TsUserRole.MANAGER)) {
       await this.$router.push({

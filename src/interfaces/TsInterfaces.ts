@@ -10,6 +10,7 @@ export interface TsAbstractUser {
   id: number
   fullName: string
   email: string
+  role: string
 }
 
 export interface TsSurveyDto {
@@ -38,7 +39,7 @@ export interface TsNewUserForm {
 
 export interface TsUserDto {
   roles: TsUserRole[],
-  user: TsAbstractUser
+  users: TsAbstractUser[]
 }
 
 export interface TsRaterRateeSkillRating {
