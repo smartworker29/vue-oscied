@@ -169,7 +169,13 @@
       "add_new_skill": "🇦🇪 Add a new Skill to this Team",
       "publish_ratee":  "🇦🇪 Publish ratee",
       "publish_ratee_message": "🇦🇪 Are you sure to publish this user?"
-    }
+    },
+    "leave_a_comment_below":  "🇦🇪 Please leave a comment below and rate {fullName} using the 1-10 rating below.",
+    "choose_the_rating":  "🇦🇪 Choose the Rating for the {fullName} on {skill}",
+    "you_have_rated":  "🇦🇪 You have rated {fullName} a score of {score} on {skill}",
+    "leave_a_comment":  "🇦🇪 Leave a comment",
+    "this_skill_in_context":  "🇦🇪 This Skill in context",
+    "how_to_develop":  "🇦🇪 How to Develop this Skill"
   },
   "dashboard": {
     "title": "🇦🇪 Dashboard",
