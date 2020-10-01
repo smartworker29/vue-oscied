@@ -4,8 +4,10 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import { Getter } from 'vuex-class'
-import { User, TsUserDto } from '@/interfaces'
+import { User, TsUserDto, SurveyInfo } from '@/interfaces'
 import TsService from '@/services/TsService'
+import SurveyService from '@/services/SurveyService'
+import SurveyHelper from '@/utils/SurveyHelper'
 
 @Component({
   name: 'MainTsPageTemplate'
@@ -20,10 +22,23 @@ export default class MainTsPageTemplate extends Vue {
   @Getter('user/currentUser')
   user!: User
 
+  @Getter('survey/getDisplayedBaseSurveyInfo')
+  surveyInfo!: SurveyInfo
+
   async created () {
     if (!this.tsUserInfo) {
       const tsUser = await TsService.getUserInfo(this.tsSurveyId, this.user.id)
       this.$store.commit('ts/setTsUser', tsUser)
+    }
+
+    if (!this.surveyInfo) {
+      const survey = await SurveyService.getSurveyInfoById(SurveyHelper.TS, this.tsSurveyId)
+
+      this.$store.commit('survey/setTakenSurveyData', {
+        productSurveyId: this.tsSurveyId,
+        productSurveyType: SurveyHelper.TS,
+        surveyInfo: survey
+      })
     }
   }
 }
