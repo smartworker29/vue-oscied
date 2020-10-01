@@ -13,9 +13,6 @@ export interface TsAbstractUser {
   role: string
 }
 
-export interface TsSurveyDto {
-}
-
 export interface TsRateeUser {
   id: number
   fullName: string

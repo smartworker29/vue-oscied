@@ -1,6 +1,5 @@
 <template>
-<!--  <router-view v-if="tsUserInfo"></router-view>-->
-  <router-view />
+  <router-view v-if="tsUserInfo"></router-view>
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
