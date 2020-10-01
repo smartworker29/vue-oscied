@@ -31,7 +31,7 @@
           </div>
           <div v-else>
             {{ $t('ts.choose_the_rating', { fullName: ratee.fullName, skill: skillInfo.name }) }}
-            <form class="form skill-rate-form skill-comment" @submit.prevent="rate">
+            <form class="form skill-rate-form skill-comment" @submit.prevent="rate" novalidate>
               <range-slider @change-value="updateValues($event)"/>
               <label for="comment" class="skill-comment__label">{{ $t('ts.leave_a_comment') }}</label>
               <div class="skill-comment__wrapper">
@@ -44,6 +44,7 @@
                 />
                 <button type="submit" class="btn btn-primary-active skill-comment__submit">{{ $t('button_g.submit') }}</button>
               </div>
+              <p class="error" v-if="errors">{{ errors.first('comment') }}</p>
             </form>
           </div>
           <h4>{{ $t('ts.this_skill_in_context') }}</h4>
@@ -136,6 +137,10 @@ export default class RaterRateeSkillPage extends Vue {
   }
 
   async rate () {
+    if (!await this.$validator.validateAll()) {
+      return
+    }
+
     try {
       const result = await TsService.addRating(this.tsRaterRateeId, this.skillId, this.ratingForm)
 
