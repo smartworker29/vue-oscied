@@ -35,7 +35,6 @@
       display: flex;
 
       .ratees-block {
-
         padding: 10px;
 
         h2 {
@@ -80,7 +79,6 @@
         .ratee-items {
           display: flex;
           flex-wrap: wrap;
-          justify-content: space-between;
 
           .ratee-card {
             width: 31%;
@@ -91,37 +89,40 @@
   }
 }
 
-.ts-rater-ratee-page {
-  .rater-ratee-wrapper {
-    display: flex;
+.ts-rater-ratee-page .rater-ratee-wrapper .rater-ratee-skills .rater-ratee-skill-card-wrapper {
+  display: flex;
+  border-bottom: 1px solid lightblue;
+  padding: 10px;
+  justify-content: space-between;
+  align-items: baseline;
 
-    .ratees-block {
-      padding: 10px;
+  .skill-name {
+    font-weight: bold;
+  }
+}
+
+.rater-ratee-wrapper {
+  display: flex;
+
+  .ratees-block {
+    padding: 10px;
+  }
+
+  .rater-ratee-info {
+    flex: 1;
+
+    .ratee-card {
+      width: 100%;
     }
+  }
 
-    .rater-ratee-info {
-      flex: 1;
+  .rater-ratee-skills {
+    flex: 3;
+  }
 
-      .ratee-card {
-        width: 100%;
-      }
-    }
-
-    .rater-ratee-skills {
-      flex: 3;
-
-      .rater-ratee-skill-card-wrapper {
-        display: flex;
-        border-bottom: 1px solid lightblue;
-        padding: 10px;
-        justify-content: space-between;
-        align-items: baseline;
-
-        .skill-name {
-          font-weight: bold;
-        }
-      }
-    }
+  .rater-ratee-skill-title {
+    color: #3d5a80;
+    font-size: 24px;
   }
 }
 

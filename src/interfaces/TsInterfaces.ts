@@ -40,3 +40,13 @@ export interface TsUserDto {
   roles: TsUserRole[],
   user: TsAbstractUser
 }
+
+export interface TsRaterRateeSkillRating {
+  score: string
+  comment: string
+}
+
+export interface TsRatingForm {
+  score: number
+  comment: string
+}

@@ -14,8 +14,42 @@
           <rater-ratee-card :ts-survey-id="tsSurveyId" :raterRatee="ratee" />
         </div>
 
-        <div class="skill-block" v-if="skillInfo">
-          <h2>{{ skillInfo.name }}</h2>
+        <div class="ratees-block skill-block" v-if="skillInfo">
+          <h2 class="rater-ratee-skill-title">{{ skillInfo.name }}</h2>
+          <span>{{ $t('ts.leave_a_comment_below', { fullName: ratee.fullName }) }}</span>
+          <div class="results-block" v-if="skillInfo.status && rating">
+            {{ $t('ts.you_have_rated', { fullName: ratee.fullName, score: rating.score, skill: skillInfo.name }) }}
+
+            <div class="skill-comment published-comment">
+              <img v-if="user.image.fileURL" :src="user.image.fileURL" class="skill-comment__logo" :alt="rating.comment">
+              <img v-else :src="require('@/assets/user.png')" class="skill-comment__logo">
+              <div class="skill-comment__content">
+              <span class="skill-comment__name">{{ user.firstName }} {{ user.lastName }}</span>
+                <div>{{ rating.comment }}</div>
+              </div>
+            </div>
+          </div>
+          <div v-else>
+            {{ $t('ts.choose_the_rating', { fullName: ratee.fullName, skill: skillInfo.name }) }}
+            <form class="form skill-rate-form skill-comment" @submit.prevent="rate">
+              <range-slider @change-value="updateValues($event)"/>
+              <label for="comment" class="skill-comment__label">{{ $t('ts.leave_a_comment') }}</label>
+              <div class="skill-comment__wrapper">
+                <textarea
+                  v-validate="'required'"
+                  id="comment"
+                  name="comment"
+                  v-model="ratingForm.comment"
+                  class="skill-comment__input"
+                />
+                <button type="submit" class="btn btn-primary-active skill-comment__submit">{{ $t('button_g.submit') }}</button>
+              </div>
+            </form>
+          </div>
+          <h4>{{ $t('ts.this_skill_in_context') }}</h4>
+          <div v-html="skillInfo.skillInContext" />
+          <h4>{{ $t('ts.how_to_develop') }}</h4>
+          <div v-html="skillInfo.howToDevelop" />
         </div>
       </div>
     </div>
@@ -23,15 +57,24 @@
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
-import { IcoachSkillShortInfo, TsRateeUser } from '@/interfaces'
+import {
+  IcoachSkillFullInfo,
+  SurveyInfo,
+  TsRateeUser,
+  TsRaterRateeSkillRating,
+  TsRatingForm,
+  TsUserDto, User
+} from '@/interfaces'
 import { Getter } from 'vuex-class'
 import RaterRateeCard from '@/components/360/RaterRateeCard.vue'
 import TsService from '@/services/TsService'
+import RangeSlider from '@/components/common/rangeSlider/RangeSlider.vue'
 
 @Component({
   name: 'RaterRateeSkillPage',
   components: {
-    RaterRateeCard
+    RaterRateeCard,
+    RangeSlider
   }
 })
 export default class RaterRateeSkillPage extends Vue {
@@ -44,11 +87,22 @@ export default class RaterRateeSkillPage extends Vue {
   @Prop({ required: true })
   skillId !: number
 
+  @Getter('user/currentUser')
+  user!: User
+
+  @Getter('ts/getUser')
+  tsUserInfo!: TsUserDto
+
   @Getter('user/isAuthenticated')
   isAuthenticated!: boolean
 
+  @Getter('survey/getDisplayedBaseSurveyInfo')
+  surveyInfo!: SurveyInfo
+
   ratee: TsRateeUser | null = null
-  skillInfo: IcoachSkillShortInfo | null = null
+  skillInfo: IcoachSkillFullInfo | null = null
+  rating: TsRaterRateeSkillRating | null = null
+  ratingForm: TsRatingForm = { comment: '', score: 1 }
 
   async created () {
     if (!this.isAuthenticated) {
@@ -62,6 +116,10 @@ export default class RaterRateeSkillPage extends Vue {
     if (!this.skillInfo) {
       this.skillInfo = await TsService.getSkillInfo(this.tsRaterRateeId, this.skillId)
     }
+
+    if (this.skillInfo && this.skillInfo.status) {
+      this.rating = await TsService.getComment(this.tsRaterRateeId, this.skillInfo.id)
+    }
   }
 
   goToList (): void {
@@ -72,5 +130,139 @@ export default class RaterRateeSkillPage extends Vue {
       }
     })
   }
+
+  updateValues (value: string) {
+    this.ratingForm.score = parseInt(value)
+  }
+
+  async rate () {
+    try {
+      const result = await TsService.addRating(this.tsRaterRateeId, this.skillId, this.ratingForm)
+
+      this.updateRating(result)
+    } catch (error) {
+      if ('response' in error && error.response.status === 400) {
+        this.handleSkillRatingErrors(error.response.data)
+      }
+    }
+  }
+
+  updateRating (rating: TsRatingForm) {
+    this.rating = {
+      comment: rating.comment,
+      score: rating.score.toFixed(2)
+    }
+    this.ratingForm = {
+      score: 1,
+      comment: ''
+    }
+
+    if (this.skillInfo) {
+      this.skillInfo.status = true
+    }
+  }
+
+  handleSkillRatingErrors (data: object) {
+    // todo::add handle logic
+  }
 }
 </script>
+
+<style lang="scss" scoped>
+.skill-comment__wrapper {
+  display: flex;
+
+  @media screen and (max-width: 768px) {
+    flex-wrap: wrap;
+  }
+}
+.skill-comment {
+  border: 1px solid #d8efff;
+  background: #f7fcff;
+  border-radius: 5px;
+  margin-top: 30px;
+  padding: 22px 23px;
+
+  h4 {
+    font-size: 20px;
+    margin: 0 0 15px;
+    font-weight: 300;
+  }
+
+  &__form {
+    width: 100%;
+  }
+
+  &__input {
+    border: 1px solid #d8efff;
+    border-radius: 8px;
+    padding: 9px 14px;
+    background: #fff;
+    width: 80%;
+    font-size: 14px;
+    height: 32px;
+    flex: 1;
+    color: rgba(7, 16, 18, 0.5);
+    @media screen and (max-width: 768px) {
+      height: 86px;
+      flex: auto;
+    }
+    &:focus {
+      outline: none;
+    }
+  }
+
+  &__label {
+    display: block;
+    padding: 20px 0;
+  }
+
+  &__submit {
+    cursor: pointer;
+    float: right;
+    border: 1px;
+    border-radius: 12px;
+    background: #00cdbf;
+    padding: 7px 20px;
+    color: #fff;
+    margin-left: 16px;
+    @media screen and (max-width: 768px) {
+      width: 100%;
+      margin: 16px 0 0;
+    }
+  }
+
+  &__published-comments {
+    border-top: 1px solid #d8efff;
+    margin-top: 24px;
+    padding-top: 24px;
+  }
+
+  &__logo {
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    margin-right: 16px;
+  }
+  &__name {
+    color: #0085cd;
+  }
+
+  &__content {
+    font-size: 14px;
+    color: #6a7071;
+    div {
+      font-size: 16px;
+      line-height: 1.5;
+      color: #071012;
+      font-weight: 300;
+    }
+  }
+}
+
+.published-comment {
+  display: flex;
+  margin-right: 17px;
+  margin-bottom: 25px;
+}
+</style>

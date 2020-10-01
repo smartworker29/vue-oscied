@@ -16,7 +16,7 @@
         <div class="ratees-block rater-ratee-skills">
           <div v-if="groupedSkillList">
             <div v-for="(group, id) in groupedSkillList" :key="id">
-              <h4>
+              <h4 class="rater-ratee-skill-title">
                 {{ $t(`icoach.categories.${id}`) }}
               </h4>
               <rater-ratee-skill-card

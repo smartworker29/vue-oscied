@@ -3,7 +3,7 @@
     <span class="skill-name">{{ skill.name }}</span>
     <div class="actions">
       <button class="btn btn-primary btn-primary-active" v-if="!skill.status" @click="rate">{{ $t('button_g.rate') }}</button>
-      <img v-else :src="require('@/assets/icons/icon-check.svg')" :alt="skill.name">
+      <img v-else :src="require('@/assets/icons/icon-check.svg')" :alt="skill.name" @click="rate">
     </div>
   </div>
 </template>

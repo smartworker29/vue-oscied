@@ -1,10 +1,10 @@
 import { BaseApiService } from '@/services/BaseApiService'
 import {
-  IcoachSkillForm,
+  IcoachSkillForm, IcoachSkillFullInfo,
   IcoachSkillShortInfo,
   TsNewUserForm,
-  TsRateeUser,
-  TsRaterUser,
+  TsRateeUser, TsRaterRateeSkillRating,
+  TsRaterUser, TsRatingForm,
   TsUserDto
 } from '@/interfaces'
 
@@ -75,8 +75,16 @@ class TsService extends BaseApiService {
     return this.callMethod('get', `/ts/${tsSurveyId}/ratees/my/`)
   }
 
-  getSkillInfo (tsRateeId: number, skillId: number) : IcoachSkillShortInfo {
+  getSkillInfo (tsRateeId: number, skillId: number) : IcoachSkillFullInfo {
     return this.callMethod('get', `ts/${tsRateeId}/skills/${skillId}`)
+  }
+
+  getComment (tsRateeId: number, skillId: number) : TsRaterRateeSkillRating {
+    return this.callMethod('get', `ts/${tsRateeId}/${skillId}/rating`)
+  }
+
+  addRating (tsRateeId: number, skillId: number, rating: TsRatingForm) : TsRatingForm {
+    return this.callMethod('post', `ts/${tsRateeId}/${skillId}/rating/add/`, { rating })
   }
 }
 
