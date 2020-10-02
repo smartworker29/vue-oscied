@@ -5,9 +5,19 @@
     </div>
     <div class="survey-content" v-if="surveyInfo">
       <p v-html="surveyInfo.welcomeMessage || ''"></p>
-      <button class="btn btn-primary btn-primary-active" @click="beginSurvey" v-if="!error">
-        {{ isUncompletedSurvey ? $t('button_g.continue_survey') : $t('button_g.start_survey') }}
-      </button>
+      <div v-if="!error">
+        <div v-if="surveyProduct && surveyProduct === '360' && tsUserInfo">
+          <button class="btn btn-primary btn-primary-active" @click="beginTsManagerSurvey" v-if="tsUserInfo.roles.includes('manager')">
+            {{ $t('button_g.start_survey_manager') }}
+          </button>
+          <button class="btn btn-primary btn-primary-active" @click="beginTsUserSurvey" v-if="tsUserInfo.roles.includes('rater')">
+            {{ $t('button_g.start_survey') }}
+          </button>
+        </div>
+        <button class="btn btn-primary btn-primary-active" @click="beginSurvey" v-else>
+          {{ isUncompletedSurvey ? $t('button_g.continue_survey') : $t('button_g.start_survey') }}
+        </button>
+      </div>
       <h2 v-else>{{ error }}</h2>
     </div>
   </div>
@@ -63,7 +73,7 @@ import SurveyHelper from '@/utils/SurveyHelper'
 import { EventBus } from '@/main'
 import { SurveyData } from '@/interfaces/LocalStorageInterfaces'
 import TsService from '@/services/TsService'
-import { TsUserRole, User } from '@/interfaces'
+import { TsUserDto, User } from '@/interfaces'
 
 @Component({
   name: 'WelcomePage',
@@ -79,6 +89,9 @@ export default class WelcomePage extends Vue {
 
   @Getter('user/currentUser')
   user!: User
+
+  @Getter('ts/getUsers')
+  tsUserInfo!: TsUserDto
 
   @Prop({})
   surveyProduct!: string
@@ -176,11 +189,6 @@ export default class WelcomePage extends Vue {
       return
     }
 
-    if (this.surveyProduct === SurveyHelper.TS) {
-      await this.beginTsSurvey()
-      return
-    }
-
     this.surveyUserInfo = await SurveyService.getSurveyUser(
       this.surveyProduct,
       this.productSurveyId,
@@ -241,6 +249,24 @@ export default class WelcomePage extends Vue {
     })
   }
 
+  async beginTsManagerSurvey () : Promise<void> {
+    await this.$router.push({
+      name: 'survey.ts.manager.dashboard',
+      params: {
+        tsSurveyId: this.productSurveyId.toString()
+      }
+    })
+  }
+
+  async beginTsUserSurvey () : Promise<void> {
+    await this.$router.push({
+      name: 'survey.ts.user.dashboard',
+      params: {
+        tsSurveyId: this.productSurveyId.toString()
+      }
+    })
+  }
+
   async beginDpSurvey () : Promise<void> {
     const progress = await SurveyService.getDpSurveyProgress(this.surveyUserInfo.surveyUserId)
 
@@ -287,35 +313,16 @@ export default class WelcomePage extends Vue {
     })
   }
 
-  async beginTsSurvey () : Promise<void> {
-    this.$store.commit('mainLogo/setType', MainLogosTypes.SURVEY_LOGOS)
-
-    const tsUser = await TsService.getUserInfo(this.productSurveyId, this.user.id)
-    this.$store.commit('ts/setUsers', tsUser)
-
-    if (tsUser.roles.includes(TsUserRole.MANAGER)) {
-      await this.$router.push({
-        name: 'survey.ts.manager.dashboard',
-        params: {
-          tsSurveyId: this.productSurveyId.toString()
-        }
-      })
-    } else if ([TsUserRole.RATEE, TsUserRole.RATER].some((role: TsUserRole) => tsUser.roles.includes(role))) {
-      await this.$router.push({
-        name: 'survey.ts.user.dashboard',
-        params: {
-          tsSurveyId: this.productSurveyId.toString()
-        }
-      })
-    }
-  }
-
   async checkTsSurvey () : Promise<void> {
     await this.$store.commit('survey/setTakenSurveyData', {
       productSurveyId: this.productSurveyId,
       productSurveyType: this.surveyProduct,
       surveyInfo: this.surveyInfo
     })
+
+    const tsUser = await TsService.getUserInfo(this.productSurveyId, this.user.id)
+    this.$store.commit('ts/setUsers', tsUser)
+    this.$store.commit('mainLogo/setType', MainLogosTypes.SURVEY_LOGOS)
   }
 }
 </script>
