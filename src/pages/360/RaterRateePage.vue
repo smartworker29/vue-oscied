@@ -12,6 +12,9 @@
         <div class="ratees-block rater-ratee-info">
           <h2>{{ $t('who_i_rating') }}</h2>
           <rater-ratee-card :ts-survey-id="tsSurveyId" :raterRatee="ratee" />
+          <div v-if="tsManager">
+            <!-- every day block-->
+          </div>
         </div>
         <div class="ratees-block rater-ratee-skills">
           <div v-if="groupedSkillList">
@@ -36,7 +39,7 @@
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import {
   IcoachSkillShortInfo,
-  SurveyInfo,
+  SurveyInfo, TsAbstractUser,
   TsRateeUser
 } from '@/interfaces'
 import { Getter } from 'vuex-class'
@@ -63,6 +66,9 @@ export default class RaterRateePage extends Vue {
 
   @Getter('survey/getDisplayedBaseSurveyInfo')
   surveyInfo!: SurveyInfo
+
+  @Getter('ts/getManager')
+  tsManager?: TsAbstractUser
 
   ratee: TsRateeUser | null = null
   skillList: IcoachSkillShortInfo[] | null = null
