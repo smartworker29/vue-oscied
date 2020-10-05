@@ -320,6 +320,10 @@ export default class WelcomePage extends Vue {
       surveyInfo: this.surveyInfo
     })
 
+    if (!this.isAuthenticated) {
+      return
+    }
+
     const tsUser = await TsService.getUserInfo(this.productSurveyId, this.user.id)
     this.$store.commit('ts/setUsers', tsUser)
     this.$store.commit('mainLogo/setType', MainLogosTypes.SURVEY_LOGOS)
