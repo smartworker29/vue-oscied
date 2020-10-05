@@ -13,7 +13,7 @@
           <img class="account-image" :src="ratee.image && ratee.image.fileURL || require('@/assets/user.png')">
           <div>{{ ratee.fullName }}</div>
           <div v-if="ratee.isLive">
-            <button class="btn btn-primary btn-primary-active" @click="review">
+            <button class="btn btn-primary btn-primary-active" @click="review(ratee.id)">
               {{ $t('button_g.review') }}
             </button>
             <button class="btn btn-primary btn-primary-active" @click="results">
@@ -156,7 +156,15 @@ export default class ManagerDashboardPage extends Vue {
     this.modalError = ''
   }
 
-  review () {}
+  review (id: number) {
+    this.$router.push({
+      name: 'survey.ts.manager.ratee',
+      params: {
+        tsSurveyId: this.tsSurveyId.toString(),
+        tsManagerRateeId: id.toString()
+      }
+    })
+  }
 
   results () {}
 }
