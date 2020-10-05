@@ -17,6 +17,9 @@
       <button class="btn btn-primary btn-primary-active" @click="reviewRatee">
         {{ $t('button_g.review_now') }}
       </button>
+      <button class="btn btn-primary btn-everyday" @click="everyday" v-if="hasEveryday">
+        {{ $t('button_g.everyday')}}
+      </button>
     </div>
   </div>
 </template>
@@ -34,6 +37,9 @@ export default class RaterRateeCard extends Vue {
 
   @Prop({ required: true })
   tsSurveyId!: number
+
+  @Prop({ default: false })
+  hasEveryday!: boolean
 
   get rateeName (): string {
     const namesParts = this.raterRatee.fullName.trim().split(' ')
@@ -56,5 +62,27 @@ export default class RaterRateeCard extends Vue {
       }
     })
   }
+
+  everyday (): void {
+    this.$router.push({
+      name: 'survey.ts.user.ratee.everyday',
+      params: {
+        tsSurveyId: this.tsSurveyId.toString(),
+        tsRaterRateeId: this.raterRatee.id.toString()
+      }
+    })
+  }
 }
 </script>
+
+<style lang="scss">
+.btn-everyday {
+  color: #fff;
+  background: #00cdbf;
+  margin-top: 10px;
+
+  &:hover {
+    color: cornflowerblue;
+  }
+}
+</style>

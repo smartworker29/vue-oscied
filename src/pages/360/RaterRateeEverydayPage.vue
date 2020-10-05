@@ -8,18 +8,19 @@
         {{ $t('button_g.back') }}
       </button>
 
-      <div class="rater-ratee-wrapper">
-        <div class="ratees-block rater-ratee-info" v-if="ratee">
+      <div class="rater-ratee-wrapper" v-if="ratee">
+        <div class="ratees-block rater-ratee-info">
           <h2>{{ $t('who_i_rating') }}</h2>
           <rater-ratee-card :ts-survey-id="tsSurveyId" :raterRatee="ratee" />
         </div>
 
-        <div class="ratees-block skill-block" v-if="skillInfo">
-          <h2 class="rater-ratee-skill-title">{{ skillInfo.name }}</h2>
+        <div class="ratees-block skill-block">
+          <h2 class="rater-ratee-skill-title">
+            {{ $t('ts.everyday') }}
+          </h2>
+          <p>{{ $t('ts.you_are_the_part', { fullName: ratee.fullName }) }}</p>
           <span>{{ $t('ts.leave_a_comment_below', { fullName: ratee.fullName }) }}</span>
-          <div class="results-block" v-if="skillInfo.status && rating">
-            {{ $t('ts.you_have_rated', { fullName: ratee.fullName, score: rating.score, skill: skillInfo.name }) }}
-
+          <div class="results-block" v-if="rating">
             <div class="skill-comment published-comment">
               <img v-if="user.image.fileURL" :src="user.image.fileURL" class="skill-comment__logo" :alt="rating.comment">
               <img v-else :src="require('@/assets/user.png')" class="skill-comment__logo">
@@ -30,7 +31,6 @@
             </div>
           </div>
           <div v-else>
-            {{ $t('ts.choose_the_rating', { fullName: ratee.fullName, skill: skillInfo.name }) }}
             <form class="form skill-rate-form skill-comment" @submit.prevent="rate" novalidate>
               <range-slider @change-value="updateValues($event)" />
               <label for="comment" class="skill-comment__label">{{ $t('ts.leave_a_comment') }}</label>
@@ -47,10 +47,6 @@
               <p class="error" v-if="errors">{{ errors.first('comment') }}</p>
             </form>
           </div>
-          <h4>{{ $t('ts.this_skill_in_context') }}</h4>
-          <div v-html="skillInfo.skillInContext" />
-          <h4>{{ $t('ts.how_to_develop') }}</h4>
-          <div v-html="skillInfo.howToDevelop" />
         </div>
       </div>
     </div>
@@ -72,21 +68,18 @@ import TsService from '@/services/TsService'
 import RangeSlider from '@/components/common/rangeSlider/RangeSlider.vue'
 
 @Component({
-  name: 'RaterRateeSkillPage',
+  name: 'RaterRateeEverydayPage',
   components: {
     RaterRateeCard,
     RangeSlider
   }
 })
-export default class RaterRateeSkillPage extends Vue {
+export default class RaterRateeEverydayPage extends Vue {
   @Prop({ required: true })
   tsSurveyId !: number
 
   @Prop({ required: true })
   tsRaterRateeId !: number
-
-  @Prop({ required: true })
-  skillId !: number
 
   @Getter('user/currentUser')
   user!: User
@@ -114,12 +107,12 @@ export default class RaterRateeSkillPage extends Vue {
       this.ratee = await TsService.getRateeInfoById(this.tsRaterRateeId)
     }
 
-    if (!this.skillInfo) {
-      this.skillInfo = await TsService.getSkillInfo(this.tsRaterRateeId, this.skillId)
-    }
+    if (!this.rating) {
+      const result = await TsService.getEverydayRating(this.tsRaterRateeId)
 
-    if (this.skillInfo && this.skillInfo.status) {
-      this.rating = await TsService.getRating(this.tsRaterRateeId, this.skillInfo.id)
+      if (!Array.isArray(result)) {
+        this.rating = result
+      }
     }
   }
 
@@ -142,7 +135,7 @@ export default class RaterRateeSkillPage extends Vue {
     }
 
     try {
-      const result = await TsService.addRating(this.tsRaterRateeId, this.skillId, this.ratingForm)
+      const result = await TsService.addEveryDayRating(this.tsRaterRateeId, this.ratingForm)
 
       this.updateRating(result)
     } catch (error) {
@@ -172,102 +165,3 @@ export default class RaterRateeSkillPage extends Vue {
   }
 }
 </script>
-
-<style lang="scss">
-.skill-comment__wrapper {
-  display: flex;
-
-  @media screen and (max-width: 768px) {
-    flex-wrap: wrap;
-  }
-}
-.skill-comment {
-  border: 1px solid #d8efff;
-  background: #f7fcff;
-  border-radius: 5px;
-  margin-top: 30px;
-  padding: 22px 23px;
-
-  h4 {
-    font-size: 20px;
-    margin: 0 0 15px;
-    font-weight: 300;
-  }
-
-  &__form {
-    width: 100%;
-  }
-
-  &__input {
-    border: 1px solid #d8efff;
-    border-radius: 8px;
-    padding: 9px 14px;
-    background: #fff;
-    width: 80%;
-    font-size: 14px;
-    height: 32px;
-    flex: 1;
-    color: rgba(7, 16, 18, 0.5);
-    @media screen and (max-width: 768px) {
-      height: 86px;
-      flex: auto;
-    }
-    &:focus {
-      outline: none;
-    }
-  }
-
-  &__label {
-    display: block;
-    padding: 20px 0;
-  }
-
-  &__submit {
-    cursor: pointer;
-    float: right;
-    border: 1px;
-    border-radius: 12px;
-    background: #00cdbf;
-    padding: 7px 20px;
-    color: #fff;
-    margin-left: 16px;
-    @media screen and (max-width: 768px) {
-      width: 100%;
-      margin: 16px 0 0;
-    }
-  }
-
-  &__published-comments {
-    border-top: 1px solid #d8efff;
-    margin-top: 24px;
-    padding-top: 24px;
-  }
-
-  &__logo {
-    border-radius: 50%;
-    width: 48px;
-    height: 48px;
-    margin-right: 16px;
-  }
-  &__name {
-    color: #0085cd;
-  }
-
-  &__content {
-    font-size: 14px;
-    color: #6a7071;
-    div {
-      font-size: 16px;
-      line-height: 1.5;
-      color: #071012;
-      font-weight: 300;
-    }
-  }
-}
-
-.published-comment {
-  display: flex;
-  margin-right: 17px;
-  margin-bottom: 25px;
-}
-</style>
