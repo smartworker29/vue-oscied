@@ -18,8 +18,9 @@
           <h2 class="rater-ratee-skill-title">{{ skillInfo.name }}</h2>
           <span>{{ $t('ts.leave_a_comment_below', { fullName: ratee.fullName }) }}</span>
           <div class="results-block" v-if="skillInfo.status && rating">
-            {{ $t('ts.you_have_rated', { fullName: ratee.fullName, score: rating.score, skill: skillInfo.name }) }}
-
+            <h3>
+              {{ $t('ts.you_have_rated', { fullName: ratee.fullName, score: rating.score, skill: skillInfo.name }) }}
+            </h3>
             <div class="skill-comment published-comment">
               <img v-if="user.image.fileURL" :src="user.image.fileURL" class="skill-comment__logo" :alt="rating.comment">
               <img v-else :src="require('@/assets/user.png')" class="skill-comment__logo">

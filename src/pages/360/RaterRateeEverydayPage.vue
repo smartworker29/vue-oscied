@@ -21,6 +21,9 @@
           <p>{{ $t('ts.you_are_the_part', { fullName: ratee.fullName }) }}</p>
           <span>{{ $t('ts.leave_a_comment_below', { fullName: ratee.fullName }) }}</span>
           <div class="results-block" v-if="rating">
+            <h3>
+              {{ $t('ts.you_have_rated', { fullName: ratee.fullName, score: rating.score, skill: $t('ts.everyday') }) }}
+            </h3>
             <div class="skill-comment published-comment">
               <img v-if="user.image.fileURL" :src="user.image.fileURL" class="skill-comment__logo" :alt="rating.comment">
               <img v-else :src="require('@/assets/user.png')" class="skill-comment__logo">
