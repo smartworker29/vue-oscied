@@ -10,7 +10,7 @@
           <button class="btn btn-primary btn-primary-active" @click="beginTsManagerSurvey" v-if="tsUserInfo.roles.includes('manager')">
             {{ $t('button_g.start_survey_manager') }}
           </button>
-          <button class="btn btn-primary btn-primary-active" @click="beginTsUserSurvey" v-if="tsUserInfo.roles.includes('rater')">
+          <button class="btn btn-primary btn-primary-active" @click="beginTsUserSurvey" v-if="tsUserInfo.roles.includes('rater') || tsUserInfo.roles.includes('ratee')">
             {{ $t('button_g.start_survey') }}
           </button>
         </div>
