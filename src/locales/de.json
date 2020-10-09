@@ -177,7 +177,15 @@
     "you_have_rated":  "🇩🇪 You have rated {fullName} a score of {score} on {skill}",
     "leave_a_comment":  "🇩🇪 Leave a comment",
     "this_skill_in_context":  "🇩🇪 This Skill in context",
-    "how_to_develop":  "🇩🇪 How to Develop this Skill"
+    "how_to_develop":  "🇩🇪 How to Develop this Skill",
+    "everyday": "🇦🇪 Everyday",
+    "you_are_the_part": "🇦🇪 You are part of the 360 support team for {fullName}. You are asked to look at\nthe definition below and think about an example of where you have witnessed\n{fullName} performing this task in their roles",
+    "results": {
+      "my_results": "🇦🇪 My Results",
+      "from": "🇦🇪 From",
+      "to": "🇦🇪 To",
+      "avarage_score": "🇦🇪 Avarage Score"
+    }
   },
   "dashboard": {
     "title": "🇩🇪 Dashboard",

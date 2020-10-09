@@ -33,7 +33,9 @@
           <div class="ratee-items">
             <users-ratee-card v-for="ratee in myRatees"
                               :key="ratee.id"
-                              :userRatee="ratee" />
+                              :userRatee="ratee"
+                              :has-view-my-score="true"
+                              @score="viewScore(ratee)"/>
           </div>
         </div>
         <div class="ratees-block raters-ratees" :class="{ full:  myRatees.length < 1 }">
@@ -138,6 +140,16 @@ export default class UserDashboardPage extends Vue {
     if (this.hasRoleRater) {
       this.ratersRatees = await TsService.uploadRatersRatee(this.tsSurveyId)
     }
+  }
+
+  viewScore (ratee: TsRateeUser) {
+    this.$router.push({
+      name: 'survey.ts.user.results',
+      params: {
+        tsSurveyId: this.tsSurveyId.toString(),
+        tsRaterRateeId: ratee.id.toString()
+      }
+    })
   }
 }
 </script>

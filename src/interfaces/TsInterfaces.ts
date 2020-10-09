@@ -48,3 +48,9 @@ export interface TsRatingForm {
   score: number
   comment: string
 }
+
+export interface TsRateeScore {
+  score: number
+  timeCreated: string | null
+  timeExpiry: string | null
+}

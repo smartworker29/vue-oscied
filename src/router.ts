@@ -27,6 +27,7 @@ import UserDashboardPage from '@/pages/360/UserDashboardPage.vue'
 import RaterRateePage from '@/pages/360/RaterRateePage.vue'
 import RaterRateeSkillPage from '@/pages/360/RaterRateeSkillPage.vue'
 import RaterRateeEverydayPage from '@/pages/360/RaterRateeEverydayPage.vue'
+import RaterRateeResultsPage from '@/pages/360/RaterRateeResultsPage.vue'
 
 Vue.use(Router)
 
@@ -167,6 +168,12 @@ const router = new Router({
           component: RaterRateeSkillPage,
           props: true,
           name: 'survey.ts.user.ratee.skill'
+        },
+        {
+          path: 'user/:tsRaterRateeId(\\d+)/results',
+          component: RaterRateeResultsPage,
+          props: true,
+          name: 'survey.ts.user.results'
         }
       ]
     },

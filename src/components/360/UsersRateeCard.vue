@@ -9,14 +9,14 @@
     </div>
     <div class="info"></div>
     <div class="actions">
-      <button class="btn btn-primary btn-primary-active">
+      <button class="btn btn-primary btn-primary-active" @click="score" v-if="hasViewMyScore">
         {{ $t('button_g.view_my_score') }}
       </button>
     </div>
   </div>
 </template>
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component, Vue, Prop, Emit } from 'vue-property-decorator'
 import { TsRateeUser } from '@/interfaces'
 
 @Component({
@@ -25,5 +25,11 @@ import { TsRateeUser } from '@/interfaces'
 export default class UsersRateeCard extends Vue {
   @Prop({ required: true })
   userRatee!: TsRateeUser
+
+  @Prop({ required: true, default: false })
+  hasViewMyScore!: boolean
+
+  @Emit()
+  score () {}
 }
 </script>

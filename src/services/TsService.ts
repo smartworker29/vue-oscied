@@ -4,6 +4,7 @@ import {
   IcoachSkillFullInfo,
   IcoachSkillShortInfo,
   TsNewUserForm,
+  TsRateeScore,
   TsRateeUser,
   TsRaterRateeSkillRating,
   TsRaterUser,
@@ -96,6 +97,10 @@ class TsService extends BaseApiService {
 
   addEveryDayRating (tsRaterRateeId: number, rating: TsRatingForm) : TsRatingForm {
     return this.callMethod('post', `ts/${tsRaterRateeId}/rating/everyday/add/`, { rating })
+  }
+
+  getRateeScores (tsRaterRateeId: number) : TsRateeScore[] {
+    return this.callMethod('get', `ts/${tsRaterRateeId}/scores/`)
   }
 }
 
