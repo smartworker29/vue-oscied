@@ -5,9 +5,19 @@
     </div>
     <div class="survey-content" v-if="surveyInfo">
       <p v-html="surveyInfo.welcomeMessage || ''"></p>
-      <button class="btn btn-primary btn-primary-active" @click="beginSurvey" v-if="!error">
-        {{ isUncompletedSurvey ? $t('button_g.continue_survey') : $t('button_g.start_survey') }}
-      </button>
+      <div v-if="!error">
+        <div v-if="surveyProduct && surveyProduct === '360' && tsUserInfo">
+          <button class="btn btn-primary btn-primary-active" @click="beginTsManagerSurvey" v-if="tsUserInfo.roles.includes('manager')">
+            {{ $t('button_g.start_survey_manager') }}
+          </button>
+          <button class="btn btn-primary btn-primary-active" @click="beginTsUserSurvey" v-if="tsUserInfo.roles.includes('rater') || tsUserInfo.roles.includes('ratee')">
+            {{ $t('button_g.start_survey') }}
+          </button>
+        </div>
+        <button class="btn btn-primary btn-primary-active" @click="beginSurvey" v-else>
+          {{ isUncompletedSurvey ? $t('button_g.continue_survey') : $t('button_g.start_survey') }}
+        </button>
+      </div>
       <h2 v-else>{{ error }}</h2>
     </div>
   </div>
@@ -36,10 +46,10 @@
             </div>
             <div class="form-content">
               <div v-if="displayedForm === 'signIn'" class="sign-form">
-                <SignInForm @changeForm="changeForm"/>
+                <SignInForm @changeForm="changeForm" :survey-product="surveyProduct" :access-code="accessCode"/>
               </div>
               <div v-else-if="displayedForm === 'signUp'" class="sign-form">
-                <SignUpForm @changeForm="changeForm"/>
+                <SignUpForm @changeForm="changeForm" :survey-product="surveyProduct" :access-code="accessCode"/>
               </div>
             </div>
           </div>
@@ -50,7 +60,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-property-decorator'
 import { Getter } from 'vuex-class'
 import SignInForm from '@/components/signIn/SignInForm.vue'
 import SignUpForm from '@/components/signUp/SignUpForm.vue'
@@ -62,6 +72,8 @@ import SurveyLocalStorageHelper from '@/utils/SurveyLocalStorageHelper'
 import SurveyHelper from '@/utils/SurveyHelper'
 import { EventBus } from '@/main'
 import { SurveyData } from '@/interfaces/LocalStorageInterfaces'
+import TsService from '@/services/TsService'
+import { TsUserDto, User } from '@/interfaces'
 
 @Component({
   name: 'WelcomePage',
@@ -74,6 +86,12 @@ import { SurveyData } from '@/interfaces/LocalStorageInterfaces'
 export default class WelcomePage extends Vue {
   @Getter('user/isAuthenticated')
   isAuthenticated!: boolean
+
+  @Getter('user/currentUser')
+  user!: User
+
+  @Getter('ts/getUsers')
+  tsUserInfo!: TsUserDto
 
   @Prop({})
   surveyProduct!: string
@@ -108,6 +126,11 @@ export default class WelcomePage extends Vue {
       }
 
       SurveyHelper.checkSurveyInfo(response.survey)
+
+      if (this.surveyProduct === SurveyHelper.TS) {
+        await this.checkTsSurvey()
+        return
+      }
 
       if (this.surveyUserInfo && SurveyLocalStorageHelper.hasSurveyUser(this.surveyProduct, this.surveyUserInfo.surveyUserId)) {
         this.surveyData = SurveyLocalStorageHelper.getSurveyUser(this.surveyProduct, this.surveyUserInfo.surveyUserId)
@@ -226,6 +249,24 @@ export default class WelcomePage extends Vue {
     })
   }
 
+  async beginTsManagerSurvey () : Promise<void> {
+    await this.$router.push({
+      name: 'survey.ts.manager.dashboard',
+      params: {
+        tsSurveyId: this.productSurveyId.toString()
+      }
+    })
+  }
+
+  async beginTsUserSurvey () : Promise<void> {
+    await this.$router.push({
+      name: 'survey.ts.user.dashboard',
+      params: {
+        tsSurveyId: this.productSurveyId.toString()
+      }
+    })
+  }
+
   async beginDpSurvey () : Promise<void> {
     const progress = await SurveyService.getDpSurveyProgress(this.surveyUserInfo.surveyUserId)
 
@@ -270,6 +311,22 @@ export default class WelcomePage extends Vue {
         surveyUserId: progress.nextSurveyPart.surveyUserId.toString()
       }
     })
+  }
+
+  async checkTsSurvey () : Promise<void> {
+    await this.$store.commit('survey/setTakenSurveyData', {
+      productSurveyId: this.productSurveyId,
+      productSurveyType: this.surveyProduct,
+      surveyInfo: this.surveyInfo
+    })
+
+    if (!this.isAuthenticated) {
+      return
+    }
+
+    const tsUser = await TsService.getUserInfo(this.productSurveyId, this.user.id)
+    this.$store.commit('ts/setUsers', tsUser)
+    this.$store.commit('mainLogo/setType', MainLogosTypes.SURVEY_LOGOS)
   }
 }
 </script>

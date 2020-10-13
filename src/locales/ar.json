@@ -55,10 +55,23 @@
     "delete_photo": "حذف الصورة",
     "add_photo": "إضافة الصورة",
     "start_survey": "بداية",
+    "start_survey_manager": "🇦🇪 Start for manager",
     "continue_survey": "استمر",
     "start_icoach": "🇦🇪 Start icoach",
     "back": "🇦🇪 Back",
-    "ok": "🇦🇪 OK"
+    "ok": "🇦🇪 OK",
+    "add_new_rating_team": "🇦🇪 Create a new Rating Team",
+    "add_new_user": "🇦🇪 Add a new User",
+    "add_new_skill": "🇦🇪 Add a new Skill",
+    "remove": "🇦🇪 Remove",
+    "setup": "🇦🇪 Setup",
+    "review": "🇦🇪 Review",
+    "review_now": "🇦🇪 Review now",
+    "results": "🇦🇪 Results",
+    "view_my_score": "🇦🇪 View my score",
+    "completed": "🇦🇪 Completed",
+    "rate": "🇦🇪 Rate",
+    "everyday": "🇦🇪 Everyday - Rate now"
   },
   "email_address": "عنوان بريد الكتروني",
   "remember_me": "تذكرنى",
@@ -66,6 +79,7 @@
   "password_confirm": "تأكيد كلمة المرور",
   "first_name": "الاسم الاول",
   "last_name": "الكنية",
+  "full_name": "🇦🇪 Full Name",
   "gender": "جنس",
   "male": "الذكر",
   "female": "أنثى",
@@ -142,6 +156,37 @@
     },
     "try_again": "🇦🇪 Try Again"
   },
+  "ts": {
+    "dashboard": {
+      "publish": "🇦🇪 Publish",
+      "unpublish": "🇦🇪 Unpublish"
+    },
+    "modal": {
+      "remove_rater_title": "🇦🇪 Remove this user",
+      "remove_rater_message": "🇦🇪 Are you sure to remove this user?",
+      "remove_skill_title": "🇦🇪 Remove this skill",
+      "remove_skill_message": "🇦🇪 Are you sure to remove this skill?",
+      "add_new_ratee": "🇦🇪 Create a new Rating Team",
+      "add_new_rater": "🇦🇪 Add a new user to this team",
+      "add_new_skill": "🇦🇪 Add a new Skill to this Team",
+      "publish_ratee":  "🇦🇪 Publish ratee",
+      "publish_ratee_message": "🇦🇪 Are you sure to publish this user?"
+    },
+    "leave_a_comment_below":  "🇦🇪 Please leave a comment below and rate {fullName} using the 1-10 rating below.",
+    "choose_the_rating":  "🇦🇪 Choose the Rating for the {fullName} on {skill}",
+    "you_have_rated":  "🇦🇪 You have rated {fullName} a score of {score} on {skill}",
+    "leave_a_comment":  "🇦🇪 Leave a comment",
+    "this_skill_in_context":  "🇦🇪 This Skill in context",
+    "how_to_develop":  "🇦🇪 How to Develop this Skill",
+    "everyday": "🇦🇪 Everyday",
+    "you_are_the_part": "🇦🇪 You are part of the 360 support team for {fullName}. You are asked to look at\nthe definition below and think about an example of where you have witnessed\n{fullName} performing this task in their roles",
+    "results": {
+      "my_results": "🇦🇪 My Results",
+      "from": "🇦🇪 From",
+      "to": "🇦🇪 To",
+      "avarage_score": "🇦🇪 Avarage Score"
+    }
+  },
   "dashboard": {
     "title": "🇦🇪 Dashboard",
     "item_type": {
@@ -150,7 +195,8 @@
       "behaviours": "🇦🇪 Behaviours",
       "dp": "🇦🇪 Discovery Process",
       "ipulse": "🇦🇪 iPulse",
-      "icoach": "🇦🇪 iCoach"
+      "icoach": "🇦🇪 iCoach",
+      "360": "🇦🇪 360"
     },
     "started_on": "🇦🇪 Started on",
     "completed_on": "🇦🇪 Completed on"
@@ -160,5 +206,18 @@
   "icoach_is_not_active": "🇦🇪 This Icoach is not yet active.",
   "icoach_is_expired": "🇦🇪 This Icoach has now expired.",
   "no_ranked_statement": "🇦🇪 You evaluated statements with 1. Would you like to proceed?",
-  "confirmation_message": "🇦🇪 Confirmation message"
+  "confirmation_message": "🇦🇪 Confirmation message",
+  "skill_category": "🇦🇪 Skills' category",
+  "skill": "🇦🇪 Skill",
+  "review_before": "🇦🇪 You need to review {name} before {date}",
+  "last_reviewed": "🇦🇪 Last reviewed: {date}",
+  "who_i_rating": "🇦🇪 Who am I rating",
+  "my_rating": "🇦🇪 My rating",
+  "layout": "🇦🇪 Layout",
+  "show_completed": "🇦🇪 Show completed",
+  "sort": {
+    "by_title": "🇦🇪 Sort by",
+    "last_review_asc": "🇦🇪 Last reviewed (Asc)",
+    "last_review_desc": "🇦🇪 Last reviewed (Desc)"
+  }
 }

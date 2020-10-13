@@ -1,5 +1,5 @@
 export interface DashboardBaseItem {
-  timeCreated: string
+  timeCreated: string | null
   timeCompleted: string | null
 }
 
@@ -24,6 +24,15 @@ export interface DashboardIcoachItem extends DashboardBaseItem {
   }
 }
 
+export interface DashboardTsItem extends DashboardBaseItem {
+  id: number
+  survey: {
+    id: number
+    title: string
+    accessCode: string
+  }
+}
+
 export interface DashboardResponse {
   eq: DashboardSurveyItem[]
   values: DashboardSurveyItem[]
@@ -31,4 +40,5 @@ export interface DashboardResponse {
   dp: DashboardSurveyItem[]
   ipulse: DashboardSurveyItem[]
   icoach: DashboardIcoachItem[]
+  tsSurvey: DashboardTsItem[]
 }

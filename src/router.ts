@@ -20,6 +20,14 @@ import DpChildSurveyCompletedPage from '@/pages/survey/DpChildSurveyCompletedPag
 import ResetPasswordPage from '@/pages/ResetPasswordPage.vue'
 import TakenIpulseSection from '@/components/survey/TakenIpulseSection.vue'
 import TakenIpulseCommentSection from '@/components/survey/TakenIpulseCommentSection.vue'
+import ManagerDashboardPage from '@/pages/360/ManagerDashboardPage.vue'
+import MainTsPageTemplate from '@/pages/360/MainTsPageTemplate.vue'
+import ManagerRateePage from '@/pages/360/ManagerRateePage.vue'
+import UserDashboardPage from '@/pages/360/UserDashboardPage.vue'
+import RaterRateePage from '@/pages/360/RaterRateePage.vue'
+import RaterRateeSkillPage from '@/pages/360/RaterRateeSkillPage.vue'
+import RaterRateeEverydayPage from '@/pages/360/RaterRateeEverydayPage.vue'
+import RaterRateeResultsPage from '@/pages/360/RaterRateeResultsPage.vue'
 
 Vue.use(Router)
 
@@ -90,7 +98,7 @@ const router = new Router({
       component: CompleteSurveyMessagePage
     },
     {
-      path: '/:surveyProduct(eq|values|behaviours|discovery-process|ipulse)/:accessCode([a-zA-Z0-9]{50})',
+      path: '/:surveyProduct(eq|values|behaviours|discovery-process|ipulse|360)/:accessCode([a-zA-Z0-9]{50})',
       name: 'survey.welcome',
       component: WelcomePage,
       props: true
@@ -117,6 +125,55 @@ const router = new Router({
           name: 'survey.page.part',
           component: TakenSurveySection,
           props: true
+        }
+      ]
+    },
+    {
+      path: '/360/:tsSurveyId(\\d+)',
+      component: MainTsPageTemplate,
+      props: true,
+      children: [
+        {
+          path: 'manager/dashboard',
+          component: ManagerDashboardPage,
+          props: true,
+          name: 'survey.ts.manager.dashboard'
+        },
+        {
+          path: 'user/dashboard',
+          component: UserDashboardPage,
+          props: true,
+          name: 'survey.ts.user.dashboard'
+        },
+        {
+          path: 'manager/:tsManagerRateeId(\\d+)',
+          component: ManagerRateePage,
+          props: true,
+          name: 'survey.ts.manager.ratee'
+        },
+        {
+          path: 'user/:tsRaterRateeId(\\d+)',
+          component: RaterRateePage,
+          props: true,
+          name: 'survey.ts.user.ratee'
+        },
+        {
+          path: 'user/:tsRaterRateeId(\\d+)/everyday',
+          component: RaterRateeEverydayPage,
+          props: true,
+          name: 'survey.ts.user.ratee.everyday'
+        },
+        {
+          path: 'user/:tsRaterRateeId(\\d+)/skill/:skillId(\\d+)',
+          component: RaterRateeSkillPage,
+          props: true,
+          name: 'survey.ts.user.ratee.skill'
+        },
+        {
+          path: 'user/:tsRaterRateeId(\\d+)/results',
+          component: RaterRateeResultsPage,
+          props: true,
+          name: 'survey.ts.user.results'
         }
       ]
     },
@@ -173,7 +230,11 @@ const availableSurveyLogosPages = [
   'survey.page.part',
   'survey.welcome.dp.survey_product',
   'survey.dp.page.part',
-  'survey.dp.completed.part'
+  'survey.dp.completed.part',
+  'survey.ts.manager.dashboard',
+  'survey.ts.user.dashboard',
+  'survey.ts.manager.ratee',
+  'survey.ts.user.ratee'
 ]
 
 const handleMainLogoCapability = (to: Route) => {

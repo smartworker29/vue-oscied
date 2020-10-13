@@ -37,15 +37,22 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Prop } from 'vue-property-decorator'
 import { SignInData } from '@/interfaces/UserInterfaces'
 import { AxiosResponse } from 'axios'
 import UserService from '@/services/UserService'
 import LocaleHelper from '@/utils/LocaleHelper'
 import { EventBus } from '@/main'
+import SurveyHelper from '@/utils/SurveyHelper'
 
 @Component({ name: 'SignInForm' })
 export default class SignInForm extends Vue {
+  @Prop({ default: '' })
+  surveyProduct?: string
+
+  @Prop({ default: '' })
+  accessCode?: string
+
   signInData: SignInData = {
     email: '',
     password: ''
@@ -58,6 +65,9 @@ export default class SignInForm extends Vue {
     }
 
     try {
+      if (this.surveyProduct === SurveyHelper.TS && this.accessCode) {
+        this.signInData = { ...this.signInData, accessCode: this.accessCode }
+      }
       await this.$auth.login(this.signInData)
       const userData = await UserService.getUser()
       LocaleHelper.setUserLocale(userData.locale)

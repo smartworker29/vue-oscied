@@ -8,6 +8,7 @@ import i18n from '@/i18n'
 
 class SurveyHelper {
   public readonly DP = 'discovery-process'
+  public readonly TS = '360'
 
   isSurveyUserAvailable (surveyUser: SurveyUserInfo | null) : boolean {
     return surveyUser !== null && !surveyUser.isCompleted && surveyUser.isAuthorised
