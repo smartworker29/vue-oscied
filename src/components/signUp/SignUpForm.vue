@@ -68,14 +68,21 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Watch } from 'vue-property-decorator'
+import { Vue, Component, Watch, Prop } from 'vue-property-decorator'
 import UserService from '@/services/UserService'
-import { RegistrationFormData } from '@/interfaces/UserInterfaces'
+import { RegistrationFormData, RegistrationTsSurveyData } from '@/interfaces/UserInterfaces'
 import LocaleHelper from '@/utils/LocaleHelper'
 import { EventBus } from '@/main'
+import SurveyHelper from '@/utils/SurveyHelper'
 
 @Component({ name: 'SignUpForm' })
 export default class SignUpForm extends Vue {
+  @Prop({ default: '' })
+  surveyProduct?: string
+
+  @Prop({ default: '' })
+  accessCode?: string
+
   registrationData: RegistrationFormData = {
     email: '',
     firstName: '',
@@ -112,10 +119,23 @@ export default class SignUpForm extends Vue {
 
     try {
       this.registrationData.locale = LocaleHelper.getUserLocale()
-      const registrationData = await UserService.registration({
-        ...this.registrationData,
-        ...{ gender: this.registrationData.gender ? this.registrationData.gender.value : null }
-      })
+      let registrationData = {}
+
+      if (this.surveyProduct === SurveyHelper.TS && this.accessCode) {
+        const registrationTsSurveyData: RegistrationTsSurveyData = {
+          ...this.registrationData,
+          gender: this.registrationData.gender ? this.registrationData.gender.value : null,
+          accessCode: this.accessCode
+        }
+
+        registrationData = await UserService.tsSurveyRegistration(registrationTsSurveyData)
+      } else {
+        registrationData = await UserService.registration({
+          ...this.registrationData,
+          ...{ gender: this.registrationData.gender ? this.registrationData.gender.value : null }
+        })
+      }
+
       await this.$auth.setToken(registrationData)
       await UserService.getUser()
 

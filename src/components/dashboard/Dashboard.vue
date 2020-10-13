@@ -17,7 +17,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import DashboardItem from './DashboardItem.vue'
-import { DashboardBaseItem, DashboardSurveyItem, DashboardIcoachItem } from '@/interfaces'
+import { DashboardBaseItem, DashboardSurveyItem, DashboardIcoachItem, DashboardTsItem } from '@/interfaces'
 import DashboardService from '@/services/DashboardService'
 
 interface DashboardItemTemplateInterface {
@@ -52,6 +52,15 @@ export default class Dashboard extends Vue {
       })
     }
 
+    const mapDashboardTsItem = (tsSurvey: DashboardTsItem) => {
+      this.dashboardItems.push({
+        title: tsSurvey.survey.title,
+        type: '360',
+        accessCode: tsSurvey.survey.accessCode,
+        item: tsSurvey
+      })
+    }
+
     surveyKey = 'eq'
     response.eq.forEach(mapDashboardSurveyItem)
 
@@ -75,6 +84,8 @@ export default class Dashboard extends Vue {
         item: icoach
       })
     })
+
+    response.tsSurvey.forEach(mapDashboardTsItem)
   }
 
   openItem (accessCode: string, surveyProductOrICoachType: string): void {
