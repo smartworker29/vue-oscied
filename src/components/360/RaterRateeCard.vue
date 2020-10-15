@@ -8,7 +8,7 @@
     </div>
     <div class="info">
       <p class="last-reviewed">{{ $t('last_reviewed', { date: '22/06/2020' }) }}</p>
-      <p class="review-before">{{ $t('review_before', { name: rateeName, date: formattedExpiryDate }) }}</p>
+      <p class="review-before">{{ $t('review_before', { name: raterRatee.fullName, date: formattedExpiryDate }) }}</p>
     </div>
     <div class="actions">
       <button class="btn btn-primary btn-primary-active" v-if="false">
@@ -40,12 +40,6 @@ export default class RaterRateeCard extends Vue {
 
   @Prop({ default: false })
   hasEveryday!: boolean
-
-  get rateeName (): string {
-    const namesParts = this.raterRatee.fullName.trim().split(' ')
-
-    return namesParts.length > 1 ? namesParts[0] : this.raterRatee.fullName
-  }
 
   get formattedExpiryDate (): string {
     return (this.raterRatee.isLive && this.raterRatee.expiryTime)
