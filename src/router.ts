@@ -140,10 +140,10 @@ const router = new Router({
           name: 'survey.ts.manager.dashboard'
         },
         {
-          path: 'user/dashboard',
+          path: 'dashboard',
           component: UserDashboardPage,
           props: true,
-          name: 'survey.ts.user.dashboard'
+          name: 'survey.ts.dashboard'
         },
         {
           path: 'manager/:tsManagerRateeId(\\d+)',
@@ -232,7 +232,7 @@ const availableSurveyLogosPages = [
   'survey.dp.page.part',
   'survey.dp.completed.part',
   'survey.ts.manager.dashboard',
-  'survey.ts.user.dashboard',
+  'survey.ts.dashboard',
   'survey.ts.manager.ratee',
   'survey.ts.user.ratee'
 ]

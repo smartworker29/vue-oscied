@@ -81,7 +81,7 @@ export default class RaterRateePage extends Vue {
     }
 
     if (!this.skillList) {
-      this.skillList = await TsService.getSkillListForUser(this.tsRaterRateeId)
+      this.skillList = this.tsManager ? await TsService.getSkillList(this.tsRaterRateeId) : await TsService.getSkillListForUser(this.tsRaterRateeId)
     }
 
     if (!this.skillList) {
@@ -100,7 +100,7 @@ export default class RaterRateePage extends Vue {
 
   goToList (): void {
     this.$router.push({
-      name: 'survey.ts.user.dashboard',
+      name: 'survey.ts.dashboard',
       params: {
         tsSurveyId: this.tsSurveyId.toString()
       }
