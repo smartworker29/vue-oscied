@@ -7,7 +7,7 @@
       <div class="name">{{ raterRatee.fullName }}</div>
     </div>
     <div class="info">
-      <p class="last-reviewed">{{ $t('last_reviewed', { date: '22/06/2020' }) }}</p>
+      <p class="last-reviewed" v-if="raterRatee.lastReviewed">{{ $t('last_reviewed', { date: formattedLastReviewed }) }}</p>
       <p class="review-before">{{ $t('review_before', { name: raterRatee.fullName, date: formattedExpiryDate }) }}</p>
     </div>
     <div class="actions">

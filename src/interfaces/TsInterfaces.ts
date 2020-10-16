@@ -20,6 +20,7 @@ export interface TsRateeUser {
   image: Image | null
   isLive: boolean
   expiryTime: Date | null
+  lastReviewed: Date | null
 }
 
 export interface TsRaterUser {
