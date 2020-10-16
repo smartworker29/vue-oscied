@@ -6,15 +6,7 @@
     <div class="survey-content" v-if="surveyInfo">
       <p v-html="surveyInfo.welcomeMessage || ''"></p>
       <div v-if="!error">
-        <div v-if="surveyProduct && surveyProduct === '360' && tsUserInfo">
-          <button class="btn btn-primary btn-primary-active" @click="beginTsManagerSurvey" v-if="tsUserInfo.roles.includes('manager')">
-            {{ $t('button_g.start_survey_manager') }}
-          </button>
-          <button class="btn btn-primary btn-primary-active" @click="beginTsUserSurvey" v-if="tsUserInfo.roles.includes('rater') || tsUserInfo.roles.includes('ratee')">
-            {{ $t('button_g.start_survey') }}
-          </button>
-        </div>
-        <button class="btn btn-primary btn-primary-active" @click="beginSurvey" v-else>
+        <button class="btn btn-primary btn-primary-active" @click="beginSurvey">
           {{ isUncompletedSurvey ? $t('button_g.continue_survey') : $t('button_g.start_survey') }}
         </button>
       </div>
@@ -173,6 +165,12 @@ export default class WelcomePage extends Vue {
     }
   }
 
+  async mounted () {
+    EventBus.$on('authorizedComplete', async () => {
+      await this.checkTsSurvey()
+    })
+  }
+
   changeForm (formName: string) {
     this.displayedForm = formName
   }
@@ -180,6 +178,15 @@ export default class WelcomePage extends Vue {
   async beginSurvey () {
     if (!this.surveyInfo) {
       return
+    }
+
+    if (this.surveyProduct === SurveyHelper.TS) {
+      await this.$router.push({
+        name: 'survey.ts.dashboard',
+        params: {
+          tsSurveyId: this.productSurveyId.toString()
+        }
+      })
     }
 
     try {
@@ -249,24 +256,6 @@ export default class WelcomePage extends Vue {
     })
   }
 
-  async beginTsManagerSurvey () : Promise<void> {
-    await this.$router.push({
-      name: 'survey.ts.manager.dashboard',
-      params: {
-        tsSurveyId: this.productSurveyId.toString()
-      }
-    })
-  }
-
-  async beginTsUserSurvey () : Promise<void> {
-    await this.$router.push({
-      name: 'survey.ts.user.dashboard',
-      params: {
-        tsSurveyId: this.productSurveyId.toString()
-      }
-    })
-  }
-
   async beginDpSurvey () : Promise<void> {
     const progress = await SurveyService.getDpSurveyProgress(this.surveyUserInfo.surveyUserId)
 
@@ -314,6 +303,10 @@ export default class WelcomePage extends Vue {
   }
 
   async checkTsSurvey () : Promise<void> {
+    if (this.surveyProduct !== SurveyHelper.TS) {
+      return
+    }
+
     await this.$store.commit('survey/setTakenSurveyData', {
       productSurveyId: this.productSurveyId,
       productSurveyType: this.surveyProduct,
