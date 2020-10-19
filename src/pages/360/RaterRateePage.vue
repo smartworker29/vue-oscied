@@ -11,7 +11,7 @@
       <div class="rater-ratee-wrapper">
         <div class="ratees-block rater-ratee-info">
           <h2>{{ $t('who_i_rating') }}</h2>
-          <rater-ratee-card :ts-survey-id="tsSurveyId" :raterRatee="ratee" :hasEveryday="!!tsManager" />
+          <rater-ratee-card :ts-survey-id="tsSurveyId" :raterRatee="ratee" :hasEveryday="hasRoleManager" />
         </div>
         <div class="ratees-block rater-ratee-skills">
           <div v-if="groupedSkillList">
@@ -64,8 +64,8 @@ export default class RaterRateePage extends Vue {
   @Getter('survey/getDisplayedBaseSurveyInfo')
   surveyInfo!: SurveyInfo
 
-  @Getter('ts/getManager')
-  tsManager?: TsAbstractUser
+  @Getter('ts/hasRoleManager')
+  hasRoleManager!: boolean
 
   ratee: TsRateeUser | null = null
   skillList: IcoachSkillShortInfo[] | null = null
