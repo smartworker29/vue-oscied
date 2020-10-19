@@ -187,6 +187,7 @@ export default class WelcomePage extends Vue {
           tsSurveyId: this.productSurveyId.toString()
         }
       })
+      return
     }
 
     try {
