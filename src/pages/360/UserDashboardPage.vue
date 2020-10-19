@@ -51,7 +51,7 @@
                               :tsSurveyId="tsSurveyId"
                               :raterRatee="ratee"/>
 
-            <div class="ratee-card users-ratee-card add-ratee" v-if="tsManager">
+            <div class="ratee-card users-ratee-card add-ratee" v-if="hasRoleManager">
               <div class="actions">
                 <button class="btn btn-primary btn-primary-active" @click="addNewRatee">
                   {{ $t('add_new_ratee') }}
@@ -76,7 +76,7 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import { Getter } from 'vuex-class'
-import { SurveyInfo, TsUserDto, TsUserRole, TsRateeUser, TsAbstractUser, TsNewUserForm } from '@/interfaces'
+import { SurveyInfo, TsUserDto, TsRateeUser, TsAbstractUser, TsNewUserForm } from '@/interfaces'
 import TsService from '@/services/TsService'
 import UsersRateeCard from '@/components/360/UsersRateeCard.vue'
 import RaterRateeCard from '@/components/360/RaterRateeCard.vue'
@@ -106,6 +106,12 @@ export default class UserDashboardPage extends Vue {
   @Getter('ts/getManager')
   tsManager!: TsAbstractUser
 
+  @Getter('ts/hasRoleRater')
+  hasRoleRater!: boolean
+
+  @Getter('ts/hasRoleManager')
+  hasRoleManager!: boolean
+
   myRatees: TsRateeUser[] = []
   ratersRatees: TsRateeUser[] = []
   orderBy: { text: string, number: number } | null = null
@@ -119,10 +125,6 @@ export default class UserDashboardPage extends Vue {
 
     await this.uploadRaterRatee()
     this.myRatees = await TsService.uploadUserRatee(this.tsSurveyId)
-  }
-
-  get hasRoleRater () : boolean {
-    return this.tsUserInfo.roles.findIndex((role: string) => role === TsUserRole.RATER) !== -1
   }
 
   get sortItemList () : any {
@@ -160,7 +162,7 @@ export default class UserDashboardPage extends Vue {
   }
 
   async uploadRaterRatee () : Promise<void> {
-    if (this.tsManager) {
+    if (this.hasRoleManager) {
       this.ratersRatees = await TsService.getRateeList(this.tsSurveyId)
     } else if (this.hasRoleRater) {
       this.ratersRatees = await TsService.uploadRatersRatee(this.tsSurveyId)

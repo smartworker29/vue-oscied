@@ -17,7 +17,7 @@
       <button class="btn btn-primary btn-primary-active" @click="reviewRatee" v-if="hasRoleRater && raterRatee.isLive">
         {{ $t('button_g.review_now') }}
       </button>
-      <div v-if="tsManager">
+      <div v-if="hasRoleManager">
         <div v-if="raterRatee.isLive">
           <button class="btn btn-primary btn-primary-active" @click="results">
             {{ $t('button_g.results') }}
@@ -35,7 +35,7 @@
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
-import { TsAbstractUser, TsRateeUser, TsUserDto, TsUserRole } from '@/interfaces'
+import { TsRateeUser, TsUserDto } from '@/interfaces'
 import dayjs from 'dayjs'
 import { Getter } from 'vuex-class'
 
@@ -55,8 +55,11 @@ export default class RaterRateeCard extends Vue {
   @Getter('ts/getUsers')
   tsUserInfo!: TsUserDto
 
-  @Getter('ts/getManager')
-  tsManager!: TsAbstractUser
+  @Getter('ts/hasRoleRater')
+  hasRoleRater!: boolean
+
+  @Getter('ts/hasRoleManager')
+  hasRoleManager!: boolean
 
   get formattedExpiryDate (): string {
     return (this.raterRatee.isLive && this.raterRatee.expiryTime)
@@ -68,10 +71,6 @@ export default class RaterRateeCard extends Vue {
     return (this.raterRatee.isLive && this.raterRatee.lastReviewed)
       ? dayjs(this.raterRatee.lastReviewed.toString()).format('DD/MM/YYYY')
       : ''
-  }
-
-  get hasRoleRater () : boolean {
-    return this.tsUserInfo.roles.findIndex((role: string) => role === TsUserRole.RATER) !== -1
   }
 
   reviewRatee (): void {
