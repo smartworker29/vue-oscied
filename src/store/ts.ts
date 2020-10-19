@@ -1,6 +1,6 @@
 import { Module } from 'vuex'
 import { RootState } from '@/store'
-import { TsAbstractUser, TsUserDto } from '@/interfaces'
+import { TsAbstractUser, TsUserDto, TsUserRole } from '@/interfaces'
 
 export interface TsState {
   users: TsUserDto | null
@@ -21,6 +21,12 @@ const ts: Module<TsState, RootState> = {
     },
     getManager (state: TsState) {
       return state.manager
+    },
+    hasRoleRater (state: TsState) {
+      return state.users ? state.users.roles.findIndex((role: string) => role === TsUserRole.RATER) !== -1 : false
+    },
+    hasRoleManager (state: TsState) {
+      return state.users ? state.users.roles.findIndex((role: string) => role === TsUserRole.MANAGER) !== -1 : false
     }
   },
 
