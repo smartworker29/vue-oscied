@@ -7,7 +7,6 @@
       <div class="name">{{ raterRatee.fullName }}</div>
     </div>
     <div class="info" v-if="hasRoleRater && raterRatee.isLive">
-      <p class="last-reviewed" v-if="raterRatee.lastReviewed">{{ $t('last_reviewed', { date: formattedLastReviewed }) }}</p>
       <p class="review-before">{{ $t('review_before', { name: raterRatee.fullName, date: formattedExpiryDate }) }}</p>
     </div>
     <div class="actions">
@@ -64,12 +63,6 @@ export default class RaterRateeCard extends Vue {
   get formattedExpiryDate (): string {
     return (this.raterRatee.isLive && this.raterRatee.expiryTime)
       ? dayjs(this.raterRatee.expiryTime.toString()).format('DD/MM/YYYY')
-      : ''
-  }
-
-  get formattedLastReviewed (): string {
-    return (this.raterRatee.isLive && this.raterRatee.lastReviewed)
-      ? dayjs(this.raterRatee.lastReviewed.toString()).format('DD/MM/YYYY')
       : ''
   }
 
