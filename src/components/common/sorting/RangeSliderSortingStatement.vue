@@ -141,7 +141,7 @@ export default class RangeSliderSortingStatement extends Vue {
       }
       &-wrapper {
         display: block;
-        margin-bottom: 17px;
+        margin-bottom: 11px;
       }
       &-range {
         width: 100%;
@@ -154,7 +154,7 @@ export default class RangeSliderSortingStatement extends Vue {
       }
       &-title {
         font-size: 15px;
-        line-height: 1.1;
+        line-height: 1.3;
       }
     }
     @media screen and (max-width: 380px) {
