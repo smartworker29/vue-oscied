@@ -1,6 +1,6 @@
 <template>
   <section class="ipulse-actions" v-if="statements">
-    <div class="ipulse-slider-header">
+    <div class="ipulse-slider-header ipulse-slider-header--desktop">
       <div class="ipulse-slider-header-item">
         <span v-for="(option, key) in options" :key="key">{{ option }}</span>
       </div>
@@ -9,6 +9,11 @@
       <div class="ipulse-slider-wrapper">
         <span class="ipulse-slider-title">{{ statement.title }}</span>
         <div class="ipulse-slider-range">
+          <div class="ipulse-slider-header ipulse-slider-header--tablet">
+            <div class="ipulse-slider-header-item">
+              <span v-for="(option, key) in options" :key="key">{{ option }}</span>
+            </div>
+          </div>
           <range-slider @change-value="updateValues($event, statement.id)" />
         </div>
       </div>
@@ -111,6 +116,9 @@ export default class RangeSliderSortingStatement extends Vue {
       flex-direction: column;
       margin-left: auto;
 
+      &--tablet {
+        display: none;
+      }
       &-item {
         display: flex;
         justify-content: space-between;
@@ -132,16 +140,28 @@ export default class RangeSliderSortingStatement extends Vue {
     @media screen and (max-width: 900px) {
       &-header {
         width: 100%;
+        margin-bottom: 4px;
+        color: #565656;
+        font-size: 14px;
+
+        &--desktop {
+          display: none;
+        }
+        &--tablet {
+          display: flex;
+          width: 100%;
+        }
       }
       &-title {
         display: block;
-        margin-bottom: 7px;
         width: 100%;
+        margin-bottom: 10px;
+        padding-top: 0;
         line-height: 1.4;
       }
       &-wrapper {
         display: block;
-        margin-bottom: 11px;
+        margin-bottom: 25px;
       }
       &-range {
         width: 100%;
@@ -149,9 +169,6 @@ export default class RangeSliderSortingStatement extends Vue {
       }
     }
     @media screen and (max-width: 768px) {
-      &-header {
-        font-size: 14px;
-      }
       &-title {
         font-size: 15px;
         line-height: 1.3;
