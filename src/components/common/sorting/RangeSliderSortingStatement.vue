@@ -1,6 +1,6 @@
 <template>
   <section class="ipulse-actions" v-if="statements">
-    <div class="ipulse-slider-header">
+    <div class="ipulse-slider-header ipulse-slider-header--desktop">
       <div class="ipulse-slider-header-item">
         <span v-for="(option, key) in options" :key="key">{{ option }}</span>
       </div>
@@ -8,9 +8,14 @@
     <div v-for="(statement, key) in statements" :key="key">
       <div class="ipulse-slider-wrapper">
         <span class="ipulse-slider-title">{{ statement.title }}</span>
-        <span class="ipulse-slider-range">
+        <div class="ipulse-slider-range">
+          <div class="ipulse-slider-header ipulse-slider-header--tablet">
+            <div class="ipulse-slider-header-item">
+              <span v-for="(option, key) in options" :key="key">{{ option }}</span>
+            </div>
+          </div>
           <range-slider @change-value="updateValues($event, statement.id)" />
-        </span>
+        </div>
       </div>
     </div>
 
@@ -103,39 +108,90 @@ export default class RangeSliderSortingStatement extends Vue {
 </script>
 
 <style lang="scss">
-  .ipulse-slider-header {
-    width: 48%;
-    display: flex;
-    flex-direction: column;
-    margin-left: auto;
+  .ipulse-slider {
 
-    .ipulse-slider-header-item {
+    &-header {
+      width: 48%;
       display: flex;
-      justify-content: space-between;
+      flex-direction: column;
+      margin-left: auto;
+
+      &--tablet {
+        display: none;
+      }
+      &-item {
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+    &-wrapper {
+      display: flex;
+      margin-top: 10px;
+      margin-bottom: 15px;
+    }
+    &-title {
+      padding-top: 20px;
+      width: 48%;
+    }
+    &-range {
+      width: 48%;
+      margin-left: auto;
+    }
+    @media screen and (max-width: 900px) {
+      &-header {
+        width: 100%;
+        margin-bottom: 4px;
+        color: #565656;
+        font-size: 14px;
+
+        &--desktop {
+          display: none;
+        }
+        &--tablet {
+          display: flex;
+          width: 100%;
+        }
+      }
+      &-title {
+        display: block;
+        width: 100%;
+        margin-bottom: 10px;
+        padding-top: 0;
+        line-height: 1.4;
+      }
+      &-wrapper {
+        display: block;
+        margin-bottom: 25px;
+      }
+      &-range {
+        width: 100%;
+        margin-left: 0;
+      }
+    }
+    @media screen and (max-width: 768px) {
+      &-title {
+        font-size: 15px;
+        line-height: 1.3;
+      }
+    }
+    @media screen and (max-width: 380px) {
+      &-header {
+        font-size: 12px;
+      }
     }
   }
+  .rtl {
 
-  .ipulse-slider-wrapper {
-    display: flex;
-    margin-top: 10px;
-    margin-bottom: 15px;
-  }
-  .ipulse-slider-title {
-    padding-top: 20px;
-    width: 48%;
-  }
-  .ipulse-slider-range {
-    width: 48%;
-    margin-left: auto;
-  }
+    .ipulse-slider {
 
-  .rtl .ipulse-slider-header {
-    margin-right: auto;
-    margin-left: 0;
-  }
-
-  .rtl .ipulse-slider-range {
-    margin-right: auto;
-    margin-left: 0;
+      &-header {
+        margin-right: auto;
+        margin-left: 0;
+      }
+      &-range {
+        margin-right: auto;
+        margin-left: 0;
+      }
+    }
   }
 </style>
