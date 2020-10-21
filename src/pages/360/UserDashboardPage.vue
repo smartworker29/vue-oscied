@@ -65,11 +65,17 @@
     <modal :classes="['ccr-modal']" name="new-ratee-modal" :height="'auto'">
       <TsAddUserModal
         :title="$t('ts.modal.add_new_ratee')"
+        :submit-button="$t('ts.modal.add_new_ratee_button')"
         :modalError="modalError"
         @cancel="handleCancelModal"
         @confirm="handleConfirmModal"
         @changed="handleChangedModal"
-      />
+      >
+        <template slot="content">
+          <p>{{ $t('ts.modal.add_new_ratee_info_1') }}</p>
+          <p>{{ $t('ts.modal.add_new_ratee_info_2')}}</p>
+        </template>
+      </TsAddUserModal>
     </modal>
   </div>
 </template>

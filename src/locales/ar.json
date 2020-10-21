@@ -169,8 +169,7 @@
       "add_new_ratee": "🇦🇪 Create a new Rating Team",
       "add_new_rater": "🇦🇪 Add a new user to this team",
       "add_new_skill": "🇦🇪 Add a new Skill to this Team",
-      "publish_ratee":  "🇦🇪 Publish ratee",
-      "publish_ratee_message": "🇦🇪 Are you sure to publish this user?"
+      "publish_ratee":  "🇦🇪 Publish ratee"
     },
     "leave_a_comment_below":  "🇦🇪 Please leave a comment below and rate {fullName} using the 1-10 rating below.",
     "choose_the_rating":  "🇦🇪 Choose the Rating for the {fullName} on {skill}",
