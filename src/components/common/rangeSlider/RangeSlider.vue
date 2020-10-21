@@ -89,11 +89,21 @@ export default class RangeSlider extends Vue {
     height: $thumb-height;
     width: $thumb-width;
   }
+  @mixin thumb-tablet {
+    box-shadow: 0 0 1px 7px $thumb-shadow-color;
+    background: $thumb-color;
+    border-radius: $thumb-radius;
+    cursor: pointer;
+    height: $thumb-height - 5;
+    width: $thumb-width - 5;
+  }
 
-  .range-container {
-    .range-numbers {
+  .range {
+
+    &-numbers {
       display: flex;
       justify-content: space-between;
+      margin: 0 -4px;
 
       span {
         cursor: pointer;
@@ -105,14 +115,12 @@ export default class RangeSlider extends Vue {
         }
       }
     }
-
-    .range-input {
+    &-input {
       width: 100%;
       height: 5px;
       background: $thumb-light-color;
       outline: none;
     }
-
     input[type=range] {
       -moz-appearance: none;
       -webkit-appearance: none;
@@ -129,6 +137,34 @@ export default class RangeSlider extends Vue {
       &::-ms-thumb {
         @include thumb;
         appearance: none;
+      }
+    }
+    @media screen and (max-width: 900px) {
+      &-numbers {
+        margin: 0 -7px;
+
+        span {
+          font-size: 15px;
+        }
+      }
+      input[type=range] {
+
+        &::-webkit-slider-thumb {
+          @include thumb-tablet;
+        }
+        &::-moz-range-thumb {
+          @include thumb-tablet;
+        }
+        &::-ms-thumb {
+          @include thumb-tablet;
+        }
+      }
+    }
+    @media screen and (max-width: 768px) {
+      &-numbers {
+        span {
+          font-size: 14px;
+        }
       }
     }
   }
