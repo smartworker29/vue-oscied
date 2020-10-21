@@ -81,7 +81,7 @@ export default class RaterRateePage extends Vue {
     }
 
     if (!this.skillList) {
-      this.skillList = this.tsManager ? await TsService.getSkillList(this.tsRaterRateeId) : await TsService.getSkillListForUser(this.tsRaterRateeId)
+      this.skillList = this.hasRoleManager ? await TsService.getSkillList(this.tsRaterRateeId) : await TsService.getSkillListForUser(this.tsRaterRateeId)
     }
 
     if (!this.skillList) {
