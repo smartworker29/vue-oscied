@@ -23,7 +23,7 @@
           <dial-chart :chart-data="formattedAverage" :options="dialChartOptions" />
           <p v-if="lastTen">{{ $t('ts.results.last_days', { count: lastTen.length }) }}</p>
           <bar-chart :chart-data="formattedLastTen" :options="barChartOptions"/>
-          <table v-if="rateeReviewsPeriods">
+          <table v-if="rateeReviewsPeriods.length">
             <thead>
               <tr>
                 <td>{{ $t('ts.results.from') }}</td>
