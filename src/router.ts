@@ -20,7 +20,6 @@ import DpChildSurveyCompletedPage from '@/pages/survey/DpChildSurveyCompletedPag
 import ResetPasswordPage from '@/pages/ResetPasswordPage.vue'
 import TakenIpulseSection from '@/components/survey/TakenIpulseSection.vue'
 import TakenIpulseCommentSection from '@/components/survey/TakenIpulseCommentSection.vue'
-import ManagerDashboardPage from '@/pages/360/ManagerDashboardPage.vue'
 import MainTsPageTemplate from '@/pages/360/MainTsPageTemplate.vue'
 import ManagerRateePage from '@/pages/360/ManagerRateePage.vue'
 import UserDashboardPage from '@/pages/360/UserDashboardPage.vue'
@@ -134,16 +133,10 @@ const router = new Router({
       props: true,
       children: [
         {
-          path: 'manager/dashboard',
-          component: ManagerDashboardPage,
-          props: true,
-          name: 'survey.ts.manager.dashboard'
-        },
-        {
-          path: 'user/dashboard',
+          path: 'dashboard',
           component: UserDashboardPage,
           props: true,
-          name: 'survey.ts.user.dashboard'
+          name: 'survey.ts.dashboard'
         },
         {
           path: 'manager/:tsManagerRateeId(\\d+)',
@@ -232,7 +225,7 @@ const availableSurveyLogosPages = [
   'survey.dp.page.part',
   'survey.dp.completed.part',
   'survey.ts.manager.dashboard',
-  'survey.ts.user.dashboard',
+  'survey.ts.dashboard',
   'survey.ts.manager.ratee',
   'survey.ts.user.ratee'
 ]

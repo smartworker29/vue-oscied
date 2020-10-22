@@ -272,10 +272,6 @@
   }
 
   .info {
-    .last-reviewed {
-      color: darkgrey;
-    }
-
     .review-before {
       color: cornflowerblue;
       background-color: aliceblue;
@@ -283,4 +279,10 @@
       padding: 5px 0;
     }
   }
+}
+
+.add-ratee {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

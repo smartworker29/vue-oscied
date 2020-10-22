@@ -64,11 +64,17 @@
       <modal :classes="['ccr-modal']" name="new-rater-modal" :height="'auto'">
         <TsAddUserModal
           :title="$t('ts.modal.add_new_rater')"
+          :submit-button="$t('ts.modal.add_new_rater_button')"
           :modalError="modalError"
           @cancel="handleCancelModal"
           @confirm="handleConfirmModal"
           @changed="handleChangedModal"
-        />
+        >
+          <template slot="content">
+            <p>{{ $t('ts.modal.add_new_rater_info_1') }}</p>
+            <p>{{ $t('ts.modal.add_new_rater_info_2') }}</p>
+          </template>
+        </TsAddUserModal>
       </modal>
       <modal :classes="['ccr-modal']" name="new-skill-modal" :height="'auto'">
         <TsAddSkillModal
@@ -102,11 +108,16 @@
       <modal :classes="['ccr-modal']" name="confirm-publish-modal" :height="'auto'">
         <SimpleConfirmModal
           :title="$t('ts.modal.publish_ratee')"
+          :submit-button="$t('ts.modal.publish_ratee_button')"
           :modalError="modalError"
-          :message="$t('ts.modal.publish_ratee_message')"
           @cancel="hideConfirmPublishRatee"
           @confirm="confirmRemovePublishRatee"
-        />
+        >
+          <template slot="content">
+            <p>{{ $t('ts.modal.publish_ratee_info_1') }}</p>
+            <p>{{ $t('ts.modal.publish_ratee_info_2') }}</p>
+          </template>
+        </SimpleConfirmModal>
       </modal>
 
     </div>
@@ -231,7 +242,7 @@ export default class ManagerRateePage extends Vue {
 
   goToList () {
     return this.$router.push({
-      name: 'survey.ts.manager.dashboard',
+      name: 'survey.ts.dashboard',
       params: {
         tsSurveyId: this.tsSurveyId.toString()
       }
