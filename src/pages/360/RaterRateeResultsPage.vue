@@ -157,6 +157,7 @@ export default class RaterRateeResultsPage extends Vue {
         yAxes: [
           {
             ticks: {
+              min: 0,
               max: 10
             },
             gridLines: {
