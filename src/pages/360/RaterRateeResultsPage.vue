@@ -49,6 +49,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 import {
   SurveyInfo,
   TsManagerRating,
+  TsManagerRatingAvarageScore,
   TsRateeReview,
   TsRateeUser,
   TsUserDto,
@@ -107,11 +108,11 @@ export default class RaterRateeResultsPage extends Vue {
     }
 
     const labels = lastTen.map(item => {
-      return dayjs(item.timeCreated).format('ddd Do')
+      return item.timeCreated ? dayjs(item.timeCreated).format('ddd Do') : ''
     })
 
     const values = lastTen.map(item => {
-      return this.prepareScoreNumberToFloat(item.score)
+      return parseInt(this.prepareScoreNumberToFloat(parseInt(item.score)))
     })
 
     return {
@@ -138,11 +139,13 @@ export default class RaterRateeResultsPage extends Vue {
       return null
     }
 
+    const restScore = 10 - parseInt(this.preparedAvarageScore)
+
     return {
       datasets: [
         {
           backgroundColor: ['#0085cd', '#d6efff'],
-          data: [this.preparedAvarageScore, (10 - this.preparedAvarageScore)]
+          data: [parseInt(this.preparedAvarageScore), restScore]
         }
       ]
     }
