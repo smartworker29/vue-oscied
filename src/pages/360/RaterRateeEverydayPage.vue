@@ -138,7 +138,7 @@ export default class RaterRateeEverydayPage extends Vue {
     }
 
     try {
-      const result = await TsService.addEveryDayRating(this.tsRaterRateeId, this.ratingForm)
+      const result = await TsService.addEverydayRating(this.tsRaterRateeId, this.ratingForm)
 
       this.updateRating(result)
     } catch (error) {
