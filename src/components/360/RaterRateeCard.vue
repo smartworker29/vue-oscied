@@ -18,7 +18,7 @@
       </button>
       <div v-if="hasRoleManager">
         <div v-if="raterRatee.isLive">
-          <button class="btn btn-primary btn-primary-active" @click="results">
+          <button class="btn btn-primary btn-primary-active" @click="results(raterRatee.id)">
             {{ $t('button_g.results') }}
           </button>
         </div>
@@ -96,7 +96,15 @@ export default class RaterRateeCard extends Vue {
     })
   }
 
-  results () {}
+  results (id: number) {
+    this.$router.push({
+      name: 'survey.ts.user.results',
+      params: {
+        tsSurveyId: this.tsSurveyId.toString(),
+        tsRaterRateeId: id.toString()
+      }
+    })
+  }
 }
 </script>
 
