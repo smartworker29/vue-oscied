@@ -1,6 +1,7 @@
 <template>
   <div class="ccr-confirm">
     <h2 class="ccr-modal__title">{{ title }}</h2>
+    <slot name="content"/>
     <form class="form">
       <div class="form-group row">
         <p class="error" v-if="modalError">{{ modalError }}</p>
@@ -26,7 +27,7 @@
     </form>
     <div class="ccr-modal__actions ccr-modal__actions-right">
       <button class="btn btn-primary" @click="$emit('cancel')">{{ $t('button_g.cancel') }}</button>
-      <button class="btn btn-primary btn-primary-active" @click="submit">{{ $t('button_g.confirm') }}</button>
+      <button class="btn btn-primary btn-primary-active" @click="submit">{{ submitButton }}</button>
     </div>
   </div>
 </template>
@@ -39,6 +40,9 @@ import { TsNewUserForm } from '@/interfaces'
 export default class TsAddUserModal extends Vue {
   @Prop({ default: '' })
   title!: string
+
+  @Prop({ default: '' })
+  submitButton!: string
 
   @Prop({ default: '' })
   modalError!: string

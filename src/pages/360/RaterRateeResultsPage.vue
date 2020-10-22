@@ -90,7 +90,7 @@ export default class RaterRateeSkillPage extends Vue {
 
   goToList (): void {
     this.$router.push({
-      name: 'survey.ts.user.dashboard',
+      name: 'survey.ts.dashboard',
       params: {
         tsSurveyId: this.tsSurveyId.toString()
       }

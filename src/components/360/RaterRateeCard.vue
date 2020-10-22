@@ -6,17 +6,26 @@
     <div class="ratee-name">
       <div class="name">{{ raterRatee.fullName }}</div>
     </div>
-    <div class="info">
-      <p class="last-reviewed">{{ $t('last_reviewed', { date: '22/06/2020' }) }}</p>
-      <p class="review-before">{{ $t('review_before', { name: rateeName, date: formattedExpiryDate }) }}</p>
+    <div class="info" v-if="hasRoleRater && raterRatee.isLive">
+      <p class="review-before">{{ $t('review_before', { name: raterRatee.fullName, date: formattedExpiryDate }) }}</p>
     </div>
     <div class="actions">
       <button class="btn btn-primary btn-primary-active" v-if="false">
         {{ $t('button_g.completed') }}
       </button>
-      <button class="btn btn-primary btn-primary-active" @click="reviewRatee">
+      <button class="btn btn-primary btn-primary-active" @click="reviewRatee" v-if="hasRoleRater && raterRatee.isLive">
         {{ $t('button_g.review_now') }}
       </button>
+      <div v-if="hasRoleManager">
+        <div v-if="raterRatee.isLive">
+          <button class="btn btn-primary btn-primary-active" @click="results">
+            {{ $t('button_g.results') }}
+          </button>
+        </div>
+        <button class="btn btn-primary btn-primary-active" @click="setup(raterRatee.id)">
+          {{ $t('button_g.setup') }}
+        </button>
+      </div>
       <button class="btn btn-primary btn-everyday" @click="everyday" v-if="hasEveryday">
         {{ $t('button_g.everyday')}}
       </button>
@@ -25,8 +34,9 @@
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
-import { TsRateeUser } from '@/interfaces'
+import { TsRateeUser, TsUserDto } from '@/interfaces'
 import dayjs from 'dayjs'
+import { Getter } from 'vuex-class'
 
 @Component({
   name: 'RaterRateeCard'
@@ -41,11 +51,14 @@ export default class RaterRateeCard extends Vue {
   @Prop({ default: false })
   hasEveryday!: boolean
 
-  get rateeName (): string {
-    const namesParts = this.raterRatee.fullName.trim().split(' ')
+  @Getter('ts/getUsers')
+  tsUserInfo!: TsUserDto
 
-    return namesParts.length > 1 ? namesParts[0] : this.raterRatee.fullName
-  }
+  @Getter('ts/hasRoleRater')
+  hasRoleRater!: boolean
+
+  @Getter('ts/hasRoleManager')
+  hasRoleManager!: boolean
 
   get formattedExpiryDate (): string {
     return (this.raterRatee.isLive && this.raterRatee.expiryTime)
@@ -63,6 +76,16 @@ export default class RaterRateeCard extends Vue {
     })
   }
 
+  setup (id: number): void {
+    this.$router.push({
+      name: 'survey.ts.manager.ratee',
+      params: {
+        tsSurveyId: this.tsSurveyId.toString(),
+        tsManagerRateeId: id.toString()
+      }
+    })
+  }
+
   everyday (): void {
     this.$router.push({
       name: 'survey.ts.user.ratee.everyday',
@@ -72,6 +95,8 @@ export default class RaterRateeCard extends Vue {
       }
     })
   }
+
+  results () {}
 }
 </script>
 

@@ -1,11 +1,11 @@
 <template>
   <div class="survey ts-user-dashboard">
     <div class="survey-header">
-      <h1 class="survey-title">{{ $t('welcome_to_survey', { surveyName: (surveyInfo) ? surveyInfo.title : '' }) }}</h1>
+      <h1 class="survey-title">{{ $t('welcome_to_survey', {surveyName: (surveyInfo) ? surveyInfo.title : ''}) }}</h1>
       <div class="ratees-filter" v-if="hasRoleRater">
         <div class="form-group sort-by">
           <label>
-            {{ $t('sort.by_title')}}
+            {{ $t('sort.by_title') }}
           </label>
           <multiselect
             v-model="orderBy"
@@ -50,25 +50,50 @@
                               :key="ratee.id"
                               :tsSurveyId="tsSurveyId"
                               :raterRatee="ratee"/>
+
+            <div class="ratee-card users-ratee-card add-ratee" v-if="hasRoleManager">
+              <div class="actions">
+                <button class="btn btn-primary btn-primary-active" @click="addNewRatee">
+                  {{ $t('add_new_ratee') }}
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    </div>
+    <modal :classes="['ccr-modal']" name="new-ratee-modal" :height="'auto'">
+      <TsAddUserModal
+        :title="$t('ts.modal.add_new_ratee')"
+        :submit-button="$t('ts.modal.add_new_ratee_button')"
+        :modalError="modalError"
+        @cancel="handleCancelModal"
+        @confirm="handleConfirmModal"
+        @changed="handleChangedModal"
+      >
+        <template slot="content">
+          <p>{{ $t('ts.modal.add_new_ratee_info_1') }}</p>
+          <p>{{ $t('ts.modal.add_new_ratee_info_2')}}</p>
+        </template>
+      </TsAddUserModal>
+    </modal>
+  </div>
 </template>
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import { Getter } from 'vuex-class'
-import { SurveyInfo, TsUserDto, TsUserRole, TsRateeUser } from '@/interfaces'
+import { SurveyInfo, TsUserDto, TsRateeUser, TsAbstractUser, TsNewUserForm } from '@/interfaces'
 import TsService from '@/services/TsService'
 import UsersRateeCard from '@/components/360/UsersRateeCard.vue'
 import RaterRateeCard from '@/components/360/RaterRateeCard.vue'
+import TsAddUserModal from '@/components/modals/TsAddUserModal.vue'
 
 @Component({
   name: 'UserDashboardPage',
   components: {
     UsersRateeCard,
-    RaterRateeCard
+    RaterRateeCard,
+    TsAddUserModal
   }
 })
 export default class UserDashboardPage extends Vue {
@@ -84,10 +109,20 @@ export default class UserDashboardPage extends Vue {
   @Getter('ts/getUsers')
   tsUserInfo!: TsUserDto
 
+  @Getter('ts/getManager')
+  tsManager!: TsAbstractUser
+
+  @Getter('ts/hasRoleRater')
+  hasRoleRater!: boolean
+
+  @Getter('ts/hasRoleManager')
+  hasRoleManager!: boolean
+
   myRatees: TsRateeUser[] = []
   ratersRatees: TsRateeUser[] = []
   orderBy: { text: string, number: number } | null = null
   isShowCompleted = false
+  modalError: string = ''
 
   async created () : Promise<void> {
     if (!this.isAuthenticated) {
@@ -96,10 +131,6 @@ export default class UserDashboardPage extends Vue {
 
     await this.uploadRaterRatee()
     this.myRatees = await TsService.uploadUserRatee(this.tsSurveyId)
-  }
-
-  get hasRoleRater () : boolean {
-    return this.tsUserInfo.roles.findIndex((role: string) => role === TsUserRole.RATER) !== -1
   }
 
   get sortItemList () : any {
@@ -137,7 +168,9 @@ export default class UserDashboardPage extends Vue {
   }
 
   async uploadRaterRatee () : Promise<void> {
-    if (this.hasRoleRater) {
+    if (this.hasRoleManager) {
+      this.ratersRatees = await TsService.getRateeList(this.tsSurveyId)
+    } else if (this.hasRoleRater) {
       this.ratersRatees = await TsService.uploadRatersRatee(this.tsSurveyId)
     }
   }
@@ -150,6 +183,36 @@ export default class UserDashboardPage extends Vue {
         tsRaterRateeId: ratee.id.toString()
       }
     })
+  }
+
+  addNewRatee () {
+    this.$modal.show('new-ratee-modal')
+  }
+
+  handleCancelModal () {
+    this.modalError = ''
+    this.$modal.hide('new-ratee-modal')
+  }
+
+  handleChangedModal () {
+    this.modalError = ''
+  }
+
+  async handleConfirmModal (user: TsNewUserForm) {
+    try {
+      const newRatee = await TsService.addRatee(this.tsSurveyId, this.tsManager.id, user)
+      this.$modal.hide('new-ratee-modal')
+
+      this.ratersRatees.push(newRatee)
+    } catch (error) {
+      if ('response' in error && [400, 403, 404].includes(error.response.status)) {
+        const { detail } = error.response.data
+
+        this.modalError = detail
+      } else {
+        throw error
+      }
+    }
   }
 }
 </script>
