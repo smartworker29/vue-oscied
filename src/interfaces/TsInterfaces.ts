@@ -49,8 +49,18 @@ export interface TsRatingForm {
   comment: string
 }
 
-export interface TsRateeScore {
+export interface TsRateeReview {
   score: number
   timeCreated: string | null
   timeExpiry: string | null
+}
+
+export interface TsManagerRatingAvarageScore {
+  score: number
+}
+
+export interface TsManagerRating {
+  score: string
+  comment: string
+  timeCreated: string | null
 }
