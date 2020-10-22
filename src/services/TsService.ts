@@ -3,8 +3,10 @@ import {
   IcoachSkillForm,
   IcoachSkillFullInfo,
   IcoachSkillShortInfo,
+  TsManagerRating,
+  TsManagerRatingAvarageScore,
   TsNewUserForm,
-  TsRateeScore,
+  TsRateeReview,
   TsRateeUser,
   TsRaterRateeSkillRating,
   TsRaterUser,
@@ -95,12 +97,20 @@ class TsService extends BaseApiService {
     return this.callMethod('get', `ts/${tsRateeId}/rating/everyday/`)
   }
 
-  addEveryDayRating (tsRaterRateeId: number, rating: TsRatingForm) : TsRatingForm {
+  addEverydayRating (tsRaterRateeId: number, rating: TsRatingForm) : TsRatingForm {
     return this.callMethod('post', `ts/${tsRaterRateeId}/rating/everyday/add/`, { rating })
   }
 
-  getRateeScores (tsRaterRateeId: number) : TsRateeScore[] {
-    return this.callMethod('get', `ts/${tsRaterRateeId}/scores/`)
+  getManagerRatingEverydayAvarageScore (tsRaterRateeId: number) : TsManagerRatingAvarageScore {
+    return this.callMethod('get', `ts/${tsRaterRateeId}/everyday/average/`)
+  }
+
+  getManagerRatingLastTen (tsRaterRateeId: number) : TsManagerRating[] {
+    return this.callMethod('get', `ts/${tsRaterRateeId}/everyday/last/`)
+  }
+
+  getRateeReviewsPeriods (tsRaterRateeId: number) : TsRateeReview[] {
+    return this.callMethod('get', `ts/${tsRaterRateeId}/reviews/`)
   }
 }
 
