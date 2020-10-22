@@ -35,7 +35,7 @@
                               :key="ratee.id"
                               :userRatee="ratee"
                               :has-view-my-score="true"
-                              @score="viewScore(ratee)"/>
+                              @score="viewScore()"/>
           </div>
         </div>
         <div class="ratees-block raters-ratees" :class="{ full:  myRatees.length < 1 }">
@@ -175,15 +175,7 @@ export default class UserDashboardPage extends Vue {
     }
   }
 
-  viewScore (ratee: TsRateeUser) {
-    this.$router.push({
-      name: 'survey.ts.user.results',
-      params: {
-        tsSurveyId: this.tsSurveyId.toString(),
-        tsRaterRateeId: ratee.id.toString()
-      }
-    })
-  }
+  viewScore () { }
 
   addNewRatee () {
     this.$modal.show('new-ratee-modal')
