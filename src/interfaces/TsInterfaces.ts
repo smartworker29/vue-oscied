@@ -54,3 +54,8 @@ export interface TsRateeScore {
   timeCreated: string | null
   timeExpiry: string | null
 }
+
+export enum TsManagerRatingType {
+  EVERYDAY = 'everyday',
+  OVERALL = 'overall'
+}
