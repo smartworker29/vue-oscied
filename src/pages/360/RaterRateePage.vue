@@ -11,7 +11,7 @@
       <div class="rater-ratee-wrapper">
         <div class="ratees-block rater-ratee-info">
           <h2>{{ $t('who_i_rating') }}</h2>
-          <rater-ratee-card :ts-survey-id="tsSurveyId" :raterRatee="ratee" :hasEveryday="hasRoleManager" />
+          <rater-ratee-card :ts-survey-id="tsSurveyId" :raterRatee="ratee" />
         </div>
         <div class="ratees-block rater-ratee-skills">
           <div v-if="groupedSkillList">

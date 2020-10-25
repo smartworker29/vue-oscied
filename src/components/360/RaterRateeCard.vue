@@ -26,8 +26,11 @@
           {{ $t('button_g.setup') }}
         </button>
       </div>
-      <button class="btn btn-primary btn-everyday" @click="everyday" v-if="hasEveryday">
+      <button class="btn btn-primary btn-everyday" @click="rating('everyday')">
         {{ $t('button_g.everyday')}}
+      </button>
+      <button class="btn btn-primary btn-everyday" @click="rating('overall')">
+        {{ $t('button_g.overall')}}
       </button>
     </div>
   </div>
@@ -86,12 +89,13 @@ export default class RaterRateeCard extends Vue {
     })
   }
 
-  everyday (): void {
+  rating (type: ManagerRatingType) : void {
     this.$router.push({
-      name: 'survey.ts.user.ratee.everyday',
+      name: 'survey.ts.manager.rating',
       params: {
         tsSurveyId: this.tsSurveyId.toString(),
-        tsRaterRateeId: this.raterRatee.id.toString()
+        tsRaterRateeId: this.raterRatee.id.toString(),
+        type
       }
     })
   }
