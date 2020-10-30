@@ -3,6 +3,7 @@ import {
   IcoachSkillForm,
   IcoachSkillFullInfo,
   IcoachSkillShortInfo,
+  TsManagerUser,
   TsNewUserForm,
   TsRateeScore,
   TsRateeUser,
@@ -27,6 +28,10 @@ class TsService extends BaseApiService {
 
   getRaterList (tsRateeId: number) : TsRaterUser[] {
     return this.callMethod('get', `/ts/${tsRateeId}/raters/`)
+  }
+
+  getRateeManagerInfo (tsRateeId: number) : TsManagerUser[] {
+    return this.callMethod('get', `/ts/${tsRateeId}/manager`)
   }
 
   getSkillList (tsRateeId: number) : IcoachSkillShortInfo[] {
