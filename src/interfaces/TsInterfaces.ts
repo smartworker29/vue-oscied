@@ -29,6 +29,13 @@ export interface TsRaterUser {
   image: Image | null
 }
 
+export interface TsManagerUser {
+  id: number
+  fullName: string
+  email: string
+  image: Image | null
+}
+
 export interface TsNewUserForm {
   email: string,
   fullName: string

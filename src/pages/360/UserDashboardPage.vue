@@ -37,6 +37,10 @@
                               :has-view-my-score="true"
                               @score="viewScore(ratee)"/>
           </div>
+          <div v-if="hasRoleRatee && myPerformanceManager">
+            <h2>{{ $t('my_performance_manager') }}</h2>
+            <div class="ratee-items"><performance-manager-card :manager="myPerformanceManager" /></div>
+          </div>
         </div>
         <div class="ratees-block raters-ratees" :class="{ full:  myRatees.length < 1 }">
           <div class="who-rating-header">
@@ -87,12 +91,14 @@ import TsService from '@/services/TsService'
 import UsersRateeCard from '@/components/360/UsersRateeCard.vue'
 import RaterRateeCard from '@/components/360/RaterRateeCard.vue'
 import TsAddUserModal from '@/components/modals/TsAddUserModal.vue'
+import PerformanceManagerCard from '@/components/360/PerformanceManagerCard.vue'
 
 @Component({
   name: 'UserDashboardPage',
   components: {
     UsersRateeCard,
     RaterRateeCard,
+    PerformanceManagerCard,
     TsAddUserModal
   }
 })
@@ -115,6 +121,9 @@ export default class UserDashboardPage extends Vue {
   @Getter('ts/hasRoleRater')
   hasRoleRater!: boolean
 
+  @Getter('ts/hasRoleRatee')
+  hasRoleRatee!: boolean
+
   @Getter('ts/hasRoleManager')
   hasRoleManager!: boolean
 
@@ -123,6 +132,7 @@ export default class UserDashboardPage extends Vue {
   orderBy: { text: string, number: number } | null = null
   isShowCompleted = false
   modalError: string = ''
+  myPerformanceManager: TsManagerUser | null = null
 
   async created () : Promise<void> {
     if (!this.isAuthenticated) {
@@ -131,6 +141,9 @@ export default class UserDashboardPage extends Vue {
 
     await this.uploadRaterRatee()
     this.myRatees = await TsService.uploadUserRatee(this.tsSurveyId)
+    if (this.hasRoleRatee) {
+      this.myPerformanceManager = await TsService.getRateeManagerInfo(this.myRatees[0].id)
+    }
   }
 
   get sortItemList () : any {
