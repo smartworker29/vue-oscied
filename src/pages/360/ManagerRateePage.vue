@@ -98,6 +98,7 @@
       <modal :classes="['ccr-modal']" name="confirm-remove-skill-modal" :height="'auto'">
         <SimpleConfirmModal
           :title="$t('ts.modal.remove_skill_title')"
+          :submit-button="$t('button_g.remove')"
           :modalError="modalError"
           :message="$t('ts.modal.remove_skill_message')"
           @cancel="hideConfirmRemoveSkillModal"

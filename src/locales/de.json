@@ -72,6 +72,7 @@
     "completed": "🇩🇪 Completed",
     "rate": "🇩🇪 Rate",
     "everyday": "🇩🇪 Everyday - Rate now",
+    "send_email": "🇩🇪 Send an email",
     "overall": "🇩🇪 Overall Score"
   },
   "email_address": "🇩🇪 Email Address",
@@ -214,6 +215,7 @@
   "who_i_rating": "🇩🇪 Who am I rating",
   "add_new_ratee": "🇩🇪 Add new ratee",
   "my_rating": "🇩🇪 My rating",
+  "my_performance_manager": "🇩🇪 My Performance Manager",
   "layout": "🇩🇪 Layout",
   "show_completed": "🇩🇪 Show completed",
   "sort": {

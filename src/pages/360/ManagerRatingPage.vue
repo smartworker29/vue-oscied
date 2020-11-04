@@ -56,9 +56,10 @@
   </div>
 </template>
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import {
-  IcoachSkillFullInfo, TsManagerRatingType,
+  IcoachSkillFullInfo,
+  TsManagerRatingType,
   SurveyInfo,
   TsRateeUser,
   TsRaterRateeSkillRating,
@@ -99,6 +100,11 @@ export default class ManagerRatingPage extends Vue {
   @Getter('survey/getDisplayedBaseSurveyInfo')
   surveyInfo!: SurveyInfo
 
+  @Watch('type')
+  async onTypeChanged () {
+    await this.updateManagerRating()
+  }
+
   ratee: TsRateeUser | null = null
   skillInfo: IcoachSkillFullInfo | null = null
   rating: TsRaterRateeSkillRating | null = null
@@ -113,13 +119,7 @@ export default class ManagerRatingPage extends Vue {
       this.ratee = await TsService.getRateeInfoById(this.tsRaterRateeId)
     }
 
-    if (!this.rating) {
-      const result = await TsService.getManagerRating(this.tsRaterRateeId, this.type)
-
-      if (!Array.isArray(result)) {
-        this.rating = result
-      }
-    }
+    await this.updateManagerRating()
   }
 
   goToList (): void {
@@ -133,6 +133,14 @@ export default class ManagerRatingPage extends Vue {
 
   updateValues (value: string) {
     this.ratingForm.score = parseInt(value)
+  }
+
+  async updateManagerRating (): Promise<void> {
+    const result = await TsService.getManagerRating(this.tsRaterRateeId, this.type)
+
+    if (!Array.isArray(result)) {
+      this.rating = result
+    }
   }
 
   async rate () {
