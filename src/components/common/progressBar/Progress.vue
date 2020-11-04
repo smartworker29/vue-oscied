@@ -22,8 +22,8 @@ export default class Progress extends Vue {
   @Getter('survey/getCurrentProductSurveySectionCount')
   totalSurveyProgressItemsCount?: number
 
-  @Getter('survey/getCountCompletedSurveySection')
-  processedSurveyItemsCount?: number
+  @Getter('survey/getNextSurveySectionNumber')
+  sectionNumber?: number
 
   @Prop({})
   totalPropsProgressItemsCount?: number
@@ -53,12 +53,12 @@ export default class Progress extends Vue {
   }
 
   get processedItemsCount () : number {
-    if (this.processedPropsItemsCount) {
+    if (typeof this.processedPropsItemsCount !== 'undefined') {
       return this.processedPropsItemsCount
     }
 
-    if (this.processedSurveyItemsCount) {
-      return this.processedSurveyItemsCount
+    if (this.sectionNumber) {
+      return this.sectionNumber - 1
     }
 
     return 0
