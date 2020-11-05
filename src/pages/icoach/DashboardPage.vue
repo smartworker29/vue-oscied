@@ -170,7 +170,7 @@ export default class DashboardPage extends Vue {
     max-width: 275px;
     width: 100%;
     @media only screen and (max-width: 600px) {
-      max-width: 100%;;
+      max-width: 100%;
     }
   }
 

@@ -6,11 +6,11 @@
       <template v-if="item.timeCompleted">
         {{ $t('dashboard.completed_on') }} {{ moment(item.timeCompleted).format("DD/MM/Y") }}
       </template>
-      <template v-else>
+      <template v-if="item.timeCreated">
         {{ $t('dashboard.started_on') }} {{ moment(item.timeCreated).format("DD/MM/Y") }}
       </template>
     </p>
-    <Progress
+    <Progress v-if="item.timeCreated"
       :show-title="false"
       :show-percent-inside="false"
       :processed-props-items-count="item.completedCountProgress ? item.completedCountProgress : 0"
