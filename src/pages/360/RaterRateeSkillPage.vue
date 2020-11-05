@@ -137,14 +137,7 @@ export default class RaterRateeSkillPage extends Vue {
       this.rating = await TsService.getRating(this.tsRaterRateeId, this.skillInfo.id)
     }
 
-    if (this.hasRoleRatee) {
-      const currentRatee = this.tsUserInfo.users.find(user => user.role === TsUserRole.RATEE)
-      if (!currentRatee) {
-        return
-      }
-
-      this.myPerformanceManager = await TsService.getRateeManagerInfo(currentRatee.id)
-    }
+    await this.uploadMyPerformanceManager()
   }
 
   goToList (): void {
@@ -173,6 +166,17 @@ export default class RaterRateeSkillPage extends Vue {
       if ('response' in error && error.response.status === 400) {
         this.handleSkillRatingErrors(error.response.data)
       }
+    }
+  }
+
+  async uploadMyPerformanceManager () {
+    if (this.hasRoleRatee) {
+      const currentRatee = this.tsUserInfo.users.find(user => user.role === TsUserRole.RATEE)
+      if (!currentRatee) {
+        return
+      }
+
+      this.myPerformanceManager = await TsService.getRateeManagerInfo(currentRatee.id)
     }
   }
 

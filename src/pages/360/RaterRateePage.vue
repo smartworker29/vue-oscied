@@ -98,22 +98,16 @@ export default class RaterRateePage extends Vue {
     }
 
     if (!this.skillList) {
-      this.skillList = this.hasRoleManager ? await TsService.getSkillList(this.tsRaterRateeId) : await TsService.getSkillListForUser(this.tsRaterRateeId)
+      this.skillList = this.hasRoleManager
+        ? await TsService.getSkillList(this.tsRaterRateeId)
+        : await TsService.getSkillListForUser(this.tsRaterRateeId)
     }
 
     if (!this.skillList) {
       return
     }
 
-    if (this.hasRoleRatee) {
-      const currentRatee = this.tsUserInfo.users.find(user => user.role === TsUserRole.RATEE)
-      if (!currentRatee) {
-        return
-      }
-
-      this.myPerformanceManager = await TsService.getRateeManagerInfo(currentRatee.id)
-    }
-
+    await this.uploadMyPerformanceManager()
     this.groupedSkillList = this.groupSkills(this.skillList)
   }
 
@@ -142,6 +136,17 @@ export default class RaterRateePage extends Vue {
         skillId: skill.id.toString()
       }
     })
+  }
+
+  async uploadMyPerformanceManager () {
+    if (this.hasRoleRatee) {
+      const currentRatee = this.tsUserInfo.users.find(user => user.role === TsUserRole.RATEE)
+      if (!currentRatee) {
+        return
+      }
+
+      this.myPerformanceManager = await TsService.getRateeManagerInfo(currentRatee.id)
+    }
   }
 }
 </script>

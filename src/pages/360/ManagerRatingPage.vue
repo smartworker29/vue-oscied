@@ -140,6 +140,8 @@ export default class ManagerRatingPage extends Vue {
 
     if (!Array.isArray(result)) {
       this.rating = result
+    } else {
+      this.rating = null
     }
   }
 
