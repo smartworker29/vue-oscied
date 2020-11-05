@@ -30,7 +30,7 @@ class TsService extends BaseApiService {
     return this.callMethod('get', `/ts/${tsRateeId}/raters/`)
   }
 
-  getRateeManagerInfo (tsRateeId: number) : TsManagerUser[] {
+  getRateeManagerInfo (tsRateeId: number) : TsManagerUser {
     return this.callMethod('get', `/ts/${tsRateeId}/manager`)
   }
 

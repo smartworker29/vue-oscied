@@ -15,6 +15,7 @@
 </template>
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
+import { TsManagerUser } from '@/interfaces'
 
 @Component({
   name: 'PerformanceManagerCard'
