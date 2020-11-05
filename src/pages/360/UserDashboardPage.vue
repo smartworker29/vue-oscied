@@ -86,7 +86,7 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import { Getter } from 'vuex-class'
-import { SurveyInfo, TsUserDto, TsRateeUser, TsAbstractUser, TsNewUserForm } from '@/interfaces'
+import { SurveyInfo, TsUserDto, TsRateeUser, TsAbstractUser, TsNewUserForm, TsManagerUser } from '@/interfaces'
 import TsService from '@/services/TsService'
 import UsersRateeCard from '@/components/360/UsersRateeCard.vue'
 import RaterRateeCard from '@/components/360/RaterRateeCard.vue'
