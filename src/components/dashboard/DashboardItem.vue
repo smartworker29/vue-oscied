@@ -13,8 +13,8 @@
     <Progress v-if="item.timeCreated"
       :show-title="false"
       :show-percent-inside="false"
-      :processed-props-items-count="item.timeCompleted ? 1 : 0"
-      :total-props-progress-items-count="1"
+      :processed-props-items-count="item.completedCountProgress ? item.completedCountProgress : 0"
+      :total-props-progress-items-count="item.amountCountProgress ? item.amountCountProgress : 1"
       percentage="true"
     />
   </div>
