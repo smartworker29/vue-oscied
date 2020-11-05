@@ -13,7 +13,7 @@
           <h2>{{ $t('who_i_rating') }}</h2>
           <rater-ratee-card :ts-survey-id="tsSurveyId" :raterRatee="ratee" />
 
-          <div v-if="hasRoleRatee && myPerformanceManager">
+          <div v-if="!hasRoleManager && myPerformanceManager">
             <h2>{{ $t('my_performance_manager') }}</h2>
             <div class="ratee-items"><performance-manager-card :manager="myPerformanceManager" /></div>
           </div>
@@ -111,6 +111,12 @@ export default class RaterRateeSkillPage extends Vue {
   @Getter('ts/hasRoleRatee')
   hasRoleRatee!: boolean
 
+  @Getter('ts/hasRoleRater')
+  hasRoleRater!: boolean
+
+  @Getter('ts/hasRoleManager')
+  hasRoleManager!: boolean
+
   @Getter('survey/getDisplayedBaseSurveyInfo')
   surveyInfo!: SurveyInfo
 
@@ -176,7 +182,13 @@ export default class RaterRateeSkillPage extends Vue {
         return
       }
 
-      this.myPerformanceManager = await TsService.getRateeManagerInfo(currentRatee.id)
+      this.myPerformanceManager = await TsService.getManagerInfo(TsUserRole.RATEE, currentRatee.id)
+    } else if (this.hasRoleRater) {
+      if (!this.ratee) {
+        return
+      }
+
+      this.myPerformanceManager = await TsService.getManagerInfo(TsUserRole.RATER, this.ratee.id)
     }
   }
 

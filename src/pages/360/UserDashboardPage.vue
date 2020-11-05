@@ -86,7 +86,15 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import { Getter } from 'vuex-class'
-import { SurveyInfo, TsUserDto, TsRateeUser, TsAbstractUser, TsNewUserForm, TsManagerUser } from '@/interfaces'
+import {
+  SurveyInfo,
+  TsUserDto,
+  TsRateeUser,
+  TsAbstractUser,
+  TsNewUserForm,
+  TsManagerUser,
+  TsUserRole
+} from '@/interfaces'
 import TsService from '@/services/TsService'
 import UsersRateeCard from '@/components/360/UsersRateeCard.vue'
 import RaterRateeCard from '@/components/360/RaterRateeCard.vue'
@@ -142,7 +150,7 @@ export default class UserDashboardPage extends Vue {
     await this.uploadRaterRatee()
     this.myRatees = await TsService.uploadUserRatee(this.tsSurveyId)
     if (this.hasRoleRatee) {
-      this.myPerformanceManager = await TsService.getRateeManagerInfo(this.myRatees[0].id)
+      this.myPerformanceManager = await TsService.getManagerInfo(TsUserRole.RATEE, this.myRatees[0].id)
     }
   }
 
