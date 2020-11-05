@@ -66,11 +66,14 @@
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import {
   IcoachSkillFullInfo,
-  SurveyInfo, TsAbstractUser,
+  SurveyInfo,
+  TsManagerUser,
   TsRateeUser,
   TsRaterRateeSkillRating,
   TsRatingForm,
-  TsUserDto, TsUserRole, User
+  TsUserDto,
+  TsUserRole,
+  User
 } from '@/interfaces'
 import { Getter } from 'vuex-class'
 import RaterRateeCard from '@/components/360/RaterRateeCard.vue'
@@ -134,11 +137,7 @@ export default class RaterRateeSkillPage extends Vue {
       this.rating = await TsService.getRating(this.tsRaterRateeId, this.skillInfo.id)
     }
 
-    if (this.hasRoleRatee) {
-      const currentRatee: TsAbstractUser = this.tsUserInfo.users.find(user => user.role === TsUserRole.RATEE)
-
-      this.myPerformanceManager = await TsService.getRateeManagerInfo(currentRatee.id)
-    }
+    await this.uploadMyPerformanceManager()
   }
 
   goToList (): void {
@@ -167,6 +166,17 @@ export default class RaterRateeSkillPage extends Vue {
       if ('response' in error && error.response.status === 400) {
         this.handleSkillRatingErrors(error.response.data)
       }
+    }
+  }
+
+  async uploadMyPerformanceManager () {
+    if (this.hasRoleRatee) {
+      const currentRatee = this.tsUserInfo.users.find(user => user.role === TsUserRole.RATEE)
+      if (!currentRatee) {
+        return
+      }
+
+      this.myPerformanceManager = await TsService.getRateeManagerInfo(currentRatee.id)
     }
   }
 
