@@ -13,7 +13,7 @@
           <h2>{{ $t('who_i_rating') }}</h2>
           <rater-ratee-card :ts-survey-id="tsSurveyId" :raterRatee="ratee" />
 
-          <div v-if="!hasRoleManager && myPerformanceManager">
+          <div v-if="myPerformanceManager">
             <h2>{{ $t('my_performance_manager') }}</h2>
             <div class="ratee-items"><performance-manager-card :manager="myPerformanceManager" /></div>
           </div>
