@@ -25,6 +25,9 @@ const ts: Module<TsState, RootState> = {
     hasRoleRater (state: TsState) {
       return state.users ? state.users.roles.findIndex((role: string) => role === TsUserRole.RATER) !== -1 : false
     },
+    hasRoleRatee (state: TsState) {
+      return state.users ? state.users.roles.findIndex((role: string) => role === TsUserRole.RATEE) !== -1 : false
+    },
     hasRoleManager (state: TsState) {
       return state.users ? state.users.roles.findIndex((role: string) => role === TsUserRole.MANAGER) !== -1 : false
     }

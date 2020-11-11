@@ -113,7 +113,7 @@ export default class WelcomePage extends Vue {
       this.$store.commit('mainLogo/setLogos', response.survey.logos)
       this.$store.commit('mainLogo/setType', MainLogosTypes.SURVEY_LOGOS)
 
-      if (!this.isAuthenticated) {
+      if (!this.isAuthenticated && this.surveyInfo) {
         EventBus.$emit('languageChanged', this.surveyInfo.defaultLanguage)
       }
 

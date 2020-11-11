@@ -72,7 +72,9 @@
     "view_my_score": "View my score",
     "completed": "Completed",
     "rate": "Rate",
-    "everyday": "Everyday - Rate now"
+    "everyday": "Everyday - Rate now",
+    "send_email": "Send an email",
+    "overall": "Overall Score"
   },
   "email_address": "Email Address",
   "remember_me": "Remember Me",
@@ -188,6 +190,7 @@
     "this_skill_in_context": "This Skill in context",
     "how_to_develop": "How to Develop this Skill",
     "everyday": "Everyday",
+    "overall": "Overall",
     "you_are_the_part": "You are part of the 360 support team for {fullName}. You are asked to look at\nthe definition below and think about an example of where you have witnessed\n{fullName} performing this task in their roles",
     "results": {
       "results": "Results",
@@ -223,6 +226,7 @@
   "review_before": "You need to review {name} before {date}",
   "who_i_rating": "Who am I rating",
   "my_rating": "My rating",
+  "my_performance_manager": "My Performance Manager",
   "add_new_ratee": "Add a New Appraisee",
   "layout": "Layout",
   "show_completed": "Show completed",

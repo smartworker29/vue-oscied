@@ -29,6 +29,13 @@ export interface TsRaterUser {
   image: Image | null
 }
 
+export interface TsManagerUser {
+  id: number
+  fullName: string
+  email: string
+  image: Image | null
+}
+
 export interface TsNewUserForm {
   email: string,
   fullName: string
@@ -53,6 +60,11 @@ export interface TsRateeReview {
   score: number
   timeCreated: string | null
   timeExpiry: string | null
+}
+
+export enum TsManagerRatingType {
+  EVERYDAY = 'everyday',
+  OVERALL = 'overall'
 }
 
 export interface TsManagerRatingAvarageScore {

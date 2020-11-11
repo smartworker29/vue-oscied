@@ -12,6 +12,11 @@
         <div class="ratees-block rater-ratee-info" v-if="ratee">
           <h2>{{ $t('who_i_rating') }}</h2>
           <rater-ratee-card :ts-survey-id="tsSurveyId" :raterRatee="ratee" />
+
+          <div v-if="hasRoleRatee && myPerformanceManager">
+            <h2>{{ $t('my_performance_manager') }}</h2>
+            <div class="ratee-items"><performance-manager-card :manager="myPerformanceManager" /></div>
+          </div>
         </div>
 
         <div class="ratees-block skill-block" v-if="skillInfo">
@@ -62,20 +67,25 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 import {
   IcoachSkillFullInfo,
   SurveyInfo,
+  TsManagerUser,
   TsRateeUser,
   TsRaterRateeSkillRating,
   TsRatingForm,
-  TsUserDto, User
+  TsUserDto,
+  TsUserRole,
+  User
 } from '@/interfaces'
 import { Getter } from 'vuex-class'
 import RaterRateeCard from '@/components/360/RaterRateeCard.vue'
 import TsService from '@/services/TsService'
 import RangeSlider from '@/components/common/rangeSlider/RangeSlider.vue'
+import PerformanceManagerCard from '@/components/360/PerformanceManagerCard.vue'
 
 @Component({
   name: 'RaterRateeSkillPage',
   components: {
     RaterRateeCard,
+    PerformanceManagerCard,
     RangeSlider
   }
 })
@@ -98,6 +108,9 @@ export default class RaterRateeSkillPage extends Vue {
   @Getter('user/isAuthenticated')
   isAuthenticated!: boolean
 
+  @Getter('ts/hasRoleRatee')
+  hasRoleRatee!: boolean
+
   @Getter('survey/getDisplayedBaseSurveyInfo')
   surveyInfo!: SurveyInfo
 
@@ -105,6 +118,7 @@ export default class RaterRateeSkillPage extends Vue {
   skillInfo: IcoachSkillFullInfo | null = null
   rating: TsRaterRateeSkillRating | null = null
   ratingForm: TsRatingForm = { comment: '', score: 1 }
+  myPerformanceManager: TsManagerUser | null = null
 
   async created () {
     if (!this.isAuthenticated) {
@@ -122,6 +136,8 @@ export default class RaterRateeSkillPage extends Vue {
     if (this.skillInfo && this.skillInfo.status) {
       this.rating = await TsService.getRating(this.tsRaterRateeId, this.skillInfo.id)
     }
+
+    await this.uploadMyPerformanceManager()
   }
 
   goToList (): void {
@@ -150,6 +166,17 @@ export default class RaterRateeSkillPage extends Vue {
       if ('response' in error && error.response.status === 400) {
         this.handleSkillRatingErrors(error.response.data)
       }
+    }
+  }
+
+  async uploadMyPerformanceManager () {
+    if (this.hasRoleRatee) {
+      const currentRatee = this.tsUserInfo.users.find(user => user.role === TsUserRole.RATEE)
+      if (!currentRatee) {
+        return
+      }
+
+      this.myPerformanceManager = await TsService.getRateeManagerInfo(currentRatee.id)
     }
   }
 
