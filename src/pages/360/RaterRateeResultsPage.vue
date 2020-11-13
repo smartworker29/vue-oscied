@@ -50,6 +50,7 @@ import {
   SurveyInfo,
   TsManagerRating,
   TsManagerRatingAvarageScore,
+  TsManagerRatingType,
   TsRateeReview,
   TsRateeUser,
   TsUserDto,
@@ -96,9 +97,9 @@ export default class RaterRateeResultsPage extends Vue {
 
   async created () {
     this.ratee = await TsService.getRateeInfoById(this.tsSurveyId)
-    this.averageEverydayScore = await TsService.getManagerRatingEverydayAvarageScore(this.tsRaterRateeId)
+    this.averageEverydayScore = await TsService.getManagerRatingAvarageScore(this.tsRaterRateeId, TsManagerRatingType.EVERYDAY)
     this.rateeReviewsPeriods = await TsService.getRateeReviewsPeriods(this.tsRaterRateeId)
-    this.lastTen = await TsService.getManagerRatingLastTen(this.tsRaterRateeId)
+    this.lastTen = await TsService.getManagerRatingLastTen(this.tsRaterRateeId, TsManagerRatingType.EVERYDAY)
   }
 
   get formattedLastTen () : Chart.ChartData | null {

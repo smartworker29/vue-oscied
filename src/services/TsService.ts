@@ -107,12 +107,12 @@ class TsService extends BaseApiService {
     return this.callMethod('post', `ts/${tsRaterRateeId}/rating/${type}/add/`, { rating })
   }
 
-  getManagerRatingEverydayAvarageScore (tsRaterRateeId: number) : TsManagerRatingAvarageScore {
-    return this.callMethod('get', `ts/${tsRaterRateeId}/everyday/average/`)
+  getManagerRatingAvarageScore (tsRaterRateeId: number, type: TsManagerRatingType) : TsManagerRatingAvarageScore {
+    return this.callMethod('get', `ts/${tsRaterRateeId}/rating/${type}/average/`)
   }
 
-  getManagerRatingLastTen (tsRaterRateeId: number) : TsManagerRating[] {
-    return this.callMethod('get', `ts/${tsRaterRateeId}/everyday/last/`)
+  getManagerRatingLastTen (tsRaterRateeId: number, type: TsManagerRatingType) : TsManagerRating[] {
+    return this.callMethod('get', `ts/${tsRaterRateeId}/rating/${type}/last/`)
   }
 
   getRateeReviewsPeriods (tsRaterRateeId: number) : TsRateeReview[] {
