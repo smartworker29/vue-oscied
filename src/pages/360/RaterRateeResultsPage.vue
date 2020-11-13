@@ -29,6 +29,7 @@
                 <td>{{ $t('ts.results.from') }}</td>
                 <td>{{ $t('ts.results.to') }}</td>
                 <td>{{ $t('ts.results.avarage_score') }}</td>
+                <td></td>
               </tr>
             </thead>
             <tbody>
@@ -36,6 +37,9 @@
                 <td>{{ review.timeCreated | formatDate('D/M/YYYY h:mm a') }}</td>
                 <td>{{ review.timeExpiry | formatDate('d/M/YYYY h:mm a') }}</td>
                 <td>{{ review.score }}</td>
+                <td>
+                  <button @click="prepareReport(review.id)">{{ $t('ts.results.download_report') }}</button>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -100,6 +104,11 @@ export default class RaterRateeResultsPage extends Vue {
     this.averageEverydayScore = await TsService.getManagerRatingAvarageScore(this.tsRaterRateeId, TsManagerRatingType.EVERYDAY)
     this.rateeReviewsPeriods = await TsService.getRateeReviewsPeriods(this.tsRaterRateeId)
     this.lastTen = await TsService.getManagerRatingLastTen(this.tsRaterRateeId, TsManagerRatingType.EVERYDAY)
+  }
+
+  async prepareReport (rateeReviewId: number): Promise<void> {
+    const result = await TsService.getRateeReviewsReport(this.tsRaterRateeId, rateeReviewId)
+    console.log(result)
   }
 
   get formattedLastTen () : Chart.ChartData | null {

@@ -118,6 +118,10 @@ class TsService extends BaseApiService {
   getRateeReviewsPeriods (tsRaterRateeId: number) : TsRateeReview[] {
     return this.callMethod('get', `ts/${tsRaterRateeId}/reviews/`)
   }
+
+  getRateeReviewsReport (tsRaterRateeId: number, tsRateeReviewId: number) : void {
+    return this.callMethod('get', `ts/${tsRaterRateeId}/reviews/${tsRateeReviewId}`)
+  }
 }
 
 export default new TsService()

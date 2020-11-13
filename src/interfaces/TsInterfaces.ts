@@ -57,6 +57,7 @@ export interface TsRatingForm {
 }
 
 export interface TsRateeReview {
+  id: number,
   score: number
   timeCreated: string | null
   timeExpiry: string | null
