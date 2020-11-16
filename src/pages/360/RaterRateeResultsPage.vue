@@ -33,7 +33,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(review, id) in rateeReviewsPeriods" :key="id">
+              <tr v-for="(review, id) in rateeReviewsPeriods" :key="id" @click="setActiveReview(review)">
                 <td>{{ review.timeCreated | formatDate('D/M/YYYY h:mm a') }}</td>
                 <td>{{ review.timeExpiry | formatDate('d/M/YYYY h:mm a') }}</td>
                 <td>{{ review.score }}</td>
@@ -49,7 +49,7 @@
   </div>
 </template>
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import {
   SurveyInfo,
   TsManagerRating,
@@ -94,10 +94,17 @@ export default class RaterRateeResultsPage extends Vue {
   @Getter('survey/getDisplayedBaseSurveyInfo')
   surveyInfo!: SurveyInfo
 
+  @Watch('activeRateeReview')
+  async onActiveRateeReviewChanged () {
+    await this.prepareRatingReviews()
+  }
+
   ratee: TsRateeUser | null = null
   rateeReviewsPeriods: TsRateeReview[] = []
   averageEverydayScore: TsManagerRatingAvarageScore | null = null
   lastTen: TsManagerRating[] | null = null
+  ratingReviews: object | null = null
+  activeRateeReview: TsRateeReview | null = null
 
   async created () {
     this.ratee = await TsService.getRateeInfoById(this.tsSurveyId)
@@ -109,6 +116,10 @@ export default class RaterRateeResultsPage extends Vue {
   async prepareReport (rateeReviewId: number): Promise<void> {
     const result = await TsService.getRateeReviewsReport(this.tsRaterRateeId, rateeReviewId)
     console.log(result)
+  }
+
+  setActiveReview (review: TsRateeReview): void {
+    this.activeRateeReview = review
   }
 
   get formattedLastTen () : Chart.ChartData | null {
@@ -216,6 +227,14 @@ export default class RaterRateeResultsPage extends Vue {
         tsSurveyId: this.tsSurveyId.toString()
       }
     })
+  }
+
+  async prepareRatingReviews () {
+    if (!this.activeRateeReview) {
+      return
+    }
+
+    this.ratingReviews = await TsService.getRateeRatingReviews(this.tsRaterRateeId, this.activeRateeReview.id)
   }
 }
 </script>
