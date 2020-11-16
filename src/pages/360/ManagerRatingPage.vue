@@ -16,13 +16,13 @@
 
         <div class="ratees-block skill-block">
           <h2 class="rater-ratee-skill-title">
-            {{ $t('ts.everyday') }}
+            {{ $t(`ts.${type}`) }}
           </h2>
           <p>{{ $t('ts.you_are_the_part', { fullName: ratee.fullName }) }}</p>
           <span>{{ $t('ts.leave_a_comment_below', { fullName: ratee.fullName }) }}</span>
           <div class="results-block" v-if="rating">
             <h3>
-              {{ $t('ts.you_have_rated', { fullName: ratee.fullName, score: rating.score, skill: $t('ts.everyday') }) }}
+              {{ $t('ts.you_have_rated', { fullName: ratee.fullName, score: rating.score, skill: $t(`ts.${type}`) }) }}
             </h3>
             <div class="skill-comment published-comment">
               <img v-if="user.image.fileURL" :src="user.image.fileURL" class="skill-comment__logo" :alt="rating.comment">
@@ -56,9 +56,10 @@
   </div>
 </template>
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import {
   IcoachSkillFullInfo,
+  TsManagerRatingType,
   SurveyInfo,
   TsRateeUser,
   TsRaterRateeSkillRating,
@@ -71,18 +72,21 @@ import TsService from '@/services/TsService'
 import RangeSlider from '@/components/common/rangeSlider/RangeSlider.vue'
 
 @Component({
-  name: 'RaterRateeEverydayPage',
+  name: 'ManagerRatingPage',
   components: {
     RaterRateeCard,
     RangeSlider
   }
 })
-export default class RaterRateeEverydayPage extends Vue {
+export default class ManagerRatingPage extends Vue {
   @Prop({ required: true })
   tsSurveyId !: number
 
   @Prop({ required: true })
   tsRaterRateeId !: number
+
+  @Prop({ required: true })
+  type !: TsManagerRatingType
 
   @Getter('user/currentUser')
   user!: User
@@ -95,6 +99,11 @@ export default class RaterRateeEverydayPage extends Vue {
 
   @Getter('survey/getDisplayedBaseSurveyInfo')
   surveyInfo!: SurveyInfo
+
+  @Watch('type')
+  async onTypeChanged () {
+    await this.updateManagerRating()
+  }
 
   ratee: TsRateeUser | null = null
   skillInfo: IcoachSkillFullInfo | null = null
@@ -110,13 +119,7 @@ export default class RaterRateeEverydayPage extends Vue {
       this.ratee = await TsService.getRateeInfoById(this.tsRaterRateeId)
     }
 
-    if (!this.rating) {
-      const result = await TsService.getEverydayRating(this.tsRaterRateeId)
-
-      if (!Array.isArray(result)) {
-        this.rating = result
-      }
-    }
+    await this.updateManagerRating()
   }
 
   goToList (): void {
@@ -132,13 +135,23 @@ export default class RaterRateeEverydayPage extends Vue {
     this.ratingForm.score = parseInt(value)
   }
 
+  async updateManagerRating (): Promise<void> {
+    const result = await TsService.getManagerRating(this.tsRaterRateeId, this.type)
+
+    if (!Array.isArray(result)) {
+      this.rating = result
+    } else {
+      this.rating = null
+    }
+  }
+
   async rate () {
     if (!await this.$validator.validateAll()) {
       return
     }
 
     try {
-      const result = await TsService.addEveryDayRating(this.tsRaterRateeId, this.ratingForm)
+      const result = await TsService.addManagerRating(this.tsRaterRateeId, this.ratingForm, this.type)
 
       this.updateRating(result)
     } catch (error) {

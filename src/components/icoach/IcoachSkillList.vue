@@ -16,8 +16,8 @@
         <Progress
           :show-title="false"
           :show-percent-inside="false"
-          :processed-props-items-count="skill.completed"
-          :total-props-progress-items-count="skill.total"
+          :processed-props-items-count="parseInt(skill.completed)"
+          :total-props-progress-items-count="parseInt(skill.total)"
           percentage="true"
         />
       </router-link>

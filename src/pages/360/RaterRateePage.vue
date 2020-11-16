@@ -11,7 +11,7 @@
       <div class="rater-ratee-wrapper">
         <div class="ratees-block rater-ratee-info">
           <h2>{{ $t('who_i_rating') }}</h2>
-          <rater-ratee-card :ts-survey-id="tsSurveyId" :raterRatee="ratee" :hasEveryday="hasRoleManager" />
+          <rater-ratee-card :ts-survey-id="tsSurveyId" :raterRatee="ratee" />
 
           <div v-if="hasRoleRatee && myPerformanceManager">
             <h2>{{ $t('my_performance_manager') }}</h2>
@@ -42,7 +42,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 import {
   IcoachSkillShortInfo,
   SurveyInfo,
-  TsManagerUser,
+  TsAbstractUser, TsManagerUser,
   TsRateeUser,
   TsUserDto,
   TsUserRole
