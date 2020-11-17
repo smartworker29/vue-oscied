@@ -22,8 +22,9 @@
     <button class="btn btn-primary btn-primary-active confirm-survey" @click="updateOrder">{{ $t('button_g.confirm_order') }}</button>
     <modal :classes="['ccr-modal']" name="confirm-statements-modal" :height="'auto'">
       <SimpleConfirmModal
-        :title="$t('confirmation_message')"
-        :message="$t('no_ranked_statement')"
+        :title="$t('ipulse_confirmation_message_heading')"
+        :message="$t('ipulse_no_ranked_statement')"
+        :submitButton="$t('button_g.confirm')"
         @cancel="hideConfirmModal"
         @confirm="confirmModal"
       />
