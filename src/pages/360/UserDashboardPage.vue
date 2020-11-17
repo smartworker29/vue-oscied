@@ -63,6 +63,10 @@
               </div>
             </div>
           </div>
+          <div v-if="hasRoleRater && myPerformanceManager">
+            <h2>{{ $t('my_performance_manager') }}</h2>
+            <div class="ratee-items"><performance-manager-card :manager="myPerformanceManager" /></div>
+          </div>
         </div>
       </div>
     </div>
@@ -149,9 +153,7 @@ export default class UserDashboardPage extends Vue {
 
     await this.uploadRaterRatee()
     this.myRatees = await TsService.uploadUserRatee(this.tsSurveyId)
-    if (this.hasRoleRatee) {
-      this.myPerformanceManager = await TsService.getManagerInfo(TsUserRole.RATEE, this.myRatees[0].id)
-    }
+    await this.uploadMyPerformanceManager()
   }
 
   get sortItemList () : any {
@@ -204,6 +206,22 @@ export default class UserDashboardPage extends Vue {
         tsRaterRateeId: ratee.id.toString()
       }
     })
+  }
+
+  async uploadMyPerformanceManager () {
+    if (this.hasRoleRatee) {
+      if (!this.myRatees.length) {
+        return
+      }
+
+      this.myPerformanceManager = await TsService.getManagerInfo(TsUserRole.RATEE, this.myRatees[0].id)
+    } else if (this.hasRoleRater) {
+      if (!this.ratersRatees.length) {
+        return
+      }
+
+      this.myPerformanceManager = await TsService.getManagerInfo(TsUserRole.RATER, this.ratersRatees[0].id)
+    }
   }
 
   addNewRatee () {
