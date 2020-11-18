@@ -260,6 +260,7 @@
   }
 }
 
+
 .btn-primary {
   color: #0085cd;
   border: solid 1px #d6efff;
@@ -268,7 +269,8 @@
     background-color: #e6f3fa; 
   }
   &:hover {
-    background-color: #e6f3fa;
+    background-color: #0085cd !important;
+    color: #fff;
   }
 }
 

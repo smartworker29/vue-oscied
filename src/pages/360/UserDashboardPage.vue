@@ -3,7 +3,8 @@
     <div class="survey-header">
       <h1 class="survey-title">{{ $t('welcome_to_survey', {surveyName: (surveyInfo) ? surveyInfo.title : ''}) }}</h1>
       <div class="ratees-filter" v-if="hasRoleRater">
-        <div class="form-group sort-by">
+        <div class="mobile-filter">Filter</div>
+        <div v-if="!isMobile" class="form-group sort-by">
           <label>
             {{ $t('sort.by_title') }}
           </label>
@@ -18,10 +19,14 @@
             :options="sortItemList">
           </multiselect>
         </div>
+        <img class="caret-down" v-else :src="require('@/assets/icons/icon-arrow-down-white.svg')">
         <div class="form-group show-completed">
           <div class="checkbox-input">
             <label for="isShowCompleted">{{ $t('show_completed') }}</label>
-            <input type="checkbox" v-model="isShowCompleted" id="isShowCompleted">
+            <label class="switch">
+              <input type="checkbox" checked v-model="isShowCompleted" id="isShowCompleted">
+              <span class="slider round"></span>
+            </label>
           </div>
         </div>
       </div>
@@ -45,8 +50,13 @@
         <div class="ratees-block raters-ratees" :class="{ full:  myRatees.length < 1 }">
           <div class="who-rating-header">
             <h2>{{ $t('who_i_rating') }}</h2>
+            <div class="layout-main">
             <div class="layout-select">
-              {{ $t('layout') }} <span @click="changeLayout(1)">1</span> | <span @click="changeLayout(2)">2</span>
+              <p>{{ $t('layout') }}</p> <button @click="changeLayout(1)"><img :src="require('@/assets/icons/icon-layout-table.svg')"></button><button @click="changeLayout(2)"><img :src="require('@/assets/icons/icon-layout-grid.svg')"></button>
+            </div>
+              <button v-if="hasRoleManager" class="btn-rate" @click="addNewRatee">
+                {{ $t('add_new_ratee') }}
+              </button>
             </div>
           </div>
           <div class="ratee-items">
@@ -55,13 +65,6 @@
                               :tsSurveyId="tsSurveyId"
                               :raterRatee="ratee"/>
 
-            <div class="ratee-card users-ratee-card add-ratee" v-if="hasRoleManager">
-              <div class="actions">
-                <button class="btn btn-primary btn-primary-active" @click="addNewRatee">
-                  {{ $t('add_new_ratee') }}
-                </button>
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -126,7 +129,7 @@ export default class UserDashboardPage extends Vue {
 
   @Getter('ts/hasRoleManager')
   hasRoleManager!: boolean
-
+  isMobile: boolean = window.innerWidth < 767;
   myRatees: TsRateeUser[] = []
   ratersRatees: TsRateeUser[] = []
   orderBy: { text: string, number: number } | null = null
@@ -144,6 +147,9 @@ export default class UserDashboardPage extends Vue {
     if (this.hasRoleRatee) {
       this.myPerformanceManager = await TsService.getRateeManagerInfo(this.myRatees[0].id)
     }
+    window.addEventListener('resize', () => {
+      this.isMobile = window.innerWidth < 767
+    })
   }
 
   get sortItemList () : any {
@@ -177,7 +183,7 @@ export default class UserDashboardPage extends Vue {
   }
 
   changeLayout (layout: number) : void {
-    alert('seleected layout ' + layout)
+    alert('selected layout ' + layout)
   }
 
   async uploadRaterRatee () : Promise<void> {

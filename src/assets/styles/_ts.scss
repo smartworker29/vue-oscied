@@ -2,31 +2,144 @@
 
   .survey-header {
     display: flex;
+    align-items: center;
     justify-content: space-between;
 
     .ratees-filter {
       display: flex;
-      min-width: 35%;
       padding: 21px 0;
+      @media screen and (max-width: 767px) {
+        padding: 15px 0;
+        position: relative;
+        .caret-down {
+          position: absolute;
+          right: 0;
+        }
+      }
 
       .sort-by {
         display: flex;
-        width: 65%;
-
+      align-items: center;
         label {
-          width: 30%;
+        white-space: nowrap;
+          margin-right: 15px;
+          font-size: 16px;
+          color: #fff;
+        }
+        .multiselect {
+          width: 200px;
+          height: 36px;
+          border-radius: 12px;
+          border: solid 1px #d6efff;
+          background-color: #ffffff;
+          .multiselect__tags {
+            background: transparent;
+            border: none;
+          }
         }
       }
 
       .show-completed {
         text-align: right;
         margin-left: 20px;
-        width: 35%;
+        display: flex;
+        align-items: center;
+        .checkbox-input {
+          display: flex;
+          align-items: center;
+          .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 40px;
+          }
+
+          .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+          }
+
+          .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+          }
+
+          .slider:before {
+            position: absolute;
+            content: "";
+            height: 32px;
+            width: 32px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+          }
+
+          input:checked + .slider {
+            background-color: #00cdbf;
+          }
+
+          input:focus + .slider {
+            box-shadow: 0 0 1px #00cdbf;
+          }
+
+          input:checked + .slider:before {
+            -webkit-transform: translateX(20px);
+            -ms-transform: translateX(20px);
+            transform: translateX(20px);
+          }
+
+          /* Rounded sliders */
+          .slider.round {
+            border-radius: 34px;
+          }
+
+          .slider.round:before {
+            border-radius: 50%;
+          }
+        }
+
       }
 
       label {
-        font-size: 20px;
+        font-size: 16px;
+        color: #fff;
+        margin-right: 16px;
       }
+      .mobile-filter {
+        display: none;
+      }
+      @media screen and (max-width: 767px) {
+        width: 100%;
+        align-items: center;
+        justify-content: space-between;
+        .form-group {
+          .checkbox-input {
+            display: none;
+          }
+          &.sort-by {
+            label {
+              display: none;
+            }
+          }
+        }
+        .mobile-filter {
+          display: flex;
+        }
+      }
+    }
+    @media screen and (max-width: 767px) {
+      flex-direction: column;
+      align-items: flex-start;
     }
   }
 
@@ -36,24 +149,80 @@
 
       @media screen and (max-width: 768px) {
         flex-direction: column;
+
       }
 
       .ratees-block {
         padding: 10px;
+        @media screen and (max-width: 768px) {
+          padding: 0;
 
+        }
         h2 {
           margin-left: 10px;
           font-weight: bold;
           font-size: 20px;
+          margin-bottom: 0;
         }
 
         .who-rating-header {
           display: flex;
           justify-content: space-between;
+          align-items: center;
+          margin-bottom: 29px;
+          .layout-main {
+            display: flex;
+            align-items: center;
+            .btn-rate {
+              border-radius: 8px;
+              outline: none;
+              background-color: #0085cd;
+              font-size: 14px;
+              border: none;
+              font-weight: 500;
+              line-height: 36px;
+              padding: 0 16px;
+              text-align: center;
+              color: #ffffff;
+              margin-left: 24px;
+            }
 
-          .layout-select {
-            font-size: 20px;
+            .layout-select {
+              display: flex;
+              align-items: center;
+              p {
+                font-size: 16px;
+                color: #071012;
+                margin: 0 15px 0 0;
+              }
+
+              button {
+                height: 28px;
+                line-height: 28px;
+                background: #fff;
+                border-radius: 4px 0 0 4px;
+                border: 1px solid #bdddff;
+                outline: none;
+                &:first-child {
+                  border: 1px solid #bdddff;
+                  border-right: 0;
+                }
+                &:last-child {
+                  border-radius: 0 4px 4px 0;
+                  background: #e6f3fa;
+                }
+                &.active {
+                  background: #d6efff;
+                }
+              }
+            }
+            @media screen and (max-width: 767px){
+              .layout-select {
+                display: none;
+              }
+            }
           }
+
         }
 
         &.user-ratees {
@@ -62,6 +231,7 @@
           .ratee-items {
             display: flex;
             flex-wrap: wrap;
+
 
             .ratee-card {
               width: 100%;
@@ -75,18 +245,78 @@
           &.full {
             flex: 1;
             .ratee-card {
-              width: 23%;
+              //width: 23%;
+              width: 100%;
+              display: flex;
+              flex-direction: column;
+              flex-grow: 1;
+              height: 100%;
+              min-height: 408px;
+              position: relative;
+              .icon-menu {
+                position: relative;
+                top: 15px;
+                display: flex;
+                width: 100%;
+                .left {
+                  left: 0;
+                  position: absolute;
+                }
+                span {
 
+                  .right {
+                    right: 0;
+                    position: absolute;
+                    width: 24px;
+                    height: 24px;
+                    border-radius: 50%;
+                    background: #bdddff;
+                    transform: rotate(90deg);
+                    padding: 0 3px;
+                  }
+                }
+              @media screen and (max-width: 767px) {
+                .left {
+                  display: none;
+                }
+              }
+
+              }
               @media screen and (max-width: 600px) {
                 width: 100%;
+                max-width: unset !important;
+                margin-right: 0;
+                min-height: unset !important;
+              }
+            }
+            .flexGrow {
+              flex-grow: 1;
+              overflow: auto;
+              @media screen and (max-width: 767px) {
+                .mobile-dev {
+                  display: flex;
+                  .ratee-image {
+                    img {
+                      width: 40px;
+                      height: 40px;
+                      margin-right: 10px;
+                    }
+                  }
+                  span {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-start;
+                  }
+                }
               }
             }
           }
         }
 
         .ratee-items {
-          display: flex;
-          flex-wrap: wrap;
+          display: grid;
+          grid-gap: 40px;
+          grid-template-columns:  repeat(auto-fill, minmax(297px, 297px));
 
           .ratee-card {
             width: 31%;
@@ -94,6 +324,12 @@
             @media screen and (max-width: 600px) {
               width: 100%;
             }
+          }
+          @media screen and (max-width: 1366px){
+            justify-content: center;
+          }
+          @media screen and (max-width: 767px){
+            justify-content: center;
           }
         }
       }
@@ -245,29 +481,44 @@
 .ts-rater-ratee-results-page .rater-ratee-wrapper .rater-ratee-info .ratee-card,
 .ts-user-dashboard .survey-content .all-ratees .ratees-block .ratee-items .ratee-card
 {
-  border: 1px solid lightblue;
-  border-radius: 10px;
+  border-radius: 12px;
   padding: 15px;
   text-align: center;
-  margin: 10px;
+  //margin-right: 26px;
+  //margin-bottom: 24px;
+  border: solid 1px #d6efff;
+  background-color: #ffffff;
+
 
   .ratee-image {
     .account-image {
-      height: 120px;
-      width: 120px;
+      height: 80px;
+      width: 80px;
+      margin-bottom: 16px;
     }
   }
 
   .ratee-name {
+    flex-grow: 1;
     .name {
-      font-weight: bold;
       font-size: 20px;
+      text-align: center;
+      color: #071012;
     }
+  .last-review {
+    color: #6a7071;
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
   }
 
   .actions {
     button {
       width: 100%;
+      &:hover {
+        background-color: #0085cd !important;
+        color: #fff;
+      }
     }
 
     a {
@@ -277,10 +528,16 @@
 
   .info {
     .review-before {
-      color: cornflowerblue;
-      background-color: aliceblue;
-      border-radius: 5px;
-      padding: 5px 0;
+      //color: cornflowerblue;
+      //background-color: aliceblue;
+      //border-radius: 5px;
+     padding: 8px 0;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      text-align: center;
+      color: #0085cd;
+      background-color: #f7fcff;
     }
   }
 }

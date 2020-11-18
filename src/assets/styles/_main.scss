@@ -23,11 +23,18 @@ body .show-mobile {
 .wrap {
   display: flex;
   flex-wrap: wrap;
+  .account-drop-down {
+    @media screen and (max-width: 767px){
+      .account-drop-down__select {
+        border-left: none !important;
+      }
+    }
+  }
 }
 
 .space-between {
   display: flex;
-  justify-content: space-between
+  justify-content: space-between;
 }
 
 .flex {
