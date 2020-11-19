@@ -38,7 +38,8 @@ export interface TsManagerUser {
 
 export interface TsNewUserForm {
   email: string,
-  fullName: string
+  firstName: string,
+  lastName: string
 }
 
 export interface TsUserDto {

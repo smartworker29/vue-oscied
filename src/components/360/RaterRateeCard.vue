@@ -23,9 +23,6 @@
     </div>
   </div>
     <div class="actions">
-      <button class="btn  btn-primary-active " v-if="false">
-        {{ $t('button_g.completed') }}
-      </button>
       <button class="btn  btn-primary-active " @click="reviewRatee" v-if="hasRoleRater && raterRatee.isLive">
         {{ $t('button_g.review_now') }}
       </button>
@@ -35,11 +32,11 @@
             {{ $t('button_g.results') }}
           </button>
         </div>
-        <button class="btn  btn-primary-active" @click="setup(raterRatee.id)">
+        <button class="btn  btn-primary-active " @click="setup(raterRatee.id)">
           {{ $t('button_g.setup') }}
         </button>
       </div>
-      <button class="btn btn-primary btn-everyday" @click="everyday" v-if="$route.name !== 'survey.ts.dashboard'">
+      <button class="btn btn-primary btn-everyday " @click="everyday" v-if="$route.name !== 'survey.ts.dashboard'">
         {{ $t('button_g.everyday')}}
       </button>
     </div>

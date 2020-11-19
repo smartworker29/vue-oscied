@@ -1,12 +1,18 @@
 <template>
   <div class="survey ts-user-dashboard">
     <div class="survey-header">
-      <h1 class="survey-title">{{ $t('welcome_to_survey', {surveyName: (surveyInfo) ? surveyInfo.title : ''}) }}</h1>
+      <h1 class="survey-title">
+        {{
+          $t("welcome_to_survey", {
+            surveyName: surveyInfo ? surveyInfo.title : "",
+          })
+        }}
+      </h1>
       <div class="ratees-filter" v-if="hasRoleRater">
         <div class="mobile-filter">Filter</div>
         <div v-if="!isMobile" class="form-group sort-by">
           <label>
-            {{ $t('sort.by_title') }}
+            {{ $t("sort.by_title") }}
           </label>
           <multiselect
             v-model="orderBy"
@@ -16,15 +22,25 @@
             :placeholder="$t('sort.by_title')"
             :searchable="false"
             :show-labels="false"
-            :options="sortItemList">
+            :options="sortItemList"
+          >
           </multiselect>
         </div>
-        <img class="caret-down" v-else :src="require('@/assets/icons/icon-arrow-down-white.svg')">
+        <img
+          class="caret-down"
+          v-else
+          :src="require('@/assets/icons/icon-arrow-down-white.svg')"
+        />
         <div class="form-group show-completed">
           <div class="checkbox-input">
-            <label for="isShowCompleted">{{ $t('show_completed') }}</label>
+            <label for="isShowCompleted">{{ $t("show_completed") }}</label>
             <label class="switch">
-              <input type="checkbox" checked v-model="isShowCompleted" id="isShowCompleted">
+              <input
+                type="checkbox"
+                checked
+                v-model="isShowCompleted"
+                id="isShowCompleted"
+              />
               <span class="slider round"></span>
             </label>
           </div>
@@ -34,42 +50,66 @@
     <div class="survey-content">
       <div class="all-ratees">
         <div class="ratees-block user-ratees" v-if="myRatees.length > 0">
-          <h2>{{ $t('my_rating') }}</h2>
+          <h2>{{ $t("my_rating") }}</h2>
           <div class="ratee-items">
-            <users-ratee-card v-for="ratee in myRatees"
-                              :key="ratee.id"
-                              :userRatee="ratee"
-                              :has-view-my-score="true"
-                              @score="viewScore(ratee)"/>
+            <users-ratee-card
+              v-for="ratee in myRatees"
+              :key="ratee.id"
+              :userRatee="ratee"
+              :has-view-my-score="true"
+              @score="viewScore(ratee)"
+            />
           </div>
           <div v-if="hasRoleRatee && myPerformanceManager">
-            <h2>{{ $t('my_performance_manager') }}</h2>
-            <div class="ratee-items"><performance-manager-card :manager="myPerformanceManager" /></div>
+            <h2>{{ $t("my_performance_manager") }}</h2>
+            <div class="ratee-items">
+              <performance-manager-card :manager="myPerformanceManager" />
+            </div>
           </div>
         </div>
-        <div class="ratees-block raters-ratees" :class="{ full:  myRatees.length < 1 }">
+        <div
+          class="ratees-block raters-ratees"
+          :class="{ full: myRatees.length < 1 }"
+        >
           <div class="who-rating-header">
-            <h2>{{ $t('who_i_rating') }}</h2>
+            <h2>{{ $t("who_i_rating") }}</h2>
             <div class="layout-main">
-            <div class="layout-select">
-              <p>{{ $t('layout') }}</p> <button @click="changeLayout(1)"><img :src="require('@/assets/icons/icon-layout-table.svg')"></button><button @click="changeLayout(2)"><img :src="require('@/assets/icons/icon-layout-grid.svg')"></button>
-            </div>
-              <button v-if="hasRoleManager" class="btn-rate" @click="addNewRatee">
-                {{ $t('add_new_ratee') }}
+              <div class="layout-select">
+                <p>{{ $t("layout") }}</p>
+                <button @click="changeLayout(1)">
+                  <img
+                    :src="require('@/assets/icons/icon-layout-table.svg')"
+                  /></button
+                ><button @click="changeLayout(2)">
+                  <img :src="require('@/assets/icons/icon-layout-grid.svg')" />
+                </button>
+              </div>
+              <button
+                v-if="hasRoleManager"
+                class="btn-rate"
+                @click="addNewRatee"
+              >
+                {{ $t("add_new_ratee") }}
               </button>
             </div>
           </div>
           <div class="ratee-items">
-            <rater-ratee-card v-for="ratee in filteredRaterRatees"
-                              :key="ratee.id"
-                              :tsSurveyId="tsSurveyId"
-                              :raterRatee="ratee"/>
-
+            <rater-ratee-card
+              v-for="ratee in filteredRaterRatees"
+              :key="ratee.id"
+              :tsSurveyId="tsSurveyId"
+              :raterRatee="ratee"
+            />
           </div>
         </div>
       </div>
     </div>
-    <modal :classes="['ccr-modal']" name="new-ratee-modal" :height="'auto'">
+    <modal
+      :classes="['ccr-modal']"
+      name="new-ratee-modal"
+      :adaptive="true"
+      :height="'auto'"
+    >
       <TsAddUserModal
         :title="$t('ts.modal.add_new_ratee')"
         :submit-button="$t('ts.modal.add_new_ratee_button')"
@@ -77,19 +117,21 @@
         @cancel="handleCancelModal"
         @confirm="handleConfirmModal"
         @changed="handleChangedModal"
-      >
-        <template slot="content">
-          <p>{{ $t('ts.modal.add_new_ratee_info_1') }}</p>
-          <p>{{ $t('ts.modal.add_new_ratee_info_2')}}</p>
-        </template>
-      </TsAddUserModal>
+      />
     </modal>
   </div>
 </template>
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import { Getter } from 'vuex-class'
-import { SurveyInfo, TsUserDto, TsRateeUser, TsAbstractUser, TsNewUserForm, TsManagerUser } from '@/interfaces'
+import {
+  SurveyInfo,
+  TsUserDto,
+  TsRateeUser,
+  TsAbstractUser,
+  TsNewUserForm,
+  TsManagerUser
+} from '@/interfaces'
 import TsService from '@/services/TsService'
 import UsersRateeCard from '@/components/360/UsersRateeCard.vue'
 import RaterRateeCard from '@/components/360/RaterRateeCard.vue'
@@ -107,37 +149,38 @@ import PerformanceManagerCard from '@/components/360/PerformanceManagerCard.vue'
 })
 export default class UserDashboardPage extends Vue {
   @Prop({ required: true })
-  tsSurveyId!: number
+  tsSurveyId!: number;
 
   @Getter('user/isAuthenticated')
-  isAuthenticated!: boolean
+  isAuthenticated!: boolean;
 
   @Getter('survey/getDisplayedBaseSurveyInfo')
-  surveyInfo!: SurveyInfo
+  surveyInfo!: SurveyInfo;
 
   @Getter('ts/getUsers')
-  tsUserInfo!: TsUserDto
+  tsUserInfo!: TsUserDto;
 
   @Getter('ts/getManager')
-  tsManager!: TsAbstractUser
+  tsManager!: TsAbstractUser;
 
   @Getter('ts/hasRoleRater')
-  hasRoleRater!: boolean
+  hasRoleRater!: boolean;
 
   @Getter('ts/hasRoleRatee')
-  hasRoleRatee!: boolean
+  hasRoleRatee!: boolean;
 
   @Getter('ts/hasRoleManager')
-  hasRoleManager!: boolean
+  hasRoleManager!: boolean;
   isMobile: boolean = window.innerWidth < 767;
-  myRatees: TsRateeUser[] = []
-  ratersRatees: TsRateeUser[] = []
-  orderBy: { text: string, number: number } | null = null
-  isShowCompleted = false
-  modalError: string = ''
-  myPerformanceManager: TsManagerUser | null = null
+  modalWidth: string = window.innerWidth < 767 ? '600px' : '80%';
+  myRatees: TsRateeUser[] = [];
+  ratersRatees: TsRateeUser[] = [];
+  orderBy: { text: string; number: number } | null = null;
+  isShowCompleted = false;
+  modalError: string = '';
+  myPerformanceManager: TsManagerUser | null = null;
 
-  async created () : Promise<void> {
+  async created (): Promise<void> {
     if (!this.isAuthenticated) {
       await this.$router.push({ name: 'notFound' })
     }
@@ -145,21 +188,24 @@ export default class UserDashboardPage extends Vue {
     await this.uploadRaterRatee()
     this.myRatees = await TsService.uploadUserRatee(this.tsSurveyId)
     if (this.hasRoleRatee) {
-      this.myPerformanceManager = await TsService.getRateeManagerInfo(this.myRatees[0].id)
+      this.myPerformanceManager = await TsService.getRateeManagerInfo(
+        this.myRatees[0].id
+      )
     }
     window.addEventListener('resize', () => {
       this.isMobile = window.innerWidth < 767
+      this.modalWidth = this.isMobile === true ? '80%' : '600px'
     })
   }
 
-  get sortItemList () : any {
+  get sortItemList (): any {
     return [
       { text: this.$t('sort.last_review_asc'), number: 1 },
       { text: this.$t('sort.last_review_desc'), number: 2 }
     ]
   }
 
-  get filteredRaterRatees () : TsRateeUser[] {
+  get filteredRaterRatees (): TsRateeUser[] {
     let result = this.ratersRatees
 
     if (this.isShowCompleted) {
@@ -182,11 +228,11 @@ export default class UserDashboardPage extends Vue {
     return result
   }
 
-  changeLayout (layout: number) : void {
+  changeLayout (layout: number): void {
     alert('selected layout ' + layout)
   }
 
-  async uploadRaterRatee () : Promise<void> {
+  async uploadRaterRatee (): Promise<void> {
     if (this.hasRoleManager) {
       this.ratersRatees = await TsService.getRateeList(this.tsSurveyId)
     } else if (this.hasRoleRater) {
@@ -219,12 +265,19 @@ export default class UserDashboardPage extends Vue {
 
   async handleConfirmModal (user: TsNewUserForm) {
     try {
-      const newRatee = await TsService.addRatee(this.tsSurveyId, this.tsManager.id, user)
+      const newRatee = await TsService.addRatee(
+        this.tsSurveyId,
+        this.tsManager.id,
+        user
+      )
       this.$modal.hide('new-ratee-modal')
 
       this.ratersRatees.push(newRatee)
     } catch (error) {
-      if ('response' in error && [400, 403, 404].includes(error.response.status)) {
+      if (
+        'response' in error &&
+        [400, 403, 404].includes(error.response.status)
+      ) {
         const { detail } = error.response.data
 
         this.modalError = detail
