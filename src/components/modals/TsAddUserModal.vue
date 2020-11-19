@@ -9,7 +9,7 @@
     <slot name="content" />
     <form class="form">
       <div class="form-group row">
-        <p class="error" v-if="modalError">{{ modalError }}</p>
+        <!-- <p class="error" v-if="modalError">{{ modalError }}</p> -->
         <label class="col-md-4 col-sm-4 col-xs-12 col-form-label">{{
           $t("email_address")
         }}</label>
@@ -24,26 +24,13 @@
       </div>
       <div class="form-group row">
         <label class="col-md-4 col-sm-4 col-xs-12 col-form-label">{{
-          $t("first_name")
+          $t("full_name")
         }}</label>
         <input
           class="form-control col-md-8 col-sm-8 col-xs-12"
           type="text"
-          name="firstName"
-          v-model="user.firstName"
-          v-validate="'required'"
-        />
-        <p class="error" v-if="errors">{{ errors.first("fullName") }}</p>
-      </div>
-      <div class="form-group row">
-        <label class="col-md-4 col-sm-4 col-xs-12 col-form-label">{{
-          $t("last_name")
-        }}</label>
-        <input
-          class="form-control col-md-8 col-sm-8 col-xs-12"
-          type="text"
-          name="lastName"
-          v-model="user.lastName"
+          name="fullName"
+          v-model="user.fullName"
           v-validate="'required'"
         />
         <p class="error" v-if="errors">{{ errors.first("fullName") }}</p>
@@ -61,35 +48,35 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
-import { TsNewUserForm } from '@/interfaces'
+import { Component, Prop, Vue, Watch } from "vue-property-decorator";
+import { TsNewUserForm } from "@/interfaces";
 
-@Component({ name: 'TsAddUserModal' })
+@Component({ name: "TsAddUserModal" })
 export default class TsAddUserModal extends Vue {
-  @Prop({ default: '' })
+  @Prop({ default: "" })
   title!: string;
 
-  @Prop({ default: '' })
+  @Prop({ default: "" })
   submitButton!: string;
 
-  @Prop({ default: '' })
+  @Prop({ default: "" })
   modalError!: string;
 
   user: TsNewUserForm = {
-    email: '',
-    firstName: '',
-    lastName: ''
+    email: "",
+    firstName: "",
+    lastName: "",
   };
 
-  @Watch('user.email')
-  emailChanged () {
-    this.$emit('changed')
+  @Watch("user.email")
+  emailChanged() {
+    this.$emit("changed");
   }
 
-  async submit () {
-    await this.$validator.validateAll()
+  async submit() {
+    await this.$validator.validateAll();
 
-    this.$emit('confirm', this.user)
+    this.$emit("confirm", this.user);
   }
 }
 </script>

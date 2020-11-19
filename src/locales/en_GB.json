@@ -168,7 +168,7 @@
       "remove_rater_message": "Are you sure to remove this user?",
       "remove_skill_title": "Remove this skill",
       "remove_skill_message": "Are you sure to remove this skill?",
-      "add_new_ratee": "Create a new Rating Team",
+      "add_new_ratee": "Add a New Appraisee",
       "add_new_ratee_button": "Add Appraisee",
       "add_new_ratee_info_1": "Enter below the details of the Appraisee.",
       "add_new_ratee_info_2": "If the email address is already on the system, the user will be able to use the system with their existing details. The user will be asked to create a new CCR3 account if otherwise.",
