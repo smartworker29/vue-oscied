@@ -1,66 +1,297 @@
 <template>
   <div class="survey">
     <div class="survey-header">
-      <h1 class="survey-title">{{ $t('welcome_to_survey', { surveyName: (surveyInfo) ? surveyInfo.title : '' }) }}</h1>
+      <h1 class="survey-title">
+        {{
+          $t("welcome_to_survey", {
+            surveyName: surveyInfo ? surveyInfo.title : ""
+          })
+        }}
+      </h1>
     </div>
     <div class="survey-content" v-if="ratee">
-      <button class="btn btn-primary btn-primary-active" @click="goToList">
-        {{ $t('button_g.back') }}
-     </button>
-      <h2>{{ ratee.fullName }}</h2>
-      <div class="ts-manager-ratee-wrapper">
-        <div class="ts-ratee-full-item-wrapper">
-          <div class="ts-ratee-full-item">
-            <img class="account-image" :alt="ratee.fullName" :src="ratee.image && ratee.image.fileURL || require('@/assets/user.png')">
-            <div>{{ ratee.fullName }}</div>
-            <div>{{ ratee.email }}</div>
-            <!--<button class="btn btn-primary btn-primary-active" @click="unpublish" v-if="ratee.isLive">-->
-              <!--{{ $t('ts.dashboard.unpublish') }}-->
-            <!--</button>-->
-            <button v-if="!ratee.isLive"
-                    class="btn btn-primary btn-primary-active"
-                    @click="publish">
-              {{ $t('ts.dashboard.publish') }}
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-3">
+            <button
+              class="btn btn-primary btn-primary-active"
+              @click="goToList"
+            >
+              {{ $t("button_g.back") }}
             </button>
-          </div>
-        </div>
-
-        <div class="ts-ratee-wrapper">
-          <div class="ts-ratee-raters-list-wrapper">
-            <button class="btn btn-primary btn-primary-active" @click="addNewRater" v-if="!ratee.isLive">
-              {{ $t('button_g.add_new_user') }}
-            </button>
-            <div v-if="raterList" class="ts-rater-wrapper">
-              <div v-for="(rater, id) in raterList" :key="id" class="ts-rater-item">
-                <img class="ts-rater-image" :alt="rater.fullName" :src="rater.image && rater.image.fileURL || require('@/assets/user.png')">
-                <div>{{ rater.fullName }}</div>
-                <button class="btn btn-primary btn-primary-active" @click="removeRater(rater)" v-if="!ratee.isLive">
-                  {{ $t('button_g.remove') }}
-                </button>
-              </div>
+            <div class="survey-user-title">
+              <h2>{{ ratee.fullName }}</h2>
             </div>
-          </div>
-
-          <div class="ts-ratee-skills-list-wrapper">
-            <button class="btn btn-primary btn-primary-active" @click="addNewSkill" v-if="!ratee.isLive">
-              {{ $t('button_g.add_new_skill') }}
-            </button>
-            <div v-if="groupedSkillList" class="ts-skill-wrapper">
-              <div v-for="(group, id) in groupedSkillList" :key="id" class="ts-skill-item">
-                <h4>
-                  {{ $t(`icoach.categories.${id}`) }}
-                </h4>
-                <div v-for="skill in group" :key="skill.id">
-                  <div>{{ skill.name }}</div>
-                  <button class="btn btn-primary btn-primary-active" @click="removeSkill(skill)" v-if="!ratee.isLive">
-                    {{ $t('button_g.remove') }}
+            <div class="ts-ratee-full-item-wrapper">
+              <div class="ts-ratee-full-item">
+                <div class="icon-menu">
+                  <img
+                    v-if="hasRoleManager && ratee.isLive"
+                    class="left"
+                    :src="require('@/assets/icons/warning.svg')"
+                  />
+                  <span
+                    ><img
+                      class="right"
+                      :src="require('@/assets/icons/nav-active.svg')"
+                  /></span>
+                </div>
+                <div class="manager-img">
+                  <img
+                    class="manager-image"
+                    :alt="ratee.fullName"
+                    :src="
+                      (ratee.image && ratee.image.fileURL) ||
+                        require('@/assets/user.png')
+                    "
+                  />
+                </div>
+                <div class="manager-name">
+                  <div class="name">{{ ratee.fullName }}</div>
+                  <div class="last-review">
+                    Last reviewed: 01/01/2020
+                  </div>
+                </div>
+                <!-- <div class="last-review">
+                    {{ $t("last_review") }} {{ formattedDate }}
+                  </div>
+                </div> -->
+                <!-- <div class="info" v-if="hasRoleRater && ratee.isLive">
+                  <p class="review-before">
+                    {{
+                      $t("review_before", {
+                        name: ratee.fullName,
+                        date: formattedExpiryDate
+                      })
+                    }}
+                  </p>
+                </div> -->
+                <!--<button class="btn btn-primary btn-primary-active" @click="unpublish" v-if="ratee.isLive">-->
+                <!--{{ $t('ts.dashboard.unpublish') }}-->
+                <!--</button>-->
+                <div class="actions">
+                  <button
+                    class="btn review btn-primary-active "
+                    @click="reviewRatee"
+                    v-if="hasRoleRater && ratee.isLive"
+                  >
+                    {{ $t("button_g.review_now") }}
+                  </button>
+                  <button
+                    v-if="!ratee.isLive"
+                    class="btn btn-primary btn-primary-active"
+                    @click="publish"
+                  >
+                    {{ $t("ts.dashboard.publish") }}
                   </button>
                 </div>
               </div>
             </div>
           </div>
+          <div class="col-md-9">
+            <div class="manager-card-header">
+              <b-tabs content-class="mt-3">
+                <b-tab title="users" active>
+                  <div class="ts-ratee-manager-list-wrapper">
+                    <div v-if="raterList" class="ts-manager-wrapper">
+                      <div class="table-outer">
+                        <div class="custom-table">
+                          <div class="table-header">
+                            <div class="header-left">
+                              <div class="form-group form-check">
+                                <input
+                                  type="checkbox"
+                                  class="form-check-input"
+                                  :id="`exampleCheck${id}`"
+                                />
+                                <label
+                                  class="form-check-label"
+                                  :for="`exampleCheck${id}`"
+                                  >Name
+                                </label>
+                                <b-icon-chevron-down></b-icon-chevron-down>
+                              </div>
+                            </div>
+                            <div class="header-right">
+                              <button class="outlined" disabled>
+                                Remove selected
+                              </button>
+                            </div>
+                          </div>
+                          <div
+                            class="table-body"
+                            v-for="rater in raterList"
+                            :key="rater.id"
+                          >
+                            <div class="table-item">
+                              <div class="form-group form-check">
+                                <div class="form-group-left">
+                                  <input
+                                    type="checkbox"
+                                    class="form-check-input"
+                                    :id="`exampleCheck${rater.id}`"
+                                  />
+                                  <img
+                                    class="ts-rater-image"
+                                    :alt="rater.fullName"
+                                    :src="
+                                      (rater.image && rater.image.fileURL) ||
+                                        require('@/assets/user.png')
+                                    "
+                                  />
+                                  <label
+                                    class="form-check-label"
+                                    :for="`exampleCheck${rater.id}`"
+                                    >{{ rater.fullName }}</label
+                                  >
+                                </div>
+                                <div class="form-group-right">
+                                  <button
+                                    class="btn btn-primary btn-primary-active remove"
+                                    @click="removeRater(rater)"
+                                    v-if="!ratee.isLive"
+                                  >
+                                    {{ $t("button_g.remove") }}
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </b-tab>
+                <b-tab title="skills">
+                  <div class="ts-ratee-skills-list-wrapper">
+                    <div v-if="groupedSkillList" class="ts-skill-wrapper">
+                      <div
+                        class="table-outer"
+                        v-for="(group, id) in groupedSkillList"
+                        :key="id"
+                      >
+                        <h4>
+                          {{ $t(`icoach.categories.${id}`) }}
+                        </h4>
+                        <div class="custom-table">
+                          <div class="table-header">
+                            <div class="header-left">
+                              <div class="form-group form-check">
+                                <input
+                                  type="checkbox"
+                                  class="form-check-input"
+                                  :id="`exampleCheck${id}`"
+                                />
+                                <label
+                                  class="form-check-label"
+                                  :for="`exampleCheck${id}`"
+                                  >Name
+                                </label>
+                                <b-icon-chevron-down></b-icon-chevron-down>
+                              </div>
+                            </div>
+                            <div class="header-right">
+                              <button class="outlined" disabled>
+                                Remove selected
+                              </button>
+                            </div>
+                          </div>
+                          <div
+                            class="table-body"
+                            v-for="skill in group"
+                            :key="skill.id"
+                          >
+                            <div class="table-item">
+                              <div class="form-group form-check">
+                                <div class="form-group-left">
+                                  <input
+                                    type="checkbox"
+                                    class="form-check-input"
+                                    :id="`exampleCheck${skill.id}`"
+                                  />
+                                  <label
+                                    class="form-check-label"
+                                    :for="`exampleCheck${skill.id}`"
+                                    >{{ skill.name }}</label
+                                  >
+                                </div>
+                                <div class="form-group-right">
+                                  <button
+                                    class="btn btn-primary btn-primary-active remove"
+                                    @click="removeSkill(skill)"
+                                    v-if="!ratee.isLive"
+                                  >
+                                    {{ $t("button_g.remove") }}
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </b-tab>
+              </b-tabs>
+              <div class="manager-actions">
+                <button class="btn btn-primary outlined" v-if="!ratee.isLive">
+                  Remove selected
+                </button>
+                <button
+                  class="btn btn-primary btn-primary-active"
+                  @click="addNewRater"
+                  v-if="!ratee.isLive"
+                >
+                  {{ $t("button_g.add_new_user") }}
+                </button>
+                <button
+                  class="btn btn-primary btn-primary-active"
+                  @click="addNewSkill"
+                  v-if="!ratee.isLive"
+                >
+                  {{ $t("button_g.add_new_skill") }}
+                </button>
+              </div>
+              <div class="manager-actions mobile">
+                <b-dropdown text="Add" no-caret>
+                  <template #button-content>
+                    Add <b-icon-chevron-down></b-icon-chevron-down>
+                  </template>
+                  <b-dropdown-item href="#">
+                    <button
+                      class="btn btn-primary outlined"
+                      v-if="!ratee.isLive"
+                    >
+                      Remove selected
+                    </button>
+                  </b-dropdown-item>
+                  <b-dropdown-item href="#">
+                    <button
+                      class="btn btn-primary btn-primary-active"
+                      @click="addNewRater"
+                      v-if="!ratee.isLive"
+                    >
+                      {{ $t("button_g.add_new_user") }}
+                    </button>
+                  </b-dropdown-item>
+                  <b-dropdown-item href="#">
+                    <button
+                      class="btn btn-primary btn-primary-active"
+                      @click="addNewSkill"
+                      v-if="!ratee.isLive"
+                    >
+                      {{ $t("button_g.add_new_skill") }}
+                    </button>
+                  </b-dropdown-item>
+                </b-dropdown>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+      <!-- <button class="btn btn-primary btn-primary-active" @click="goToList">
+        {{ $t("button_g.back") }}
+      </button> -->
       <modal :classes="['ccr-modal']" name="new-rater-modal" :height="'auto'">
         <TsAddUserModal
           :title="$t('ts.modal.add_new_rater')"
@@ -71,8 +302,8 @@
           @changed="handleChangedModal"
         >
           <template slot="content">
-            <p>{{ $t('ts.modal.add_new_rater_info_1') }}</p>
-            <p>{{ $t('ts.modal.add_new_rater_info_2') }}</p>
+            <p>{{ $t("ts.modal.add_new_rater_info_1") }}</p>
+            <p>{{ $t("ts.modal.add_new_rater_info_2") }}</p>
           </template>
         </TsAddUserModal>
       </modal>
@@ -85,9 +316,14 @@
         />
       </modal>
 
-      <modal :classes="['ccr-modal']" name="confirm-remove-rater-modal" :height="'auto'">
+      <modal
+        :classes="['ccr-modal']"
+        name="confirm-remove-rater-modal"
+        :height="'auto'"
+      >
         <SimpleConfirmModal
           :title="$t('ts.modal.remove_rater_title')"
+          :submit-button="$t('button_g.remove')"
           :modalError="modalError"
           :message="$t('ts.modal.remove_rater_message')"
           @cancel="hideConfirmRemoveRaterModal"
@@ -95,7 +331,11 @@
         />
       </modal>
 
-      <modal :classes="['ccr-modal']" name="confirm-remove-skill-modal" :height="'auto'">
+      <modal
+        :classes="['ccr-modal']"
+        name="confirm-remove-skill-modal"
+        :height="'auto'"
+      >
         <SimpleConfirmModal
           :title="$t('ts.modal.remove_skill_title')"
           :submit-button="$t('button_g.remove')"
@@ -106,7 +346,11 @@
         />
       </modal>
 
-      <modal :classes="['ccr-modal']" name="confirm-publish-modal" :height="'auto'">
+      <modal
+        :classes="['ccr-modal']"
+        name="confirm-publish-modal"
+        :height="'auto'"
+      >
         <SimpleConfirmModal
           :title="$t('ts.modal.publish_ratee')"
           :submit-button="$t('ts.modal.publish_ratee_button')"
@@ -115,12 +359,11 @@
           @confirm="confirmRemovePublishRatee"
         >
           <template slot="content">
-            <p>{{ $t('ts.modal.publish_ratee_info_1') }}</p>
-            <p>{{ $t('ts.modal.publish_ratee_info_2') }}</p>
+            <p>{{ $t("ts.modal.publish_ratee_info_1") }}</p>
+            <p>{{ $t("ts.modal.publish_ratee_info_2") }}</p>
           </template>
         </SimpleConfirmModal>
       </modal>
-
     </div>
   </div>
 </template>
@@ -129,7 +372,8 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 import {
   IcoachSkillForm,
   IcoachSkillShortInfo,
-  SurveyInfo, TsAbstractUser,
+  SurveyInfo,
+  TsAbstractUser,
   TsNewUserForm,
   TsRateeUser,
   TsRaterUser,
@@ -141,6 +385,7 @@ import TsService from '@/services/TsService'
 import TsAddUserModal from '@/components/modals/TsAddUserModal.vue'
 import TsAddSkillModal from '@/components/modals/TsAddSkillModal.vue'
 import SimpleConfirmModal from '@/components/modals/SimpleConfirmModal.vue'
+import dayjs from 'dayjs'
 
 @Component({
   name: 'ManagerRateePage',
@@ -148,32 +393,34 @@ import SimpleConfirmModal from '@/components/modals/SimpleConfirmModal.vue'
 })
 export default class ManagerRateePage extends Vue {
   @Prop()
-  tsSurveyId !: number
+  tsSurveyId!: number;
 
   @Prop()
-  tsManagerRateeId !: number
+  tsManagerRateeId!: number;
 
   @Getter('user/isAuthenticated')
-  isAuthenticated!: boolean
+  isAuthenticated!: boolean;
 
   @Getter('survey/getDisplayedBaseSurveyInfo')
-  surveyInfo!: SurveyInfo
+  surveyInfo!: SurveyInfo;
 
   @Getter('ts/getUsers')
-  tsUser!: TsUserDto
+  tsUser!: TsUserDto;
 
   @Getter('ts/getManager')
-  tsManager!: TsAbstractUser
+  tsManager!: TsAbstractUser;
 
   @Getter('user/currentUser')
-  user!: User
+  user!: User;
+  @Getter('ts/hasRoleManager')
+  hasRoleManager!: boolean;
 
-  ratee: TsRateeUser | null = null
-  raterList: TsRaterUser[] = []
-  groupedSkillList: { [key: number]: IcoachSkillShortInfo[] } = {}
-  modalError: string = ''
-  raterToRemove: TsRaterUser | null = null
-  skillToRemove: IcoachSkillShortInfo | null = null
+  ratee: TsRateeUser | null = null;
+  raterList: TsRaterUser[] = [];
+  groupedSkillList: { [key: number]: IcoachSkillShortInfo[] } = {};
+  modalError: string = '';
+  raterToRemove: TsRaterUser | null = null;
+  skillToRemove: IcoachSkillShortInfo | null = null;
 
   async created () {
     if (!this.isAuthenticated) {
@@ -210,11 +457,18 @@ export default class ManagerRateePage extends Vue {
         return
       }
 
-      const newRater = await TsService.addRater(this.tsManager.id, this.ratee.id, rater)
+      const newRater = await TsService.addRater(
+        this.tsManager.id,
+        this.ratee.id,
+        rater
+      )
       this.raterList.push(newRater)
       this.$modal.hide('new-rater-modal')
     } catch (error) {
-      if ('response' in error && [400, 403, 404].includes(error.response.status)) {
+      if (
+        'response' in error &&
+        [400, 403, 404].includes(error.response.status)
+      ) {
         const { detail } = error.response.data
         this.modalError = detail
       } else {
@@ -242,12 +496,14 @@ export default class ManagerRateePage extends Vue {
   }
 
   goToList () {
-    return this.$router.push({
-      name: 'survey.ts.dashboard',
-      params: {
-        tsSurveyId: this.tsSurveyId.toString()
-      }
-    })
+    return this.$router
+      .push({
+        name: 'survey.ts.dashboard',
+        params: {
+          tsSurveyId: this.tsSurveyId.toString()
+        }
+      })
+      .catch(() => {})
   }
 
   hideConfirmRemoveRaterModal () {
@@ -268,9 +524,16 @@ export default class ManagerRateePage extends Vue {
     }
 
     try {
-      await TsService.removeRater(this.tsManager.id, this.ratee.id, this.raterToRemove.id)
+      await TsService.removeRater(
+        this.tsManager.id,
+        this.ratee.id,
+        this.raterToRemove.id
+      )
     } catch (error) {
-      if ('response' in error && [400, 403, 404].includes(error.response.status)) {
+      if (
+        'response' in error &&
+        [400, 403, 404].includes(error.response.status)
+      ) {
         const { detail } = error.response.data
 
         this.modalError = detail
@@ -291,9 +554,16 @@ export default class ManagerRateePage extends Vue {
     }
 
     try {
-      await TsService.removeSkill(this.tsManager.id, this.ratee.id, this.skillToRemove.id)
+      await TsService.removeSkill(
+        this.tsManager.id,
+        this.ratee.id,
+        this.skillToRemove.id
+      )
     } catch (error) {
-      if ('response' in error && [400, 403, 404].includes(error.response.status)) {
+      if (
+        'response' in error &&
+        [400, 403, 404].includes(error.response.status)
+      ) {
         const { detail } = error.response.data
 
         this.modalError = detail
@@ -327,9 +597,16 @@ export default class ManagerRateePage extends Vue {
         return
       }
 
-      newRateeSkill = await TsService.addSkill(this.tsManager.id, this.ratee.id, skill)
+      newRateeSkill = await TsService.addSkill(
+        this.tsManager.id,
+        this.ratee.id,
+        skill
+      )
     } catch (error) {
-      if ('response' in error && [400, 403, 404].includes(error.response.status)) {
+      if (
+        'response' in error &&
+        [400, 403, 404].includes(error.response.status)
+      ) {
         const { detail } = error.response.data
         this.modalError = detail
 
@@ -354,29 +631,37 @@ export default class ManagerRateePage extends Vue {
     Vue.set(this.groupedSkillList, newRateeSkill.category, categoryList)
   }
 
-  groupSkills (skills: IcoachSkillShortInfo[]) : { [key: number]: IcoachSkillShortInfo[] } {
+  groupSkills (
+    skills: IcoachSkillShortInfo[]
+  ): { [key: number]: IcoachSkillShortInfo[] } {
     return skills.reduce((rv: any, skill: IcoachSkillShortInfo) => {
       (rv[skill.category] = rv[skill.category] || []).push(skill)
       return rv
     }, {})
-  };
+  }
 
-  publish () : void {
+  publish (): void {
     this.$modal.show('confirm-publish-modal')
   }
 
-  hideConfirmPublishRatee () : void {
+  hideConfirmPublishRatee (): void {
     this.raterToRemove = null
     this.$modal.hide('confirm-publish-modal')
     this.modalError = ''
   }
 
-  async confirmRemovePublishRatee () : Promise<void> {
+  async confirmRemovePublishRatee (): Promise<void> {
     try {
-      this.ratee = await TsService.publish(this.tsManager.id, this.tsManagerRateeId)
+      this.ratee = await TsService.publish(
+        this.tsManager.id,
+        this.tsManagerRateeId
+      )
       this.$modal.hide('confirm-publish-modal')
     } catch (error) {
-      if ('response' in error && [400, 403, 404].includes(error.response.status)) {
+      if (
+        'response' in error &&
+        [400, 403, 404].includes(error.response.status)
+      ) {
         const { detail } = error.response.data
         this.modalError = detail
       } else {
@@ -388,46 +673,332 @@ export default class ManagerRateePage extends Vue {
 </script>
 
 <style lang="scss">
-  .ts-manager-ratee-wrapper {
+.ts-manager-ratee-wrapper {
+  display: flex;
+}
+
+.ts-ratee-full-item-wrapper {
+  max-width: 275px;
+  width: 100%;
+}
+
+.ts-rater-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+.ts-ratee-full-item {
+  border: 1px solid #d8efff;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px;
+}
+
+.ts-rater-item {
+  display: flex;
+  padding: 10px;
+  margin: 10px;
+}
+
+.ts-rater-image {
+  display: block;
+  margin: 0 auto 24px;
+  width: 32px;
+  height: 32px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.ts-ratee-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+.survey {
+  .survey-user-title {
+    h2 {
+      font-size: 20px;
+      font-weight: 500;
+      margin: 15px 0;
+    }
+  }
+  .ts-ratee-manager-list-wrapper {
+    .ts-manager-wrapper {
+      .table-outer {
+        .custom-table {
+          .form-group {
+            .form-group-left {
+              label {
+                margin-left: 20px !important;
+                text-transform: capitalize;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .ts-ratee-skills-list-wrapper,
+  .ts-ratee-manager-list-wrapper {
+    .ts-skill-wrapper,
+    .ts-manager-wrapper {
+      .table-outer {
+        h4 {
+          margin: 30px 0 24px 0;
+        }
+        .custom-table {
+          overflow: hidden;
+          border-radius: 16px;
+          border: solid 1px #e6f3fa;
+          border-bottom: transparent;
+          p {
+            margin: 0;
+          }
+          img {
+            margin: 0 0 0 20px;
+          }
+          .form-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 0;
+            .form-group-left {
+              display: flex;
+              input {
+                border-radius: 3px;
+                box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1);
+                border: solid 1px #e1e6e9;
+                width: 16px;
+                height: 16px;
+              }
+              label {
+                margin-left: 30px;
+                color: #071012;
+              }
+            }
+            .form-group-right {
+              .btn {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                &.remove {
+                  border-radius: 8px;
+                  background: #fff;
+                  border: solid 1px #d6efff;
+                  height: 36px;
+                  font-size: 14px;
+                  font-weight: 500;
+                  &:hover {
+                    color: #fff;
+                  }
+                }
+              }
+            }
+          }
+          .table-header {
+            display: flex;
+            overflow: hidden;
+            justify-content: space-between;
+            padding: 20px 16px;
+            border-bottom: solid 1px #e6f3fa;
+
+            .header-left {
+              display: flex;
+              input {
+                border-radius: 3px;
+                box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1);
+                border: solid 1px #e1e6e9;
+                width: 16px;
+                height: 16px;
+              }
+              label {
+                font-weight: 600;
+                margin-left: 30px;
+              }
+              svg {
+                margin-left: 10px;
+                color: #0085cd;
+                font-weight: 500;
+              }
+            }
+            .header-right {
+              .outlined {
+                background: transparent;
+                border: none;
+              }
+            }
+          }
+          .table-body {
+            .table-item {
+              border-bottom: solid 1px #e6f3fa;
+              padding: 20px 16px;
+              background: #fff;
+            }
+          }
+          .table-body:nth-child(even) {
+            .table-item {
+              background: #f7fcff;
+            }
+          }
+        }
+      }
+    }
+  }
+  .manager-card-header {
     display: flex;
+    justify-content: space-between;
+    .manager-actions {
+      position: absolute;
+      top: 0;
+      right: 0;
+      display: flex;
+      .btn-primary {
+        margin-left: 10px;
+        height: 36px;
+        background: #0085cd;
+        border-color: #0085cd;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 14px;
+        border-radius: 8px;
+        &.outlined {
+          background: transparent;
+          border-color: transparent;
+          color: #0085cd;
+          font-size: 16px;
+          font-weight: 600;
+          &:hover {
+            background: transparent !important;
+          }
+        }
+      }
+      &.mobile {
+        display: none;
+      }
+    }
+    @media (max-width: 992px) {
+      .manager-actions {
+        display: none;
+      }
+      .manager-actions.mobile {
+        display: block;
+        .dropdown {
+          height: 36px;
+          .dropdown-toggle {
+            padding: 13px 10px;
+            background: #0085cd;
+            border-color: #0085cd;
+            align-items: center;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            svg {
+              margin-left: 5px;
+              font-size: 16px;
+            }
+            &:focus {
+              outline: none;
+              box-shadow: none;
+            }
+          }
+        }
+      }
+    }
   }
-
-  .ts-ratee-full-item-wrapper {
-    max-width: 275px;
-    width: 100%;
-  }
-
-  .ts-rater-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-  }
-
+}
+.ts-ratee-full-item-wrapper {
+  max-width: 282px;
   .ts-ratee-full-item {
-    border: 1px solid #d8efff;
-    border-radius: 10px;
-    padding: 10px;
-    margin: 10px;
-
+    padding: 16px 16px 24px 16px;
+    border-radius: 12px;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.05);
+    border: solid 1px #e6f3fa;
+    background-color: #ffffff;
+    .actions {
+      margin-top: 58px;
+      .review {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        font-size: 14px;
+        justify-content: center;
+        height: 36px;
+        border-radius: 8px;
+        background-color: #0085cd;
+        color: #fff;
+      }
+      .btn-primary {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        font-size: 14px;
+        font-weight: 500;
+        border-radius: 8px;
+        border: solid 1px #d6efff;
+        height: 36px;
+      }
+    }
+    .icon-menu {
+      position: relative;
+      top: 15px;
+      display: flex;
+      width: 100%;
+      .right {
+        right: 0;
+        position: absolute;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: #bdddff;
+        -webkit-transform: rotate(90deg);
+        transform: rotate(90deg);
+        padding: 0 3px;
+      }
+    }
+    .manager-img {
+      text-align: center;
+      img {
+        width: 80px;
+        height: 80px;
+        margin: 0 auto;
+        border-radius: 50%;
+      }
+    }
+    .manager-name {
+      .name {
+        font-size: 20px;
+        text-align: center;
+        color: #071012;
+        line-height: 28px;
+      }
+      .last-review {
+        color: #6a7071;
+        font-size: 14px;
+        margin-bottom: 12px;
+        text-align: center;
+      }
+    }
+    .info {
+      .review-before {
+        padding: 8px 0;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 500;
+        text-align: center;
+        color: #0085cd;
+        background-color: #f7fcff;
+      }
+    }
   }
-
-  .ts-rater-item {
-    display: flex;
-    padding: 10px;
-    margin: 10px;
+  @media (max-width: 540px) {
+    max-width: 100%;
+    margin-bottom: 30px;
+    .ts-ratee-full-item {
+      margin: 0;
+    }
   }
-
-  .ts-rater-image {
-    display: block;
-    margin: 0 auto 24px;
-    width: 32px;
-    height: 32px;
-    object-fit: cover;
-    border-radius: 50%;
-  }
-
-  .ts-ratee-wrapper {
-    display: flex;
-    flex-direction: column;
-  }
+}
 </style>

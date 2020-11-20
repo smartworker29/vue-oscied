@@ -4,7 +4,7 @@
       <h1 class="survey-title">
         {{
           $t("welcome_to_survey", {
-            surveyName: surveyInfo ? surveyInfo.title : "",
+            surveyName: surveyInfo ? surveyInfo.title : ""
           })
         }}
       </h1>
@@ -118,10 +118,10 @@
         @confirm="handleConfirmModal"
         @changed="handleChangedModal"
       >
-      <template slot="content">
-        <p>{{ $t('ts.modal.add_new_ratee_info_1') }}</p>
-        <p>{{ $t('ts.modal.add_new_ratee_info_2') }}</p>
-      </template>
+        <template slot="content">
+          <p>{{ $t("ts.modal.add_new_ratee_info_1") }}</p>
+          <!-- <p>{{ $t('ts.modal.add_new_ratee_info_2') }}</p> -->
+        </template>
       </TsAddUserModal>
     </modal>
   </div>
