@@ -73,8 +73,7 @@
     "completed": "Completed",
     "rate": "Rate",
     "everyday": "Everyday - Rate now",
-    "send_email": "Send an email",
-    "overall": "Overall Score"
+    "send_email": "Send an email"
   },
   "email_address": "Email Address",
   "remember_me": "Remember Me",
@@ -190,7 +189,6 @@
     "this_skill_in_context": "This Skill in context",
     "how_to_develop": "How to Develop this Skill",
     "everyday": "Everyday",
-    "overall": "Overall",
     "you_are_the_part": "You are part of the 360 support team for {fullName}. You are asked to look at\nthe definition below and think about an example of where you have witnessed\n{fullName} performing this task in their roles",
     "results": {
       "my_results": "My Results",
@@ -217,11 +215,12 @@
   "survey_is_expired": "This Questionnaire has now expired.",
   "icoach_is_not_active": "This iCoach is not yet active.",
   "icoach_is_expired": "This iCoach has now expired.",
-  "ipulse_no_ranked_statement": "You have decided to score one or more statements with a score of 1. If you believe that the ranking you have made on statements are correct for you, then simply confirm this below.",
-  "ipulse_confirmation_message_heading": "Please Confirm Your Choices",
+  "no_ranked_statement": "You evaluated statements with 1. Would you like to proceed?",
+  "confirmation_message": "Confirmation message",
   "skill_category": "Skills' category",
   "skill": "Skill",
   "review_before": "You need to review {name} before {date}",
+  "last_review": "Last reviewed",
   "who_i_rating": "Who am I rating",
   "my_rating": "My rating",
   "my_performance_manager": "My Performance Manager",
