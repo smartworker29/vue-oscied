@@ -34,9 +34,12 @@
         <div class="header-icon">
           <img :src="require('@/assets/icons/icon-alert-blue.svg')">
         </div>
-        <!-- <div class="header-logout header-icon"  @click.prevent="logout">
-          <img :src="require('@/assets/icons/icon-logout-blue.svg')">
-        </div> -->
+<!--        <div class="header-logout header-icon"  @click.prevent="logout">-->
+<!--          <img :src="require('@/assets/icons/icon-logout-blue.svg')">-->
+<!--        </div>-->
+        <div class="header-nav-icon">
+          <img :src="require('@/assets/icons/nav-dots.svg')">
+        </div>
       </template>
       <template v-else>
         <LangSwitcher class="language-header" />
@@ -137,6 +140,21 @@ export default class UserHeader extends Vue {
     }
     @media only screen and (max-width: 760px) {
       display: none;
+    }
+  }
+
+  .header-nav-icon {
+    border-left: 1px solid #d6efff;
+    height: 100%;
+    display: flex;
+    width: 62px;
+    transition: 0.2s all;
+    &:hover {
+      background: #bdddff;
+    }
+    cursor: pointer;
+    img {
+      margin: 0 auto;
     }
   }
 
