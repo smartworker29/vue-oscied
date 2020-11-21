@@ -49,14 +49,10 @@
                 <div class="manager-name">
                   <div class="name">{{ ratee.fullName }}</div>
                   <div class="last-review">
-                    Last reviewed: 01/01/2020
-                  </div>
-                </div>
-                <!-- <div class="last-review">
                     {{ $t("last_review") }} {{ formattedDate }}
                   </div>
-                </div> -->
-                <!-- <div class="info" v-if="hasRoleRater && ratee.isLive">
+                </div>
+                <div class="info" v-if="hasRoleRater && ratee.isLive">
                   <p class="review-before">
                     {{
                       $t("review_before", {
@@ -65,14 +61,13 @@
                       })
                     }}
                   </p>
-                </div> -->
+                </div>
                 <!--<button class="btn btn-primary btn-primary-active" @click="unpublish" v-if="ratee.isLive">-->
                 <!--{{ $t('ts.dashboard.unpublish') }}-->
                 <!--</button>-->
                 <div class="actions">
                   <button
                     class="btn review btn-primary-active "
-                    @click="reviewRatee"
                     v-if="hasRoleRater && ratee.isLive"
                   >
                     {{ $t("button_g.review_now") }}
@@ -102,20 +97,21 @@
                                 <input
                                   type="checkbox"
                                   class="form-check-input"
-                                  :id="`exampleCheck${id}`"
+                                  id="user-list-checkbox"
+                                  v-model="checkedAll"
                                 />
                                 <label
                                   class="form-check-label"
-                                  :for="`exampleCheck${id}`"
+                                  for="user-list-checkbox"
                                   >Name
                                 </label>
                                 <b-icon-chevron-down></b-icon-chevron-down>
                               </div>
                             </div>
                             <div class="header-right">
-                              <button class="outlined" disabled>
-                                Remove selected
-                              </button>
+<!--                              <button @click="removeCheckedAll" class="outlined" :disabled="checked.length === 0">-->
+<!--                                Remove selected-->
+<!--                              </button>-->
                             </div>
                           </div>
                           <div
@@ -130,6 +126,8 @@
                                     type="checkbox"
                                     class="form-check-input"
                                     :id="`exampleCheck${rater.id}`"
+                                    v-model="checked"
+                                    :value="rater.id"
                                   />
                                   <img
                                     class="ts-rater-image"
@@ -180,20 +178,22 @@
                                 <input
                                   type="checkbox"
                                   class="form-check-input"
-                                  :id="`exampleCheck${id}`"
+                                  :id="`categories${id}`"
+                                  v-model="checkedAllGroup[id]"
+                                  @click="checkGroup(id)"
                                 />
                                 <label
                                   class="form-check-label"
-                                  :for="`exampleCheck${id}`"
+                                  :for="`categories${id}`"
                                   >Name
                                 </label>
                                 <b-icon-chevron-down></b-icon-chevron-down>
                               </div>
                             </div>
                             <div class="header-right">
-                              <button class="outlined" disabled>
-                                Remove selected
-                              </button>
+<!--                              <button class="outlined" >-->
+<!--                                Remove selected-->
+<!--                              </button>-->
                             </div>
                           </div>
                           <div
@@ -208,6 +208,8 @@
                                     type="checkbox"
                                     class="form-check-input"
                                     :id="`exampleCheck${skill.id}`"
+                                    v-model="checkedItemGroup"
+                                    :value="skill.id"
                                   />
                                   <label
                                     class="form-check-label"
@@ -234,7 +236,7 @@
                 </b-tab>
               </b-tabs>
               <div class="manager-actions">
-                <button class="btn btn-primary outlined" v-if="!ratee.isLive">
+                <button class="btn btn-primary outlined" v-if="!ratee.isLive" :disabled="checked.length === 0 && checkedItemGroup.length === 0">
                   Remove selected
                 </button>
                 <button
@@ -412,6 +414,8 @@ export default class ManagerRateePage extends Vue {
 
   @Getter('user/currentUser')
   user!: User;
+  @Getter('ts/hasRoleRater')
+  hasRoleRater!: boolean;
   @Getter('ts/hasRoleManager')
   hasRoleManager!: boolean;
 
@@ -421,6 +425,64 @@ export default class ManagerRateePage extends Vue {
   modalError: string = '';
   raterToRemove: TsRaterUser | null = null;
   skillToRemove: IcoachSkillShortInfo | null = null;
+  checked: Array<string> = [];
+  checkedItemGroup: Array<string> = [];
+  checkedAllGroup: Object = {};
+
+  get formattedDate (): string {
+    if (this.ratee !== null && this.ratee.expiryTime) {
+      return dayjs(this.ratee.expiryTime.toString()).format('DD/MM/YYYY')
+    }
+    return dayjs(new Date().toString()).format('DD/MM/YYYY')
+  }
+
+  get formattedExpiryDate (): string {
+    if (this.ratee !== null && this.ratee.isLive && this.ratee.expiryTime) {
+      return dayjs(this.ratee.expiryTime.toString()).format('DD/MM/YYYY')
+    }
+    return ''
+  }
+
+  get checkedAll () {
+    return this.raterList ? this.checked.length === this.raterList.length : false
+  }
+
+  set checkedAll (value: any) {
+    const selected: Array<string> = []
+    if (value) {
+      this.raterList.forEach(function (user: any) {
+        selected.push(user.id)
+      })
+    }
+
+    this.checked = selected
+  }
+
+  async removeCheckedAll () {
+    this.checked = []
+  }
+
+  async checkGroup (group: any) {
+    const selected: Array<string> = []
+
+    this.checkedAllGroup[group] = !this.checkedAllGroup[group]
+
+    for (const [key, value] of Object.entries(this.checkedAllGroup)) {
+      if (key !== group) {
+        this.checkedAllGroup[key] = false
+      }
+      console.log(`${key}: ${value}`)
+    }
+
+    if (this.checkedAllGroup[group]) {
+      this.groupedSkillList[group].forEach((item: any) => {
+        selected.push(item.id)
+      })
+      this.checkedItemGroup = selected
+    } else {
+      this.checkedItemGroup = []
+    }
+  }
 
   async created () {
     if (!this.isAuthenticated) {
