@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="ccr-modal__header">
-      <h2 class="ccr-modal__title">{{ title }}</h2>
+      <h2 class="ccr-modal__title" style="margin: 0;">{{ title }}</h2>
       <div class="ccr-modal__close">
         <span class="arrow" @click="$emit('cancel')"><fa icon="times" /></span>
       </div>
