@@ -47,7 +47,7 @@ export interface TsUserDto {
 }
 
 export interface TsRaterRateeSkillRating {
-  score: string
+  score: number
   comment: string
 }
 

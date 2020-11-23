@@ -141,7 +141,7 @@ export default class UserDashboardPage extends Vue {
 
     await this.uploadRaterRatee()
     this.myRatees = await TsService.uploadUserRatee(this.tsSurveyId)
-    if (this.hasRoleRatee) {
+    if (this.hasRoleRatee && this.myRatees.length > 0) {
       this.myPerformanceManager = await TsService.getRateeManagerInfo(this.myRatees[0].id)
     }
   }
