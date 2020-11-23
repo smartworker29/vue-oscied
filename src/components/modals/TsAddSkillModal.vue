@@ -3,7 +3,7 @@
     <h2 class="ccr-modal__title">{{ $t('ts.modal.add_new_skill') }}</h2>
     <span>{{ categoriesTitles }}</span>
     <form class="form">
-      <div class="form-group row">
+      <div class="form-group">
         <p class="error" v-if="modalError">{{ modalError }}</p>
         <div class="form-group row form-group-select col-md-6">
           <multiselect
@@ -39,14 +39,22 @@
 
       </div>
     </form>
-    <div class="ccr-modal__actions ccr-modal__actions-right">
+    <!-- <div class="ccr-modal__actions ccr-modal__actions-right">
       <button class="btn btn-primary" @click="$emit('cancel')">
         {{ $t('button_g.cancel') }}
       </button>
       <button class="btn btn-primary btn-primary-active" @click="submit">
         {{ $t('button_g.confirm') }}
       </button>
-    </div>
+    </div> -->
+    <div class="modal-footer" style="border-top: none;">
+          <button class="btn btn-primary" @click="$emit('cancel')">
+          {{ $t('button_g.cancel') }}
+        </button>
+        <button class="btn btn-primary btn-primary-active" @click="submit">
+          {{ $t('button_g.confirm') }}
+        </button>
+      </div>
   </div>
 </template>
 

@@ -104,6 +104,19 @@ class TsService extends BaseApiService {
     return this.callMethod('post', `ts/${tsRaterRateeId}/rating/everyday/add/`, { rating })
   }
 
+  // *** START *** //
+
+  // TODO: plug method
+  addManagerRating (tsRaterRateeId: number, rating: TsRatingForm, blank: any) : TsRatingForm {
+    return this.callMethod('post','');
+  }
+
+  getManagerRating (tsRaterRateeId: number, blank: any) : TsRateeScore[] {
+    return this.callMethod('get', ``)
+  }
+
+  // *** END *** //
+
   getRateeScores (tsRaterRateeId: number) : TsRateeScore[] {
     return this.callMethod('get', `ts/${tsRaterRateeId}/scores/`)
   }
