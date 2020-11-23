@@ -147,7 +147,6 @@
                                   <button
                                     class="btn btn-primary btn-primary-active remove"
                                     @click="removeRater(rater)"
-                                    v-if="!ratee.isLive"
                                   >
                                     {{ $t("button_g.remove") }}
                                   </button>
@@ -221,7 +220,6 @@
                                   <button
                                     class="btn btn-primary btn-primary-active remove"
                                     @click="removeSkill(skill)"
-                                    v-if="!ratee.isLive"
                                   >
                                     {{ $t("button_g.remove") }}
                                   </button>
@@ -236,7 +234,7 @@
                 </b-tab>
               </b-tabs>
               <div class="manager-actions">
-                <button class="btn btn-primary outlined" v-if="!ratee.isLive" :disabled="checked.length === 0 && checkedItemGroup.length === 0">
+                <button class="btn btn-primary outlined" :disabled="checked.length === 0 && checkedItemGroup.length === 0">
                   Remove selected
                 </button>
                 <button
@@ -262,7 +260,6 @@
                   <b-dropdown-item href="#">
                     <button
                       class="btn btn-primary outlined"
-                      v-if="!ratee.isLive"
                     >
                       Remove selected
                     </button>

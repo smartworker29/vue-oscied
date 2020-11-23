@@ -40,7 +40,8 @@
           </multiselect>
           <small class="error">{{ errors.first('skill') }}</small>
         </div>
-       </div>
+
+      </div>
     </form>
     <!-- <div class="ccr-modal__actions ccr-modal__actions-right">
       <button class="btn btn-primary" @click="$emit('cancel')">
