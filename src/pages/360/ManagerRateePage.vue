@@ -427,7 +427,7 @@ export default class ManagerRateePage extends Vue {
   skillToRemove: IcoachSkillShortInfo | null = null;
   checked: Array<string> = [];
   checkedItemGroup: Array<string> = [];
-  checkedAllGroup: Object = {};
+  checkedAllGroup: any = {};
 
   get formattedDate (): string {
     if (this.ratee !== null && this.ratee.expiryTime) {
