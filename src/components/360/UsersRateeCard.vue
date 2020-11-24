@@ -1,7 +1,13 @@
 <template>
   <div class="ratee-card users-ratee-card">
     <div class="ratee-image">
-      <img class="account-image" :src="userRatee.image && userRatee.image.fileURL || require('@/assets/user.png')">
+      <img
+        class="account-image"
+        :src="
+          (userRatee.image && userRatee.image.fileURL) ||
+            require('@/assets/user.png')
+        "
+      />
     </div>
     <div class="ratee-name">
       <div class="name">{{ userRatee.fullName }}</div>
@@ -9,8 +15,12 @@
     </div>
     <div class="info"></div>
     <div class="actions">
-      <button class="btn btn-primary btn-primary-active" @click="score" v-if="hasViewMyScore">
-        {{ $t('button_g.view_my_score') }}
+      <button
+        class="btn btn-primary btn-primary-active"
+        @click="score"
+        v-if="hasViewMyScore"
+      >
+        {{ $t("button_g.view_my_score") }}
       </button>
     </div>
   </div>
@@ -24,10 +34,10 @@ import { TsRateeUser } from '@/interfaces'
 })
 export default class UsersRateeCard extends Vue {
   @Prop({ required: true })
-  userRatee!: TsRateeUser
+  userRatee!: TsRateeUser;
 
   @Prop({ required: true, default: false })
-  hasViewMyScore!: boolean
+  hasViewMyScore!: boolean;
 
   @Emit()
   score () {}

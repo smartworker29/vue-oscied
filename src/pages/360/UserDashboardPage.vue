@@ -4,7 +4,7 @@
       <h1 class="survey-title">
         {{
           $t("welcome_to_survey", {
-            surveyName: surveyInfo ? surveyInfo.title : "",
+            surveyName: surveyInfo ? surveyInfo.title : ""
           })
         }}
       </h1>
@@ -67,21 +67,18 @@
             </div>
           </div>
         </div>
-        <div
-          class="ratees-block raters-ratees"
-          :class="{ full: myRatees.length < 1 }"
-        >
-          <div class="who-rating-header">
-            <h2>{{ $t("who_i_rating") }}</h2>
+        <div class="ratees-block raters-ratees" :class="{ full:  myRatees.length < 1 }">
+          <div class="who-rating-header" v-if="hasRoleManager || filteredRaterRatees.length">
+            <h2>{{ $t(ratingHeader) }}</h2>
             <div class="layout-main">
-              <div class="layout-select">
-                <p>{{ $t("layout") }}</p>
-                <button @click="changeLayout(1)">
-                  <img
-                    :src="require('@/assets/icons/icon-layout-table.svg')"
-                  /></button
-                ><button @click="changeLayout(2)">
-                  <img :src="require('@/assets/icons/icon-layout-grid.svg')" />
+            <div class="layout-select">
+              <p>{{ $t('layout') }}</p>
+              <button @click="changeLayout(1)">
+                <img
+                  :src="require('@/assets/icons/icon-layout-table.svg')"
+                /></button
+              ><button @click="changeLayout(2)">
+              <img :src="require('@/assets/icons/icon-layout-grid.svg')" />
                 </button>
               </div>
               <button
@@ -93,16 +90,20 @@
               </button>
             </div>
           </div>
-          <div class="ratee-items">
-            <rater-ratee-card
-              v-for="ratee in filteredRaterRatees"
-              :key="ratee.id"
-              :tsSurveyId="tsSurveyId"
-              :raterRatee="ratee"
-            />
+          <div v-if="hasRoleRater && myPerformanceManager && !hasRoleManager">
+            <h2>{{ $t('my_performance_manager') }}</h2>
+            <div class="ratee-items"><performance-manager-card :manager="myPerformanceManager" /></div>
+          </div>
+            <div class="ratee-items">
+              <rater-ratee-card
+                v-for="ratee in filteredRaterRatees"
+                :key="ratee.id"
+                :tsSurveyId="tsSurveyId"
+                :raterRatee="ratee"
+              />
+            </div>
           </div>
         </div>
-      </div>
     </div>
     <modal
       :classes="['ccr-modal']"
@@ -118,10 +119,9 @@
         @confirm="handleConfirmModal"
         @changed="handleChangedModal"
       >
-      <template slot="content">
-        <p>{{ $t('ts.modal.add_new_ratee_info_1') }}</p>
-        <p>{{ $t('ts.modal.add_new_ratee_info_2') }}</p>
-      </template>
+        <template slot="content">
+          <p>{{ $t("ts.modal.add_new_ratee_info_1") }}</p>
+        </template>
       </TsAddUserModal>
     </modal>
   </div>
@@ -135,7 +135,8 @@ import {
   TsRateeUser,
   TsAbstractUser,
   TsNewUserForm,
-  TsManagerUser
+  TsManagerUser,
+  TsUserRole
 } from '@/interfaces'
 import TsService from '@/services/TsService'
 import UsersRateeCard from '@/components/360/UsersRateeCard.vue'
@@ -192,11 +193,8 @@ export default class UserDashboardPage extends Vue {
 
     await this.uploadRaterRatee()
     this.myRatees = await TsService.uploadUserRatee(this.tsSurveyId)
-    if (this.hasRoleRatee) {
-      this.myPerformanceManager = await TsService.getRateeManagerInfo(
-        this.myRatees[0].id
-      )
-    }
+
+    await this.uploadMyPerformanceManager()
     window.addEventListener('resize', () => {
       this.isMobile = window.innerWidth < 767
       this.modalWidth = this.isMobile === true ? '80%' : '600px'
@@ -232,9 +230,11 @@ export default class UserDashboardPage extends Vue {
 
     return result
   }
+  get ratingHeader (): string {
+    return this.hasRoleManager ? 'rating_teams' : 'who_i_rating'
+  }
 
-  changeLayout (layout: number): void {
-    alert('selected layout ' + layout)
+  changeLayout (layout: number) : void {
   }
 
   async uploadRaterRatee (): Promise<void> {
@@ -253,6 +253,22 @@ export default class UserDashboardPage extends Vue {
         tsRaterRateeId: ratee.id.toString()
       }
     })
+  }
+
+  async uploadMyPerformanceManager () {
+    if (this.hasRoleRatee) {
+      if (!this.myRatees.length) {
+        return
+      }
+
+      this.myPerformanceManager = await TsService.getManagerInfo(TsUserRole.RATEE, this.myRatees[0].id)
+    } else if (this.hasRoleRater) {
+      if (!this.ratersRatees.length) {
+        return
+      }
+
+      this.myPerformanceManager = await TsService.getManagerInfo(TsUserRole.RATER, this.ratersRatees[0].id)
+    }
   }
 
   addNewRatee () {

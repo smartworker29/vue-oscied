@@ -3,6 +3,6 @@ declare module 'vue-authenticate' {
   export default VueAuthenticate
 }
 declare module 'vuedraggable' {
-  const draggable: any
-  export default draggable
+  // const draggable: any
+  // export default draggable
 }

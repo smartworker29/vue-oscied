@@ -1,24 +1,36 @@
 <template>
   <div class="survey ts-rater-ratee-page">
     <div class="survey-header">
-      <h1 class="survey-title">{{ $t('welcome_to_survey', { surveyName: (surveyInfo) ? surveyInfo.title : '' }) }}</h1>
+      <h1 class="survey-title">
+        {{
+          $t("welcome_to_survey", {
+            surveyName: surveyInfo ? surveyInfo.title : ""
+          })
+        }}
+      </h1>
     </div>
     <div class="survey-content" v-if="ratee">
       <button class="btn btn-primary btn-primary-active" @click="goToList">
-        {{ $t('button_g.back') }}
+        {{ $t("button_g.back") }}
       </button>
 
       <div class="rater-ratee-wrapper">
         <div class="ratees-block rater-ratee-info">
-          <h2>{{ $t('who_i_rating') }}</h2>
-          <rater-ratee-card :ts-survey-id="tsSurveyId" :raterRatee="ratee" :hasEveryday="hasRoleManager" />
-
-          <div v-if="hasRoleRatee && myPerformanceManager">
+          <h2>{{ $t("who_i_rating") }}</h2>
+          <rater-ratee-card
+            :ts-survey-id="tsSurveyId"
+            :raterRatee="ratee"
+            :hasEveryday="hasRoleManager"
+          />
+          <div v-if="myPerformanceManager">
             <h2>{{ $t('my_performance_manager') }}</h2>
-            <div class="ratee-items"><performance-manager-card :manager="myPerformanceManager" /></div>
+            <div class="ratee-items">
+              <performance-manager-card :manager="myPerformanceManager" />
+            </div>
           </div>
         </div>
         <div class="ratees-block rater-ratee-skills">
+          <p>dkdk</p>
           <div v-if="groupedSkillList">
             <div v-for="(group, id) in groupedSkillList" :key="id">
               <h4 class="rater-ratee-skill-title">
@@ -63,30 +75,33 @@ import PerformanceManagerCard from '@/components/360/PerformanceManagerCard.vue'
 })
 export default class RaterRateePage extends Vue {
   @Prop()
-  tsSurveyId !: number
+  tsSurveyId!: number;
 
   @Prop()
-  tsRaterRateeId !: number
+  tsRaterRateeId!: number;
 
   @Getter('user/isAuthenticated')
-  isAuthenticated!: boolean
+  isAuthenticated!: boolean;
 
   @Getter('survey/getDisplayedBaseSurveyInfo')
-  surveyInfo!: SurveyInfo
+  surveyInfo!: SurveyInfo;
 
   @Getter('ts/hasRoleRatee')
-  hasRoleRatee!: boolean
+  hasRoleRatee!: boolean;
+
+  @Getter('ts/hasRoleRater')
+  hasRoleRater!: boolean
 
   @Getter('ts/hasRoleManager')
-  hasRoleManager!: boolean
+  hasRoleManager!: boolean;
 
   @Getter('ts/getUsers')
-  tsUserInfo!: TsUserDto
+  tsUserInfo!: TsUserDto;
 
-  ratee: TsRateeUser | null = null
-  skillList: IcoachSkillShortInfo[] | null = null
-  groupedSkillList: { [key: number]: IcoachSkillShortInfo[] } = {}
-  myPerformanceManager: TsManagerUser | null = null
+  ratee: TsRateeUser | null = null;
+  skillList: IcoachSkillShortInfo[] | null = null;
+  groupedSkillList: { [key: number]: IcoachSkillShortInfo[] } = {};
+  myPerformanceManager: TsManagerUser | null = null;
 
   async created () {
     if (!this.isAuthenticated) {
@@ -111,7 +126,9 @@ export default class RaterRateePage extends Vue {
     this.groupedSkillList = this.groupSkills(this.skillList)
   }
 
-  groupSkills (skills: IcoachSkillShortInfo[]) : { [key: number]: IcoachSkillShortInfo[] } {
+  groupSkills (
+    skills: IcoachSkillShortInfo[]
+  ): { [key: number]: IcoachSkillShortInfo[] } {
     return skills.reduce((rv: any, skill: IcoachSkillShortInfo) => {
       (rv[skill.category] = rv[skill.category] || []).push(skill)
       return rv
@@ -140,12 +157,19 @@ export default class RaterRateePage extends Vue {
 
   async uploadMyPerformanceManager () {
     if (this.hasRoleRatee) {
-      const currentRatee = this.tsUserInfo.users.find(user => user.role === TsUserRole.RATEE)
+      const currentRatee = this.tsUserInfo.users.find(
+        user => user.role === TsUserRole.RATEE
+      )
       if (!currentRatee) {
         return
       }
+      this.myPerformanceManager = await TsService.getManagerInfo(TsUserRole.RATEE, currentRatee.id)
+    } else if (this.hasRoleRater) {
+      if (!this.ratee) {
+        return
+      }
 
-      this.myPerformanceManager = await TsService.getRateeManagerInfo(currentRatee.id)
+      this.myPerformanceManager = await TsService.getManagerInfo(TsUserRole.RATER, this.ratee.id)
     }
   }
 }
