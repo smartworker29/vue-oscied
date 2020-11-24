@@ -222,6 +222,7 @@
   "review_before": "You need to review {name} before {date}",
   "last_review": "Last reviewed",
   "who_i_rating": "Who am I rating",
+  "rating_teams": "Rating Teams",
   "my_rating": "My rating",
   "my_performance_manager": "My Performance Manager",
   "add_new_ratee": "Add a New Appraisee",

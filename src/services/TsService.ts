@@ -10,7 +10,8 @@ import {
   TsRaterRateeSkillRating,
   TsRaterUser,
   TsRatingForm,
-  TsUserDto
+  TsUserDto,
+  TsUserRole
 } from '@/interfaces'
 
 class TsService extends BaseApiService {
@@ -30,8 +31,8 @@ class TsService extends BaseApiService {
     return this.callMethod('get', `/ts/${tsRateeId}/raters/`)
   }
 
-  getRateeManagerInfo (tsRateeId: number) : TsManagerUser {
-    return this.callMethod('get', `/ts/${tsRateeId}/manager`)
+  getManagerInfo (tsRole: TsUserRole, tsRateeId: number) : TsManagerUser {
+    return this.callMethod('get', `/ts/${tsRole}/${tsRateeId}/manager`)
   }
 
   getSkillList (tsRateeId: number) : IcoachSkillShortInfo[] {

@@ -48,6 +48,7 @@
                 </div>
                 <div class="manager-name">
                   <div class="name">{{ ratee.fullName }}</div>
+                  <div class="email">{{ ratee.email }}</div>
                   <div class="last-review">
                     {{ $t("last_review") }} {{ formattedDate }}
                   </div>
@@ -1032,6 +1033,9 @@ export default class ManagerRateePage extends Vue {
         text-align: center;
         color: #071012;
         line-height: 28px;
+      }
+      .email {
+        text-align: center;
       }
       .last-review {
         color: #6a7071;
