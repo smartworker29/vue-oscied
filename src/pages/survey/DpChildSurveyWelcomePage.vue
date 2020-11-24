@@ -206,7 +206,9 @@ export default class DpChildSurveyWelcomePage extends Vue {
     display: flex;
     justify-content: space-between;
     @media only screen and (max-width: 768px) {
-      margin-bottom: 11px;
+      margin-bottom: 0px;
+      margin-top: 24px;
+      text-align: left;
       flex-wrap: wrap;
       span: {
         width: 100%;

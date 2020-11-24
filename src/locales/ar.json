@@ -72,8 +72,7 @@
     "completed": "🇦🇪 Completed",
     "rate": "🇦🇪 Rate",
     "everyday": "🇦🇪 Everyday - Rate now",
-    "send_email": "🇦🇪 Send an email",
-    "overall": "🇦🇪 Overall Score"
+    "send_email": "🇦🇪 Send an email"
   },
   "email_address": "عنوان بريد الكتروني",
   "remember_me": "تذكرنى",
@@ -168,7 +167,7 @@
       "remove_rater_message": "🇦🇪 Are you sure to remove this user?",
       "remove_skill_title": "🇦🇪 Remove this skill",
       "remove_skill_message": "🇦🇪 Are you sure to remove this skill?",
-      "add_new_ratee": "🇦🇪 Create a new Rating Team",
+      "add_new_ratee": "🇦🇪 Add a New Appraisee",
       "add_new_rater": "🇦🇪 Add a new user to this team",
       "add_new_skill": "🇦🇪 Add a new Skill to this Team",
       "publish_ratee":  "🇦🇪 Publish ratee"
@@ -180,7 +179,6 @@
     "this_skill_in_context":  "🇦🇪 This Skill in context",
     "how_to_develop":  "🇦🇪 How to Develop this Skill",
     "everyday": "🇦🇪 Everyday",
-    "overall": "🇦🇪 Overall",
     "you_are_the_part": "🇦🇪 You are part of the 360 support team for {fullName}. You are asked to look at\nthe definition below and think about an example of where you have witnessed\n{fullName} performing this task in their roles",
     "results": {
       "my_results": "🇦🇪 My Results",
@@ -212,7 +210,9 @@
   "skill_category": "🇦🇪 Skills' category",
   "skill": "🇦🇪 Skill",
   "review_before": "🇦🇪 You need to review {name} before {date}",
+  "last_review": "🇦🇪 Last reviewed",
   "who_i_rating": "🇦🇪 Who am I rating",
+  "rating_teams": "🇦🇪 Rating Teams",
   "add_new_ratee": "🇦🇪 Add new ratee",
   "my_rating": "🇦🇪 My rating",
   "my_performance_manager": "🇦🇪 My Performance Manager",

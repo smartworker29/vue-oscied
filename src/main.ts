@@ -10,7 +10,7 @@ import './mixin'
 import './filters'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import BootstrapVue from 'bootstrap-vue'
+import {BootstrapVue, BIcon, BIconChevronDown} from 'bootstrap-vue'
 import Multiselect from 'vue-multiselect'
 import VueAxios from 'vue-axios'
 import VeeValidate from 'vee-validate'
@@ -23,6 +23,8 @@ import LocaleHelper from '@/utils/LocaleHelper'
 export const EventBus = new Vue()
 
 Vue.component('multiselect', Multiselect)
+Vue.component('BIcon', BIcon)
+Vue.component('BIconChevronDown', BIconChevronDown)
 Vue.use(VModal)
 Vue.use(BootstrapVue)
 Vue.use(VeeValidate)

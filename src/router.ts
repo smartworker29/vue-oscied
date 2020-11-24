@@ -25,8 +25,8 @@ import ManagerRateePage from '@/pages/360/ManagerRateePage.vue'
 import UserDashboardPage from '@/pages/360/UserDashboardPage.vue'
 import RaterRateePage from '@/pages/360/RaterRateePage.vue'
 import RaterRateeSkillPage from '@/pages/360/RaterRateeSkillPage.vue'
+import RaterRateeEverydayPage from '@/pages/360/RaterRateeEverydayPage.vue'
 import RaterRateeResultsPage from '@/pages/360/RaterRateeResultsPage.vue'
-import ManagerRatingPage from '@/pages/360/ManagerRatingPage.vue'
 
 Vue.use(Router)
 
@@ -151,10 +151,10 @@ const router = new Router({
           name: 'survey.ts.user.ratee'
         },
         {
-          path: 'user/:tsRaterRateeId(\\d+)/:type(everyday|overall)',
-          component: ManagerRatingPage,
+          path: 'user/:tsRaterRateeId(\\d+)/everyday',
+          component: RaterRateeEverydayPage,
           props: true,
-          name: 'survey.ts.manager.rating'
+          name: 'survey.ts.user.ratee.everyday'
         },
         {
           path: 'user/:tsRaterRateeId(\\d+)/skill/:skillId(\\d+)',

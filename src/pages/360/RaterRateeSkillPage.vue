@@ -13,7 +13,7 @@
           <h2>{{ $t('who_i_rating') }}</h2>
           <rater-ratee-card :ts-survey-id="tsSurveyId" :raterRatee="ratee" />
 
-          <div v-if="hasRoleRatee && myPerformanceManager">
+          <div v-if="myPerformanceManager">
             <h2>{{ $t('my_performance_manager') }}</h2>
             <div class="ratee-items"><performance-manager-card :manager="myPerformanceManager" /></div>
           </div>
@@ -24,7 +24,7 @@
           <span>{{ $t('ts.leave_a_comment_below', { fullName: ratee.fullName }) }}</span>
           <div class="results-block" v-if="skillInfo.status && rating">
             <h3>
-              {{ $t('ts.you_have_rated', { fullName: ratee.fullName, score: rating.score, skill: skillInfo.name }) }}
+              {{ $t('ts.you_have_rated', { fullName: ratee.fullName, score: Math.trunc(rating.score), skill: skillInfo.name }) }}
             </h3>
             <div class="skill-comment published-comment">
               <img v-if="user.image.fileURL" :src="user.image.fileURL" class="skill-comment__logo" :alt="rating.comment">
@@ -111,6 +111,12 @@ export default class RaterRateeSkillPage extends Vue {
   @Getter('ts/hasRoleRatee')
   hasRoleRatee!: boolean
 
+  @Getter('ts/hasRoleRater')
+  hasRoleRater!: boolean
+
+  @Getter('ts/hasRoleManager')
+  hasRoleManager!: boolean
+
   @Getter('survey/getDisplayedBaseSurveyInfo')
   surveyInfo!: SurveyInfo
 
@@ -176,14 +182,20 @@ export default class RaterRateeSkillPage extends Vue {
         return
       }
 
-      this.myPerformanceManager = await TsService.getRateeManagerInfo(currentRatee.id)
+      this.myPerformanceManager = await TsService.getManagerInfo(TsUserRole.RATEE, currentRatee.id)
+    } else if (this.hasRoleRater) {
+      if (!this.ratee) {
+        return
+      }
+
+      this.myPerformanceManager = await TsService.getManagerInfo(TsUserRole.RATER, this.ratee.id)
     }
   }
 
   updateRating (rating: TsRatingForm) {
     this.rating = {
       comment: rating.comment,
-      score: rating.score.toFixed(2)
+      score: rating.score
     }
     this.ratingForm = {
       score: 1,
