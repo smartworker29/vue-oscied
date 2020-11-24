@@ -44,7 +44,7 @@
         {{ submitButton }}
       </button>
     </div> -->
-        <div class="modal-footer" style="border-top: none;">
+        <div class="modal-footer" style="border-top: none; padding: 0;">
              <button class="btn btn-primary btn-primary-active" @click="submit">
         {{ submitButton }}
       </button>
