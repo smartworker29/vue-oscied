@@ -1,0 +1,21 @@
+// tab styles globals
+.tabs {
+  width: 100%;
+}
+.nav-tabs {
+  border-bottom: none;
+  .nav-link {
+    color: #071012;
+    text-transform: capitalize;
+    font-weight: 500;
+  }
+  .nav-link.active {
+    background: #e6f3fa;
+    border-radius: 12px;
+    border-color: #e6f3fa;
+  }
+  .nav-link:hover,
+  .nav-link:focus {
+    border: 1px solid transparent;
+  }
+}

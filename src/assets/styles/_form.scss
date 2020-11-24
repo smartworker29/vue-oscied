@@ -1,4 +1,5 @@
-.error, .has-error {
+.error,
+.has-error {
   color: #ce4844;
   input {
     border: 1px solid #ce4844;
@@ -7,35 +8,35 @@
 
 .form-wrapper {
   overflow: hidden;
-  background: #fff;
-  border-radius: 23px;
-  box-shadow: 0 24px 32px 0 rgba(0, 0, 0, 0.1);
-  border: solid 1px #0085cd;
   padding-bottom: 6px;
+  background: #fff;
+  box-shadow: 0 24px 32px 0 rgba(0, 0, 0, .1);
+  border: solid 1px #0085cd;
+  border-radius: 23px;
 }
 
 .form-switcher {
-  background: #e6f3fa;
   padding: 24px 24px 0;
+  background: #e6f3fa;
   border-bottom: 1px solid #bdddff;
   @media only screen and (max-width: 768px) {
     display: flex;
-    padding: 14px 15px 0;
     justify-content: space-between;
+    padding: 14px 15px 0;
   }
 
   button {
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-    color: #fff;
-    background-color: #0085cd;
-    font-size: 18px;
-    padding: 11px 24px;
-    font-weight: 600;
-    border: solid 1px #bdddff;
-    border-bottom: none;
     position: relative;
     top: 1px;
+    padding: 11px 24px;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 600;
+    background-color: #0085cd;
+    border: solid 1px #bdddff;
+    border-bottom: none;
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
     &:focus {
       outline: none;
     }
@@ -51,8 +52,8 @@
 }
 
 .form-content {
-  padding: 0 21px 24px;
   overflow: hidden;
+  padding: 0 21px 24px;
   @media only screen and (max-width: 576px) {
     padding: 9px 12px 24px;
   }
@@ -83,16 +84,16 @@
   }
   .form-group {
     display: flex;
-    justify-content: space-between;
-    margin-bottom: 16px;
     flex-wrap: wrap;
+    justify-content: space-between;
     align-items: center;
+    margin-bottom: 16px;
     &.has-error {
       &.form-group-select .multiselect__tags {
-        border-color: #ce4844
+        border-color: #ce4844;
       }
       input {
-        border-color: #ce4844
+        border-color: #ce4844;
       }
     }
 
@@ -107,28 +108,28 @@
 
     &.space {
       width: 100%;
-      height: 66px;
       max-width: 286px;
+      height: 66px;
       @media only screen and (max-width: 1200px) {
         height: 60px;
       }
     }
 
     .input-wrapper {
-      max-width: 100%;
-      width: 100%;
       position: relative;
+      width: 100%;
+      max-width: 100%;
     }
 
     input {
-      font-size: 14px;
-      border-radius: 12px;
-      width: 100%;
+      // width: 100%;
       max-width: 100%;
       padding: 9px 16px;
-      background: #ffffff;
+      font-size: 14px;
+      background: #fff;
       border: solid 1px #d6efff;
-      transition: all 0.2;
+      border-radius: 12px;
+      transition: all .2;
       &:focus {
         outline: none;
       }
@@ -144,8 +145,8 @@
     position: relative;
     .eye-block {
       position: relative;
-      right: 5px;
       top: 8px;
+      right: 5px;
     }
   }
 
@@ -154,57 +155,56 @@
       border: none;
     }
     .multiselect {
-      .multiselect__select:before {
-        background: url('assets/icons/icon-arrow-down-xs-blue.svg') no-repeat;
-        border: none;
-        height: 24px;
-        width: 24px;
-        top: -1px;
-        display: block;
-      }
-
       // border: solid 1px #d6efff;
       min-width: 200px;
       max-width: 100%;
+      .multiselect__select:before {
+        top: -1px;
+        display: block;
+        width: 24px;
+        height: 24px;
+        background: url("assets/icons/icon-arrow-down-xs-blue.svg") no-repeat;
+        border: none;
+      }
       &.multiselect--above {
         .multiselect__content-wrapper {
           top: auto;
           border: solid 1px #d6efff;
-          border-bottom-left-radius: 12px;
-          border-bottom-right-radius: 12px;
-          border-top-left-radius: 0;
-          border-top-right-radius: 0;
           border-bottom: none;
+          border-top-right-radius: 0;
+          border-bottom-right-radius: 12px;
+          border-bottom-left-radius: 12px;
+          border-top-left-radius: 0;
         }
         .multiselect__content {
-          padding-top: 0px;
+          padding-top: 0;
           padding-bottom: 12px;
         }
       }
     }
 
     .multiselect__tags {
-      border-radius: 12px;
-      padding: 5px 40px 0 16px;
       min-height: 36px;
+      padding: 5px 40px 0 16px;
       border: solid 1px #d6efff;
+      border-radius: 12px;
     }
 
     .multiselect__option {
-      font-size: 14px;
       padding: 12px 16px;
+      font-size: 14px;
     }
 
     .multiselect__option--highlight {
-      background: #e6f3fa;
       color: #35495e;
+      background: #e6f3fa;
     }
 
     .multiselect__single {
+      padding: 2px 0 0 0;
+      margin: 0;
       color: #071012;
       font-size: 14px;
-      margin: 0;
-      padding: 2px 0 0 0;
     }
 
     .multiselect__content {
@@ -214,13 +214,13 @@
     .multiselect__content-wrapper {
       top: 27px;
       border: solid 1px #d6efff;
-      border-bottom-left-radius: 12px;
-      border-bottom-right-radius: 12px;
       border-top: none;
+      border-bottom-right-radius: 12px;
+      border-bottom-left-radius: 12px;
     }
 
     .multiselect__placeholder {
-      margin-bottom: 1px
+      margin-bottom: 1px;
     }
     // input {
     //   border: none;
@@ -242,33 +242,35 @@
   }
 
   label {
-    font-size: 16px;
-    color: #071012;
-    width: 100%;
+    // width: 100%;
     margin-bottom: 6px;
+    color: #071012;
+    font-size: 16px;
   }
 }
 
 .btn {
-  cursor: pointer;
-  border-radius: 12px;
+  padding: 13px 18px;
   background: #fff;
   border: solid 1px #00cdbf;
-  padding: 13px 18px;
+  border-radius: 12px;
+  cursor: pointer;
   &:focus {
     outline: none;
   }
 }
+
 
 .btn-primary {
   color: #0085cd;
   border: solid 1px #d6efff;
   cursor: pointer;
   &-active {
-    background-color: #e6f3fa; 
+    background-color: #e6f3fa;
   }
   &:hover {
-    background-color: #e6f3fa;
+    color: #fff;
+    background-color: #0085cd !important;
   }
 }
 
@@ -279,19 +281,19 @@
 
 .form-actions {
   display: inline-flex;
-  margin-top: 6px;
   width: 100%;
+  margin-top: 6px;
   .switch-form {
-    font-size: 16px;
-    cursor: pointer;
-    text-decoration: underline;
     color: #0085cd;
+    font-size: 16px;
+    text-decoration: underline;
+    cursor: pointer;
   }
 }
 
 .form-actions-justified {
+  justify-content: space-between;;
   align-items: center;
-  justify-content: space-between
 }
 
 .form-actions-right {
@@ -315,9 +317,9 @@
 .checkbox-input {
   display: flex;
   label {
+    margin-left: 5px;
     font-size: 14px;
     font-weight: 300;
-    margin-left: 5px;
   }
   input {
     margin-top: 2px;
@@ -340,9 +342,9 @@
   }
   .switch-form {
     @media only screen and (max-width: 576px) {
-      font-size: 14px;
-      margin-bottom: 24px;
       width: 100%;
+      margin-bottom: 24px;
+      font-size: 14px;
     }
   }
   .form-actions-right {

@@ -41,11 +41,11 @@ export default class Progress extends Vue {
   percentage?: boolean
 
   get totalProgressItemsCount () : number {
-    if (typeof this.totalPropsProgressItemsCount === 'number') {
+    if (this.totalPropsProgressItemsCount) {
       return this.totalPropsProgressItemsCount
     }
 
-    if (typeof this.totalSurveyProgressItemsCount === 'number') {
+    if (this.totalSurveyProgressItemsCount) {
       return this.totalSurveyProgressItemsCount
     }
 
@@ -53,7 +53,7 @@ export default class Progress extends Vue {
   }
 
   get processedItemsCount () : number {
-    if (typeof this.processedPropsItemsCount === 'number') {
+    if (typeof this.processedPropsItemsCount !== 'undefined') {
       return this.processedPropsItemsCount
     }
 
@@ -68,6 +68,10 @@ export default class Progress extends Vue {
     return (this.processedItemsCount && this.totalProgressItemsCount)
       ? Math.ceil(this.processedItemsCount / this.totalProgressItemsCount * 100)
       : 0
+  }
+
+  get formattedProcessedItemsCount () : string|0 {
+    return this.percentage && this.processedPercent ? this.processedPercent.toFixed(0) : 0
   }
 }
 </script>
