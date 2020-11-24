@@ -55,7 +55,7 @@ export default class RangeSlider extends Vue {
     this.$emit('change-value', this.inputRange)
   }
 
-  changedValue (event: InputEvent) {
+  changedValue (event: Event) {
     this.recalculateRangeStyles()
     const input = event.target as HTMLInputElement
 

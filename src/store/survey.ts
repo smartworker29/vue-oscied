@@ -1,5 +1,5 @@
 import { Module } from 'vuex'
-import { RootState, SurveyState } from '@/store'
+import { RootState } from '@/store'
 import {
   Section,
   SurveyInfo,

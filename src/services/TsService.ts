@@ -13,7 +13,8 @@ import {
   TsRaterRateeSkillRating,
   TsRaterUser,
   TsRatingForm,
-  TsUserDto
+  TsUserDto,
+  TsUserRole
 } from '@/interfaces'
 
 class TsService extends BaseApiService {
@@ -33,8 +34,8 @@ class TsService extends BaseApiService {
     return this.callMethod('get', `/ts/${tsRateeId}/raters/`)
   }
 
-  getRateeManagerInfo (tsRateeId: number) : TsManagerUser {
-    return this.callMethod('get', `/ts/${tsRateeId}/manager`)
+  getManagerInfo (tsRole: TsUserRole, tsRateeId: number) : TsManagerUser {
+    return this.callMethod('get', `/ts/${tsRole}/${tsRateeId}/manager`)
   }
 
   getSkillList (tsRateeId: number) : IcoachSkillShortInfo[] {
@@ -105,6 +106,14 @@ class TsService extends BaseApiService {
 
   addManagerRating (tsRaterRateeId: number, rating: TsRatingForm, type: TsManagerRatingType) : TsRatingForm {
     return this.callMethod('post', `ts/${tsRaterRateeId}/rating/${type}/add/`, { rating })
+  }
+
+  getEverydayRating (tsRateeId: number) : TsRaterRateeSkillRating|[] {
+    return this.callMethod('get', `ts/${tsRateeId}/rating/everyday/`)
+  }
+
+  addEveryDayRating (tsRaterRateeId: number, rating: TsRatingForm) : TsRatingForm {
+    return this.callMethod('post', `ts/${tsRaterRateeId}/rating/everyday/add/`, { rating })
   }
 
   getManagerRatingAvarageScore (tsRaterRateeId: number, type: TsManagerRatingType) : TsManagerRatingAvarageScore {

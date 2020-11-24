@@ -168,7 +168,7 @@
       "remove_rater_message": "🇩🇪 Are you sure to remove this user?",
       "remove_skill_title": "🇩🇪 Remove this skill",
       "remove_skill_message": "🇩🇪 Are you sure to remove this skill?",
-      "add_new_ratee": "🇩🇪 Create a new Rating Team",
+      "add_new_ratee": "🇩🇪 Add a New Appraisee",
       "add_new_rater": "🇩🇪 Add a new user to this team",
       "add_new_skill": "🇩🇪 Add a new Skill to this Team",
       "publish_ratee":  "🇩🇪 Publish ratee"
@@ -215,7 +215,9 @@
   "skill_category": "🇩🇪 Skills' category",
   "skill": "🇩🇪 Skill",
   "review_before": "🇩🇪 You need to review {name} before {date}",
+  "last_review": "🇩🇪 Last reviewed",
   "who_i_rating": "🇩🇪 Who am I rating",
+  "rating_teams": "🇩🇪 Rating Teams",
   "add_new_ratee": "🇩🇪 Add new ratee",
   "my_rating": "🇩🇪 My rating",
   "my_performance_manager": "🇩🇪 My Performance Manager",

@@ -38,7 +38,8 @@ export interface TsManagerUser {
 
 export interface TsNewUserForm {
   email: string,
-  fullName: string
+  firstName: string,
+  lastName: string
 }
 
 export interface TsUserDto {
@@ -47,7 +48,7 @@ export interface TsUserDto {
 }
 
 export interface TsRaterRateeSkillRating {
-  score: string
+  score: number
   comment: string
 }
 
@@ -61,11 +62,6 @@ export interface TsRateeReview {
   score: number
   timeCreated: string | null
   timeExpiry: string | null
-}
-
-export enum TsManagerRatingType {
-  EVERYDAY = 'everyday',
-  OVERALL = 'overall'
 }
 
 export interface TsManagerRatingAvarageScore {

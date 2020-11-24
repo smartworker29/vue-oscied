@@ -1,14 +1,16 @@
 <template>
-  <div class="container dashboard-page">
+  <div class="dashboard-page">
     <div class="dashboard-content">
-      <h2 class="dashboard-content-title">{{ $t('dashboard.title')}}</h2>
+      <h2 class="dashboard-content-title">{{ $t("dashboard.title") }}</h2>
       <div class="dashboard-items" v-if="dashboardItems">
-        <DashboardItem v-for="(item, index) in dashboardItems"
-                       :key="index"
-                       :item="item.item"
-                       :type="item.type"
-                       :title="item.title"
-                       @click.native="openItem(item.accessCode, item.type)" />
+        <DashboardItem
+          v-for="(item, index) in dashboardItems"
+          :key="index"
+          :item="item.item"
+          :type="item.type"
+          :title="item.title"
+          @click.native="openItem(item.accessCode, item.type)"
+        />
       </div>
     </div>
   </div>
@@ -17,14 +19,19 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import DashboardItem from './DashboardItem.vue'
-import { DashboardBaseItem, DashboardSurveyItem, DashboardIcoachItem, DashboardTsItem } from '@/interfaces'
+import {
+  DashboardBaseItem,
+  DashboardSurveyItem,
+  DashboardIcoachItem,
+  DashboardTsItem
+} from '@/interfaces'
 import DashboardService from '@/services/DashboardService'
 
 interface DashboardItemTemplateInterface {
-  title: string
-  type: string
-  accessCode: string
-  item: DashboardBaseItem
+  title: string;
+  type: string;
+  accessCode: string;
+  item: DashboardBaseItem;
 }
 
 @Component({
@@ -33,7 +40,7 @@ interface DashboardItemTemplateInterface {
   }
 })
 export default class Dashboard extends Vue {
-  dashboardItems: DashboardItemTemplateInterface[] = []
+  dashboardItems: DashboardItemTemplateInterface[] = [];
 
   async created () {
     await this.uploadItems()
@@ -90,14 +97,22 @@ export default class Dashboard extends Vue {
 
   openItem (accessCode: string, surveyProductOrICoachType: string): void {
     if (surveyProductOrICoachType === 'icoach') {
-      this.$router.push({ name: 'icoach.welcome', params: { accessCode: accessCode } })
+      this.$router.push({
+        name: 'icoach.welcome',
+        params: { accessCode: accessCode }
+      })
     } else {
-      const surveyProduct = surveyProductOrICoachType === 'dp' ? 'discovery-process' : surveyProductOrICoachType
-      this.$router.push({ name: 'survey.welcome', params: { surveyProduct, accessCode } })
+      const surveyProduct =
+        surveyProductOrICoachType === 'dp'
+          ? 'discovery-process'
+          : surveyProductOrICoachType
+      this.$router.push({
+        name: 'survey.welcome',
+        params: { surveyProduct, accessCode }
+      })
     }
   }
 }
 </script>
 
-<style lang="scss">
-</style>
+<style lang="scss"></style>

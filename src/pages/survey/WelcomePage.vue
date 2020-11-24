@@ -366,7 +366,8 @@ export default class WelcomePage extends Vue {
   }
 
   .survey-title {
-    font-size: 32px;
+    font-size: 24px;
+    margin: 0;
     font-weight: 300;
     color: #fff;
     display: flex;

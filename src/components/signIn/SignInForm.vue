@@ -30,7 +30,7 @@
           <input type="checkbox">
           <label>{{ $t('remember_me') }}</label>
         </div>
-        <button type="submit" class="btn btn-success col-12">{{ $t('button_g.sign_in') }}</button>
+        <button type="submit" class="btn btn-success">{{ $t('button_g.sign_in') }}</button>
       </div>
     </div>
   </form>
