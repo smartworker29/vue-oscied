@@ -151,7 +151,7 @@ export default class RaterRateeEverydayPage extends Vue {
   updateRating (rating: TsRatingForm) {
     this.rating = {
       comment: rating.comment,
-      score: rating.score.toFixed(2)
+      score: rating.score
     }
     this.ratingForm = {
       score: 1,

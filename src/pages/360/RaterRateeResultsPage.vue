@@ -54,7 +54,7 @@ import {
   SurveyInfo,
   TsManagerRating,
   TsManagerRatingAvarageScore,
-  TsManagerRatingType,
+  TsManagerRatingTypeEnum,
   TsRateeReview,
   TsRateeUser,
   TsUserDto,
@@ -108,9 +108,9 @@ export default class RaterRateeResultsPage extends Vue {
 
   async created () {
     this.ratee = await TsService.getRateeInfoById(this.tsSurveyId)
-    this.averageEverydayScore = await TsService.getManagerRatingAvarageScore(this.tsRaterRateeId, TsManagerRatingType.EVERYDAY)
+    this.averageEverydayScore = await TsService.getManagerRatingAvarageScore(this.tsRaterRateeId, TsManagerRatingTypeEnum.EVERYDAY)
     this.rateeReviewsPeriods = await TsService.getRateeReviewsPeriods(this.tsRaterRateeId)
-    this.lastTen = await TsService.getManagerRatingLastTen(this.tsRaterRateeId, TsManagerRatingType.EVERYDAY)
+    this.lastTen = await TsService.getManagerRatingLastTen(this.tsRaterRateeId, TsManagerRatingTypeEnum.EVERYDAY)
   }
 
   async prepareReport (rateeReviewId: number): Promise<void> {

@@ -128,12 +128,12 @@ class TsService extends BaseApiService {
     return this.callMethod('get', `ts/${tsRaterRateeId}/reviews/`)
   }
 
-  getRateeReviewsReport (tsRaterRateeId: number, tsRateeReviewId: number) : void {
-    return this.callMethod('get', `ts/${tsRaterRateeId}/reviews/${tsRateeReviewId}`)
+  getRateeReviewsReport (tsRaterRateeId: number, tsRateeReviewId: number) : object {
+    return this.callMethod('get', `ts/${tsRaterRateeId}/reviews/${tsRateeReviewId}/`)
   }
 
-  getRateeRatingReviews (tsRaterRateeId: number, tsRateeReviewId: number) : void {
-    return this.callMethod('get', `ts/${tsRaterRateeId}/rating-reviews/${tsRateeReviewId}`)
+  getRateeRatingReviews (tsRaterRateeId: number, tsRateeReviewId: number) : object {
+    return this.callMethod('get', `ts/${tsRaterRateeId}/rating-reviews/${tsRateeReviewId}/`)
   }
 }
 
