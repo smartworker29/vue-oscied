@@ -3,9 +3,12 @@ import {
   IcoachSkillForm,
   IcoachSkillFullInfo,
   IcoachSkillShortInfo,
+  TsManagerRatingType,
   TsManagerUser,
+  TsManagerRating,
+  TsManagerRatingAvarageScore,
   TsNewUserForm,
-  TsRateeScore,
+  TsRateeReview,
   TsRateeUser,
   TsRaterRateeSkillRating,
   TsRaterUser,
@@ -97,6 +100,14 @@ class TsService extends BaseApiService {
     return this.callMethod('post', `ts/${tsRateeId}/${skillId}/rating/add/`, { rating })
   }
 
+  getManagerRating (tsRateeId: number, type: TsManagerRatingType) : TsRaterRateeSkillRating|[] {
+    return this.callMethod('get', `ts/${tsRateeId}/rating/${type}/`)
+  }
+
+  addManagerRating (tsRaterRateeId: number, rating: TsRatingForm, type: TsManagerRatingType) : TsRatingForm {
+    return this.callMethod('post', `ts/${tsRaterRateeId}/rating/${type}/add/`, { rating })
+  }
+
   getEverydayRating (tsRateeId: number) : TsRaterRateeSkillRating|[] {
     return this.callMethod('get', `ts/${tsRateeId}/rating/everyday/`)
   }
@@ -105,21 +116,24 @@ class TsService extends BaseApiService {
     return this.callMethod('post', `ts/${tsRaterRateeId}/rating/everyday/add/`, { rating })
   }
 
-  // *** START *** //
-
-  // TODO: plug method
-  addManagerRating (tsRaterRateeId: number, rating: TsRatingForm, blank: any) : TsRatingForm {
-    return this.callMethod('post','');
+  getManagerRatingAvarageScore (tsRaterRateeId: number, type: TsManagerRatingType) : TsManagerRatingAvarageScore {
+    return this.callMethod('get', `ts/${tsRaterRateeId}/rating/${type}/average/`)
   }
 
-  getManagerRating (tsRaterRateeId: number, blank: any) : TsRateeScore[] {
-    return this.callMethod('get', ``)
+  getManagerRatingLastTen (tsRaterRateeId: number, type: TsManagerRatingType) : TsManagerRating[] {
+    return this.callMethod('get', `ts/${tsRaterRateeId}/rating/${type}/last/`)
   }
 
-  // *** END *** //
+  getRateeReviewsPeriods (tsRaterRateeId: number) : TsRateeReview[] {
+    return this.callMethod('get', `ts/${tsRaterRateeId}/reviews/`)
+  }
 
-  getRateeScores (tsRaterRateeId: number) : TsRateeScore[] {
-    return this.callMethod('get', `ts/${tsRaterRateeId}/scores/`)
+  getRateeReviewsReport (tsRaterRateeId: number, tsRateeReviewId: number) : object {
+    return this.callMethod('get', `ts/${tsRaterRateeId}/reviews/${tsRateeReviewId}/`)
+  }
+
+  getRateeRatingReviews (tsRaterRateeId: number, tsRateeReviewId: number) : object {
+    return this.callMethod('get', `ts/${tsRaterRateeId}/rating-reviews/${tsRateeReviewId}/`)
   }
 }
 

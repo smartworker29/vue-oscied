@@ -183,10 +183,12 @@
     "overall":  "🇦🇪 Overall Score",
     "you_are_the_part": "🇦🇪 You are part of the 360 support team for {fullName}. You are asked to look at\nthe definition below and think about an example of where you have witnessed\n{fullName} performing this task in their roles",
     "results": {
-      "my_results": "🇦🇪 My Results",
+      "results": "🇦🇪 Results",
+      "everyday_results": "🇦🇪 Everyday results",
       "from": "🇦🇪 From",
       "to": "🇦🇪 To",
-      "avarage_score": "🇦🇪 Avarage Score"
+      "avarage_score": "🇦🇪 Avarage Score",
+      "download_report": "🇦🇪 Download report"
     }
   },
   "dashboard": {
