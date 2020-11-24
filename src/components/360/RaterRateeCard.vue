@@ -47,7 +47,7 @@
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
-import { TsManagerRatingType, TsRateeUser, TsUserDto } from '@/interfaces'
+import { TsManagerRatingTypeEnum, TsRateeUser, TsUserDto } from '@/interfaces'
 import dayjs from 'dayjs'
 import { Getter } from 'vuex-class'
 
@@ -102,7 +102,7 @@ export default class RaterRateeCard extends Vue {
     })
   }
 
-  rating (type: TsManagerRatingType) : void {
+  rating (type: TsManagerRatingTypeEnum) : void {
     this.$router.push({
       name: 'survey.ts.manager.rating',
       params: {
