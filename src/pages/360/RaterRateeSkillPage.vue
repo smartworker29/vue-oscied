@@ -24,7 +24,7 @@
           <span>{{ $t('ts.leave_a_comment_below', { fullName: ratee.fullName }) }}</span>
           <div class="results-block" v-if="skillInfo.status && rating">
             <h3>
-              {{ $t('ts.you_have_rated', { fullName: ratee.fullName, score: rating.score, skill: skillInfo.name }) }}
+              {{ $t('ts.you_have_rated', { fullName: ratee.fullName, score: Math.trunc(rating.score), skill: skillInfo.name }) }}
             </h3>
             <div class="skill-comment published-comment">
               <img v-if="user.image.fileURL" :src="user.image.fileURL" class="skill-comment__logo" :alt="rating.comment">
@@ -195,7 +195,7 @@ export default class RaterRateeSkillPage extends Vue {
   updateRating (rating: TsRatingForm) {
     this.rating = {
       comment: rating.comment,
-      score: rating.score.toFixed(2)
+      score: rating.score
     }
     this.ratingForm = {
       score: 1,
