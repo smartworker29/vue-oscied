@@ -43,8 +43,8 @@
           </div>
         </div>
         <div class="ratees-block raters-ratees" :class="{ full:  myRatees.length < 1 }">
-          <div class="who-rating-header">
-            <h2>{{ $t('who_i_rating') }}</h2>
+          <div class="who-rating-header" v-if="hasRoleManager || filteredRaterRatees.length">
+            <h2>{{ $t(ratingHeader) }}</h2>
             <div class="layout-select">
               {{ $t('layout') }} <span @click="changeLayout(1)">1</span> | <span @click="changeLayout(2)">2</span>
             </div>
@@ -184,6 +184,10 @@ export default class UserDashboardPage extends Vue {
     // }
 
     return result
+  }
+
+  get ratingHeader (): string {
+    return this.hasRoleManager ? 'rating_teams' : 'who_i_rating'
   }
 
   changeLayout (layout: number) : void {
