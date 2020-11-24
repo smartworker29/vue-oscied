@@ -9,7 +9,7 @@
     <slot name="content" />
     <form class="form">
       <div class="form-group">
-        <!-- <p class="error" v-if="modalError">{{ modalError }}</p> -->
+        <p class="error" v-if="modalError">{{ modalError }}</p>
         <label class="col-md-4 col-sm-4 col-xs-12 col-form-label">{{
           $t("email_address")
         }}</label>
