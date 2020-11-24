@@ -80,12 +80,15 @@ export default class UserHeader extends Vue {
   isActiveAccountMenu: boolean = false
 
   mounted () : void {
-    document.addEventListener('click', (e) => {
-      const element = document.getElementById('account-drop-down')
-      if (element) {
-        if (!element.contains(<Node>(event!.target))) {
-          this.isActiveAccountMenu = false
-        }
+    document.addEventListener('click', (event: Event) => {
+      const element: HTMLElement | null = document.getElementById('account-drop-down')
+
+      if (!element) {
+        return
+      }
+
+      if (event.target instanceof Node && !element.contains(event.target)) {
+        this.isActiveAccountMenu = false
       }
     })
   }
