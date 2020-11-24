@@ -25,13 +25,13 @@
         <button class="btn btn-primary btn-primary-active" @click="setup(raterRatee.id)">
           {{ $t('button_g.setup') }}
         </button>
+        <button class="btn btn-primary btn-everyday" @click="rating('everyday')" v-if="raterRatee.isLive">
+          {{ $t('button_g.everyday') }}
+        </button>
+        <button class="btn btn-primary btn-everyday" @click="rating('overall')" v-if="raterRatee.isLive">
+          {{ $t('button_g.overall') }}
+        </button>
       </div>
-      <button class="btn btn-primary btn-everyday" @click="rating('everyday')" v-if="raterRatee.isLive">
-        {{ $t('button_g.everyday') }}
-      </button>
-      <button class="btn btn-primary btn-everyday" @click="rating('overall')" v-if="raterRatee.isLive">
-        {{ $t('button_g.overall') }}
-      </button>
     </div>
   </div>
 </template>
