@@ -469,7 +469,6 @@ export default class ManagerRateePage extends Vue {
       if (key !== group) {
         this.checkedAllGroup[key] = false
       }
-      console.log(`${key}: ${value}`)
     }
 
     if (this.checkedAllGroup[group]) {
