@@ -122,7 +122,7 @@ export default class RaterRateeResultsPage extends Vue {
   }
 
   scoreFormat (score: string): string {
-    return `${parseFloat(score).toFixed(2)} %`
+    return `${(parseFloat(score) * 10).toFixed(1)}%`
   }
 
   get formattedLastTen () : Chart.ChartData | null {
