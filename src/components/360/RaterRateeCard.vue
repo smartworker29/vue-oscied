@@ -124,6 +124,7 @@ export default class RaterRateeCard extends Vue {
 </script>
 
 <style lang="scss">
+
 .btn-everyday {
   color: #fff;
   background: #00cdbf;
