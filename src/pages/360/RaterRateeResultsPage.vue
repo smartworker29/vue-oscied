@@ -107,7 +107,7 @@ export default class RaterRateeResultsPage extends Vue {
   activeRateeReview: TsRateeReview | null = null
 
   async created () {
-    this.ratee = await TsService.getRateeInfoById(this.tsSurveyId)
+    this.ratee = await TsService.getRateeInfoById(this.tsRaterRateeId)
     this.averageEverydayScore = await TsService.getManagerRatingAvarageScore(this.tsRaterRateeId, TsManagerRatingTypeEnum.EVERYDAY)
     this.rateeReviewsPeriods = await TsService.getRateeReviewsPeriods(this.tsRaterRateeId)
     this.lastTen = await TsService.getManagerRatingLastTen(this.tsRaterRateeId, TsManagerRatingTypeEnum.EVERYDAY)
