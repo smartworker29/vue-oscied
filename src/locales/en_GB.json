@@ -198,7 +198,7 @@
       "last_days": "Last {count} days",
       "from": "From",
       "to": "To",
-      "avarage_score": "Avarage Score",
+      "average_score": "Performance Review Rating",
       "download_report": "Download report"
     }
   },

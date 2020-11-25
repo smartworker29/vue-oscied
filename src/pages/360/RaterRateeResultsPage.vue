@@ -28,7 +28,7 @@
               <tr>
                 <td>{{ $t('ts.results.from') }}</td>
                 <td>{{ $t('ts.results.to') }}</td>
-                <td>{{ $t('ts.results.avarage_score') }}</td>
+                <td>{{ $t('ts.results.average_score') }}</td>
                 <td></td>
               </tr>
             </thead>
@@ -36,7 +36,7 @@
               <tr v-for="(review, id) in rateeReviewsPeriods" :key="id" @click="setActiveReview(review)">
                 <td>{{ review.timeCreated | formatDate('D/M/YYYY h:mm a') }}</td>
                 <td>{{ review.timeExpiry | formatDate('d/M/YYYY h:mm a') }}</td>
-                <td>{{ review.score }}</td>
+                <td>{{ review.score }}%</td>
                 <td>
                   <button @click="prepareReport(review.id)">{{ $t('ts.results.download_report') }}</button>
                 </td>
