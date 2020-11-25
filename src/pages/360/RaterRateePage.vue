@@ -16,14 +16,20 @@
 
       <div class="rater-ratee-wrapper">
         <div class="rater-ratee-mobile-wrapper">
-          <h2>{{ $t("who_i_rating") }}</h2>
-          <button class="rater-ratee-expand-nav">
-            <span></span>
-            <span></span>
-            <span></span>
+         <div class="header">
+            <h2>{{ $t("who_i_rating") }}</h2>
+          <button class="rater-ratee-expand-nav" @click="toggleRateeMobileNav">
+            <span v-if="!rateeMobileNav"></span>
+            <span v-if="!rateeMobileNav"></span>
+            <span v-if="!rateeMobileNav"></span>
+            <fa v-if="rateeMobileNav" class="icon" icon="arrow-up" />
           </button>
-
+         </div>
+          <div class="content rater-ratee-info" :class="{'active': rateeMobileNav}">
+              <rater-ratee-card :ts-survey-id="tsSurveyId" :raterRatee="ratee" :hasEveryday="hasRoleManager" />
+          </div>
         </div>
+
         <div class="ratees-block rater-ratee-info">
           <h2>{{ $t("who_i_rating") }}</h2>
 
@@ -110,6 +116,11 @@ export default class RaterRateePage extends Vue {
       [key: number]: IcoachSkillShortInfo[]
     } = {};
     myPerformanceManager: TsManagerUser | null = null;
+    rateeMobileNav: boolean = false;
+
+    async toggleRateeMobileNav () {
+      this.rateeMobileNav = !this.rateeMobileNav
+    }
 
     async created () {
       if (!this.isAuthenticated) {
@@ -280,17 +291,35 @@ export default class RaterRateePage extends Vue {
 
   .rater-ratee-mobile-wrapper {
     position: relative;
+    z-index: 9999;
     padding: 16px 5% 18px 5%;
     background-color: #fafdff;
     display: none;
-    justify-content: space-between;
-    align-items: center;
+
     box-shadow: 0 9px 16px 0 rgba(0, 0, 0, 0.15);
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
     h2 {
       font-size: 20px;
       font-weight: bold;
       margin: 0;
+    }
+
+    .content {
+      display: none;
+      padding-top: 5%;
+      padding-bottom: 5%;
+      background-color: #fafdff;
+      position: relative;
+
+      &.active {
+        display: block;
+      }
     }
 
     .rater-ratee-expand-nav {
@@ -306,6 +335,7 @@ export default class RaterRateePage extends Vue {
       border: solid 1px #d6efff;
       background-color: #ffffff;
       outline: none;
+      z-index: 999;
 
       span {
         display: block;
@@ -317,6 +347,10 @@ export default class RaterRateePage extends Vue {
           margin-bottom: 2px;
         }
       }
+
+      .icon {
+        color: #0085cd;
+      }
     }
   }
 
@@ -326,7 +360,7 @@ export default class RaterRateePage extends Vue {
     }
 
     .rater-ratee-mobile-wrapper {
-      display: flex;
+      display: block;
     }
   }
 
