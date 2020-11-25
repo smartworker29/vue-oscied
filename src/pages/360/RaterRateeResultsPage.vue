@@ -36,7 +36,7 @@
               <tr v-for="(review, id) in rateeReviewsPeriods" :key="id" @click="setActiveReview(review)">
                 <td>{{ review.timeCreated | formatDate('D/M/YYYY h:mm a') }}</td>
                 <td>{{ review.timeExpiry | formatDate('d/M/YYYY h:mm a') }}</td>
-                <td>{{ review.score }}%</td>
+                <td>{{ scoreFormat(review.score) }}</td>
                 <td>
                   <button @click="prepareReport(review.id)">{{ $t('ts.results.download_report') }}</button>
                 </td>
@@ -115,11 +115,14 @@ export default class RaterRateeResultsPage extends Vue {
 
   async prepareReport (rateeReviewId: number): Promise<void> {
     const result = await TsService.getRateeReviewsReport(this.tsRaterRateeId, rateeReviewId)
-    console.log(result)
   }
 
   setActiveReview (review: TsRateeReview): void {
     this.activeRateeReview = review
+  }
+
+  scoreFormat (score: string): string {
+    return `${(parseFloat(score) * 10).toFixed(1)}%`
   }
 
   get formattedLastTen () : Chart.ChartData | null {
