@@ -70,6 +70,12 @@ export default class RangeSlider extends Vue {
     const direction = this.$i18n.locale === 'ar' ? 'left' : 'right'
     this.rangeSlider.style.background = `linear-gradient(to ${direction}, ${dark} 0%, ${dark} ${percentage}%, ${light} ${percentage}%, ${light} 100%)`
   }
+
+  reset (): void {
+    this.inputRange = 1
+    this.rangeSlider.value = '1'
+    this.recalculateRangeStyles()
+  }
 }
 </script>
 <style lang="scss" scoped>

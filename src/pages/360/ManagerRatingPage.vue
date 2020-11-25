@@ -20,7 +20,25 @@
           </h2>
           <p>{{ $t('ts.you_are_the_part', { fullName: ratee.fullName }) }}</p>
           <span>{{ $t('ts.leave_a_comment_below', { fullName: ratee.fullName }) }}</span>
-          <div class="results-block" v-if="rating">
+          <form v-if="isFormDisplayed" class="form skill-rate-form skill-comment" @submit.prevent="rate" novalidate>
+            <range-slider
+              @change-value="updateValues($event)"
+              ref="scoreRange"
+            />
+            <label for="comment" class="skill-comment__label">{{ $t('ts.leave_a_comment') }}</label>
+            <div class="skill-comment__wrapper">
+              <textarea
+                v-model="ratingForm.comment"
+                v-validate="'required'"
+                id="comment"
+                name="comment"
+                class="skill-comment__input"
+              />
+              <button type="submit" class="btn btn-primary-active skill-comment__submit">{{ $t('button_g.submit') }}</button>
+            </div>
+            <p class="error" v-if="errors">{{ errors.first('comment') }}</p>
+          </form>
+          <div class="results-block" v-for="(rating, index) in ratings" :key="index">
             <h3>
               {{ $t('ts.you_have_rated', { fullName: ratee.fullName, score: Math.trunc(rating.score), skill: $t(`ts.${type}`) }) }}
             </h3>
@@ -33,30 +51,13 @@
               </div>
             </div>
           </div>
-          <div v-else>
-            <form class="form skill-rate-form skill-comment" @submit.prevent="rate" novalidate>
-              <range-slider @change-value="updateValues($event)" />
-              <label for="comment" class="skill-comment__label">{{ $t('ts.leave_a_comment') }}</label>
-              <div class="skill-comment__wrapper">
-                <textarea
-                  v-model="ratingForm.comment"
-                  v-validate="'required'"
-                  id="comment"
-                  name="comment"
-                  class="skill-comment__input"
-                />
-                <button type="submit" class="btn btn-primary-active skill-comment__submit">{{ $t('button_g.submit') }}</button>
-              </div>
-              <p class="error" v-if="errors">{{ errors.first('comment') }}</p>
-            </form>
-          </div>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script lang="ts">
-import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
+import { Component, Prop, Ref, Vue, Watch } from 'vue-property-decorator'
 import {
   IcoachSkillFullInfo,
   TsManagerRatingType,
@@ -64,7 +65,9 @@ import {
   TsRateeUser,
   TsRaterRateeSkillRating,
   TsRatingForm,
-  TsUserDto, User
+  TsUserDto,
+  User,
+  TsManagerRatingTypeEnum
 } from '@/interfaces'
 import { Getter } from 'vuex-class'
 import RaterRateeCard from '@/components/360/RaterRateeCard.vue'
@@ -100,6 +103,9 @@ export default class ManagerRatingPage extends Vue {
   @Getter('survey/getDisplayedBaseSurveyInfo')
   surveyInfo!: SurveyInfo
 
+  @Ref()
+  scoreRange!: RangeSlider
+
   @Watch('type')
   async onTypeChanged () {
     await this.updateManagerRating()
@@ -107,8 +113,16 @@ export default class ManagerRatingPage extends Vue {
 
   ratee: TsRateeUser | null = null
   skillInfo: IcoachSkillFullInfo | null = null
-  rating: TsRaterRateeSkillRating | null = null
+  ratings: TsRaterRateeSkillRating[] = []
   ratingForm: TsRatingForm = { comment: '', score: 1 }
+
+  get isFormDisplayed (): boolean {
+    if (this.type === TsManagerRatingTypeEnum.EVERYDAY) {
+      return true
+    }
+
+    return this.ratings.length === 0
+  }
 
   async created () {
     if (!this.isAuthenticated) {
@@ -136,13 +150,7 @@ export default class ManagerRatingPage extends Vue {
   }
 
   async updateManagerRating (): Promise<void> {
-    const result = await TsService.getManagerRating(this.tsRaterRateeId, this.type)
-
-    if (!Array.isArray(result)) {
-      this.rating = result
-    } else {
-      this.rating = null
-    }
+    this.ratings = await TsService.getManagerRatings(this.tsRaterRateeId, this.type)
   }
 
   async rate () {
@@ -154,6 +162,7 @@ export default class ManagerRatingPage extends Vue {
       const result = await TsService.addManagerRating(this.tsRaterRateeId, this.ratingForm, this.type)
 
       this.updateRating(result)
+      this.scoreRange.reset()
     } catch (error) {
       if ('response' in error && error.response.status === 400) {
         this.handleSkillRatingErrors(error.response.data)
@@ -162,10 +171,12 @@ export default class ManagerRatingPage extends Vue {
   }
 
   updateRating (rating: TsRatingForm) {
-    this.rating = {
+    this.ratings.unshift({
       comment: rating.comment,
       score: rating.score
-    }
+    })
+
+    this.$validator.reset()
     this.ratingForm = {
       score: 1,
       comment: ''
@@ -181,3 +192,9 @@ export default class ManagerRatingPage extends Vue {
   }
 }
 </script>
+
+<style scoped lang="scss">
+.skill-rate-form {
+  margin-bottom: 25px;
+}
+</style>

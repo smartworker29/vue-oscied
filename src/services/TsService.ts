@@ -100,7 +100,7 @@ class TsService extends BaseApiService {
     return this.callMethod('post', `ts/${tsRateeId}/${skillId}/rating/add/`, { rating })
   }
 
-  getManagerRating (tsRateeId: number, type: TsManagerRatingType) : TsRaterRateeSkillRating|[] {
+  getManagerRatings (tsRateeId: number, type: TsManagerRatingType) : TsRaterRateeSkillRating[] {
     return this.callMethod('get', `ts/${tsRateeId}/rating/${type}/`)
   }
 
