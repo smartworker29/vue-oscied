@@ -3,12 +3,14 @@ import {
   faArrowsAltV,
   faCoffee,
   faInfoCircle,
-  faTimes
+  faTimes,
+  faArrowUp
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(
   faArrowsAltV,
   faCoffee,
   faInfoCircle,
-  faTimes
+  faTimes,
+  faArrowUp
 )
