@@ -30,7 +30,6 @@
           </div>
         </div>
         <div class="ratees-block rater-ratee-skills">
-          <p>dkdk</p>
           <div v-if="groupedSkillList">
             <div v-for="(group, id) in groupedSkillList" :key="id">
               <h4 class="rater-ratee-skill-title">
