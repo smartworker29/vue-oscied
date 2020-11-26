@@ -145,12 +145,19 @@
 
   .survey-content {
     .all-ratees {
-      display: flex;
+      // display: flex;
 
-      @media screen and (max-width: 768px) {
-        flex-direction: column;
+      // @media screen and (max-width: 768px) {
+      //   flex-direction: column;
 
-      }
+      // }
+    display: grid;
+    grid-template-columns: 282px calc(100% - 306px);
+    grid-column-gap: 24px;
+  
+    @media screen and (max-width: 768px) {
+        grid-template-columns: 1fr;
+    }
 
       .ratees-block {
         padding: 10px;
@@ -197,6 +204,9 @@
               }
 
               button {
+                display: flex;
+                align-items: center;
+                justify-content: center;
                 height: 28px;
                 line-height: 28px;
                 background: #fff;
@@ -338,6 +348,9 @@
     }
   }
 }
+
+
+
 
 .rater-ratee-wrapper {
   display: grid;
@@ -593,7 +606,7 @@
 .rater-ratee-card {
   .actions {
     .btn {
-      padding: 10px 32px;
+      padding: 7px 32px;
       color: #fff;
       border-radius: 8px;
 
