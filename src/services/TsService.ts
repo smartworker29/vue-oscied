@@ -14,7 +14,8 @@ import {
   TsRaterUser,
   TsRatingForm,
   TsUserDto,
-  TsUserRole
+  TsUserRole,
+  TsRateeRatingResults
 } from '@/interfaces'
 
 class TsService extends BaseApiService {
@@ -134,6 +135,10 @@ class TsService extends BaseApiService {
 
   getRateeRatingReviews (tsRaterRateeId: number, tsRateeReviewId: number) : object {
     return this.callMethod('get', `ts/${tsRaterRateeId}/rating-reviews/${tsRateeReviewId}/`)
+  }
+
+  getRateeRatingResults (tsRateeId: number) : TsRateeRatingResults {
+    return this.callMethod('get', `ts/ratees/${tsRateeId}/reting-results/`)
   }
 }
 

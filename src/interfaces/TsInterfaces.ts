@@ -73,3 +73,8 @@ export interface TsManagerRating {
   comment: string
   timeCreated: string | null
 }
+
+export interface TsRateeRatingResults {
+  performanceReviewScore: number
+  leadershipSurveyScore: number
+}
