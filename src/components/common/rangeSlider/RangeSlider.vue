@@ -100,10 +100,15 @@ export default class RangeSlider extends Vue {
 
   .range {
 
+    .range-input {
+      height: 2px !important;
+    }
+
     &-numbers {
       display: flex;
       justify-content: space-between;
       margin: 0 -4px;
+      margin-bottom: 10px;
 
       span {
         cursor: pointer;
