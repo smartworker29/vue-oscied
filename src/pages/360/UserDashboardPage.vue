@@ -1,5 +1,5 @@
 <template>
-  <div class="survey ts-user-dashboard" :class="{ 'all-ratees-manager': hasRoleManager}">
+  <div class="survey ts-user-dashboard" :class="{ 'all-ratees-manager': hasRoleManager || hasRoleRater}">
     <div class="survey-header">
       <h1 class="survey-title">
         {{
@@ -33,7 +33,7 @@
     <div class="survey-content">
 
       <div class="all-ratees">
-        <div class="rater-ratee-mobile-wrapper" v-if="!hasRoleManager">
+        <div class="rater-ratee-mobile-wrapper" v-if="!hasRoleManager  && !hasRoleRater">
           <div class="header">
             <h2>{{ $t("my_rating") }} {{ hasRoleManager }}</h2>
             <button class="rater-ratee-expand-nav" @click="toggleRateeMobileNav">

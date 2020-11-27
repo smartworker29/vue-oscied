@@ -197,4 +197,28 @@ export default class ManagerRatingPage extends Vue {
 .skill-rate-form {
   margin-bottom: 25px;
 }
+  .survey {
+    &-content {
+      padding: 0;
+      padding-left: 5%;
+      padding-right: 5%;
+      padding-bottom: 60px;
+      background-color: #fafdff;
+    }
+
+    &-header {
+      padding: 32px 5% 32px 5%;
+
+      @media screen and (max-width: 768px) {
+        padding: 24px 5% 24px 5%;
+      }
+    }
+
+    &-title {
+      margin-top: 0;
+      font-size: 24px;
+      font-weight: 300;
+      color: #ffffff;
+    }
+  }
 </style>

@@ -10,9 +10,9 @@
       </h1>
     </div>
     <div class="survey-content" v-if="ratee">
-      <!-- <button class="btn-back btn btn-primary btn-primary-active" @click="goToList">
+      <button class="btn-back btn btn-primary btn-primary-active" @click="goToList">
         {{ $t("button_g.back") }}
-      </button> -->
+      </button>
 
       <div class="rater-ratee-wrapper">
         <div class="rater-ratee-mobile-wrapper">

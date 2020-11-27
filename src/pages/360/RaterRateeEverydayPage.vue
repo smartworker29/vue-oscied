@@ -168,3 +168,33 @@ export default class RaterRateeEverydayPage extends Vue {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+  .survey {
+    &-content {
+      padding: 0;
+      padding-left: 5%;
+      padding-bottom: 60px;
+      background-color: #fafdff;
+
+      @media screen and (max-width: 768px) {
+        padding-left: 0;
+      }
+    }
+
+    &-header {
+      padding: 32px 5% 32px 5%;
+
+      @media screen and (max-width: 768px) {
+        padding: 24px 5% 24px 5%;
+      }
+    }
+
+    &-title {
+      margin-top: 0;
+      font-size: 24px;
+      font-weight: 300;
+      color: #ffffff;
+    }
+  }
+</style>

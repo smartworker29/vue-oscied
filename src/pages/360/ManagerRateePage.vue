@@ -10,7 +10,6 @@
       </h1>
     </div>
     <div class="survey-content" v-if="ratee">
-      <div class="container-fluid">
         <div class="row">
           <div class="col-md-3">
             <button
@@ -288,7 +287,7 @@
             </div>
           </div>
         </div>
-      </div>
+
       <!-- <button class="btn btn-primary btn-primary-active" @click="goToList">
         {{ $t("button_g.back") }}
       </button> -->
@@ -732,6 +731,7 @@ export default class ManagerRateePage extends Vue {
 </script>
 
 <style lang="scss">
+
 .ts-manager-ratee-wrapper {
   display: flex;
 }
@@ -1063,4 +1063,29 @@ export default class ManagerRateePage extends Vue {
     }
   }
 }
+
+  .survey {
+    &-content {
+      padding: 0;
+      padding-left: 5%;
+      padding-right: 5%;
+      padding-bottom: 60px;
+      background-color: #fafdff;
+    }
+
+    &-header {
+      padding: 32px 5% 32px 5%;
+
+      @media screen and (max-width: 768px) {
+        padding: 24px 5% 24px 5%;
+      }
+    }
+
+    &-title {
+      margin-top: 0;
+      font-size: 24px;
+      font-weight: 300;
+      color: #ffffff;
+    }
+  }
 </style>
