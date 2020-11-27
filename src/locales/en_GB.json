@@ -199,6 +199,7 @@
       "from": "From",
       "to": "To",
       "average_score": "Performance Review Rating",
+      "leadership_score": "Leadership Survey Rating",
       "download_report": "Download report"
     }
   },

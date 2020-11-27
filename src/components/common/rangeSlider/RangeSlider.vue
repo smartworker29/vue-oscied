@@ -113,6 +113,12 @@ export default class RangeSlider extends Vue {
     this.rangeSlider.style.background = `linear-gradient(to ${direction}, ${dark} 0%, ${dark} ${percentage}%, ${light} ${percentage}%, ${light} 100%)`
   }
 
+  reset (): void {
+    this.inputRange = 1
+    this.rangeSlider.value = '1'
+    this.recalculateRangeStyles()
+  }
+
   get sliderId (): string {
     return `slider-${this.generatedNumber}`
   }
@@ -150,10 +156,15 @@ export default class RangeSlider extends Vue {
 
   .range {
 
+    .range-input {
+      height: 2px !important;
+    }
+
     &-numbers {
       display: flex;
       justify-content: space-between;
       margin: 0 -4px;
+      margin-bottom: 10px;
 
       span {
         cursor: pointer;
