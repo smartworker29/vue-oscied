@@ -22,7 +22,7 @@
               <fa v-if="rateeMobileNav" class="icon" icon="arrow-up" />
             </button>
           </div>
-          <div class="content rater-ratee-info" :class="{'active': rateeMobileNav}">
+          <div v-if="ratee" class="content rater-ratee-info" :class="{'active': rateeMobileNav}">
             <rater-ratee-card :ts-survey-id="tsSurveyId" :raterRatee="ratee" :hasEveryday="hasRoleManager" />
           </div>
         </div>
@@ -45,7 +45,7 @@
             class="rater-ratee-skill-subtitle">{{ $t('ts.leave_a_comment_below', { fullName: ratee.fullName }) }}</span>
           <div class="results-block" v-if="skillInfo.status && rating">
             <h3 class="rater-ratee-skill-form-hint">
-              {{ $t('ts.you_have_rated', { fullName: ratee.fullName, score: Math.trunc(rating.score), skill: skillInfo.name }) }}
+              {{ $t('ts.you_have_rated', { fullName: ratee.fullName, score: scoreFormatFromString(rating.score), skill: skillInfo.name }) }}
             </h3>
             <div class="skill-comment published-comment">
               <img v-if="user.image.fileURL" :src="user.image.fileURL" class="skill-comment__logo"
@@ -88,7 +88,13 @@
                 </ul>
               </div>
 
-              <range-slider @change-value="updateValues($event)" />
+              <range-slider
+                :rangeLimit="100"
+                :stepForNumber="10"
+                :isShownTooltip="true"
+                :min="0"
+                @change-value="updateValues($event)"
+              />
 
               <div class="skill-comment__wrapper">
                 <label for="comment" class="skill-comment__label">{{ $t('ts.leave_a_comment') }}</label>
@@ -206,7 +212,7 @@ export default class RaterRateeSkillPage extends Vue {
   }
 
   updateValues (value: string) {
-    this.ratingForm.score = parseInt(value)
+    this.ratingForm.score = parseInt(value) / 10
   }
 
   async toggleRateeMobileNav () {
@@ -244,6 +250,10 @@ export default class RaterRateeSkillPage extends Vue {
 
       this.myPerformanceManager = await TsService.getManagerInfo(TsUserRole.RATER, this.ratee.id)
     }
+  }
+
+  scoreFormatFromString (score: string): string {
+    return parseFloat(score).toFixed(1)
   }
 
   updateRating (rating: TsRatingForm) {
