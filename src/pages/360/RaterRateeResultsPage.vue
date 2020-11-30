@@ -85,6 +85,7 @@ import UsersRateeCard from '@/components/360/UsersRateeCard.vue'
 import BarChart from '@/components/360/BarChart.vue'
 import DialChart from '@/components/360/DialChart.vue'
 import dayjs from 'dayjs'
+import download from 'downloadjs'
 
 @Component({
   name: 'RaterRateeResultsPage',
@@ -135,7 +136,12 @@ export default class RaterRateeResultsPage extends Vue {
   }
 
   async prepareReport (rateeReviewId: number): Promise<void> {
-    const result = await TsService.getRateeReviewsReport(this.tsRaterRateeId, rateeReviewId)
+    const blobPdfFile = await TsService.downloadRateeReviewsReport(this.tsRaterRateeId, rateeReviewId)
+    const fileName = this.ratee
+      ? `Report ${this.ratee.fullName} ${dayjs().format('DD//MM//YYYY HH:mm')}`
+      : `Report ratee - ${this.tsRaterRateeId}, review - ${rateeReviewId} ${dayjs().format('DD//MM//YYYY HH:mm')}`
+
+    download(blobPdfFile, fileName, 'application/pdf')
   }
 
   setActiveReview (review: TsRateeReview): void {
