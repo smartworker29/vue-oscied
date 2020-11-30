@@ -18,31 +18,49 @@
           </div>
         </div>
         <div class="ratees-block results-block" >
-          <h2>{{ $t('ts.results.results') }}</h2>
-          <p>{{ $t('ts.results.everyday_results') }}</p>
-          <dial-chart :chart-data="formattedAverage" :options="dialChartOptions" />
-          <p v-if="lastTen">{{ $t('ts.results.last_days', { count: lastTen.length }) }}</p>
-          <bar-chart :chart-data="formattedLastTen" :options="barChartOptions"/>
-          <table v-if="rateeReviewsPeriods.length">
-            <thead>
+          <div class="charts">
+            <div class="left-result-side">
+              <h2>{{ $t('ts.results.results') }}</h2>
+              <p>{{ $t('ts.results.everyday_results') }}</p>
+              <dial-chart :chart-data="formattedAverage" :options="dialChartOptions" />
+              <p v-if="lastTen">{{ $t('ts.results.last_days', { count: lastTen.length }) }}</p>
+              <bar-chart :chart-data="formattedLastTen" :options="barChartOptions"/>
+            </div>
+            <div class="right-result-side">
+              <section v-if="rateeRatingResults">
+                <p class="score-item">
+                  <span class="title">{{ $t('ts.results.average_score') }}</span>
+                  <span class="score">{{ ratingFormat(rateeRatingResults.performanceReviewScore) }}</span>
+                </p>
+                <p class="score-item">
+                  <span class="title">{{ $t('ts.results.leadership_score') }}</span>
+                  <span class="score">{{ ratingFormat(rateeRatingResults.leadershipSurveyScore) }}</span>
+                </p>
+              </section>
+            </div>
+          </div>
+          <div class="ratees-block reports-download">
+            <table v-if="rateeReviewsPeriods.length">
+              <thead>
               <tr>
                 <td>{{ $t('ts.results.from') }}</td>
                 <td>{{ $t('ts.results.to') }}</td>
                 <td>{{ $t('ts.results.average_score') }}</td>
                 <td></td>
               </tr>
-            </thead>
-            <tbody>
+              </thead>
+              <tbody>
               <tr v-for="(review, id) in rateeReviewsPeriods" :key="id" @click="setActiveReview(review)">
                 <td>{{ review.timeCreated | formatDate('D/M/YYYY h:mm a') }}</td>
-                <td>{{ review.timeExpiry | formatDate('d/M/YYYY h:mm a') }}</td>
+                <td>{{ review.timeExpiry | formatDate('D/M/YYYY h:mm a') }}</td>
                 <td>{{ scoreFormat(review.score) }}</td>
                 <td>
                   <button @click="prepareReport(review.id)">{{ $t('ts.results.download_report') }}</button>
                 </td>
               </tr>
-            </tbody>
-          </table>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
@@ -55,6 +73,7 @@ import {
   TsManagerRating,
   TsManagerRatingAvarageScore,
   TsManagerRatingTypeEnum,
+  TsRateeRatingResults,
   TsRateeReview,
   TsRateeUser,
   TsUserDto,
@@ -105,12 +124,14 @@ export default class RaterRateeResultsPage extends Vue {
   lastTen: TsManagerRating[] | null = null
   ratingReviews: object | null = null
   activeRateeReview: TsRateeReview | null = null
+  rateeRatingResults: TsRateeRatingResults | null = null
 
   async created () {
-    this.ratee = await TsService.getRateeInfoById(this.tsSurveyId)
+    this.ratee = await TsService.getRateeInfoById(this.tsRaterRateeId)
     this.averageEverydayScore = await TsService.getManagerRatingAvarageScore(this.tsRaterRateeId, TsManagerRatingTypeEnum.EVERYDAY)
     this.rateeReviewsPeriods = await TsService.getRateeReviewsPeriods(this.tsRaterRateeId)
     this.lastTen = await TsService.getManagerRatingLastTen(this.tsRaterRateeId, TsManagerRatingTypeEnum.EVERYDAY)
+    this.rateeRatingResults = await TsService.getRateeRatingResults(this.tsRaterRateeId)
   }
 
   async prepareReport (rateeReviewId: number): Promise<void> {
@@ -123,6 +144,15 @@ export default class RaterRateeResultsPage extends Vue {
 
   scoreFormat (score: string): string {
     return `${(parseFloat(score) * 10).toFixed(1)}%`
+  }
+
+  ratingFormat (rating: number): string {
+    const integerPart = Math.trunc(rating)
+    const decimalPart = rating - integerPart
+
+    const numberFractionDigits = decimalPart > 0 ? 1 : 0
+
+    return `${rating.toFixed(numberFractionDigits)}%`
   }
 
   get formattedLastTen () : Chart.ChartData | null {
@@ -241,3 +271,19 @@ export default class RaterRateeResultsPage extends Vue {
   }
 }
 </script>
+
+<style scoped lang="scss">
+.results-block .charts {
+  display: flex;
+
+  .left-result-side, .right-result-side  {
+    flex: 1;
+  }
+}
+
+.score-item .score {
+  float: right;
+  font-weight: bold;
+  color: #0085cd;
+}
+</style>
