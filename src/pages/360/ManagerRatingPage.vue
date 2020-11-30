@@ -44,7 +44,7 @@
           </form>
           <div class="results-block" v-for="(rating, index) in ratings" :key="index">
             <h3>
-              {{ $t('ts.you_have_rated', { fullName: ratee.fullName, score: Math.trunc(rating.score), skill: $t(`ts.${type}`) }) }}
+              {{ $t('ts.you_have_rated', { fullName: ratee.fullName, score: scoreFormatFromString(rating.score), skill: $t(`ts.${type}`) }) }}
             </h3>
             <div class="skill-comment published-comment">
               <img v-if="user.image.fileURL" :src="user.image.fileURL" class="skill-comment__logo" :alt="rating.comment">
@@ -172,6 +172,10 @@ export default class ManagerRatingPage extends Vue {
         this.handleSkillRatingErrors(error.response.data)
       }
     }
+  }
+
+  scoreFormatFromString (score: string): string {
+    return parseFloat(score).toFixed(1)
   }
 
   updateRating (rating: TsRatingForm) {
