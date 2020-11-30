@@ -45,7 +45,7 @@ Vue.config.productionTip = false
 
 axios.defaults.baseURL = process.env.VUE_APP_API_ENDPOINT_URL
 axios.interceptors.request.use(function (config) {
-  if (config.headers.common.Accept && config.headers.common.Accept.indexOf('*/*') !== -1) {
+  if (!config.headers.accept && config.headers.common.Accept && config.headers.common.Accept.indexOf('*/*') !== -1) {
     config.headers.accept = 'application/json'
   }
 

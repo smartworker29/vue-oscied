@@ -129,8 +129,14 @@ class TsService extends BaseApiService {
     return this.callMethod('get', `ts/${tsRaterRateeId}/reviews/`)
   }
 
-  getRateeReviewsReport (tsRaterRateeId: number, tsRateeReviewId: number) : object {
-    return this.callMethod('get', `ts/${tsRaterRateeId}/reviews/${tsRateeReviewId}/`)
+  downloadRateeReviewsReport (tsRaterRateeId: number, tsRateeReviewId: number) : Blob {
+    return this.callMethod(
+      'get',
+      `ts/${tsRaterRateeId}/reviews/${tsRateeReviewId}/download/`,
+      null,
+      null,
+      { headers: { 'accept': 'application/pdf' } }
+    )
   }
 
   getRateeRatingReviews (tsRaterRateeId: number, tsRateeReviewId: number) : object {
