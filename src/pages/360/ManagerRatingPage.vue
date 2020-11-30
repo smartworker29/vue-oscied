@@ -22,8 +22,12 @@
           <span>{{ $t('ts.leave_a_comment_below', { fullName: ratee.fullName }) }}</span>
           <form v-if="isFormDisplayed" class="form skill-rate-form skill-comment" @submit.prevent="rate" novalidate>
             <range-slider
-              @change-value="updateValues($event)"
+              :rangeLimit="100"
+              :stepForNumber="10"
+              :isShownTooltip="true"
+              :min="0"
               ref="scoreRange"
+              @change-value="updateValues($event)"
             />
             <label for="comment" class="skill-comment__label">{{ $t('ts.leave_a_comment') }}</label>
             <div class="skill-comment__wrapper">
@@ -145,8 +149,8 @@ export default class ManagerRatingPage extends Vue {
     })
   }
 
-  updateValues (value: string) {
-    this.ratingForm.score = parseInt(value)
+  updateValues (value: number) {
+    this.ratingForm.score = value / 10
   }
 
   async updateManagerRating (): Promise<void> {

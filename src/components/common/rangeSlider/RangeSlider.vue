@@ -1,19 +1,37 @@
 <template>
   <div class="range-container" v-if="rangeLimit > 0">
     <div class="range-numbers" v-if="withNumber">
-      <span v-for="index in rangeLimit"
-            :key="index"
-            :class="{ 'selected-number': inputRange === index }"
-            @click="changeValueByNumber(index)"
-      >
-        {{ index }}
-      </span>
+      <span v-if="min === 0"
+            :class="{ 'selected-number': inputRange === 0 }"
+            @click="changeValueByNumber(0)"
+      >0</span>
+      <section v-for="index in rangeLimit" :key="index">
+        <span v-if="stepForNumber === 1"
+              :class="{ 'selected-number': inputRange === index }"
+              @click="changeValueByNumber(index)"
+        >
+          {{ index }}
+        </span>
+        <template v-else>
+          <span v-if="index % stepForNumber === 0"
+                :class="{ 'selected-number': inputRange === index }"
+                @click="changeValueByNumber(index)"
+          >
+          {{ index / stepForNumber }}
+        </span>
+        </template>
+      </section>
     </div>
     <div class="range">
+      <b-tooltip v-if="isShownTooltip"
+                 :target="sliderId"
+                 :title="tooltipTextValue"
+                 :placement="'bottom'"></b-tooltip>
       <input v-model.number="inputRange"
+             :id="sliderId"
              class="range-input"
              type="range"
-             min="1"
+             :min="min"
              max="-1"
              ref="rangeSlider"
              @input="changedValue"
@@ -34,14 +52,38 @@ export default class RangeSlider extends Vue {
 
   @Prop({
     required: false,
+    default: false
+  })
+  isShownTooltip!: boolean
+
+  @Prop({
+    required: false,
     default: true
   })
   withNumber!: boolean
 
+  @Prop({
+    required: false,
+    default: 1
+  })
+  stepForNumber!: number
+
+  @Prop({
+    required: false,
+    default: 1
+  })
+  min!: number
+
   inputRange = 1
+  generatedNumber: string | null = null
 
   @Ref()
   rangeSlider!: HTMLInputElement
+
+  created (): void {
+    this.generatedNumber = Math.random().toString(36).substring(7)
+    this.inputRange = this.min
+  }
 
   mounted () {
     this.rangeSlider.max = String(this.rangeLimit)
@@ -75,6 +117,14 @@ export default class RangeSlider extends Vue {
     this.inputRange = 1
     this.rangeSlider.value = '1'
     this.recalculateRangeStyles()
+  }
+
+  get sliderId (): string {
+    return `slider-${this.generatedNumber}`
+  }
+
+  get tooltipTextValue (): string {
+    return (this.inputRange / this.stepForNumber).toFixed(1)
   }
 }
 </script>
