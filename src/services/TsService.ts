@@ -138,7 +138,7 @@ class TsService extends BaseApiService {
   }
 
   getRateeRatingResults (tsRateeId: number) : TsRateeRatingResults {
-    return this.callMethod('get', `ts/ratees/${tsRateeId}/reting-results/`)
+    return this.callMethod('get', `ts/ratees/${tsRateeId}/rating-results/`)
   }
 }
 

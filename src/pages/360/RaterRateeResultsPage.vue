@@ -52,7 +52,7 @@
               <tbody>
               <tr v-for="(review, id) in rateeReviewsPeriods" :key="id" @click="setActiveReview(review)">
                 <td>{{ review.timeCreated | formatDate('D/M/YYYY h:mm a') }}</td>
-                <td>{{ review.timeExpiry | formatDate('d/M/YYYY h:mm a') }}</td>
+                <td>{{ review.timeExpiry | formatDate('D/M/YYYY h:mm a') }}</td>
                 <td>{{ scoreFormat(review.score) }}</td>
                 <td>
                   <button @click="prepareReport(review.id)">{{ $t('ts.results.download_report') }}</button>
