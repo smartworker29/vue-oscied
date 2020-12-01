@@ -135,7 +135,7 @@ class TsService extends BaseApiService {
       `ts/${tsRaterRateeId}/reviews/${tsRateeReviewId}/download/`,
       null,
       null,
-      { headers: { 'accept': 'application/pdf' } }
+      { responseType: 'blob', headers: { 'accept': 'application/pdf' } }
     )
   }
 
