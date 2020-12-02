@@ -279,17 +279,19 @@ export default class RaterRateeResultsPage extends Vue {
 </script>
 
 <style scoped lang="scss">
-.results-block .charts {
-  display: flex;
+.app-360 {
+  .results-block .charts {
+    display: flex;
 
-  .left-result-side, .right-result-side  {
-    flex: 1;
+    .left-result-side, .right-result-side {
+      flex: 1;
+    }
   }
-}
 
-.score-item .score {
-  float: right;
-  font-weight: bold;
-  color: #0085cd;
+  .score-item .score {
+    float: right;
+    font-weight: bold;
+    color: #0085cd;
+  }
 }
 </style>

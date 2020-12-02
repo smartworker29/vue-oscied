@@ -126,31 +126,31 @@ export default class RaterRateeCard extends Vue {
 </script>
 
 <style lang="scss">
+.app-360 {
+  .btn-everyday {
+    color: #fff;
+    background: #00cdbf;
+    margin-top: 10px;
 
-.btn-everyday {
-  color: #fff;
-  background: #00cdbf;
-  margin-top: 10px;
+    &:hover {
+      color: cornflowerblue;
+    }
+  }
 
-  &:hover {
-    color: cornflowerblue;
+  .rater-ratee-card {
+    border-radius: 12px;
+    padding: 24px;
+    box-sizing: border-box;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.05);
+    border: solid 1px #e6f3fa;
+    background-color: #ffffff;
+
+    .actions {
+      .btn-primary-active {
+        border-radius: 8px;
+        background-color: #0085cd;
+      }
+    }
   }
 }
-
-    .rater-ratee-card {
-        border-radius: 12px;
-        padding: 24px;
-        box-sizing: border-box;
-        box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.05);
-        border: solid 1px #e6f3fa;
-        background-color: #ffffff;
-
-        .actions {
-          .btn-primary-active {
-            border-radius: 8px;
-            background-color: #0085cd;
-          }
-        }
-      }
-
 </style>

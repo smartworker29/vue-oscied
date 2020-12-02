@@ -278,6 +278,7 @@ export default class RaterRateeSkillPage extends Vue {
 </script>
 
 <style lang="scss" scoped>
+.app-360 {
   .survey {
     &-content {
       padding: 0;
@@ -317,13 +318,13 @@ export default class RaterRateeSkillPage extends Vue {
     background: #fff;
     padding: 32px 20% 32px 24px;
 
-  //  @media screen and (max-width: 1200px) {
-  //      padding-right: 5%;
-  // }
+    //  @media screen and (max-width: 1200px) {
+    //      padding-right: 5%;
+    // }
 
-  @media screen and (max-width: 768px) {
-       padding: 32px 5% 32px 5%;
-  }
+    @media screen and (max-width: 768px) {
+      padding: 32px 5% 32px 5%;
+    }
 
     .rater-ratee-skill-title {
       font-size: 32px;
@@ -332,10 +333,10 @@ export default class RaterRateeSkillPage extends Vue {
     }
 
     .rater-ratee-skill-subtitle {
-    margin: 24px 0 40px;
-    font-size: 16px;
-    line-height: 1.5;
-    color: #071012;
+      margin: 24px 0 40px;
+      font-size: 16px;
+      line-height: 1.5;
+      color: #071012;
     }
 
     .rater-ratee-skill-form-hint {
@@ -347,89 +348,92 @@ export default class RaterRateeSkillPage extends Vue {
       font-weight: bold;
     }
 
-  .skill-comment__label {
-    margin: 40px 0 16px 0;
-    padding: 0;
-    font-size: 20px;
-    line-height: 1.4;
-    color: #071012;
-  }
-
-  .skill {
-    &-comment {
-      margin-bottom: 40px;
-      border: solid 1px #d6efff;
-      padding: 32px 24px 24px;
-
-     @media screen and (max-width: 768px) {
-       padding: 5%;
+    .skill-comment__label {
+      margin: 40px 0 16px 0;
+      padding: 0;
+      font-size: 20px;
+      line-height: 1.4;
+      color: #071012;
     }
 
-      .error {
-        margin: 0;
-      }
-
-      .range-mobile-select {
-        display: none;
-        width: 100%;
-        border-radius: 12px;
+    .skill {
+      &-comment {
+        margin-bottom: 40px;
         border: solid 1px #d6efff;
-        background-color: #ffffff;
-        padding: 8px 14px 8px 16px;
-        outline: none;
-        background: #fff url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgIHZpZXdCb3g9IjAgMCAyNCAyNCI+CiAgICA8cGF0aCBmaWxsPSIjMDA4NWNkIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xMiAxNC43ODhMNi44OTcgOS4xN2MtLjE5Ny0uMjE3LS41MjYtLjIyNi0uNzM0LS4wMi0uMjA5LjIwNS0uMjE4LjU0OC0uMDIuNzY1bDUuMyA1LjgzOGMuMTQ1LjE2LjM0Ny4yNDguNTU3LjI0OC4yMSAwIC40MTEtLjA4OS41NTYtLjI0OGw1LjMwMi01LjgzOGMuMTk3LS4yMTcuMTg4LS41Ni0uMDItLjc2Ni0uMjEtLjIwNS0uNTM4LS4xOTYtLjczNS4wMjFMMTIgMTQuNzl6Ii8+Cjwvc3ZnPgo=') no-repeat right 0.75rem center/24px 24px;
-      }
+        padding: 32px 24px 24px;
 
-      .range-titles {
-        margin-bottom: 16px;
+        @media screen and (max-width: 768px) {
+          padding: 5%;
+        }
+
+        .error {
+          margin: 0;
+        }
+
+        .range-mobile-select {
+          display: none;
+          width: 100%;
+          border-radius: 12px;
+          border: solid 1px #d6efff;
+          background-color: #ffffff;
+          padding: 8px 14px 8px 16px;
+          outline: none;
+          background: #fff url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgIHZpZXdCb3g9IjAgMCAyNCAyNCI+CiAgICA8cGF0aCBmaWxsPSIjMDA4NWNkIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xMiAxNC43ODhMNi44OTcgOS4xN2MtLjE5Ny0uMjE3LS41MjYtLjIyNi0uNzM0LS4wMi0uMjA5LjIwNS0uMjE4LjU0OC0uMDIuNzY1bDUuMyA1LjgzOGMuMTQ1LjE2LjM0Ny4yNDguNTU3LjI0OC4yMSAwIC40MTEtLjA4OS41NTYtLjI0OGw1LjMwMi01LjgzOGMuMTk3LS4yMTcuMTg4LS41Ni0uMDItLjc2Ni0uMjEtLjIwNS0uNTM4LS4xOTYtLjczNS4wMjFMMTIgMTQuNzl6Ii8+Cjwvc3ZnPgo=') no-repeat right 0.75rem center/24px 24px;
+        }
+
+        .range-titles {
+          margin-bottom: 16px;
+
           ul {
             display: flex;
             justify-content: space-between;
             align-items: center;
+
             li {
               max-width: 80px;
               font-size: 12px;
               color: #071012;
             }
           }
+
           @media screen and (max-width: 768px) {
             display: none;
+          }
         }
-      }
 
-         @media screen and (max-width: 768px) {
+        @media screen and (max-width: 768px) {
 
-           .range-container {
-              display: none;
+          .range-container {
+            display: none;
           }
 
           .range-mobile-select {
-              display: block;
+            display: block;
           }
         }
-    }
+      }
 
-    &-comment__wrapper {
-    display: block;
-  }
+      &-comment__wrapper {
+        display: block;
+      }
 
-    &-comment__input {
-      width: 100%;
-      margin-bottom: 16px;
-    }
+      &-comment__input {
+        width: 100%;
+        margin-bottom: 16px;
+      }
 
-    &-comment-actions {
-      display: flex;
-      justify-content: flex-end;
-    }
+      &-comment-actions {
+        display: flex;
+        justify-content: flex-end;
+      }
 
-  &-comment__submit {
-      float: none;
-      padding: 7px 16px;
-      font-size: 16px;
-      font-weight: 500;
+      &-comment__submit {
+        float: none;
+        padding: 7px 16px;
+        font-size: 16px;
+        font-weight: 500;
+      }
     }
-  }
 
   }
 
@@ -437,7 +441,7 @@ export default class RaterRateeSkillPage extends Vue {
     margin-top: 24px;
   }
 
-    .ts-rater-ratee-skill-page {
+  .ts-rater-ratee-skill-page {
 
     .rater-ratee-wrapper {
 
@@ -487,7 +491,7 @@ export default class RaterRateeSkillPage extends Vue {
     }
   }
 
-.rater-ratee-mobile-wrapper {
+  .rater-ratee-mobile-wrapper {
     position: relative;
     z-index: 9999;
     padding: 16px 5% 18px 5%;
@@ -561,5 +565,5 @@ export default class RaterRateeSkillPage extends Vue {
       display: block;
     }
   }
-
+}
 </style>

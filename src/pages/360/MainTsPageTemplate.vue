@@ -1,5 +1,7 @@
 <template>
-  <router-view v-if="tsUserInfo"></router-view>
+  <section class="app-360">
+    <router-view v-if="tsUserInfo"></router-view>
+  </section>
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
