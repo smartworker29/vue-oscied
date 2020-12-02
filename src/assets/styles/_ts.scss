@@ -154,7 +154,7 @@
     display: grid;
     grid-template-columns: 282px calc(100% - 306px);
     grid-column-gap: 24px;
-  
+
     @media screen and (max-width: 768px) {
         grid-template-columns: 1fr;
     }
@@ -334,7 +334,7 @@
             @media screen and (max-width: 600px) {
               width: 100%;
             }
-          } 
+          }
           @media screen and (max-width: 1366px){
             justify-content: center;
           }
@@ -367,7 +367,7 @@
     font-size: 18px !important;
     line-height: 1.44;
     color: #071012;
-    
+
     @media screen and (max-width: 768px) {
       font-size: 16px;
   }
@@ -568,7 +568,7 @@
     button {
       width: 100%;
       border: none;
-      margin: 7.5px 0;    
+      margin: 7.5px 0;
       &:hover {
         // background-color: #0085cd !important;
         color: #fff;
@@ -612,7 +612,7 @@
 
       &.btn-primary-active {
         background-color: #0085cd;
-  
+
         &:hover {
           background-color: #d6efff !important;
           color: #0085cd !important;
@@ -646,4 +646,8 @@
       }
     }
   }
+}
+
+.app-360 {
+  @import "app-360";
 }
