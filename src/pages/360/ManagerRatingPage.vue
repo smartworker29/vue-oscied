@@ -202,9 +202,11 @@ export default class ManagerRatingPage extends Vue {
 </script>
 
 <style scoped lang="scss">
-.skill-rate-form {
-  margin-bottom: 25px;
-}
+.app-360 {
+  .skill-rate-form {
+    margin-bottom: 25px;
+  }
+
   .survey {
     &-content {
       padding: 0;
@@ -229,4 +231,5 @@ export default class ManagerRatingPage extends Vue {
       color: #ffffff;
     }
   }
+}
 </style>

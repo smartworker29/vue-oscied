@@ -621,6 +621,7 @@ export default class ManagerRateePage extends Vue {
 </script>
 
 <style lang="scss">
+.app-360 {
   .ts-manager-ratee-wrapper {
     display: flex;
   }
@@ -1010,13 +1011,13 @@ export default class ManagerRateePage extends Vue {
       background-color: #fafdff;
 
       &-container {
-      display: grid;
-      grid-template-columns: 282px calc(100% - 306px);
-      grid-column-gap: 24px;
+        display: grid;
+        grid-template-columns: 282px calc(100% - 306px);
+        grid-column-gap: 24px;
 
-      @media screen and (max-width: 768px) {
-        grid-template-columns: 1fr;
-      }
+        @media screen and (max-width: 768px) {
+          grid-template-columns: 1fr;
+        }
       }
     }
 
@@ -1035,5 +1036,5 @@ export default class ManagerRateePage extends Vue {
       color: #ffffff;
     }
   }
-
+}
 </style>
