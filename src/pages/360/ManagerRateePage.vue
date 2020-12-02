@@ -63,6 +63,9 @@
         <b-tabs content-class="mt-3">
           <b-tab title="users" active>
             <div class="ts-ratee-manager-list-wrapper">
+              <button class="btn btn-primary btn-primary-active" @click="addNewRater" v-if="!ratee.isLive">
+                {{ $t("button_g.add_new_user") }}
+              </button>
               <div v-if="raterList" class="ts-manager-wrapper">
                 <div class="table-outer">
                   <div class="custom-table">
@@ -110,6 +113,9 @@
           </b-tab>
           <b-tab title="skills">
             <div class="ts-ratee-skills-list-wrapper">
+              <button class="btn btn-primary btn-primary-active" @click="addNewSkill" v-if="!ratee.isLive">
+                {{ $t("button_g.add_new_skill") }}
+              </button>
               <div v-if="groupedSkillList" class="ts-skill-wrapper">
                 <div class="table-outer" v-for="(group, id) in groupedSkillList" :key="id">
                   <h4>
@@ -157,12 +163,6 @@
         <div class="manager-actions">
           <button class="btn btn-primary outlined" :disabled="checked.length === 0 && checkedItemGroup.length === 0">
             Remove selected
-          </button>
-          <button class="btn btn-primary btn-primary-active" @click="addNewRater" v-if="!ratee.isLive">
-            {{ $t("button_g.add_new_user") }}
-          </button>
-          <button class="btn btn-primary btn-primary-active" @click="addNewSkill" v-if="!ratee.isLive">
-            {{ $t("button_g.add_new_skill") }}
           </button>
         </div>
         <div class="manager-actions mobile">
@@ -621,6 +621,7 @@ export default class ManagerRateePage extends Vue {
 </script>
 
 <style lang="scss">
+.app-360 {
   .ts-manager-ratee-wrapper {
     display: flex;
   }
@@ -1010,13 +1011,13 @@ export default class ManagerRateePage extends Vue {
       background-color: #fafdff;
 
       &-container {
-      display: grid;
-      grid-template-columns: 282px calc(100% - 306px);
-      grid-column-gap: 24px;
+        display: grid;
+        grid-template-columns: 282px calc(100% - 306px);
+        grid-column-gap: 24px;
 
-      @media screen and (max-width: 768px) {
-        grid-template-columns: 1fr;
-      }
+        @media screen and (max-width: 768px) {
+          grid-template-columns: 1fr;
+        }
       }
     }
 
@@ -1035,5 +1036,5 @@ export default class ManagerRateePage extends Vue {
       color: #ffffff;
     }
   }
-
+}
 </style>

@@ -310,6 +310,7 @@ export default class UserDashboardPage extends Vue {
 </script>
 
 <style lang="scss" scope>
+.app-360 {
   .survey {
     &-content {
       padding: 0;
@@ -458,7 +459,7 @@ export default class UserDashboardPage extends Vue {
               margin-top: 16px;
             }
 
-            >h2 {
+            > h2 {
               margin-bottom: 0;
             }
 
@@ -503,10 +504,11 @@ export default class UserDashboardPage extends Vue {
         display: block;
 
         .ratees-block {
-           &.raters-ratees {
+          &.raters-ratees {
             padding-left: 0;
             padding-right: 0;
           }
+
           .ratee-items {
             grid-template-columns: repeat(4, 1fr);
 
@@ -527,5 +529,5 @@ export default class UserDashboardPage extends Vue {
       }
     }
   }
-
+}
 </style>

@@ -200,6 +200,7 @@ export default class RaterRateePage extends Vue {
 </script>
 
 <style lang="scss" scoped>
+.app-360 {
   .survey {
     &-content {
       padding: 0;
@@ -363,5 +364,5 @@ export default class RaterRateePage extends Vue {
       display: block;
     }
   }
-
+}
 </style>
