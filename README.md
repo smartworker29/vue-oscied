@@ -1,4 +1,3 @@
-# CCR3 Onesource AppEU (End User application)
 
 ## 1. Installation
 
@@ -18,8 +17,3 @@ yarn install
 yarn serve
 ```
 
-Alternatively, the Docker Stack can be used to run a specific Container for this project. Run the following command from the docker project root:
-
-```bash
-orbit run app-eu
-```
